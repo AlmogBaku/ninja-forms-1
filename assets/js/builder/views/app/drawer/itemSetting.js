@@ -135,6 +135,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 
 			jQuery( this.el ).find( '.nf-help' ).each(function() {
 				var content = jQuery(this).next('.nf-help-text');
+
 				jQuery( this ).jBox( 'Tooltip', {
 					content: content,
 					maxWidth: 200,
@@ -297,6 +298,8 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
                     helpTextWrapper = document.createElement( 'span' );
                     helpTextWrapper.appendChild( helpIconLink );
                     helpTextWrapper.appendChild( helpTextContainer );
+
+                    // console.log( helpTextWrapper.innerHTML );
 
                     // The template expects a string value.
 					return helpTextWrapper.innerHTML;

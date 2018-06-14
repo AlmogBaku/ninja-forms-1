@@ -23,6 +23,8 @@ class NF_Fields_ListMultiselect extends NF_Abstracts_List
     {
         parent::__construct();
 
+        $this->_settings[ 'options' ][ 'columns' ][ 'value' ][ 'help' ] = 'some text';
+
         $this->_nicename = __( 'Multi-Select', 'ninja-forms' );
 
         add_filter( 'ninja_forms_merge_tag_calc_value_' . $this->_type, array( $this, 'get_calc_value' ), 10, 2 );

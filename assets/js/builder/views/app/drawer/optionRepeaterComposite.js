@@ -56,6 +56,7 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 			// this.setElement( this.$el );
 		
 			var that = this;
+
 			jQuery( this.el ).find( '.nf-list-options-tbody' ).sortable( {
 				handle: '.handle',
 				helper: 'clone',
@@ -86,8 +87,9 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 		},
 
 		onAttach: function() {
-            
 			var importLink = jQuery( this.el ).find( '.nf-open-import-tooltip' );
+			var valueTipLink = jQuery( this.$el ).find( '.nf-help' );
+			console.log(valueTipLink);
 			var jBox = jQuery( importLink ).jBox( 'Tooltip', {
                 title: '<h3>Please enter your options below:</h3>',
                 content: jQuery( this.el ).find( '.nf-import-options' ),
@@ -103,7 +105,22 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
                 }
             } );
 
-			jQuery( this.el ).find( '.nf-import' ).on( 'click', { view: this, jBox: jBox }, this.clickImport );
+			var context = this.el;
+
+            var jBoxValue = jQuery( valueTipLink ).jBox( 'Tooltip', {
+                content: jQuery(context).find( '.nf-help-text' ),
+                maxWidth: 200,
+                theme: 'TooltipBorder',
+                trigger: 'click',
+                closeOnClick: true,
+                zIndex: 9999999999,
+				onOpen: function() {
+                	console.log(this);
+				}
+            } );
+
+
+            jQuery( this.el ).find( '.nf-import' ).on( 'click', { view: this, jBox: jBox }, this.clickImport );
 
 			/*
 			 * Send out a radio message.
@@ -125,13 +142,34 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 
 	    			_.each( this.columns, function( col ) {
 	    				var headerText, headerContainer;
-
+	    				// console.log(this);
 	    				// Use a fragment to support HTML in the col.header property, ie Dashicons.
                         headerText = document.createRange().createContextualFragment( col.header );
-	    				headerContainer = document.createElement( 'div' );
-	    				headerContainer.appendChild( headerText );
 
-	    				columns.appendChild( headerContainer );
+                        headerContainer = document.createElement( 'div' );
+	    				headerContainer.appendChild( headerText );
+                        columns.appendChild( headerContainer );
+                        if( col.help ) {
+                            that.renderTooltip( headerContainer, col.help );
+
+                            // jQuery( that.$el ).find( '.nf-help' ).each(function() {
+                            //
+                            //     var content = jQuery(this).next('.nf-help-text');
+                            //
+                            //     console.log( this );
+                            //     console.log( content );
+                            //     jQuery( this ).jBox( 'Tooltip', {
+                            //         content: content,
+                            //         maxWidth: 200,
+                            //         theme: 'TooltipBorder',
+                            //         trigger: 'click',
+                            //         closeOnClick: true
+                            //     })
+                            // });
+
+                        }
+
+
 	    			} );
 
                     afterColumns = document.createElement( 'div' );
@@ -189,6 +227,31 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 				}
 			};
 		},
+
+        renderTooltip: function( columnHeader, text ) {
+            if ( ! text ) return '';
+            var helpText, helpTextContainer, helpIcon, helpIconLink, helpTextWrapper;
+
+            helpText = document.createTextNode( text );
+            helpTextContainer = document.createElement( 'div' );
+            helpTextContainer.classList.add( 'nf-help-text' );
+            helpTextContainer.appendChild( helpText );
+
+            helpIcon = document.createElement( 'span' );
+            helpIcon.classList.add( 'dashicons', 'dashicons-admin-comments' );
+            helpIconLink = document.createElement( 'a' );
+            helpIconLink.classList.add( 'nf-help' );
+            helpIconLink.setAttribute( 'href', '#' );
+            helpIconLink.setAttribute( 'tabindex', '-1' );
+            helpIconLink.appendChild( helpIcon );
+
+            // helpTextWrapper = document.createElement( 'span' );
+            columnHeader.appendChild( helpIconLink );
+            columnHeader.appendChild( helpTextContainer );
+            // columnHeader.appendChild( helpTextWrapper );
+            // The template expects a string value.
+            return columnHeader.innerHTML;
+        },
 
 		attachHtml: function( collectionView, childView ) {
 			jQuery( collectionView.el ).find( '.nf-list-options-tbody' ).append( childView.el );
