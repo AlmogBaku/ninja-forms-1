@@ -67,6 +67,16 @@ abstract class NF_Abstracts_Migration
         }
     }
 
+	/**
+	 * Function to run our stage two db updates.
+	 */
+	public function _stage_two()
+	{
+		if ( method_exists( $this, 'do_stage_two' ) ) {
+			$this->do_stage_two();
+		}
+	}
+
     public function _run()
     {
         // Check the flag

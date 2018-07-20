@@ -58,7 +58,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         /**
          * @since 3.0
          */
-        const VERSION = '3.3.10';
+        const VERSION = '3.3.11';
 
         const WP_MIN_VERSION = '4.7';
 
@@ -407,6 +407,15 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                         // Update our db version.
                         update_option( 'ninja_forms_db_version', '1.1' );
                     }
+
+	                // If our db version is above 1.1 and below 2.1...
+	                if ( version_compare( get_option( 'ninja_forms_db_version' ), '1.1', '>' )
+	                    && version_compare( get_option( 'ninja_forms_db_version' ), '2.1', '<') ) {
+		                // Do our stage 2 updates.
+		                $migrations->do_stage_two();
+		                // Update our db version.
+		                update_option( 'ninja_forms_db_version', '2.1' );
+	                }
                 }
             }
 
