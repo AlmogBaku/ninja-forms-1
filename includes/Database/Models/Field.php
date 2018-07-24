@@ -18,12 +18,149 @@ final class NF_Database_Models_Field extends NF_Abstracts_Model
         'key',
         'parent_id',
         'type',
-        'created_at'
+        'created_at',
+	    'field_label',
+	    'field_key',
+	    'order',
+	    'required',
+	    'default_value',
+	    'label_pos',
+	    'personally_identifiable',
     );
     public function __construct( $db, $id, $parent_id = '' )
     {
         parent::__construct( $db, $id, $parent_id );
     }
+
+	/**
+	 * Save Setting
+	 *
+	 * Save a single setting.
+	 *
+	 * @param $key
+	 * @param $value
+	 * @return bool|false|int
+	 */
+	protected function _save_setting( $key, $value )
+	{
+		// If the setting is a column, save the settings to the model's table.
+		if( in_array( $key, $this->_columns ) ){
+
+			$format = null;
+			if( in_array( $key, array( 'required', 'personally_identifiable' ) ) ) {
+				// gotta set the format for the columns that use bit type
+				$format = '%d';
+			}
+
+			if( 'label' == $key ) {
+				$this->_db->update(
+					$this->_table_name,
+					array(
+						'field_label' => $value
+					),
+					array(
+						'id' => $this->_id
+					),
+					$format
+				);
+			}
+
+			if( 'key' == $key ) {
+				$this->_db->update(
+					$this->_table_name,
+					array(
+						'field_key' => $value
+					),
+					array(
+						'id' => $this->_id
+					),
+					$format
+				);
+			}
+
+			// Don't update the field_label or field_key. Duplicating issue for now
+			if( ! in_array($key, [ 'field_label', 'field_key' ] ) ) {
+				$update_model = $this->_db->update(
+					$this->_table_name,
+					array(
+						$key => $value
+					),
+					array(
+						'id' => $this->_id
+					),
+					$format
+				);
+			} else {
+				return 1;
+			}
+
+			/*
+			 * if it's not a form, you can return, but we are still saving some
+			 * settings for forms in the form_meta table
+			 */
+			if( ! in_array( $key, [
+				'order',
+				'required',
+				'default_value',
+				'label_pos',
+				'personally_identifiable', ]
+				)
+			) {
+				return $update_model;
+			}
+		}
+
+		$meta_row = $this->_db->get_row(
+			"
+                SELECT `value`
+                FROM   `$this->_meta_table_name`
+                WHERE  `parent_id` = $this->_id
+                AND    `key` = '$key'
+                "
+		);
+
+		if( $meta_row ){
+
+			$update_values = array(
+				'value' => $value,
+				'meta_key' => $key,
+				'meta_value' => $value,
+			);
+
+			$result = $this->_db->update(
+				$this->_meta_table_name,
+				$update_values,
+				array(
+					'key' => $key,
+					'parent_id' => $this->_id
+				)
+			);
+
+		} else {
+
+			$insert_values = array(
+				'key' => $key,
+				'value' => $value,
+				'meta_key' => $key,
+				'meta_value' => $value,
+				'parent_id' => $this->_id,
+			);
+
+			$result = $this->_db->insert(
+				$this->_meta_table_name,
+				$insert_values,
+				array(
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%d'
+				)
+			);
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Delete
