@@ -58,7 +58,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         /**
          * @since 3.0
          */
-        const VERSION = '3.3.11';
+        const VERSION = '3.3.12';
 
         const WP_MIN_VERSION = '4.7';
 
@@ -409,7 +409,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                     }
 
 	                // If our db version is above 1.1 and below 2.1...
-	                if ( version_compare( get_option( 'ninja_forms_db_version' ), '1.1', '>' )
+	                if ( version_compare( get_option( 'ninja_forms_db_version' ), '1.0', '>' )
 	                    && version_compare( get_option( 'ninja_forms_db_version' ), '2.1', '<') ) {
 		                // Do our stage 2 updates.
 		                $migrations->do_stage_two();

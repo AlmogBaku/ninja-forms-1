@@ -41,7 +41,7 @@ class NF_Database_Migrations_Fields extends NF_Abstracts_Migration
 	public function do_stage_two()
 	{
 		$query = "ALTER TABLE {$this->table_name()}
-            ADD `field_label` longtext {$this->charset_collate()},
+            ADD `field_label` longtext {$this->collate()},
             ADD `field_key` longtext {$this->collate()},
             ADD `order` int(11),
             ADD `required` bit,
