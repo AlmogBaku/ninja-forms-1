@@ -8,7 +8,16 @@ final class NF_Database_FieldsController
     private $insert_fields;
     private $insert_field_meta = array();
     private $insert_field_meta_chunk = 0;
-    private $update_fields = array( 'key' => '', 'label' => '', 'type' => '' );
+    private $update_fields = array(
+    	                        'key' => '',
+	                            'label' => '',
+	                            'type' => '',
+	                            'field_label' => '',
+	                            'field_key' => '',
+	                            'order' => '',
+	                            'required' => '',
+	                            'default_value' => '',
+	                            'label_pos' => '');
     private $update_field_meta = array();
     private $update_field_meta_chunk = 0;
     public function __construct( $form_id, $fields_data )
@@ -52,8 +61,29 @@ final class NF_Database_FieldsController
             $settings = array(
                 'key' => $field_data[ 'settings' ][ 'key' ],
                 'label' => $field_data[ 'settings' ][ 'label' ],
-                'type' => $field_data[ 'settings' ][ 'type' ]
+                'type' => $field_data[ 'settings' ][ 'type' ],
+                'field_label' => $field_data[ 'settings' ][ 'label' ],
+	            'field_key' => $field_data[ 'settings' ][ 'key' ],
+	            'order' => $field_data[ 'settings' ][ 'order' ],
             );
+
+	        if( isset( $field_data[ 'settings' ][ 'required' ] ) ) {
+		        $settings[ 'required' ] = $field_data[ 'settings' ][ 'required' ];
+	        } else {
+		        $settings[ 'required' ] = false;
+	        }
+
+            if( isset( $field_data[ 'settings' ][ 'default' ] ) ) {
+            	$settings[ 'default_value' ] = $field_data[ 'settings' ][ 'default' ];
+            } else {
+	        	$settings[ 'default_value' ] = 'NULL';
+            }
+
+	        if( isset( $field_data[ 'settings' ][ 'label_pos' ] ) ) {
+		        $settings[ 'label_pos' ] = $field_data[ 'settings' ][ 'label_pos' ];
+	        } else {
+		        $settings[ 'label_pos' ] = 'default';
+	        }
             if( ! is_numeric( $field_id ) ) {
                 $this->insert_field( $settings ); // New Field.
             } else {
@@ -131,7 +161,7 @@ final class NF_Database_FieldsController
         if( ! $this->insert_fields ) return "";
         $insert_fields = rtrim( $this->insert_fields, ',' ); // Strip trailing comma from SQl.
         return "
-            INSERT INTO {$this->db->prefix}nf3_fields ( `key`, `label`, `type`, `parent_id` )
+            INSERT INTO {$this->db->prefix}nf3_fields ( `key`, `label`, `type`, `field_label`, `field_key`, `order`, `required`, `default_value`, `label_pos`, `parent_id` )
             VALUES {$insert_fields}
         ";
     }
@@ -156,7 +186,7 @@ final class NF_Database_FieldsController
             empty( $this->update_fields[ 'label' ] ) ||
             empty( $this->update_fields[ 'type'  ] )
             ) return "";
-        return "
+        $queryStr = "
             UPDATE {$this->db->prefix}nf3_fields
             SET `key` = CASE {$this->update_fields[ 'key' ]}
                 ELSE `key`
@@ -167,7 +197,30 @@ final class NF_Database_FieldsController
             , `type` = CASE {$this->update_fields[ 'type' ]}
                 ELSE `type`
                 END
+            , `field_label` = CASE {$this->update_fields[ 'field_label' ]}
+            	ELSE `field_label`
+            	END
+            , `field_key` = CASE {$this->update_fields[ 'field_key' ]}
+            	ELSE `field_key`
+            	END
+            , `order` = CASE {$this->update_fields[ 'order' ]}
+            	ELSE `field_label`
+            	END
+            , `required` = CASE {$this->update_fields[ 'required' ]}
+            	ELSE `required`
+            	END
+            , `label_pos` = CASE {$this->update_fields[ 'label_pos' ]}
+            	ELSE `label_pos`
+            	END
         ";
+
+        if( isset( $this->update_fields[ 'default_value' ] ) ) {
+        	$queryStr  .= ", `default_value` = CASE {$this->update_fields[ 'default_value' ]}
+            	ELSE `default_value`
+            	END";
+        }
+
+        return $queryStr;
     }
     /*
     |--------------------------------------------------------------------------
@@ -187,9 +240,9 @@ final class NF_Database_FieldsController
         if( ! isset( $this->insert_field_meta[ $this->insert_field_meta_chunk ] ) || ! $this->insert_field_meta[ $this->insert_field_meta_chunk ] ) {
             $this->insert_field_meta[ $this->insert_field_meta_chunk ] = '';
         }
-        $this->insert_field_meta[ $this->insert_field_meta_chunk ] .= "('{$field_id}','{$key}','{$value}' ),";
+        $this->insert_field_meta[ $this->insert_field_meta_chunk ] .= "('{$field_id}','{$key}','{$value}','{$key}','{$value}') ,";
         $counter++;
-        if( 0 == $counter % 5000 ) $this->insert_field_meta_chunk++;
+        if( 0 == $counter % 2500 ) $this->insert_field_meta_chunk++;
     }
     public function run_insert_field_meta_query()
     {
@@ -197,7 +250,7 @@ final class NF_Database_FieldsController
         foreach( $this->insert_field_meta as $insert_field_meta ){
             $insert_field_meta = rtrim( $insert_field_meta, ',' ); // Strip trailing comma from SQl.
             $this->db->query( "
-                INSERT INTO {$this->db->prefix}nf3_field_meta ( `parent_id`, `key`, `value` )
+                INSERT INTO {$this->db->prefix}nf3_field_meta ( `parent_id`, `key`, `value`, `meta_key`, `meta_value` )
                 VALUES {$insert_field_meta}
             ");
         }
@@ -219,8 +272,19 @@ final class NF_Database_FieldsController
         }
         $this->update_field_meta[ $this->update_field_meta_chunk ] .= " WHEN `parent_id` = '{$field_id}' AND `key` = '{$key}' THEN '{$value}'";
 
+        $this->db->update(
+            $this->db->prefix . 'nf3_field_meta',
+            array(
+            	'meta_key' => $key
+            ),
+            array(
+            	'parent_id' => $field_id,
+	            'key' => $key
+            )
+        );
+
         $counter++;
-        if( 0 == $counter % 5000 ) $this->update_field_meta_chunk++;
+        if( 0 == $counter % 2500 ) $this->update_field_meta_chunk++;
     }
     public function run_update_field_meta_query()
     {
@@ -228,7 +292,8 @@ final class NF_Database_FieldsController
         foreach( $this->update_field_meta as $update_field_meta ){
             $this->db->query("
                 UPDATE {$this->db->prefix}nf3_field_meta as field_meta
-                SET `value` = CASE {$update_field_meta} ELSE `value` END
+                SET `value` = CASE {$update_field_meta} ELSE `value` END,
+                `meta_value` = CASE {$update_field_meta} ELSE `meta_value` END
             ");
             return;
         }
