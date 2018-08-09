@@ -17,10 +17,31 @@ class NF_Database_Migrations_ActionMeta extends NF_Abstracts_Migration
             `parent_id` int NOT NULL,
             `key` longtext NOT NULL,
             `value` longtext,
+            `meta_key` longtext,
+            `meta_value` longtext,
             UNIQUE KEY (`id`)
         ) {$this->charset_collate()};";
 
         dbDelta( $query );
+    }
+
+	/**
+	 * Do Stage Two
+	 * This method runs as a part of the stage two step processor
+	 * it will add tables that we need that are missing currently.
+	 *
+	 * @since 3.3.12
+	 * @return void
+	 */
+    public function do_stage_two()
+    {
+        global $wpdb;
+
+        $query = "ALTER TABLE {$this->table_name()}
+            ADD `meta_key` longtext {$this->collate()},
+            ADD `meta_value` longtext {$this->collate()}";
+
+        $wpdb->query( $query );
     }
 
 }

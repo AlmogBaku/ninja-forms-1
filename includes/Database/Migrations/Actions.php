@@ -21,10 +21,30 @@ class NF_Database_Migrations_Actions extends NF_Abstracts_Migration
             `parent_id` int NOT NULL,
             `created_at` TIMESTAMP,
             `updated_at` DATETIME,
+            `label` longtext,
             UNIQUE KEY (`id`)
         ) {$this->charset_collate()};";
 
         dbDelta( $query );
+    }
+
+    /**
+     * Do Stage Two
+     * This method runs as a part of the stage two step processor
+     * it will add tables that we need that are missing currently.
+     *
+     * @since 3.3.12
+     * @return void
+     */
+    public function do_stage_two()
+    {
+        global $wpdb;
+
+        $query = "ALTER TABLE {$this->table_name()}
+            ADD `label` longtext {$this->collate()}";
+
+
+        $wpdb->query( $query );
     }
 
 }
