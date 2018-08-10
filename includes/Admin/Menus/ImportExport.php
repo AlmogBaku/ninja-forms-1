@@ -7,7 +7,7 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
     public $menu_slug = 'nf-import-export';
 
     public function __construct()
-    {
+    {   
         add_action( 'init', array( $this, 'import_form_listener' ), 0 );
         add_action( 'init', array( $this, 'export_form_listener' ), 0 );
 
@@ -17,6 +17,24 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
         add_filter( 'ninja_forms_before_import_fields', array( $this, 'import_fields_backwards_compatibility' ) );
 
         parent::__construct();
+        
+        add_action( 'admin_init', array( $this, 'nf_upgrade_redirect' ) );
+    }
+
+    /**
+     * If we have required updates, redirect to the main Ninja Forms page
+     */
+    public function nf_upgrade_redirect() {
+        global $pagenow;
+        
+        if( "1" == get_option( 'ninja_forms_needs_updates' ) ) {
+            remove_submenu_page( $this->parent_slug, $this->menu_slug );
+            if( 'admin.php' == $pagenow && 'nf-import-export' == $_GET[ 'page' ] ) {
+            
+                wp_safe_redirect( admin_url( 'admin.php?page=ninja-forms' ), 301 );
+                exit;
+            }
+        }
     }
 
     public function get_page_title()

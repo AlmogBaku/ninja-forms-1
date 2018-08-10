@@ -239,6 +239,22 @@
     </div>
 </script>
 
+<!-- Section: Required Updates -->
+<script id="tmpl-nf-requiredUpdates" type="text/template">
+    <div>
+        <h1>Required Updates</h1>
+        <div>
+            <p>
+                <?php _e( 'There are some required updates we need to perform on your Ninja Forms installation before you continue.', 'ninja-forms' ); ?>
+                
+            </p>
+        </div>
+        <div>
+            <input class="nf-button primary nf-required-update" type='button' id='nf-required-updates-btn' name='nf-required-updates-btn' value="<?php _e( 'Do Required Updates' ); ?>" />
+        </div>
+    </div>
+</script>
+
 <!-- Widget: Forms -->
 <script id="tmpl-nf-widget-forms" type="text/template">
     <header>

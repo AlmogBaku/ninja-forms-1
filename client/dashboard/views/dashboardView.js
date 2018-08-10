@@ -6,7 +6,7 @@
  * @copyright (c) 2017 WP Ninjas
  * @since 3.2
  */
-define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/sections/memberships.js', 'views/oauth.js', 'views/promotion.js' ], function( WidgetView, ServicesView, AppsView, MembershipsView, OAuthView, PromotionView ) {
+define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/sections/memberships.js', 'views/oauth.js', 'views/promotion.js', 'views/sections/requiredUpdates.js' ], function( WidgetView, ServicesView, AppsView, MembershipsView, OAuthView, PromotionView, RequiredUpdatesView ) {
     var view = Marionette.View.extend( {
         template: "#tmpl-nf-dashboard",
 
@@ -20,33 +20,45 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
 
         events: {
             'click .widgets a': function(e){
-                this.showChildView( 'content', new WidgetView() );
-                jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
-                e.target.classList.add( 'active' );
-                this.currentView = 'widgets';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView( 'content', new WidgetView() );
+                    jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
+                    e.target.classList.add( 'active' );
+                    this.currentView = 'widgets';
+                }
             },
             'click .services a': function(e){
-                this.showChildView( 'content', new ServicesView() );
-                jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
-                e.target.classList.add( 'active' );
-                this.currentView = 'services';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView( 'content', new ServicesView() );
+                    jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
+                    e.target.classList.add( 'active' );
+                    this.currentView = 'services';
+                }
             },
             'click .apps a': function(e){
-                this.showChildView( 'content', new AppsView() );
-                jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
-                e.target.classList.add( 'active' );
-                this.currentView = 'apps';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView( 'content', new AppsView() );
+                    jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
+                    e.target.classList.add( 'active' );
+                    this.currentView = 'apps';
+                }
             },
             'click .memberships a': function(e){
-                this.showChildView( 'content', new MembershipsView() );
-                jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
-                e.target.classList.add( 'active' );
-                this.currentView = 'memberships';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView( 'content', new MembershipsView() );
+                    jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
+                    e.target.classList.add( 'active' );
+                    this.currentView = 'memberships';
+                }
             },
         },
 
         initialize: function() {
 
+            if( "1" === nfAdmin.requiredUpdates ) {
+                window.location.hash = '#requiredUpdates';
+            }
+            
             switch( window.location.hash ) {
                 case '#apps':
                     this.currentView = 'apps';
@@ -56,6 +68,9 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     break;
                 case '#memberships':
                     this.currentView = 'memberships';
+                    break;
+                case '#requiredUpdates':
+                    this.currentView = 'requiredUpdates';
                     break;
                 case '#widgets':
                 default:
@@ -67,22 +82,28 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
              * TODO: Clean this up.
              */
             nfRadio.channel( 'dashboard' ).reply( 'show:widgets', function(){
-                this.showChildView('content', new WidgetView() );
-                jQuery( 'nav.sections a.active' ).removeClass( 'active' );
-                jQuery( 'nav.sections .widgets a' ).addClass( 'active' );
-                this.currentView = 'widgets';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView('content', new WidgetView() );
+                    jQuery( 'nav.sections a.active' ).removeClass( 'active' );
+                    jQuery( 'nav.sections .widgets a' ).addClass( 'active' );
+                    this.currentView = 'widgets';
+                }
             }, this );
             nfRadio.channel( 'dashboard' ).reply( 'show:services', function(){
-                this.showChildView('content', new ServicesView() );
-                jQuery( 'nav.sections a.active' ).removeClass( 'active' );
-                jQuery( 'nav.sections .services a' ).addClass( 'active' );
-                this.currentView = 'services';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView('content', new ServicesView() );
+                    jQuery( 'nav.sections a.active' ).removeClass( 'active' );
+                    jQuery( 'nav.sections .services a' ).addClass( 'active' );
+                    this.currentView = 'services';
+                }
             }, this );
             nfRadio.channel( 'dashboard' ).reply( 'show:apps', function(){
-                this.showChildView('content', new AppsView() );
-                jQuery( 'nav.sections a.active' ).removeClass( 'active' );
-                jQuery( 'nav.sections .apps a' ).addClass( 'active' );
-                this.currentView = 'apps';
+                if( "1" != nfAdmin.requiredUpdates ) {
+                    this.showChildView('content', new AppsView() );
+                    jQuery( 'nav.sections a.active' ).removeClass( 'active' );
+                    jQuery( 'nav.sections .apps a' ).addClass( 'active' );
+                    this.currentView = 'apps';
+                }
             }, this );
         },
 
@@ -100,6 +121,9 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     break;
                 case '#services':
                     var childView = new ServicesView();
+                    break;
+                case '#requiredUpdates':
+                    var childView = new RequiredUpdatesView();
                     break;
                 case '#widgets':
                 default:

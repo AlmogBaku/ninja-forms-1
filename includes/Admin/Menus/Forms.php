@@ -20,6 +20,23 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
 
         add_action( 'admin_body_class', array( $this, 'body_class' ) );
+        add_action( 'admin_init', array( $this, 'nf_upgrade_redirect' ) );
+    }
+
+    /**
+     * If we have required updates, redirect to the main Ninja Forms page
+     */
+    public function nf_upgrade_redirect() {
+        global $pagenow;
+            
+        if( "1" == get_option( 'ninja_forms_needs_updates' ) &&
+            'admin.php' == $pagenow && 
+            'ninja-forms' == $_GET[ 'page' ] &&
+            isset( $_GET[ 'form_id' ] ) ) {
+                wp_safe_redirect( admin_url( 'admin.php?page=ninja-forms' ), 301 );
+                exit;
+            
+        }
     }
 
     public function body_class( $classes )
@@ -145,6 +162,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
                 'formTelemetry'     => ( get_option( 'nf_form_tel_sent' ) ) ? 0 : 1,
                 'showOptin'         => ( get_option( 'ninja_forms_do_not_allow_tracking' ) ||
                                          get_option( 'ninja_forms_allow_tracking' ) ) ? 0 : 1,
+                'requiredUpdates'    => get_option( 'ninja_forms_needs_updates', 0 ),
                 'currentUserEmail'  => $current_user->user_email,
                 'doingCleanup'      => ( ! get_option( 'ninja_forms_data_is_clean' ) &&
                                         isset( $_REQUEST[ 'action' ] ) &&
