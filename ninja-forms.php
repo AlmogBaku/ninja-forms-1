@@ -264,6 +264,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 self::$instance->controllers[ 'form' ]          = new NF_AJAX_Controllers_Form();
                 self::$instance->controllers[ 'fields' ]    = new NF_AJAX_Controllers_Fields();
                 self::$instance->controllers[ 'batch_process' ] = new NF_AJAX_REST_BatchProcess();
+                self::$instance->controllers[ 'required_updates' ] = new NF_AJAX_REST_RequiredUpdate();
                 self::$instance->controllers[ 'preview' ]       = new NF_AJAX_Controllers_Preview();
                 self::$instance->controllers[ 'submission' ]    = new NF_AJAX_Controllers_Submission();
                 self::$instance->controllers[ 'savedfields' ]   = new NF_AJAX_Controllers_SavedFields();
@@ -376,6 +377,10 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                  */
                 self::$instance->tracking = new NF_Tracking();
 
+                /*
+                 * Required Updates
+                 */
+                self::$instance->updates[ 'stage_two' ] = new NF_Updates_StageTwo(array(), array());
 
                 self::$instance->submission_expiration_cron = new NF_Database_SubmissionExpirationCron();
 
@@ -465,6 +470,9 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 Ninja_Forms()->dispatcher()->send( 'upgrade' );
             }
 
+            // Instantiates our required updates array. This determines if updates are required.
+            $updates = apply_filters( 'ninja_forms_required_updates', array() );
+
             add_filter( 'ninja_forms_dashboard_menu_items', array( $this, 'maybe_hide_dashboard_items' ) );
             
             // If we don't have clean data...
@@ -547,6 +555,19 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                     $items[ 'services' ]
                 );
             }
+			if ( 1 == get_option( 'ninja_forms_needs_updates' ) ) {
+				unset(
+                    $items[ 'widgets' ],
+                    $items[ 'apps' ],
+                    $items[ 'memberships' ],
+                    $items[ 'services' ]
+				);
+                // TODO: Add our required update section here.
+                // $items[ 'requiredUpdates' ] = array(
+                //         'slug' => 'requiredUpdates',
+                //         'niceName' => __( 'Required Updates', 'ninja-forms' ),
+                //     );
+			}
             return $items;
         }
 
