@@ -22,6 +22,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 
         // If we don't have a nonce...
         // OR if the nonce is invalid...
+		// TODO: Commented for testing. Re-enable before pushing to production.
 //        if ( ! isset( $request_data[ 'security' ] ) || ! wp_verify_nonce( $request_data[ 'security' ], 'ninja_forms_upgrade_nonce' ) ) {
 //            // Kick the request out now.
 //            $data[ 'error' ] = __( 'Request forbidden.', 'ninja-forms' );
@@ -31,21 +32,15 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 		// If we're not already doing updates...
 		if ( ! $doing_updates ) {
 			// Get our list of already run updates.
-			$processed = get_option( 'ninja_forms_required_updates' );
-			// If we didn't get anything...
-			// Default to an empty array.
-			if ( ! $processed ) $processed = array();
+			$processed = get_option( 'ninja_forms_required_updates', array() );
 			// Get our list of updates to run.
-			$this->updates = apply_filters( 'ninja_forms_required_updates', array() );
-			// Compare the arrays to see what updates need to run.
-			$running = $this->get_current_updates( $processed );
+			$this->updates = Ninja_Forms()->config( 'RequiredUpdates' );
 			// Sort our updates.
-			$this->running = $this->sort_updates( $running, $processed );
-
+			$this->running = $this->sort_updates( $this->updates, $processed );
 			// If we got EXACTLY false...
-			if ( false == $running ) {
+			if ( false === $this->running ) {
 				// Inform the user that the update failed.
-				$data[ 'error' ] = __( 'The requested update cannot be run at this time.', 'ninja-forms' );
+				$data[ 'error' ] = __( 'The requested update cannot be run at this time. Please ensure that your copy of Ninja Forms is up to date with the latest version.', 'ninja-forms' );
 				return $data;
 			}
 		} // Otherwise... (We are already processing updates.)
