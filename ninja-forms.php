@@ -377,11 +377,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                  */
                 self::$instance->tracking = new NF_Tracking();
 
-                /*
-                 * Required Updates
-                 */
-                self::$instance->updates[ 'stage_two' ] = new NF_Updates_StageTwo(array(), array());
-
                 self::$instance->submission_expiration_cron = new NF_Database_SubmissionExpirationCron();
 
                 /*
@@ -470,9 +465,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 Ninja_Forms()->dispatcher()->send( 'upgrade' );
             }
 
-            // Instantiates our required updates array. This determines if updates are required.
-            $updates = apply_filters( 'ninja_forms_required_updates', array() );
-
             add_filter( 'ninja_forms_dashboard_menu_items', array( $this, 'maybe_hide_dashboard_items' ) );
             
             // If we don't have clean data...
@@ -480,6 +472,16 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 // Register a new notice.
                 add_filter( 'ninja_forms_admin_notices', array( $this, 'data_cleanup_notice' ) );
             }
+			// Remove already completed updates from our filtered list of required updates.
+			add_filter( 'ninja_forms_required_updates', array( $this, 'remove_completed_updates' ), 99 );
+
+			// Get our list of required updates.
+			$required_updates = Ninja_Forms()->config( 'RequiredUpdates' );
+			// If we got back a list of updates...
+			if ( ! empty( $required_updates ) ) {
+				// Record that we have updates to run.
+				update_option( 'ninja_forms_needs_updates', 1 );
+			}
         }
 
 	    /**
@@ -935,6 +937,27 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             );
             return $notices;
         }
+		
+		/**
+		 * Function to deregister already completed updates from the list of required updates.
+		 * 
+		 * @since 3.3.14
+		 * 
+		 * @param $updates (Array) Our array of required updates.
+		 * @return $updates (Array) Our array of required updates.
+		 */
+		public function remove_completed_updates( $updates ) {
+			$processed = get_option( 'ninja_forms_required_updates', array() );
+			// For each update in our list...
+			foreach ( $updates as $slug => $update ) {
+				// If we have already processed it...
+				if ( isset( $processed[ $slug ] ) ) {
+					// Remove it from the list.
+					unset( $updates[ $slug ] );
+				}
+			}			
+			return $updates;
+		}
 
     } // End Class Ninja_Forms
 
