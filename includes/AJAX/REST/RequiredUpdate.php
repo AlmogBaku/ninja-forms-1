@@ -50,7 +50,6 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 		// Call the class of our current update.
 		$class = $this->running[ 0 ][ 'class_name' ];
 		$update_class = new $class( $request_data, $this->running );
-		$update_class->process();
     }
 
 	protected function get_request_data()

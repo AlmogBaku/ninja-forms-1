@@ -3,15 +3,15 @@
 return apply_filters( 'ninja_forms_required_updates', array(
 
 //	'OrphanSubs' => array(
-//		'class' => 'NF_Updates_OrphanSubs',
+//		'class_name' => 'NF_Updates_OrphanSubs',
 //		'requires' => array(),
 //	),
-	'CCActions' => array(
-		'class' => 'NF_Updates_CCActions',
+	'CacheCollateActions' => array(
+		'class_name' => 'NF_Updates_CacheCollateActions',
 		'requires' => array(),
 	),
-//	'CCFields' => array(
-//		'class' => 'NF_Updates_CCFields',
+//	'CacheCollateFields' => array(
+//		'class_name' => 'NF_Updates_CacheCollateFields',
 //		'requires' => array(),
 //	),
 
