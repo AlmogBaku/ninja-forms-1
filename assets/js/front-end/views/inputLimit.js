@@ -15,8 +15,14 @@ define( [], function() {
             var words = value.trim().replace(regex, ' ').split(' ');
             var wordCount = words.length;
             var charCount = value.length;
-
-            if ( 'characters' == this.model.get( 'input_limit_type' ) ) {
+            
+            /**
+             * PHP Config has 'char' instead of 'characters', so I changed it to
+             * 'characters', but added 'char' here so existing form fields will
+             * act correctly
+             **/
+            if ( 'characters' == this.model.get( 'input_limit_type' )
+                    || 'char' == this.model.get( 'input_limit_type' ) ) {
                 jQuery( el ).attr( 'maxlength', this.model.get( 'input_limit' ) );
                 this.count = this.model.get( 'input_limit' ) - charCount;
             } else {
