@@ -12,6 +12,10 @@ abstract class NF_Abstracts_RequiredUpdate
 
     protected $_class_name = '';
 
+    public $debug = false;
+
+    public $response = array();
+
     /**
      * Constructor
      */
@@ -45,13 +49,29 @@ abstract class NF_Abstracts_RequiredUpdate
 
 
     /**
-     * Function to cleanup any lingering temporary elements of a batch process after completion.
+     * Function to cleanup any lingering temporary elements of required updates after completion.
      */
     public function cleanup()
     {
-        /**
-         * This function intentionally left empty.
-         */
+        // Delete our required updates data.
+        delete_option( 'ninja_forms_doing_required_updates' );
+        // Flag that updates are done.
+        update_option( 'ninja_forms_needs_updates', 0 );
+        // Output that we're done.
+        $this->response[ 'updatesRemaining' ] = 0;
+        $this->respond();
+    }
+
+
+    /**
+     * Function to dump our JSON response and kill processing.
+     */
+    public function respond()
+    {
+        // Dump the response.
+        echo( json_encode( $this->response ) );
+        // Terminate processing.
+        die();
     }
 
 }
