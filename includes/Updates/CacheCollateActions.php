@@ -19,14 +19,22 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
      */
     public function __construct( $data = array(), $running )
     {
+        // Save a reference to wpdb.
         global $wpdb;
         $this->db = $wpdb;
 
+        // Set debug for testing or live transactions.
+        $this->debug = true;
+
+        // Define the class variables.
         $this->_slug = 'CacheCollateActions';
         $this->_class_name = 'NF_Updates_CacheCollateActions';
         $this->data = $data;
         $this->running = $running;
+
+        // Call the parent constructor.
         parent::__construct();
+
         // Begin processing.
         $this->process();
     }
@@ -106,33 +114,27 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         // Garbage collection.
         unset( $db_actions );
         unset( $db_action_ids );
-
-//        echo('Action IDs<br />');
-//        var_dump($action_ids);
-//        echo('<br />Delete<br />');
-//        var_dump($delete);
-//        echo('<br />Insert<br />');
-//        var_dump($insert);
-//        var_dump( $actions_by_id[ '43' ] );
-        // TODO: Remove this die statement when ready for testing.
-        die();
         
         // If we have items to delete...
         if ( ! empty( $delete ) ) {
             // Delete all meta for those actions.
             $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $delete ) . ")";
-            $this->db->query( $sql );
+            $this->query( $sql );
             // Delete the actions.
             $sql = "DELETE FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $delete ) . ")";
-            $this->db->query( $sql );
+            $this->query( $sql );
             // Empty out the delete list.
             $delete = array();
         }
-        
+
+        // Set our hard limit for the loops.
+        $limit = 10;
+
+        // Setup a holding object for inserted items.
+        $insert_ids = array();
+
         // If we have items to insert...
         if ( ! empty( $insert ) ) {
-            // Set our hard limit for the loop.
-            $limit = 10;
             // Store the meta items outside the loop for faster insertion.
             $meta_items = array();
             // While we still have items to insert...
@@ -149,9 +151,16 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 $settings = $actions_by_id[ $inserting ];
                 // Insert into the actions table.
                 $sql = "INSERT INTO `{$this->db->prefix}nf3_actions` ( type, active, parent_id, created_at ) VALUES ( '" . $settings[ 'type' ] . "', " . intval( $settings[ 'active' ] ) . ", " . intval( $form[ 'ID' ] ) . ", '" . $settings[ 'created_at' ] . "' )";
-                $this->db->query( $sql );
-                // Get the ID of the new action.
-                $new_id = $this->db->insert_id;
+                $this->query( $sql );
+                // Set a default new_id for debugging.
+                $new_id = 0;
+                // If we're not in debug mode...
+                if ( ! $this->debug ) {
+                    // Get the ID of the new action.
+                    $new_id = $this->db->insert_id;
+                }
+                // Save a reference to this insertion.
+                $insert_ids[ $inserting ] = $new_id;
                 // For each meta of the action...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
@@ -167,7 +176,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             }
             // Insert our meta.
             $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value ) VALUES " . implode( ', ', $meta_items );
-            $this->db->query( $sql );
+            $this->query( $sql );
         }
         
         // At this point, we should only have items to update.
@@ -175,8 +184,6 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         // If we have items left to process...
         // AND If processing hasn't been locked...
         if ( ! empty( $action_ids ) && ! $this->lock_process ) {
-            // Set our hard limit for the loop.
-            $limit = 10;
             // Store the meta items outside the loop for faster insertion.
             $meta_items = array();
             $flush_ids = array();
@@ -195,7 +202,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 $settings = $actions_by_id[ $updating ];
                 // Update the actions table.
                 $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET type = '" . $settings[ 'type' ] . "', active = " . intval( $settings[ 'active' ] ) . ", created_at = '" . $settings[ 'created_at' ] . "' WHERE id = " . intval( $updating );
-                $this->db->query( $sql );
+                $this->query( $sql );
                 // For each meta of the action...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
@@ -211,10 +218,10 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             }
             // Flush our existing meta.
             $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
-            $this->db->query( $sql );
+            $this->query( $sql );
             // Insert our updated meta.
             $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value ) VALUES " . implode( ', ', $meta_items );
-            $this->db->query( $sql );
+            $this->query( $sql );
         }
         
         // If we have locked processing...
@@ -235,19 +242,45 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             array_push( $this->running[ 0 ][ 'forms' ], $form );
         } // Otherwise... (The step is complete.)
         else {
-            // If all steps are completed...
-            if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
-                // Run our cleanup process.
-                $this->cleanup();
-            } // Otherwise... (We still have steps to process.)
-            else {
+            // If all steps have not been completed...
+            if ( ! empty( $this->running[ 0 ][ 'forms' ] ) ) {
                 // Increment our step count.
-                $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] + 1 );
+                $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
             }
         }
-        // Update the cache.
-        // Dump our response.
-
+        // Get a copy of the cache.
+        $sql = "SELECT cache FROM `{$this->db->prefix}nf3_upgrades` WHERE id = " . intval( $form[ 'ID' ] );
+        $result = $this->db->query( $sql );
+        $cache = maybe_unserialize( $result[ 0 ][ 'cache' ] );
+        // For each action in the cache...
+        foreach( $cache[ 'actions' ] as &$action ) {
+            // If we have a new ID for this action...
+            if ( isset( $insert_ids[ $action[ 'id' ] ] ) ) {
+                // Update it.
+                $action[ 'id' ] = intval( $insert_ids[ $action[ 'id' ] ] );
+            }
+            // TODO: Might also need to append some new settings here (Label)?
+        }
+        // Save the cache.
+        $sql = "UPDATE `{$this->db->prefix}nf3_upgrades` SET cache = " . serialize( $cache ) . " WHERE id = " . intval( $form[ 'ID' ] );
+        $this->query( $sql );
+        // Prepare to output our number of steps and current step.
+        $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
+        $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
+        // If we do not have locked processing...
+        if ( ! $this->lock_process ) {
+            // If all steps have been completed...
+            if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
+                // Run our cleanup method.
+                $this->cleanup();
+            }
+        }
+        // Record our current location in the process.
+        update_option( 'ninja_forms_doing_required_updates', $this->running );
+        // Prepare to output the number of updates remaining.
+        $this->response[ 'updatesRemaining' ] = count( $this->running );
+        // Respond to the AJAX call.
+        $this->respond();
     }
 
 
@@ -274,14 +307,25 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
      */
     public function cleanup()
     {
-        /**
-         * This function intentionally left empty.
-         */
+        // Remove the current process from the array.
+        array_shift( $this->running );
+        // Record to our updates setting that this update is complete.
+        $updates = get_option( 'ninja_forms_required_updates', array() );
+        $updates[ $this->_slug ] = 'complete';
+        update_option( 'ninja_forms_required_updates', $updates );
+        // If we have no updates left to process...
+        if ( empty( $this->running ) ) {
+            // Call the parent cleanup method.
+            parent::cleanup();
+        }
     }
 
 
     /**
      * Function to prepare our query values for insert.
+     * 
+     * @param $value (String) The value to be escaped for SQL.
+     * @return (String) The escaped (and possibly serialized) value of the string.
      */
     public function prepare( $value )
     {
@@ -290,5 +334,18 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         $escaped = maybe_serialize( $escaped );
 
         return $escaped;
+    }
+
+
+    /**
+     * Function used to call queries that are gated by debug.
+     * 
+     * @param $sql (String) The query to be run.
+     * @return (Object) The response to the wpdb query call.
+     */
+    public function query( $sql ) {
+        if ( ! $this->debug ) {
+            return $this->db->query( $sql );
+        }
     }
 }
