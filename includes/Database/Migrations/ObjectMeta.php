@@ -18,7 +18,7 @@ class NF_Database_Migrations_ObjectMeta extends NF_Abstracts_Migration
             `key` longtext NOT NULL,
             `value` longtext,
             UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }

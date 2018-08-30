@@ -21,7 +21,7 @@ class NF_Database_Migrations_Relationships extends NF_Abstracts_Migration
             `created_at` TIMESTAMP,
             `updated_at` DATETIME,
             UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }

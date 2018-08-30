@@ -1,7 +1,17 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class NF_Abstracts_RequiredUpdate
+ * Class NF_Updates_CacheCollateActions
+ * 
+ * This class manages the step process of running through the CacheCollateActions required update.
+ * It will define an object to pull data from (if necessary) to pick back up if exited early.
+ * It will run an upgrade function to alter the nf3_actions and nf3_action_meta tables.
+ * Then, it will step over each form on the site, following this process:
+ * - Actions that exist in the data tables but not in the cache will be deleted.
+ * - Actions that exist in the cache but not in the data tables will be inserted.
+ * - Actions that exist in the data tables but have an incorrect form ID will be inserted as a new ID and referenced from the cache.
+ * - Actions that exist in both will be updated from the cache to ensure the data is correct.
+ * After completing the above for every form on the site, it will remove the data object that manages its location.
  */
 class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
 {
@@ -16,6 +26,9 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
 
     /**
      * Constructor
+     * 
+     * @param $data (Array) The data object passed in by the AJAX call.
+     * @param $running (Array) The array of required updates being run.
      */
     public function __construct( $data = array(), $running )
     {
@@ -117,12 +130,8 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         
         // If we have items to delete...
         if ( ! empty( $delete ) ) {
-            // Delete all meta for those actions.
-            $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $delete ) . ")";
-            $this->query( $sql );
-            // Delete the actions.
-            $sql = "DELETE FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $delete ) . ")";
-            $this->query( $sql );
+            // Run our deletion process.
+            $this->delete( $delete );
             // Empty out the delete list.
             $delete = array();
         }
@@ -150,7 +159,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 $inserting = array_pop( $insert );
                 $settings = $actions_by_id[ $inserting ];
                 // Insert into the actions table.
-                $sql = "INSERT INTO `{$this->db->prefix}nf3_actions` ( type, active, parent_id, created_at ) VALUES ( '" . $settings[ 'type' ] . "', " . intval( $settings[ 'active' ] ) . ", " . intval( $form[ 'ID' ] ) . ", '" . $settings[ 'created_at' ] . "' )";
+                $sql = "INSERT INTO `{$this->db->prefix}nf3_actions` ( type, active, parent_id, created_at, label ) VALUES ( '" . $settings[ 'type' ] . "', " . intval( $settings[ 'active' ] ) . ", " . intval( $form[ 'ID' ] ) . ", '" . $settings[ 'created_at' ] . "', '" . $this->prepare( $settings[ 'label' ] ) . "' )";
                 $this->query( $sql );
                 // Set a default new_id for debugging.
                 $new_id = 0;
@@ -166,7 +175,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                     // If it's not empty...
                     if ( ( ! empty( $value ) || '0' == $value ) ) {
                         // Add the data to the list.
-                        array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
+                        array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "', '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
                     }
                 }
                 // Remove the item from the list of actions.
@@ -175,7 +184,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 $limit--;
             }
             // Insert our meta.
-            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value ) VALUES " . implode( ', ', $meta_items );
+            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
         }
         
@@ -201,14 +210,14 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 array_push( $flush_ids, $updating );
                 $settings = $actions_by_id[ $updating ];
                 // Update the actions table.
-                $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET type = '" . $settings[ 'type' ] . "', active = " . intval( $settings[ 'active' ] ) . ", created_at = '" . $settings[ 'created_at' ] . "' WHERE id = " . intval( $updating );
+                $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET type = '" . $settings[ 'type' ] . "', active = " . intval( $settings[ 'active' ] ) . ", created_at = '" . $settings[ 'created_at' ] . "', label = '" . $this->prepare( $settings[ 'label' ] ) . "' WHERE id = " . intval( $updating );
                 $this->query( $sql );
                 // For each meta of the action...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
                     if ( ( ! empty( $value ) || '0' == $value ) ) {
                         // Add the data to the list.
-                        array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
+                        array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "', '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
                     }
                 }
                 // Remove the item from the list of actions.
@@ -220,7 +229,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
             $this->query( $sql );
             // Insert our updated meta.
-            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value ) VALUES " . implode( ', ', $meta_items );
+            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
         }
         
@@ -247,6 +256,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 // Increment our step count.
                 $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
             }
+            // TODO: Update the stage of the current form in the upgrades table.
         }
         // Get a copy of the cache.
         $sql = "SELECT cache FROM `{$this->db->prefix}nf3_upgrades` WHERE id = " . intval( $form[ 'ID' ] );
@@ -291,6 +301,11 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     {
         // Record that we're processing the update.
         $this->running[ 0 ][ 'running' ] = true;
+        // If we're not debugging...
+        if ( ! $this->debug ) {
+            // Ensure that our data tables are updated.
+            $this->migrate();
+        }
         // Get a list of our forms...
         $sql = "SELECT ID FROM `{$this->db->prefix}nf3_forms`";
         $forms = $this->db->get_results( $sql, 'ARRAY_A' );
@@ -303,7 +318,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
 
 
     /**
-     * Function to cleanup any lingering temporary elements of a batch process after completion.
+     * Function to cleanup any lingering temporary elements of a required update after completion.
      */
     public function cleanup()
     {
@@ -343,9 +358,41 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
      * @param $sql (String) The query to be run.
      * @return (Object) The response to the wpdb query call.
      */
-    public function query( $sql ) {
+    public function query( $sql )
+    {
+        // If we're not debugging...
         if ( ! $this->debug ) {
+            // Run the query.
             return $this->db->query( $sql );
         }
+        // Otherwise, return false.
+        return false;
     }
+
+
+    /**
+     * Function to delete unncessary items from our existing tables.
+     * 
+     * @param $items (Array) The list of IDs to be deleted.
+     */
+    public function delete( $items )
+    {
+        // Delete all meta for those actions.
+        $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $items ) . ")";
+        $this->query( $sql );
+        // Delete the actions.
+        $sql = "DELETE FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $items ) . ")";
+        $this->query( $sql );
+    }
+
+
+    /**
+     * Function to run our table migrations.
+     */
+    public function migrate()
+    {
+        $migrations = new NF_Database_Migrations();
+        $migrations->do_upgrade( 'cache_collate_actions' );
+    }
+
 }

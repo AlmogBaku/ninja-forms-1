@@ -20,7 +20,7 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
             `meta_key` longtext,
             `meta_value` longtext,
             UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
@@ -31,8 +31,8 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
     public function do_stage_one()
     {
         $query = "ALTER TABLE {$this->table_name()}
-            ADD `meta_key` longtext {$this->collate()},
-            ADD `meta_value` longtext {$this->collate()}";
+            ADD `meta_key` longtext {$this->charset_collate()},
+            ADD `meta_value` longtext {$this->charset_collate()}";
         global $wpdb;
         $wpdb->query( $query );
     }

@@ -20,21 +20,21 @@ class NF_Database_Migrations_FieldMeta extends NF_Abstracts_Migration
             `meta_key` longtext,
             `meta_value` longtext,
            	UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
 
 	/**
-	 * Function to run our stage two upgrades.
+	 * Function to run our stage three upgrades.
      *
      * @since 3.3.12
 	 */
-	public function do_stage_two()
+	public function do_stage_three()
 	{
 		$query = "ALTER TABLE {$this->table_name()}
-            ADD `meta_key` longtext {$this->collate()},
-            ADD `meta_value` longtext {$this->collate()}";
+            ADD `meta_key` longtext {$this->charset_collate()},
+            ADD `meta_value` longtext {$this->charset_collate()}";
 		global $wpdb;
 		$wpdb->query( $query );
 	}

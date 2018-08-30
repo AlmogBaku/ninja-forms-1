@@ -17,7 +17,7 @@ class NF_Database_Migrations_Upgrades extends NF_Abstracts_Migration
             `cache` LONGTEXT,
             `stage` INT(11) NOT NULL DEFAULT 0,
             PRIMARY KEY ( id )
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
