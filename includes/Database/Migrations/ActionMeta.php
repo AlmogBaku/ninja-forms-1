@@ -2,6 +2,12 @@
 
 class NF_Database_Migrations_ActionMeta extends NF_Abstracts_Migration
 {
+
+    /**
+     * Constructor method for the NF_Database_Migrations_ActionMeta class.
+     * 
+     * @since 3.0.0
+     */
     public function __construct()
     {
         parent::__construct(
@@ -10,6 +16,14 @@ class NF_Database_Migrations_ActionMeta extends NF_Abstracts_Migration
         );
     }
 
+
+    /**
+     * Function to run our initial migration.
+     * 
+     * @since 3.0.0
+     * 
+     * @updated 3.3.14
+     */
     public function run()
     {
         $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
@@ -20,26 +34,26 @@ class NF_Database_Migrations_ActionMeta extends NF_Abstracts_Migration
             `meta_key` longtext,
             `meta_value` longtext,
             UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
 
+
 	/**
-	 * Do Stage Two
-	 * This method runs as a part of the stage two step processor
-	 * it will add tables that we need that are missing currently.
+	 * Function to be run as part of our CacheCollateActions required update.
 	 *
 	 * @since 3.3.12
-	 * @return void
+	 * 
+	 * @updated 3.3.14
 	 */
-    public function do_stage_two()
+    public function cache_collate_actions()
     {
         global $wpdb;
 
         $query = "ALTER TABLE {$this->table_name()}
-            ADD `meta_key` longtext {$this->collate()},
-            ADD `meta_value` longtext {$this->collate()}";
+            ADD `meta_key` longtext {$this->charset_collate()},
+            ADD `meta_value` longtext {$this->charset_collate()};";
 
         $wpdb->query( $query );
     }

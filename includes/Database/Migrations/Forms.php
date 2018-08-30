@@ -28,7 +28,7 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
             `logged_in` bit,
             `seq_num` int,
             UNIQUE KEY (`id`)
-        ) {$this->charset_collate()};";
+        ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
@@ -47,8 +47,8 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
 		 * 
 		 */
         $query = "ALTER TABLE {$this->table_name()}
-            ADD `form_title` longtext {$this->collate()},
-            ADD `default_label_pos` varchar(15) {$this->collate()},
+            ADD `form_title` longtext {$this->charset_collate()},
+            ADD `default_label_pos` varchar(15) {$this->charset_collate()},
             ADD `show_title` bit,
             ADD `clear_complete` bit,
             ADD `hide_complete` bit,
