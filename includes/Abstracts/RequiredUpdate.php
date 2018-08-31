@@ -16,6 +16,7 @@ abstract class NF_Abstracts_RequiredUpdate
 
     public $response = array();
 
+
     /**
      * Constructor
      */

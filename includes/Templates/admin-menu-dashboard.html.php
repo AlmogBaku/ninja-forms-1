@@ -252,6 +252,7 @@
         <div>
             <input class="nf-button primary nf-required-update" type='button' id='nf-required-updates-btn' name='nf-required-updates-btn' value="<?php _e( 'Do Required Updates' ); ?>" />
         </div>
+        <div class="nf-update-progress jBox-content" id="nf-required-updates-progress"></div>
     </div>
 </script>
 

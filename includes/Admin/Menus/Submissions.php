@@ -57,7 +57,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
         // This will only run on our post type.
         add_action( 'views_edit-nf_sub', array( $this, 'change_views' ) );
         
-        add_action( 'admin_init', array( $this, 'nf_upgrade_redirect' ) );
+        // add_action( 'admin_init', array( $this, 'nf_upgrade_redirect' ) );
     }
 
     /**
@@ -67,11 +67,11 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
         global $pagenow;
             
         if( "1" == get_option( 'ninja_forms_needs_updates' ) ) {
-            remove_submenu_page( $this->parent_slug, $this->menu_slug );
-            if( 'edit.php' == $pagenow && 'nf_sub' == $_GET[ 'post_type' ] ) {
-                wp_safe_redirect( admin_url( 'admin.php?page=ninja-forms' ), 301 );
-                exit;
-            }
+            // remove_submenu_page( $this->parent_slug, $this->menu_slug );
+            // if( 'edit.php' == $pagenow && 'nf_sub' == $_GET[ 'post_type' ] ) {
+            //     wp_safe_redirect( admin_url( 'admin.php?page=ninja-forms' ), 301 );
+            //     exit;
+            // }
         }
     }
 
