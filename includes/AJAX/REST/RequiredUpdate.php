@@ -41,6 +41,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 			if ( false === $this->running ) {
 				// Inform the user that the update failed.
 				$data[ 'error' ] = __( 'The requested update cannot be run at this time. Please ensure that your copy of Ninja Forms is up to date with the latest version.', 'ninja-forms' );
+
 				return $data;
 			}
 		} // Otherwise... (We are already processing updates.)
