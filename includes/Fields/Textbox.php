@@ -42,7 +42,7 @@ class NF_Fields_Textbox extends NF_Abstracts_Input
          * sanitize this in case someone tries to inject data that runs in
          * Excel and similar apps
          * */
-        if( 0 < strlen($field_value ) ) {
+        if( 0 < strlen( $field_value ) ) {
             $first_char = substr( $field_value, 0, 1 );
             if( in_array( $first_char, array( '=', '@', '+', '-' ) ) ) {
                 return "'" . $field_value;
