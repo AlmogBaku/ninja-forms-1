@@ -2,6 +2,12 @@
 
 class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
 {
+
+    /**
+     * Constructor method for the NF_Database_Migrations_Actions class.
+     * 
+     * @since 3.0.0
+     */
     public function __construct()
     {
         parent::__construct(
@@ -10,6 +16,14 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
         );
     }
 
+
+    /**
+     * Function to run our initial migration.
+     * 
+     * @since 3.0.0
+     * 
+     * @updated 3.3.14
+     */
     public function run()
     {
         $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
@@ -24,7 +38,8 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
 
         dbDelta( $query );
     }
-    
+
+
     /**
      * Function to run our stage one upgrades.
      */
@@ -32,8 +47,37 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
     {
         $query = "ALTER TABLE {$this->table_name()}
             ADD `meta_key` longtext {$this->charset_collate()},
-            ADD `meta_value` longtext {$this->charset_collate()}";
+            ADD `meta_value` longtext {$this->charset_collate()};";
         global $wpdb;
+        $wpdb->query( $query );
+    }
+
+
+    /**
+     * Function to be run as part of our CacheCollateForms required update.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     */
+    public function cache_collate_forms()
+    {
+        global $wpdb;
+
+        // Get the current column structure of the nf3_forms table.
+        $sql = "SHOW COLUMNS FROM {$this->table_name()}";
+        $result = $wpdb->get_results( $sql, 'ARRAY_A' );
+        // If the meta_key column exists...
+        if ( isset( $result[ 0 ][ 'meta_key' ] ) ) {
+            // Update our existing columns.
+            $query = "ALTER TABLE {$this->table_name()}
+                MODIFY `meta_key` longtext {$this->charset_collate()},
+                MODIFY `meta_value` longtext {$this->charset_collate()};";
+        } // Otherwise... (The meta_key column does not exist.)
+        else {
+            // Create the new columns.
+            $query = "ALTER TABLE {$this->table_name()}
+                ADD `meta_key` longtext {$this->charset_collate()},
+                ADD `meta_value` longtext {$this->charset_collate()};";
+        }
         $wpdb->query( $query );
     }
 
