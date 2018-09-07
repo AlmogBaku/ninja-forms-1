@@ -408,27 +408,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                     // Ensure all of our tables have been defined.
                     $migrations = new NF_Database_Migrations();
                     $migrations->migrate();
-                    // If our db version is below 1.1...
-                    if ( version_compare( get_option( 'ninja_forms_db_version' ), '1.1', '<' ) ) {
-                        // Do our stage 1 updates.
-                        $migrations->do_stage_one();
-                        // Update our db version.
-                        update_option( 'ninja_forms_db_version', '1.1' );
-                    }
-					// Fix for legacy versions that upgraded without a set DB version.
-					// If our version is exactly 1.1...
-					if ( version_compare( get_option( 'ninja_forms_db_version' ), '1.1', '==' ) ) {
-						global $wpdb;
-						// Fetch the form_title column from the fields table.
-						$sql = "SHOW FULL COLUMNS FROM `{$wpdb->prefix}nf3_forms` WHERE Field = 'form_title'";
-						$result = $wpdb->get_results( $sql, 'ARRAY_A' );
-						// If we didn't get a result...
-						if ( empty( $result ) ) {
-							// Do our stage 1 updates, even though they should have already run.
-							$migrations->do_stage_one();
-						}
-					}
-					
                 }
             }
 

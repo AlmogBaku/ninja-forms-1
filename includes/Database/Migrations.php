@@ -55,20 +55,6 @@ class NF_Database_Migrations
             $migration->_do_upgrade( $callback );
         }
     }
-    
-
-    /**
-     * Function to run all our stage one changes.
-     * 
-     * @since 3.3.8
-     */
-    public function do_stage_one()
-    {
-        foreach( $this->migrations as $migration ) {
-            $migration->_stage_one();
-        }
-    }
-
 
     /**
      * Function to nuke our 3.0 tables.
