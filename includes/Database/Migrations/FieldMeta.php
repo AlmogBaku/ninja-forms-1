@@ -30,7 +30,7 @@ class NF_Database_Migrations_FieldMeta extends NF_Abstracts_Migration
      *
      * @since 3.3.12
 	 */
-	public function do_stage_three()
+	public function cache_collate_fields()
 	{
 		$query = "ALTER TABLE {$this->table_name()}
             ADD `meta_key` longtext {$this->charset_collate()},

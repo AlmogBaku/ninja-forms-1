@@ -1,19 +1,19 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class NF_Updates_CacheCollateActions
+ * Class NF_Updates_CacheCollateFields
  * 
- * This class manages the step process of running through the CacheCollateActions required update.
+ * This class manages the step process of running through the CacheCollateFields required update.
  * It will define an object to pull data from (if necessary) to pick back up if exited early.
- * It will run an upgrade function to alter the nf3_actions and nf3_action_meta tables.
+ * It will run an upgrade function to alter the nf3_fields and nf3_field_meta tables.
  * Then, it will step over each form on the site, following this process:
- * - Actions that exist in the data tables but not in the cache will be deleted.
- * - Actions that exist in the cache but not in the data tables will be inserted.
- * - Actions that exist in the data tables but have an incorrect form ID will be inserted as a new ID and referenced from the cache.
- * - Actions that exist in both will be updated from the cache to ensure the data is correct.
+ * - Fields that exist in the data tables but not in the cache will be deleted.
+ * - Fields that exist in the cache but not in the data tables will be inserted.
+ * - Fields that exist in the data tables but have an incorrect form ID will be inserted as a new ID and referenced from the cache.
+ * - Fields that exist in both will be updated from the cache to ensure the data is correct.
  * After completing the above for every form on the site, it will remove the data object that manages its location.
  */
-class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
+class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 {
     
     private $data = array();
@@ -40,8 +40,8 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         $this->debug = true;
 
         // Define the class variables.
-        $this->_slug = 'CacheCollateActions';
-        $this->_class_name = 'NF_Updates_CacheCollateActions';
+        $this->_slug = 'CacheCollateFields';
+        $this->_class_name = 'NF_Updates_CacheCollateFields';
         $this->data = $data;
         $this->running = $running;
 
@@ -67,48 +67,48 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         // See which form we're currently working with.
         $form = array_pop( $this->running[ 0 ][ 'forms' ] );
         
-        // Get the actions for that form.
-        $actions = Ninja_Forms()->form( $form[ 'ID' ] )->get_actions();
+        // Get the fields for that form.
+        $fields = Ninja_Forms()->form( $form[ 'ID' ] )->get_fields();
         
         // Setup variables for our SQL methods.
-        $action_ids = array();
-        $actions_by_id = array();
+        $field_ids = array();
+        $fields_by_id = array();
         $insert = array();
         $delete = array();
         
-        // For each action...
-        foreach ( $actions as $action ) {
+        // For each field...
+        foreach ( $fields as $field ) {
             // Add the ID to the list.
-            array_push( $action_ids, $action->get_id() );
-            $actions_by_id[ $action->get_id() ] = $action->get_settings();
+            array_push( $field_ids, $field->get_id() );
+            $fields_by_id[ $field->get_id() ] = $field->get_settings();
         }
-        // Cross reference the Actions table to see if these IDs exist for this Form.
-        $sql = "SELECT id FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $action_ids ) . ") AND parent_id = {$form[ 'ID' ]}";
-        $db_actions = $this->db->get_results( $sql, 'ARRAY_A' );
-        $db_action_ids = array();
-        // For each action in the actions table...
-        foreach ( $db_actions as $action ) {
+        // Cross reference the Fields table to see if these IDs exist for this Form.
+        $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $field_ids ) . ") AND parent_id = {$form[ 'ID' ]}";
+        $db_fields = $this->db->get_results( $sql, 'ARRAY_A' );
+        $db_field_ids = array();
+        // For each field in the fields table...
+        foreach ( $db_fields as $field ) {
             // If we have no reference to it in the cache...
-            if ( ! in_array( $action[ 'id' ], $action_ids ) ) {
+            if ( ! in_array( $field[ 'id' ], $field_ids ) ) {
                 // Schedule it for deletion.
-                array_push( $delete, $action[ 'id' ] );
+                array_push( $delete, $field[ 'id' ] );
             }
             // Push the id onto our comparison array.
-            array_push( $db_action_ids, $action[ 'id' ] );
+            array_push( $db_field_ids, $field[ 'id' ] );
         }
         
         // If we're not continuing an old process...
-        if ( ! isset( $form[ 'action_ids' ] ) ) {
-            // For each action in the cache...
-            foreach ( $action_ids as $action ) {
-                // If we have no reference to it in the actions table...
-                if ( ! in_array( $action, $db_action_ids ) ) {
+        if ( ! isset( $form[ 'field_ids' ] ) ) {
+            // For each field in the cache...
+            foreach ( $field_ids as $field ) {
+                // If we have no reference to it in the fields table...
+                if ( ! in_array( $field, $db_field_ids ) ) {
                     // Schedule it for insertion.
-                    array_push( $insert, $action );
+                    array_push( $insert, $field );
                 }
             }
-            // Cross reference the Actions table to see if these IDs exist on other Forms.
-            $sql = "SELECT id FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $action_ids ) . ") AND parent_id <> {$form[ 'ID' ]}";
+            // Cross reference the Fields table to see if these IDs exist on other Forms.
+            $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $field_ids ) . ") AND parent_id <> {$form[ 'ID' ]}";
             $duplicates = $this->db->get_results( $sql, 'ARRAY_A' );
             // If we got something back...
             // (There were duplicates.)
@@ -121,12 +121,12 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             }
         } // Otherwise... (We are continuing.)
         else {
-            $action_ids = $form[ 'action_ids' ];
+            $field_ids = $form[ 'field_ids' ];
             $insert = $form[ 'insert' ];
         }
         // Garbage collection.
-        unset( $db_actions );
-        unset( $db_action_ids );
+        unset( $db_fields );
+        unset( $db_field_ids );
         
         // If we have items to delete...
         if ( ! empty( $delete ) ) {
@@ -157,20 +157,29 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 }
                 // Get our item to be inserted.
                 $inserting = array_pop( $insert );
-                $settings = $actions_by_id[ $inserting ];
-                // Insert into the actions table.
-                $sql = "INSERT INTO `{$this->db->prefix}nf3_actions` ( type, active, parent_id, created_at, label ) VALUES ( '" . $settings[ 'type' ] . "', " . intval( $settings[ 'active' ] ) . ", " . intval( $form[ 'ID' ] ) . ", '" . $settings[ 'created_at' ] . "', '" . $this->prepare( $settings[ 'label' ] ) . "' )";
+                $settings = $fields_by_id[ $inserting ];
+                // Insert into the fields table.
+                $sql = "INSERT INTO `{$this->db->prefix}nf3_fields` ( label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( '" . $this->prepare( $settings[ 'label' ] ) . "', '".
+                       $this->prepare( $settings[ 'key' ] ) . "', '" .
+                       $this->prepare( $settings[ 'type' ] ) . "', " .
+                       intval( $form[ 'ID' ] ) . ", '" .
+                       $this->prepare( $settings[ 'label' ] ) . "', '" .
+                       $this->prepare( $settings[ 'key' ] ) . "', " .
+                       intval( $settings[ 'order' ] ) . ", " .
+                       intval( $settings[ 'required' ] ) . ", '" .
+                       $this->prepare( $settings[ 'default_value' ] ) . "', '" .
+                       $this->prepare( $settings[ 'label_pos' ] ) . "' )";
                 $this->query( $sql );
                 // Set a default new_id for debugging.
                 $new_id = 0;
                 // If we're not in debug mode...
                 if ( ! $this->debug ) {
-                    // Get the ID of the new action.
+                    // Get the ID of the new field.
                     $new_id = $this->db->insert_id;
                 }
                 // Save a reference to this insertion.
                 $insert_ids[ $inserting ] = $new_id;
-                // For each meta of the action...
+                // For each meta of the field...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
                     if ( ( ! empty( $value ) || '0' == $value ) ) {
@@ -178,13 +187,13 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                         array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "', '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
                     }
                 }
-                // Remove the item from the list of actions.
-                unset( $actions_by_id[ $inserting ] );
+                // Remove the item from the list of fields.
+                unset( $fields_by_id[ $inserting ] );
                 // Reduce the limit.
                 $limit--;
             }
             // Insert our meta.
-            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
+            $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
         }
         
@@ -192,12 +201,12 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         
         // If we have items left to process...
         // AND If processing hasn't been locked...
-        if ( ! empty( $action_ids ) && ! $this->lock_process ) {
+        if ( ! empty( $field_ids ) && ! $this->lock_process ) {
             // Store the meta items outside the loop for faster insertion.
             $meta_items = array();
             $flush_ids = array();
             // While we still have items to update...
-            while ( 0 < count( $action_ids ) ) {
+            while ( 0 < count( $field_ids ) ) {
                 // If we have hit our limit...
                 if ( 1 > $limit ) {
                     // Lock processing.
@@ -206,48 +215,58 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                     break;
                 }
                 // Get our item to be updated.
-                $updating = array_pop( $action_ids );
+                $updating = array_pop( $field_ids );
                 array_push( $flush_ids, $updating );
-                $settings = $actions_by_id[ $updating ];
-                // Update the actions table.
-                $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET type = '" . $settings[ 'type' ] . "', active = " . intval( $settings[ 'active' ] ) . ", created_at = '" . $settings[ 'created_at' ] . "', label = '" . $this->prepare( $settings[ 'label' ] ) . "' WHERE id = " . intval( $updating );
+                $settings = $fields_by_id[ $updating ];
+                // Update the fields table.
+                $sql = "UPDATE `{$this->db->prefix}nf3_fields` SET label = '" 
+                    . $this->prepare( $settings[ 'label' ] ) 
+                    . "', `key` = '" . $this->prepare( $settings[ 'key' ] ) 
+                    . "', `type` = '" . $this->prepare( $settings[ 'type' ] ) 
+                    . "', field_label = '" . $this->prepare( $settings[ 'label' ] ) 
+                    . "', field_key = '" . $this->prepare( $settings[ 'key' ] ) 
+                    . "', `order` = " . intval( $settings[ 'order' ] ) 
+                    . ", required = " . intval( $settings[ 'required' ] )
+                    . ", default_value = '" . $this->prepare( $settings[ 'default_value' ] )
+                    . "', label_pos = '" . $this->prepare( $settings[ 'label_pos' ] )
+                    . "' WHERE id = " . intval( $updating );
                 $this->query( $sql );
-                // For each meta of the action...
+                // For each meta of the field...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
                     if ( ( ! empty( $value ) || '0' == $value ) ) {
                         // Add the data to the list.
-                        array_push( $meta_items, "( " . intval( $new_id ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "', '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
+                        array_push( $meta_items, "( " . intval( $updating ) . ", '" . $meta . "', '" . $this->prepare( $value ) . "', '" . $meta . "', '" . $this->prepare( $value ) . "' )" );
                     }
                 }
-                // Remove the item from the list of actions.
-                unset( $actions_by_id[ $updating ] );
+                // Remove the item from the list of fields.
+                unset( $fields_by_id[ $updating ] );
                 // Reduce the limit.
                 $limit--;
             }
             // Flush our existing meta.
-            $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
+            $sql = "DELETE FROM `{$this->db->prefix}nf3_field_meta` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
             $this->query( $sql );
             // Insert our updated meta.
-            $sql = "INSERT INTO `{$this->db->prefix}nf3_action_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
+            $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
         }
         
         // If we have locked processing...
         if ( $this->lock_process ) {
-            // Reset the action_ids array.
-            $action_ids = array();
-            // For each action left to process...
-            foreach ( $actions_by_id as $id => $action ) {
-                // If we've not already processed this action...
-                if ( in_array( $id, $form[ 'action_ids' ] ) ) {
+            // Reset the field_ids array.
+            $field_ids = array();
+            // For each field left to process...
+            foreach ( $fields_by_id as $id => $field ) {
+                // If we've not already processed this field...
+                if ( in_array( $id, $form[ 'field_ids' ] ) ) {
                     // Save a reference to its ID.
-                    array_push( $action_ids, $id );
+                    array_push( $field_ids, $id );
                 }
             }
             // Store our current data location.
             $form[ 'insert' ] = $insert;
-            $form[ 'action_ids' ] = $action_ids;
+            $form[ 'field_ids' ] = $field_ids;
             array_push( $this->running[ 0 ][ 'forms' ], $form );
         } // Otherwise... (The step is complete.)
         else {
@@ -258,25 +277,23 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             }
             // TODO: Update the stage of the current form in the upgrades table.
         }
-        // Get a copy of the cache.
-        $sql = "SELECT cache FROM `{$this->db->prefix}nf3_upgrades` WHERE id = " . intval( $form[ 'ID' ] );
-        $result = $this->db->query( $sql );
-        $cache = maybe_unserialize( $result[ 0 ][ 'cache' ] );
-        // For each action in the cache...
-        foreach( $cache[ 'actions' ] as &$action ) {
-            // If we have a new ID for this action...
-            if ( isset( $insert_ids[ $action[ 'id' ] ] ) ) {
+        // // Get a copy of the cache.
+        $cache = WPN_Helper::get_nf_cache($form[ 'ID' ] );
+        // For each field in the cache...
+        foreach( $cache[ 'fields' ] as &$field ) {
+            // If we have a new ID for this field...
+            if ( isset( $insert_ids[ $field[ 'id' ] ] ) ) {
                 // Update it.
-                $action[ 'id' ] = intval( $insert_ids[ $action[ 'id' ] ] );
+                $field[ 'id' ] = intval( $insert_ids[ $field[ 'id' ] ] );
             }
             // TODO: Might also need to append some new settings here (Label)?
         }
         // Save the cache.
-        $sql = "UPDATE `{$this->db->prefix}nf3_upgrades` SET cache = " . serialize( $cache ) . " WHERE id = " . intval( $form[ 'ID' ] );
-        $this->query( $sql );
+        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache );
         // Prepare to output our number of steps and current step.
         $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
         $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
+        
         // If we do not have locked processing...
         if ( ! $this->lock_process ) {
             // If all steps have been completed...
@@ -383,11 +400,11 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
      */
     public function delete( $items )
     {
-        // Delete all meta for those actions.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $items ) . ")";
+        // Delete all meta for those fields.
+        $sql = "DELETE FROM `{$this->db->prefix}nf3_field_meta` WHERE parent_id IN(" . implode( ', ', $items ) . ")";
         $this->query( $sql );
-        // Delete the actions.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $items ) . ")";
+        // Delete the fields.
+        $sql = "DELETE FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $items ) . ")";
         $this->query( $sql );
     }
 
@@ -398,7 +415,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     public function migrate()
     {
         $migrations = new NF_Database_Migrations();
-        $migrations->do_upgrade( 'cache_collate_actions' );
+        $migrations->do_upgrade( 'cache_collate_fields' );
     }
 
 }
