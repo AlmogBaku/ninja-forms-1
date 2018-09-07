@@ -12,6 +12,8 @@ define( [], function() {
 
         totalUpdates: -1, // we start with -1 and overwrite it 
 
+        updatesRemaining: -1,
+
         ui: {
             requiredUpdates: '.nf-required-update',
     
@@ -37,17 +39,33 @@ define( [], function() {
             jQuery.post( ajaxurl, {action: 'nf_required_update' } )
                 .then( function( response ) {
                     var res = JSON.parse( response );
-                    console.log( res );
 
                     // if we still have updates remaining, call the ajax again
                     if( res.updatesRemaining > 0 ) {
-                        // start displaying progress bars for each update
-                        context.showProgressBars( res );
-                        context.doRequiredUpdates();
+
+                        /**
+                         * We had to add this if/else b/c the classes were returning
+                         * results where the currentStep and stepsTotal values
+                         * were the same, but the updatesRemaining value had changed,
+                         * thus causing any progress bars after the first to 
+                         * automatically show 100% even though the updates continue
+                         */
+                        if( context.updatesRemaining !== res.updatesRemaining 
+                            && res.currentStep === res.stepsTotal ) {
+                            
+                            context.doRequiredUpdates();
+                            
+                        } else {
+                            context.showProgressBars( res );
+                            context.doRequiredUpdates();
+                            context.updatesRemaining = res.updatesRemaining;
+                        }
                     } else {
                         // get our main progess bar(s) container
                         var mainProgressBarDiv = document.getElementById( 'nf-required-updates-progress' );
-                        mainProgressBarDiv.innerHTML = "Updates Done.";
+                        var doneDiv = document.createElement( 'div' );
+                        doneDiv.innerHTML = "<strong>Updates Done!</strong>";
+                        mainProgressBarDiv.appendChild( doneDiv );
                         console.log( "UPDATE DONE" );
                     }
                 });

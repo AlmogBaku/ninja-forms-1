@@ -38,7 +38,7 @@ class NF_Database_Migrations_Fields extends NF_Abstracts_Migration
      *
      * @since 3.3.12
 	 */
-	public function do_stage_three()
+	public function cache_collate_fields()
 	{
 		$query = "ALTER TABLE {$this->table_name()}
             ADD `field_label` longtext {$this->charset_collate()},
