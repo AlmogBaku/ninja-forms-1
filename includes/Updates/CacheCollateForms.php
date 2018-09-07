@@ -7,7 +7,9 @@
  * It will define an object to pull data from (if necessary) to pick back up if exited early.
  * It will run an upgrade function to alter the nf3_forms and nf3_form_meta tables.
  * Then, it will step over each form on the site, following this process:
- * - 
+ * - New columns in the nf3_forms table will be populated with data from the cache.
+ * - New and existing columns in the nf3_form_meta tables will be populated from the cache.
+ * - A new record of the cache will be saved to the nf3_upgrades table (if it does not already exist).
  * After completing the above for every form on the site, it will remove the data object that manages its location.
  */
 class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
@@ -121,7 +123,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         
         // Update the upgrades table.
         $cache = WPN_Helper::get_nf_cache( $form[ 'ID' ] );
-        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache );
+        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache, 1 );
 
         // Increment our step count.
         $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
