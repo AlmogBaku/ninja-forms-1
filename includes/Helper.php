@@ -291,12 +291,12 @@ final class WPN_Helper
      * 
      * @param $id (int) The form ID.
      * @param $data (string) The form cache.
+     * @param $stage (int) The target stage of this update. Default to the current max stage.
      * 
      * @since 3.3.7
+     * @updated UPDATE_VERSION_ON_MERGE
      */
-    public static function update_nf_cache( $id, $data ) {
-        // Define our current stage here for use as we run various upgrades.
-        $CURRENT_STAGE = 1;
+    public static function update_nf_cache( $id, $data, $stage = 1 ) {
         // Serialize our data.
         $cache = serialize( $data );
         global $wpdb;
@@ -306,11 +306,11 @@ final class WPN_Helper
         // If we don't already have the data...
         if ( empty( $result ) ) {
             // Insert it.
-	        $sql = $wpdb->prepare( "INSERT INTO `{$wpdb->prefix}nf3_upgrades` (id, cache, stage) VALUES (%d, %s, %s)", intval( $id ), $cache, $CURRENT_STAGE);
+	        $sql = $wpdb->prepare( "INSERT INTO `{$wpdb->prefix}nf3_upgrades` (id, cache, stage) VALUES (%d, %s, %s)", intval( $id ), $cache, intval( $stage ) );
         } // Otherwise... (We do have the data.)
         else {
             // Update the existing record.
-	        $sql = $wpdb->prepare( "UPDATE `{$wpdb->prefix}nf3_upgrades` SET cache = %s WHERE id = %d", $cache, intval( $id ) ) ;
+	        $sql = $wpdb->prepare( "UPDATE `{$wpdb->prefix}nf3_upgrades` SET cache = %s, stage = %d WHERE id = %d", $cache, intval( $stage ), intval( $id ) );
         }
         $wpdb->query( $sql );
     }

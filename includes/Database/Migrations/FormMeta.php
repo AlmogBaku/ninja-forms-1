@@ -49,10 +49,10 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
         global $wpdb;
 
         // Get the current column structure of the nf3_forms table.
-        $sql = "SHOW COLUMNS FROM {$this->table_name()}";
+        $sql = "SHOW COLUMNS FROM {$this->table_name()} WHERE `Field` = 'meta_key'";
         $result = $wpdb->get_results( $sql, 'ARRAY_A' );
         // If the meta_key column exists...
-        if ( isset( $result[ 0 ][ 'meta_key' ] ) ) {
+        if ( ! empty( $result ) ) {
             // Update our existing columns.
             $query = "ALTER TABLE {$this->table_name()}
                 MODIFY `meta_key` longtext {$this->charset_collate()},
