@@ -70,20 +70,6 @@ abstract class NF_Abstracts_Migration
         return $response;
     }
 
-
-    /**
-     * Function to run our stage one db updates.
-     * 
-     * @since 3.3.8
-     */
-    public function _stage_one()
-    {
-        if ( method_exists( $this, 'do_stage_one' ) ) {
-            $this->do_stage_one();
-        }
-    }
-
-
     /**
      * Function to run our required update functions.
      * 
