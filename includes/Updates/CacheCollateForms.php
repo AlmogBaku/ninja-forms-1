@@ -38,7 +38,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         $this->db = $wpdb;
 
         // Set debug for testing or live transactions.
-        $this->debug = true;
+        $this->debug = false;
 
         // Define the class variables.
         $this->_slug = 'CacheCollateForms';
@@ -121,7 +121,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         $sql = "INSERT INTO `{$this->db->prefix}nf3_form_meta` ( parent_id, `key`, `value`, meta_key, meta_value ) VALUES " . implode( ', ', $insert_items );
         $this->query( $sql );
         
-        // Update the upgrades table.
+        // Update the upgrades table, passing in 1 for the current stage.
         $cache = WPN_Helper::get_nf_cache( $form[ 'ID' ] );
         WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache, 1 );
 
@@ -167,7 +167,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         $this->running[ 0 ][ 'forms' ] = $forms;
         // Record the total number of steps in this batch.
         $this->running[ 0 ][ 'steps' ] = count( $forms );
-        // Record our current step (defaulted to 1 here).
+        // Record our current step (defaulted to 0 here).
         $this->running[ 0 ][ 'current' ] = 0;
     }
 

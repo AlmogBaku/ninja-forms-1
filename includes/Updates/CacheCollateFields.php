@@ -29,6 +29,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
      * 
      * @param $data (Array) The data object passed in by the AJAX call.
      * @param $running (Array) The array of required updates being run.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function __construct( $data = array(), $running )
     {
@@ -55,6 +57,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 
     /**
      * Function to loop over the batch.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function process()
     {
@@ -379,7 +383,6 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 // Increment our step count.
                 $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
             }
-            // TODO: Update the stage of the current form in the upgrades table.
         }
         // // Get a copy of the cache.
         $cache = WPN_Helper::get_nf_cache($form[ 'ID' ] );
@@ -392,8 +395,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             }
             // TODO: Might also need to append some new settings here (Label)?
         }
-        // Save the cache.
-        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache );
+        // Save the cache, passing 3 as the current stage.
+        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache, 3 );
         // Prepare to output our number of steps and current step.
         $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
         $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
@@ -417,6 +420,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 
     /**
      * Function to run any setup steps necessary to begin processing.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function startup()
     {
@@ -433,13 +438,15 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         $this->running[ 0 ][ 'forms' ] = $forms;
         // Record the total number of steps in this batch.
         $this->running[ 0 ][ 'steps' ] = count( $forms );
-        // Record our current step (defaulted to 1 here).
-        $this->running[ 0 ][ 'current' ] = 1;
+        // Record our current step (defaulted to 0 here).
+        $this->running[ 0 ][ 'current' ] = 0;
     }
 
 
     /**
      * Function to cleanup any lingering temporary elements of a required update after completion.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function cleanup()
     {
@@ -462,6 +469,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 	 *
 	 * @param $value (String) The value to be escaped for SQL.
 	 * @return (String) The escaped (and possibly serialized) value of the string.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
 	 */
 	public function prepare( $value )
 	{
@@ -484,6 +493,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
      * 
      * @param $sql (String) The query to be run.
      * @return (Object) The response to the wpdb query call.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function query( $sql )
     {
@@ -501,6 +512,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
      * Function to delete unncessary items from our existing tables.
      * 
      * @param $items (Array) The list of IDs to be deleted.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function delete( $items )
     {
@@ -515,6 +528,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 
     /**
      * Function to run our table migrations.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function migrate()
     {
