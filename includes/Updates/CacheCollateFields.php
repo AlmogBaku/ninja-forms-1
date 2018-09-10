@@ -75,6 +75,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         $fields_by_id = array();
         $insert = array();
         $delete = array();
+        $submission_updates = array();
         
         // For each field...
         foreach ( $fields as $field ) {
@@ -83,7 +84,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             $fields_by_id[ $field->get_id() ] = $field->get_settings();
         }
         // Cross reference the Fields table to see if these IDs exist for this Form.
-        $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $field_ids ) . ") AND parent_id = {$form[ 'ID' ]}";
+        $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE parent_id = {$form[ 'ID' ]}";
         $db_fields = $this->db->get_results( $sql, 'ARRAY_A' );
         $db_field_ids = array();
         // For each field in the fields table...
@@ -92,11 +93,11 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             if ( ! in_array( $field[ 'id' ], $field_ids ) ) {
                 // Schedule it for deletion.
                 array_push( $delete, $field[ 'id' ] );
+            } else { // Push the id onto our comparison array.
+                array_push( $db_field_ids, $field[ 'id' ] );
             }
-            // Push the id onto our comparison array.
-            array_push( $db_field_ids, $field[ 'id' ] );
         }
-        
+
         // If we're not continuing an old process...
         if ( ! isset( $form[ 'field_ids' ] ) ) {
             // For each field in the cache...
@@ -115,14 +116,20 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             if ( ! empty( $duplicates ) ) {
                 // For each duplicate...
                 foreach ( $duplicates as $duplicate ) {
-                    // Schedule it for insertion.
-                    array_push( $insert, $duplicate[ 'id' ] );
+                    // Schedule it for insertion if it isn't already in our $insert array
+                    if ( ! in_array( $duplicate[ 'id' ], $insert ) ) {
+                       array_push( $insert, $duplicate[ 'id' ] ); 
+                    }
+                    
+                    // Add this field to our submission_updates array which tracks which field IDs change.
+                    $submission_updates[ $duplicate[ 'id' ] ] = true;
                 }
             }
         } // Otherwise... (We are continuing.)
         else {
             $field_ids = $form[ 'field_ids' ];
             $insert = $form[ 'insert' ];
+            $submission_updates = $form[ 'submission_updates' ];
         }
         // Garbage collection.
         unset( $db_fields );
@@ -180,6 +187,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 }
                 // Save a reference to this insertion.
                 $insert_ids[ $inserting ] = $new_id;
+
+                // Update our submission_updates array with the new ID of this field so that we can use it later.
+                if ( isset ( $submission_updates[ $inserting ] ) ) {
+                    $submission_updates[ $inserting ] = $new_id; 
+                }
+                
                 // For each meta of the field...
                 foreach ( $settings as $meta => $value ) {
                     // If it's not empty...
@@ -197,11 +210,100 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
         }
+
+        /**
+         * If we have any duplicate field IDs, we need to update any existing submissions with the new field ID.
+         *
+         * The $submission_updates array will look like:
+         *
+         * $submission_updates[ original_id ] = new_id;
+         *
+         * This section:
+         *     Checks to see if we have any fields in our $submission_updates array (have a changed ID)
+         *     Makes sure that processing isn't locked
+         *     Loops over fields in our $submission_updates array
+         *     Fetches submissions for the specific form ID
+         *     Loops over those submissions and replaces _field_ORIGINALID with _field_NEWID
+         */
         
-        // At this point, we should only have items to update.
-        
-        // If we have items left to process...
-        // AND If processing hasn't been locked...
+        if ( ! empty ( $submission_updates ) && ! $this->lock_process ) {
+            /*
+             * Keep track of old field IDs we've used.
+             *     Initially, we set our record array to our current submission updates array.
+             *     When we finish updating an old field, we remove it from the record array.
+             *     When we're done with all fields, we set the submission updates array to the record array.
+             */
+            $submission_updates_record = $submission_updates;
+            // Meta key update limit; How many meta keys do we want to update at a time?
+            $meta_key_limit = 200;
+            // Loop through submission updates and query the postmeta table for any meta_key values of _field_{old_id}.
+            foreach ( $submission_updates as $old_id => $new_id ) {
+                // Make sure that we haven't reached our query limit.
+                if ( 1 > $limit ) {
+                    // Lock processing.
+                    $this->lock_process = true;
+                    // Exit the loop.
+                    break;
+                }
+
+                // This sql is designed to grab our old _field_X post meta keys so that we can replace them with new _field_X meta keys.
+                $sql = "SELECT
+                    old_field_id.meta_id
+                    FROM
+                    `{$this->db->prefix}posts` p
+                    INNER JOIN `{$this->db->prefix}postmeta` old_field_id ON old_field_id.post_id = p.ID
+                    AND old_field_id.meta_key = '_field_{$old_id}'
+                    INNER JOIN `{$this->db->prefix}postmeta` form_id ON form_id.post_id = p.ID
+                    AND form_id.meta_key = '_form_id'
+
+                    WHERE old_field_id.meta_key = '_field_{$old_id}'
+                     AND form_id.meta_value = {$form[ 'ID' ]}
+                     AND p.post_type = 'nf_sub'
+                     LIMIT {$meta_key_limit}";
+                // Fetch our sql results.
+                $meta_ids = $this->db->get_results( $sql, 'ARRAY_N' );
+                // Implode our meta ids so that we can use the result in our update sql.
+                $imploded_ids = implode( ',', call_user_func_array( 'array_merge', $meta_ids ) );
+                // Update all our fetched meta IDs with the new _field_ meta key.
+                $sql = "UPDATE `{$this->db->prefix}postmeta`
+                    SET    meta_key = '_field_{$new_id}'
+                    WHERE  meta_id IN ( {$imploded_ids} )";
+                    
+                $this->query( $sql );
+
+                /*
+                 * Let's make sure that we're done processing all post meta for this old field ID.
+                 * 
+                 * If the number of meta rows retrieved equals our limit:
+                 *     lock processing
+                 *     break out of this loop
+                 * Else
+                 *     we're done with this old field, remove it from our list
+                 *     subtract from our $limit var
+                 */
+                if ( $meta_key_limit === count( $meta_ids ) ) {
+                    // Keep anything else from processing.
+                    $this->lock_process = true;
+                    // Exit this foreach loop.
+                    break;
+                } else { // We're done with this old field.
+                    // Remove the field ID from our submission array.
+                    unset( $submission_updates_record[ $old_id ] );
+                    // Decrement our query limit.
+                    $limit--;
+                }
+
+            } // End foreach
+            // Set our submission updates array to our record array so that we remove any completed old ids.
+            $submission_updates = $submission_updates_record;
+        }
+   
+        /*
+         * At this point, we should only have items to update.
+         * 
+         * If we have items left to process...
+         * AND If processing hasn't been locked...
+         */
         if ( ! empty( $field_ids ) && ! $this->lock_process ) {
             // Store the meta items outside the loop for faster insertion.
             $meta_items = array();
@@ -268,6 +370,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             // Store our current data location.
             $form[ 'insert' ] = $insert;
             $form[ 'field_ids' ] = $field_ids;
+            $form[ 'submission_updates' ] = $submission_updates;
             array_push( $this->running[ 0 ][ 'forms' ], $form );
         } // Otherwise... (The step is complete.)
         else {
