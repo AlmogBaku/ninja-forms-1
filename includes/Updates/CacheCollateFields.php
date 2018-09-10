@@ -37,7 +37,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         $this->db = $wpdb;
 
         // Set debug for testing or live transactions.
-        $this->debug = true;
+        $this->debug = false;
 
         // Define the class variables.
         $this->_slug = 'CacheCollateFields';
@@ -176,6 +176,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 if ( ! $this->debug ) {
                     // Get the ID of the new field.
                     $new_id = $this->db->insert_id;
+                    $settings[ 'old_field_id' ] = $inserting;
                 }
                 // Save a reference to this insertion.
                 $insert_ids[ $inserting ] = $new_id;

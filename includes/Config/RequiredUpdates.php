@@ -14,9 +14,9 @@ return apply_filters( 'ninja_forms_required_updates', array(
 //		'class_name' => 'NF_Updates_CacheCollateActions',
 //		'requires' => array( 'CacheCollateForms' ),
 //	),
-//	'CacheCollateFields' => array(
-//		'class_name' => 'NF_Updates_CacheCollateFields',
-//		'requires' => array(),
-//	),
+	'CacheCollateFields' => array(
+		'class_name' => 'NF_Updates_CacheCollateFields',
+		'requires' => array(),
+	),
 
 ));

@@ -168,7 +168,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         // Record the total number of steps in this batch.
         $this->running[ 0 ][ 'steps' ] = count( $forms );
         // Record our current step (defaulted to 1 here).
-        $this->running[ 0 ][ 'current' ] = 1;
+        $this->running[ 0 ][ 'current' ] = 0;
     }
 
 
