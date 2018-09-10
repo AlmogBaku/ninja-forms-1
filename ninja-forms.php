@@ -460,7 +460,11 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 			if ( ! empty( $required_updates ) ) {
 				// Record that we have updates to run.
 				update_option( 'ninja_forms_needs_updates', 1 );
-			}
+			} // Otherwise... (Sanity check)
+            else {
+                // Record that there are no required updates.
+                update_option( 'ninja_forms_needs_updates', 0 );
+            }
         }
 
 	    /**
