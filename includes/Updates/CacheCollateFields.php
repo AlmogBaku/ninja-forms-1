@@ -169,18 +169,35 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 // Get our item to be inserted.
                 $inserting = array_pop( $insert );
                 $settings = $fields_by_id[ $inserting ];
+                
+                /*
+                 * We want to preserve the field ids from the cache if we can.
+                 * To do this, we check our $submission_updates array for this current field.
+                 * If it doesn't exist in the array, we can trust the cached field id.
+                 * If it exists in that array, then this is a duplicate.
+                 */
+                if ( ! isset( $submission_updates[ $inserting ] ) ) {
+                    $maybe_field_id = intval( $inserting ); // Use the cached field id.
+                } else {
+                    $maybe_field_id = 'NULL'; // Setting 'NULL' uses SQL auto-increment.
+                }
+                
                 // Insert into the fields table.
-                $sql = "INSERT INTO `{$this->db->prefix}nf3_fields` ( label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( '" . $this->prepare( $settings[ 'label' ] ) . "', '".
-                       $this->prepare( $settings[ 'key' ] ) . "', '" .
-                       $this->prepare( $settings[ 'type' ] ) . "', " .
-                       intval( $form[ 'ID' ] ) . ", '" .
-                       $this->prepare( $settings[ 'label' ] ) . "', '" .
-                       $this->prepare( $settings[ 'key' ] ) . "', " .
-                       intval( $settings[ 'order' ] ) . ", " .
-                       intval( $settings[ 'required' ] ) . ", '" .
-                       $this->prepare( $settings[ 'default_value' ] ) . "', '" .
-                       $this->prepare( $settings[ 'label_pos' ] ) . "' )";
+                $sql = "INSERT INTO `{$this->db->prefix}nf3_fields` ( `id`, label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( " .
+                    $maybe_field_id . ", '" .
+                    $this->prepare( $settings[ 'label' ] ) . "', '".
+                    $this->prepare( $settings[ 'key' ] ) . "', '" .
+                    $this->prepare( $settings[ 'type' ] ) . "', " .
+                    intval( $form[ 'ID' ] ) . ", '" .
+                    $this->prepare( $settings[ 'label' ] ) . "', '" .
+                    $this->prepare( $settings[ 'key' ] ) . "', " .
+                    intval( $settings[ 'order' ] ) . ", " .
+                    intval( $settings[ 'required' ] ) . ", '" .
+                    $this->prepare( $settings[ 'default_value' ] ) . "', '" .
+                    $this->prepare( $settings[ 'label_pos' ] ) . "' )";
+
                 $this->query( $sql );
+
                 // Set a default new_id for debugging.
                 $new_id = 0;
                 // If we're not in debug mode...
@@ -207,9 +224,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 }
                 // Remove the item from the list of fields.
                 unset( $fields_by_id[ $inserting ] );
+                $field_index = array_search( $inserting, $field_ids );
+                unset( $field_ids[ $field_index ] );
                 // Reduce the limit.
                 $limit--;
             }
+
             // Insert our meta.
             $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
             $this->query( $sql );
@@ -464,28 +484,28 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     }
 
 
-	/**
-	 * Function to prepare our query values for insert.
-	 *
-	 * @param $value (String) The value to be escaped for SQL.
-	 * @return (String) The escaped (and possibly serialized) value of the string.
+    /**
+     * Function to prepare our query values for insert.
+     *
+     * @param $value (String) The value to be escaped for SQL.
+     * @return (String) The escaped (and possibly serialized) value of the string.
      * 
      * @since UPDATE_VERSION_ON_MERGE
-	 */
-	public function prepare( $value )
-	{
-		// Default to the current value to ensure a return type.
-		$escaped = $value;
-		// If our value isn't of type float...
-		if ( ! is_float( $value ) ) {
-			// Escape it.
-			$escaped = $this->db->_real_escape( $value );
-			// Serialize the value if necessary.
-			$escaped = maybe_serialize( $escaped );
-		}
+     */
+    public function prepare( $value )
+    {
+        // Default to the current value to ensure a return type.
+        $escaped = $value;
+        // If our value isn't of type float...
+        if ( ! is_float( $value ) ) {
+            // Escape it.
+            $escaped = $this->db->_real_escape( $value );
+            // Serialize the value if necessary.
+            $escaped = maybe_serialize( $escaped );
+        }
 
-		return $escaped;
-	}
+        return $escaped;
+    }
 
 
     /**
