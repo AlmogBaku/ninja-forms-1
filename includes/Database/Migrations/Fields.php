@@ -2,6 +2,12 @@
 
 class NF_Database_Migrations_Fields extends NF_Abstracts_Migration
 {
+
+    /**
+     * Constructor method for the NF_Database_Migrations_Fields class.
+     * 
+     * @since 3.0.0
+     */
     public function __construct()
     {
         parent::__construct(
@@ -10,6 +16,13 @@ class NF_Database_Migrations_Fields extends NF_Abstracts_Migration
         );
     }
 
+    /**
+     * Function to run our initial migration.
+     * 
+     * @since 3.0.0
+     * 
+     * @updated UPDATE_VERSION_ON_MERGE
+     */
     public function run()
     {
         $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
@@ -33,24 +46,30 @@ class NF_Database_Migrations_Fields extends NF_Abstracts_Migration
         dbDelta( $query );
     }
 
-	/**
-	 * Function to run our stage two upgrades.
+    /**
+     * Function to run our stage two upgrades.
      *
      * @since 3.3.12
-	 */
-	public function cache_collate_fields()
-	{
-		$query = "ALTER TABLE {$this->table_name()}
-            ADD `field_label` longtext {$this->charset_collate()},
-            ADD `field_key` longtext {$this->charset_collate()},
-            ADD `order` int(11),
-            ADD `required` bit,
-            ADD `default_value` longtext {$this->charset_collate()},
-            ADD `label_pos` varchar(15) {$this->charset_collate()},
-            ADD `personally_identifiable` bit,
-            MODIFY `type` longtext {$this->charset_collate()};";
-		global $wpdb;
-		$wpdb->query( $query );
-	}
+     * 
+     * @updated UPDATE_VERSION_ON_MERGE
+     */
+    public function cache_collate_fields()
+    {
+        // If the field_label column has not already been defined...
+        if ( ! $this->column_exists( 'field_label' ) ) {
+            global $wpdb;
+            // Modify our table.
+            $query = "ALTER TABLE {$this->table_name()}
+                ADD `field_label` longtext {$this->charset_collate()},
+                ADD `field_key` longtext {$this->charset_collate()},
+                ADD `order` int(11),
+                ADD `required` bit,
+                ADD `default_value` longtext {$this->charset_collate()},
+                ADD `label_pos` varchar(15) {$this->charset_collate()},
+                ADD `personally_identifiable` bit,
+                MODIFY `type` longtext {$this->charset_collate()};";
+            $wpdb->query( $query );
+        }
+    }
 
 }

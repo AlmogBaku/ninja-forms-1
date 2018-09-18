@@ -22,7 +22,7 @@ class NF_Database_Migrations_Actions extends NF_Abstracts_Migration
      * 
      * @since 3.0.0
      * 
-     * @updated 3.3.14
+     * @updated UPDATE_VERSION_ON_MERGE
      */
     public function run()
     {
@@ -48,17 +48,20 @@ class NF_Database_Migrations_Actions extends NF_Abstracts_Migration
      *
      * @since 3.3.12
      * 
-     * @updated 3.3.14
+     * @updated UPDATE_VERSION_ON_MERGE
      */
     public function cache_collate_actions()
     {
-        global $wpdb;
+        // If the label column has not already been defined...
+        if ( ! $this->column_exists( 'label' ) ) {
+            global $wpdb;
+            // Modify our table.
+            $query = "ALTER TABLE {$this->table_name()}
+                ADD `label` longtext {$this->charset_collate()},
+                MODIFY `type` longtext {$this->charset_collate()};";
 
-        $query = "ALTER TABLE {$this->table_name()}
-            ADD `label` longtext {$this->charset_collate()},
-            MODIFY `type` longtext {$this->charset_collate()};";
-
-        $wpdb->query( $query );
+            $wpdb->query( $query );
+        }
     }
 
 }
