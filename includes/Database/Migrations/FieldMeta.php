@@ -2,6 +2,12 @@
 
 class NF_Database_Migrations_FieldMeta extends NF_Abstracts_Migration
 {
+
+    /**
+     * Constructor method for the NF_Database_Migrations_FieldMeta class.
+     * 
+     * @since 3.0.0
+     */
     public function __construct()
     {
         parent::__construct(
@@ -10,6 +16,13 @@ class NF_Database_Migrations_FieldMeta extends NF_Abstracts_Migration
         );
     }
 
+    /**
+     * Function to run our initial migration.
+     * 
+     * @since 3.0.0
+     * 
+     * @updated UPDATE_VERSION_ON_MERGE
+     */
     public function run()
     {
         $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
@@ -19,24 +32,30 @@ class NF_Database_Migrations_FieldMeta extends NF_Abstracts_Migration
             `value` longtext,
             `meta_key` longtext,
             `meta_value` longtext,
-           	UNIQUE KEY (`id`)
+               UNIQUE KEY (`id`)
         ) {$this->charset_collate( true )};";
 
         dbDelta( $query );
     }
 
-	/**
-	 * Function to run our stage three upgrades.
+    /**
+     * Function to run our stage three upgrades.
      *
      * @since 3.3.12
-	 */
-	public function cache_collate_fields()
-	{
-		$query = "ALTER TABLE {$this->table_name()}
-            ADD `meta_key` longtext {$this->charset_collate()},
-            ADD `meta_value` longtext {$this->charset_collate()}";
-		global $wpdb;
-		$wpdb->query( $query );
-	}
+     * 
+     * @updated UPDATE_VERSION_ON_MERGE
+     */
+    public function cache_collate_fields()
+    {
+        // If the meta_key column has not already been defined...
+        if ( ! $this->column_exists( 'meta_key' ) ) {
+            global $wpdb;
+            // Modify our table.
+            $query = "ALTER TABLE {$this->table_name()}
+                ADD `meta_key` longtext {$this->charset_collate()},
+                ADD `meta_value` longtext {$this->charset_collate()}";
+            $wpdb->query( $query );
+        }
+    }
 
 }

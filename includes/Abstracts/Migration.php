@@ -40,6 +40,28 @@ abstract class NF_Abstracts_Migration
 
 
     /**
+     * Function to check for the existence of a column in the extension's table.
+     * 
+     * @param $column (String) The name of the column to search for.
+     * 
+     * @return (Boolean) Whether or not the column exists.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     */
+    public function column_exists( $column )
+    {
+        global $wpdb;
+        $response = false;
+        // Fetch any records of the target column.
+        $sql = $wpdb->prepare( "SHOW COLUMNS FROM `{$this->table_name()}` WHERE `Field` = '%s';", $column );
+        $result = $wpdb->query( $sql );
+        // If we got anything back, say so.
+        if ( ! empty( $result ) ) $response = true;
+        return $result;
+    }
+
+
+    /**
      * Funciton to get the charset and collate for migrations.
      * 
      * @param $use_default (Boolean) Whether or not to include the DEFAULT keyword in the return pattern.
@@ -75,7 +97,7 @@ abstract class NF_Abstracts_Migration
      * 
      * @param $callback (String) The function to be run by this call.
      * 
-     * @since 3.3.14
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function _do_upgrade( $callback )
     {

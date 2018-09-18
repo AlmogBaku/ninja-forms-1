@@ -22,18 +22,18 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
      * 
      * @since 3.0.0
      * 
-     * @updated 3.3.14
+     * @updated UPDATE_VERSION_ON_MERGE
      */
     public function run()
     {
         $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
             `id` int NOT NULL AUTO_INCREMENT,
             `title` longtext,
-			`key` longtext,
+            `key` longtext,
             `created_at` TIMESTAMP,
             `updated_at` DATETIME,
-			`views` int(11),
-			`subs` int(11),
+            `views` int(11),
+            `subs` int(11),
             `form_title` longtext,
             `default_label_pos` varchar(15),
             `show_title` bit,
@@ -56,11 +56,8 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
     {
         global $wpdb;
 
-        // Get the current column structure of the nf3_forms table.
-        $sql = "SHOW COLUMNS FROM {$this->table_name()} WHERE `Field` = 'form_title'";
-        $result = $wpdb->get_results( $sql, 'ARRAY_A' );
         // If the form_title column exists...
-        if ( ! empty( $result ) ) {
+        if ( $this->column_exists( 'form_title' ) ) {
             // Update our existing columns.
             $query = "ALTER TABLE {$this->table_name()}
                 MODIFY `form_title` longtext {$this->charset_collate()},

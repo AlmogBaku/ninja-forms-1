@@ -22,7 +22,7 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
      * 
      * @since 3.0.0
      * 
-     * @updated 3.3.14
+     * @updated UPDATE_VERSION_ON_MERGE
      */
     public function run()
     {
@@ -48,11 +48,8 @@ class NF_Database_Migrations_FormMeta extends NF_Abstracts_Migration
     {
         global $wpdb;
 
-        // Get the current column structure of the nf3_forms table.
-        $sql = "SHOW COLUMNS FROM {$this->table_name()} WHERE `Field` = 'meta_key'";
-        $result = $wpdb->get_results( $sql, 'ARRAY_A' );
         // If the meta_key column exists...
-        if ( ! empty( $result ) ) {
+        if ( $this->column_exists( 'meta_key' ) ) {
             // Update our existing columns.
             $query = "ALTER TABLE {$this->table_name()}
                 MODIFY `meta_key` longtext {$this->charset_collate()},

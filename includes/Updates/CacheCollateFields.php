@@ -204,23 +204,23 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 
     /**
      * Function to prepare our query values for insert.
-     *
-     * @param $value (String) The value to be escaped for SQL.
+     * 
+     * @param $value (Mixed) The value to be escaped for SQL.
      * @return (String) The escaped (and possibly serialized) value of the string.
      * 
      * @since UPDATE_VERSION_ON_MERGE
      */
     public function prepare( $value )
     {
-        // Default to the current value to ensure a return type.
-        $escaped = $value;
-        // If our value isn't of type float...
-        if ( ! is_float( $value ) ) {
-            // Escape it.
-            $escaped = $this->db->_real_escape( $value );
-            // Serialize the value if necessary.
-            $escaped = maybe_serialize( $escaped );
+        // If our value is a number...
+        if ( is_float( $value ) ) {
+            // Exit early and return the value.
+            return $value;
         }
+        // Serialize the value if necessary.
+        $escaped = maybe_serialize( $value );
+        // Escape it.
+        $escaped = $this->db->_real_escape( $escaped );
 
         return $escaped;
     }
@@ -314,17 +314,6 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     {
         // Set the form we're currently working with.
         $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
-        
-        /**
-         * If we're continuing a process, set our class vars appropriately.
-         * Bail early so that nothing else fires.
-         */
-        if ( isset( $this->form[ 'field_ids' ] ) ) {
-            $this->field_ids = $this->form[ 'field_ids' ];
-            $this->insert = $this->form[ 'insert' ];
-            $this->submission_updates = $this->form[ 'submission_updates' ];
-            return false;
-        }
 
         // Get the fields for our form from the cache.
         $fields = Ninja_Forms()->form( $this->form[ 'ID' ] )->get_fields();
@@ -337,6 +326,17 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         foreach ( $fields as $field ) {
             array_push( $this->field_ids, $field->get_id() );
             $this->fields_by_id[ $field->get_id() ] = $field->get_settings();
+        }
+        
+        /**
+         * If we're continuing a process, set our class vars appropriately.
+         * Bail early so that nothing else fires.
+         */
+        if ( isset( $this->form[ 'field_ids' ] ) ) {
+            $this->field_ids = $this->form[ 'field_ids' ];
+            $this->insert = $this->form[ 'insert' ];
+            $this->submission_updates = $this->form[ 'submission_updates' ];
+            return false;
         }
         /**
          * We need to cross reference the Fields table to see if these ids exist for this form.
@@ -689,14 +689,17 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     {
         // If we have locked processing...
         if ( $this->lock_process ) {
-            // Reset the field_ids array.
-            $this->field_ids = array();
-            // For each field left to process...
-            foreach ( $this->fields_by_id as $id => $field ) {
-                // If we've not already processed this field...
-                if ( in_array( $id, $this->form[ 'field_ids' ] ) ) {
-                    // Save a reference to its ID.
-                    array_push( $this->field_ids, $id );
+            // If we're continuing a process...
+            if ( isset( $this->form[ 'field_ids' ] ) ) {
+                // Reset the field_ids array.
+                $this->field_ids = array();
+                // For each field left to process...
+                foreach ( $this->fields_by_id as $id => $field ) {
+                    // If we've not already processed this field...
+                    if ( in_array( $id, $this->form[ 'field_ids' ] ) ) {
+                        // Save a reference to its ID.
+                        array_push( $this->field_ids, $id );
+                    }
                 }
             }
             // Store our current data location.
