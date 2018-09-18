@@ -57,14 +57,16 @@ class NF_Database_Migrations
     }
 
     /**
-     * Function to nuke our 3.0 tables.
+     * This function drops ninja forms tables and options
      * 
      * @param $areYouSure (Boolean)
      * @param $areYouReallySure (Boolean)
+     * @param $nuke_multisite (Boolean)
      * 
-     * @since 3.0.0
+     * @since 2.9.34
+     * @updated 3.3.16
      */
-    public function nuke( $areYouSure = FALSE, $areYouReallySure = FALSE )
+    public function nuke( $areYouSure = FALSE, $areYouReallySure = FALSE, $nuke_multisite = TRUE )
     {
         if( ! $areYouSure || ! $areYouReallySure ) return;
 
@@ -74,13 +76,18 @@ class NF_Database_Migrations
             $this->_nuke();
             return;
         }
+        // adding this to make sure we don't nuke ALL subsites when upgrading one subsite
+        if ( $nuke_multisite ) {
+            $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
-        $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-
-        foreach( $blog_ids as $blog_id ){
-            switch_to_blog( $blog_id );
+            foreach( $blog_ids as $blog_id ){
+                switch_to_blog( $blog_id );
+                $this->_nuke();
+                restore_current_blog(); // Call after EVERY switch_to_blog().
+            }
+        } else {
             $this->_nuke();
-            restore_current_blog(); // Call after EVERY switch_to_blog().
+            return;
         }
     }
 
