@@ -12,7 +12,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
     }
 
     /**
-     * POST /forms/<id>/
+     * POST
      * @param array $request_data [ int $clone_id ]
      * @return array $data [ int $new_form_id ]
      */
@@ -38,6 +38,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 			// Sort our updates.
 			$this->running = $this->sort_updates( $this->updates, $processed );
 			// If we got EXACTLY false...
+            // TODO: This block is only necessary to avoid bad update dependencies. Refactor.
 			if ( false === $this->running ) {
 				// Inform the user that the update failed.
 				$data[ 'error' ] = __( 'The requested update cannot be run at this time. Please ensure that your copy of Ninja Forms is up to date with the latest version.', 'ninja-forms' );
@@ -52,6 +53,45 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 		$class = $this->running[ 0 ][ 'class_name' ];
 		$update_class = new $class( $request_data, $this->running );
     }
+
+	/**
+	 * GET
+	 * @param $request_data (Array)
+	 * @return $data (Array)
+	 * 
+	 * @since UPDATE_VERSION_ON_MERGE
+	 */
+	public function get( $request_data ) {
+        
+        $data = array();
+		$data[ 'updates' ] = array();
+
+        // If we don't have a nonce...
+        // OR if the nonce is invalid...
+		// TODO: Commented for testing. Re-enable before pushing to production.
+//        if ( ! isset( $request_data[ 'security' ] ) || ! wp_verify_nonce( $request_data[ 'security' ], 'ninja_forms_upgrade_nonce' ) ) {
+//            // Kick the request out now.
+//            $data[ 'error' ] = __( 'Request forbidden.', 'ninja-forms' );
+//			return $data;
+//        }
+
+        // Get our list of already run updates.
+        $processed = get_option( 'ninja_forms_required_updates', array() );
+        // Get our list of updates yet to be run.
+        $this->updates = Ninja_Forms()->config( 'RequiredUpdates' );
+        // Sort our updates.
+        $sorted = $this->sort_updates( $this->updates, $processed );
+        // If we got EXACTLY false...
+        // TODO: This block is only necessary to avoid bad update dependencies. Refactor.
+        if ( false === $sorted ) {
+            // Inform the user that the update failed.
+            $data[ 'error' ] = __( 'The requested update cannot be run at this time. Please ensure that your copy of Ninja Forms is up to date with the latest version.', 'ninja-forms' );
+
+            return $data;
+        }
+        $data[ 'updates' ] = $sorted;
+        return $data;
+	}
 
 	protected function get_request_data()
 	{
