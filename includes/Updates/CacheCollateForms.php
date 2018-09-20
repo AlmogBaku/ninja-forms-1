@@ -24,6 +24,22 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
     private $db;
 
     /**
+     * Stores information about the current form being processed.
+     * @var array
+     */
+    private $form;
+
+    /**
+     * Declare a blacklist for settings to not be inserted.
+     * @var array
+     */
+    private $blacklist = array(
+            'title',
+            'objectType',
+            'editActive',
+        );
+
+    /**
      * Constructor
      * 
      * @param $data (Array) The data object passed in by the AJAX call.
@@ -68,80 +84,18 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         }
 
         // See which form we're currently working with.
-        $form = array_pop( $this->running[ 0 ][ 'forms' ] );
+        $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
         
-        // Get the settings for that form.
-        $settings = Ninja_Forms()->form( $form[ 'ID' ] )->get()->get_settings();
+        /**
+         * Update our form table with the appropriate form settings.
+         */
+        $this->update_form();
         
-        // Get our seq_number from meta.
-        $sql = "SELECT `value` FROM `{$this->db->prefix}nf3_form_meta` WHERE `key` = '_seq_num' AND `parent_id` = " . intval( $form[ 'ID' ] );
-        $result = $this->db->query( $sql, 'ARRAY_A' );
-        // Default to 1.
-        $seq_num = 1;
-        if ( ! empty( $result[ 0 ][ 'value' ] ) ) {
-            // If we got back something, set it to the proper value.
-            $seq_num = intval( $result[ 0 ][ 'value' ] );
-        }
-        
-        // If logged in is false...
-        if ( ! $settings[ 'logged_in' ] || 'false' === $settings[ 'logged_in' ] ) {
-            $logged_in = 0;
-        } // Otherwise... (logged in is true.)
-        else {
-            $logged_in = 1;
-        }
-        
-        // Save the new columns to the forms table.
-        $sql = "UPDATE `{$this->db->prefix}nf3_forms` SET form_title = '" . $this->prepare( $settings[ 'title' ] ) . "', default_label_pos = '" . $settings[ 'default_label_pos' ] . "', show_title = " . intval( $settings[ 'show_title' ] ) . ", clear_complete = " . intval( $settings[ 'clear_complete' ] ) . ", hide_complete = " . intval( $settings[ 'hide_complete' ] ) . ", logged_in = {$logged_in}, seq_num = {$seq_num} WHERE id = " . intval( $form[ 'ID' ] ) . ";";
-        $this->query( $sql );
-        
-        // Remove the existing meta from the form_meta table.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_form_meta` WHERE parent_id = " . intval( $form[ 'ID' ] );
-        $this->query( $sql );
-        
-        // Declare a blacklist for settings to not be inserted.
-        $blacklist = array(
-            'title',
-            'objectType',
-            'editActive',
-        );
-        
-        $insert_items = array();
-        // Add _seq_num since it's protected and won't be a setting.
-        array_push( $insert_items, "( " . intval( $form[ 'ID' ] ) . ", '_seq_num', '{$seq_num}', '_seq_num', '{$seq_num}' )" );
-        // For each form setting...
-        foreach ( $settings as $key => $setting ) {
-            // If it's not a restricted setting...
-            if ( ! in_array( $key, $blacklist ) ) {
-                // Add it to the stack.
-                array_push( $insert_items, "( " . intval( $form[ 'ID' ] ) . ", '{$key}', '" . $this->prepare( $setting ) . "', '{$key}', '" . $this->prepare( $setting ) . "'  )" );
-            }
-        }
-        // Insert the new meta values.
-        $sql = "INSERT INTO `{$this->db->prefix}nf3_form_meta` ( parent_id, `key`, `value`, meta_key, meta_value ) VALUES " . implode( ', ', $insert_items );
-        $this->query( $sql );
-        
-        // Update the upgrades table, passing in 1 for the current stage.
-        $cache = WPN_Helper::get_nf_cache( $form[ 'ID' ] );
-        WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache, 1 );
+        /**
+         * Check to see if we're done with processing this form and prepare to respond.
+         */
+        $this->end_of_step();
 
-        // Increment our step count.
-        $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
-
-        // Prepare to output our number of steps and current step.
-        $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
-        $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
-
-        // If all steps have been completed...
-        if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
-            // Run our cleanup method.
-            $this->cleanup();
-        }
-
-        // Record our current location in the process.
-        update_option( 'ninja_forms_doing_required_updates', $this->running );
-        // Prepare to output the number of updates remaining.
-        $this->response[ 'updatesRemaining' ] = count( $this->running );
         // Respond to the AJAX call.
         $this->respond();
     }
@@ -246,6 +200,92 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
     {
         $migrations = new NF_Database_Migrations();
         $migrations->do_upgrade( 'cache_collate_forms' );
+    }
+
+    /**
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
+    private function end_of_step()
+    {
+        // Update the upgrades table, passing in 1 for the current stage.
+        $cache = WPN_Helper::get_nf_cache( $this->form[ 'ID' ] );
+        WPN_Helper::update_nf_cache( $this->form[ 'ID' ], $cache, 1 );
+
+        // Increment our step count.
+        $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
+
+        // Prepare to output our number of steps and current step.
+        $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
+        $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
+
+        // If all steps have been completed...
+        if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
+            // Run our cleanup method.
+            $this->cleanup();
+        }
+
+        // Record our current location in the process.
+        update_option( 'ninja_forms_doing_required_updates', $this->running );
+        // Prepare to output the number of updates remaining.
+        $this->response[ 'updatesRemaining' ] = count( $this->running );
+    }
+
+    /**
+     * Update our form table for the current form.
+     * We have new table columns, so we want to make sure that those are populated properly.
+     *
+     * Also checks meta values against our $this->blacklist.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return [type]  [description]
+     */
+    private function update_form()
+    {
+        // Get the settings for that form.
+        $settings = Ninja_Forms()->form( $this->form[ 'ID' ] )->get()->get_settings();
+        
+        // Get our seq_number from meta.
+        $sql = "SELECT `value` FROM `{$this->db->prefix}nf3_form_meta` WHERE `key` = '_seq_num' AND `parent_id` = " . intval( $this->form[ 'ID' ] );
+        $result = $this->db->query( $sql, 'ARRAY_A' );
+        // Default to 1.
+        $seq_num = 1;
+        if ( ! empty( $result[ 0 ][ 'value' ] ) ) {
+            // If we got back something, set it to the proper value.
+            $seq_num = intval( $result[ 0 ][ 'value' ] );
+        }
+        
+        // If logged in is false...
+        if ( ! $settings[ 'logged_in' ] || 'false' === $settings[ 'logged_in' ] ) {
+            $logged_in = 0;
+        } // Otherwise... (logged in is true.)
+        else {
+            $logged_in = 1;
+        }
+        
+        // Save the new columns to the forms table.
+        $sql = "UPDATE `{$this->db->prefix}nf3_forms` SET form_title = '" . $this->prepare( $settings[ 'title' ] ) . "', default_label_pos = '" . $settings[ 'default_label_pos' ] . "', show_title = " . intval( $settings[ 'show_title' ] ) . ", clear_complete = " . intval( $settings[ 'clear_complete' ] ) . ", hide_complete = " . intval( $settings[ 'hide_complete' ] ) . ", logged_in = {$logged_in}, seq_num = {$seq_num} WHERE id = " . intval( $this->form[ 'ID' ] ) . ";";
+        $this->query( $sql );
+        
+        // Remove the existing meta from the form_meta table.
+        $sql = "DELETE FROM `{$this->db->prefix}nf3_form_meta` WHERE parent_id = " . intval( $this->form[ 'ID' ] );
+        $this->query( $sql );
+                
+        $insert_items = array();
+        // Add _seq_num since it's protected and won't be a setting.
+        array_push( $insert_items, "( " . intval( $this->form[ 'ID' ] ) . ", '_seq_num', '{$seq_num}', '_seq_num', '{$seq_num}' )" );
+        // For each form setting...
+        foreach ( $settings as $key => $setting ) {
+            // If it's not a restricted setting...
+            if ( ! in_array( $key, $this->blacklist ) ) {
+                // Add it to the stack.
+                array_push( $insert_items, "( " . intval( $this->form[ 'ID' ] ) . ", '{$key}', '" . $this->prepare( $setting ) . "', '{$key}', '" . $this->prepare( $setting ) . "'  )" );
+            }
+        }
+        // Insert the new meta values.
+        $sql = "INSERT INTO `{$this->db->prefix}nf3_form_meta` ( parent_id, `key`, `value`, meta_key, meta_value ) VALUES " . implode( ', ', $insert_items );
+        $this->query( $sql );
     }
 
 }
