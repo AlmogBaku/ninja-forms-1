@@ -8,9 +8,35 @@ final class NF_Database_FieldsController
     private $insert_fields;
     private $insert_field_meta = array();
     private $insert_field_meta_chunk = 0;
-    private $update_fields = array( 'key' => '', 'label' => '', 'type' => '' );
+    /**
+     * An array of UPDATE SQL strings.
+     *
+     * i.e. array( 'key' => 'WHERE `id` = X THEN...' )
+     * 
+     * @var array
+     */
+    private $update_fields = array( 'id' => '', 'key' => '', 'label' => '', 'type' => '', 'field_key' => '', 'field_label' => '', 'order' => '', 'default_value' => '', 'label_pos' => '', 'required' => '' );
     private $update_field_meta = array();
     private $update_field_meta_chunk = 0;
+
+    /**
+     * Store an array of columns that we want to store in our table rather than meta
+     */
+    private $db_columns = array(
+        'id',
+        'key',
+        'type',
+        'label',
+        'field_key',
+        'field_label',
+        'order',
+        'required',
+        'default_value',
+        'label_pos',
+        'parent_id',
+    );
+
+
     public function __construct( $form_id, $fields_data )
     {
         global $wpdb;
@@ -52,11 +78,49 @@ final class NF_Database_FieldsController
             $settings = array(
                 'key' => $field_data[ 'settings' ][ 'key' ],
                 'label' => $field_data[ 'settings' ][ 'label' ],
-                'type' => $field_data[ 'settings' ][ 'type' ]
+                'type' => $field_data[ 'settings' ][ 'type' ],
+                'field_key' => $field_data[ 'settings' ][ 'key' ],
+                'field_label' => $field_data[ 'settings' ][ 'label' ],
+                'required' => absint( $field_data[ 'settings' ][ 'required' ] ),
+                'order' => $field_data[ 'settings' ][ 'order' ],
+                'default_value' => $field_data[ 'settings' ][ 'default' ],
+                'label_pos' => $field_data[ 'settings' ][ 'label_pos' ],
             );
-            if( ! is_numeric( $field_id ) ) {
-                $this->insert_field( $settings ); // New Field.
+
+            /**
+             * We need to decide if we need to insert this field or update it in our fields table.
+             * 
+             * If we don't have a numeric field id, we're dealing with a tmp field, which is a new field
+             *
+             * If this field exists in our cache, but doesn't exist in our table, we need to insert it.
+             *
+             * Otherwise, we're updating.
+             *
+             * Check our DB for a field with this id.
+             */
+            $field_in_db = $this->db->get_row( "SELECT `id` FROM `wp_nf3_fields` WHERE `id` = {$field_id}" );
+
+            /**
+             * If $field_id isn't a number, then it's a tmp-id.
+             *
+             * If we have a tmp-id OR the field hasn't been found in our DB, we need to insert it.
+             */
+            if( ! is_numeric( $field_id ) || empty( $field_in_db ) ) {
+
+                /**
+                 * If our $field_id is numeric, we want to insert it into the db with the row.
+                 *
+                 * If it's not, we want to pass NULL so that we get an autoincrement.
+                 */
+                if ( is_numeric( $field_id ) ) {
+                    $settings[ 'id' ] = $field_id;
+                } else {
+                    $settings[ 'id' ] = NULL;
+                }
+                // New Field.
+                $this->insert_field( $settings );
             } else {
+                // We're updating field settings.
                 $this->update_field( $field_id, $settings );
             }
         }
@@ -121,20 +185,45 @@ final class NF_Database_FieldsController
     */
     private function insert_field( $settings )
     {
+        // Add our initial opening parenthesis.
         $this->insert_fields .= "(";
-        foreach ( $settings as $setting => $value ) {
+        // Add our form id to our settings as 'parent_id'.
+        $settings[ 'parent_id' ] = $this->form_id;
+
+        /**
+         * Loop over each of our $this->db_columns to create a value list for our SQL statement.
+         */
+        foreach ( $this->db_columns as $col ) {
+            $value = $settings[ $col ];
             $this->db->escape_by_ref( $value );
-            $this->insert_fields .= "'{$value}',";
+            if ( is_numeric( $value ) ) {
+                $this->insert_fields .= "{$value},";
+            } else {
+                $this->insert_fields .= "'{$value}',";
+            }
+            
         }
-        $this->insert_fields .= "'{$this->form_id}'";
+        // Remove any trailing commas from our SQL string.
+        $this->insert_fields = rtrim( $this->insert_fields, ',' );
         $this->insert_fields .=  '),';
     }
     public function get_insert_fields_query()
     {
         if( ! $this->insert_fields ) return "";
         $insert_fields = rtrim( $this->insert_fields, ',' ); // Strip trailing comma from SQl.
+        
+        /**
+         * Loop over each of our $this->db_columns to create a column list for our SQL statement below.
+         */
+        $columns = '';
+        foreach( $this->db_columns as $col ) {
+            $columns .= "`{$col}` ,";
+        }
+
+        $columns = rtrim( $columns, ',' );
+
         return "
-            INSERT INTO {$this->db->prefix}nf3_fields ( `key`, `label`, `type`, `parent_id` )
+            INSERT INTO {$this->db->prefix}nf3_fields ( {$columns} )
             VALUES {$insert_fields}
         ";
     }
@@ -148,7 +237,13 @@ final class NF_Database_FieldsController
         foreach ( $settings as $setting => $value ) {
             $line = "WHEN `id` = '{$field_id}' ";
             $this->db->escape_by_ref( $value );
-            $line .= "THEN '{$value}'";
+            $line .= "THEN ";
+            if ( is_numeric( $value ) ) {
+                $line .= "{$value} ";
+            } else {
+                $line .= "'{$value}' ";
+            }
+            
             $this->update_fields[ $setting ] .= $line;
         }
     }
@@ -157,7 +252,14 @@ final class NF_Database_FieldsController
         if(
             empty( $this->update_fields[ 'key'   ] ) ||
             empty( $this->update_fields[ 'label' ] ) ||
-            empty( $this->update_fields[ 'type'  ] )
+            empty( $this->update_fields[ 'type'  ] ) ||
+            empty( $this->update_fields[ 'field_key'  ] ) ||
+            empty( $this->update_fields[ 'field_label'  ] ) ||
+            empty( $this->update_fields[ 'order'  ] ) ||
+            empty( $this->update_fields[ 'required'  ] ) ||
+            empty( $this->update_fields[ 'default_value'  ] ) ||
+            empty( $this->update_fields[ 'label_pos'  ] )
+
             ) return "";
         return "
             UPDATE {$this->db->prefix}nf3_fields
@@ -169,6 +271,24 @@ final class NF_Database_FieldsController
                 END
             , `type` = CASE {$this->update_fields[ 'type' ]}
                 ELSE `type`
+                END
+            , `field_key` = CASE {$this->update_fields[ 'key' ]}
+                ELSE `field_key`
+                END
+            , `field_label` = CASE {$this->update_fields[ 'label' ]}
+                ELSE `field_label`
+                END
+            , `order` = CASE {$this->update_fields[ 'order' ]}
+                ELSE `order`
+                END
+            , `default_value` = CASE {$this->update_fields[ 'default_value' ]}
+                ELSE `default_value`
+                END
+            , `label_pos` = CASE {$this->update_fields[ 'label_pos' ]}
+                ELSE `label_pos`
+                END
+            , `required` = CASE {$this->update_fields[ 'required' ]}
+                ELSE `required`
                 END
         ";
     }
