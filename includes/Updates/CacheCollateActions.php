@@ -22,7 +22,59 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     
     private $lock_process = false;
     
+    /**
+     * Stores a reference to the global $wpdb object.
+     * @var object
+     */
     private $db;
+
+    /**
+     * Stores information about the current form being processed.
+     * @var array
+     */
+    private $form;
+
+    /**
+     * Stores the actions for the current form being processed.
+     * @var  array
+     */
+    private $actions;
+
+    /**
+     * Associative array of actions keyed by action id.
+     * @var array
+     */
+    private $actions_by_id = array();
+
+    /**
+     * Non-associative array of action ids.
+     * @var array
+     */
+    private $action_ids = array();
+
+    /**
+     * Hard limit for the number of querys we run during a single step.
+     * @var integer
+     */
+    private $limit = 10;
+
+    /**
+     * Array of action ids that need an update.
+     * @var array
+     */
+    private $update = array();
+
+    /**
+     * List of setting keys we don't want to save in the database.
+     * @var array
+     */
+    private $blacklist = array(
+        'objectType',
+        'objectDomain',
+        'editActive',
+        'title',
+        'key',
+    );
 
     /**
      * Constructor
@@ -68,133 +120,26 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
             $this->startup();
         }
 
-        // See which form we're currently working with.
-        $form = array_pop( $this->running[ 0 ][ 'forms' ] );
+        /**
+         * Get all of our database variables up and running.
+         * Sets up class vars that are used in subsequent methods.
+         */
+        $this->setup_vars();
 
-        // Get the actions for that form.
-        $actions = Ninja_Forms()->form( $form[ 'ID' ] )->get_actions();
+        /**
+         * Update action values and meta if necessary.
+         */
+        $this->maybe_update_actions();
 
-        // Get the cache for that form.
-        $cache = WPN_Helper::get_nf_cache( $form[ 'ID' ] );
+        /**
+         * Saves our current location, along with any processing data we may need for the next step.
+         * If we're done with our step, runs cleanup instead.
+         */
+        $this->end_of_step();        
 
-        // Setup variables for our SQL methods.
-        $action_ids = array();
-        $actions_by_id = array();
-
-        // For each action...
-        foreach ( $actions as $action ) {
-            // Add the ID to the list.
-            array_push( $action_ids, $action->get_id() );
-            $actions_by_id[ $action->get_id() ] = $action->get_settings();
-        }
-
-        // Set our hard limit for the loop.
-        $limit = 10;
-
-        // If we're continuing an old process...
-        if ( isset( $form[ 'update' ] ) ) {
-            // Fetch our remaining udpates.
-            $update = $form[ 'update' ];
-        } // Otherwise... (We're beginning a new process.)
-        else {
-            // Copy all IDs to our update list.
-            $update = $action_ids;
-        }
-
-        // Declare placeholder values.
-        $sub_sql = array();
-        $meta_values = array();
-        // Setup our setting blacklist.
-        $blacklist = array(
-            'objectType',
-            'objectDomain',
-            'editActive',
-            'title',
-            'key',
-        );
-
-        // While we have actions to update...
-        while ( 0 < count( $update ) ) {
-            // If we have hit our limit...
-            if ( 1 > $limit ) {
-                // Lock processing.
-                $this->lock_process = true;
-                // Exit the loop.
-                break;
-            }
-            // Get our action to be updated.
-            $action = array_pop( $update );
-            // Get our settings.
-            $settings = $actions_by_id[ $action ];
-            // Update the new label column.
-            array_push( $sub_sql, "WHEN `id` = " . intval( $action ) . " THEN '" . $this->prepare( $settings[ 'label' ] ) . "'" );
-            // For each setting...
-            foreach ( $settings as $key => $setting ) {
-                // If the key is not blacklisted...
-                if ( ! in_array( $key, $blacklist ) ) {
-                    // Add the value to be updated.
-                    array_push( $meta_values, "WHEN `key` = '{$key}' THEN '" . $this->prepare( $setting ) . "'" );
-                }
-            }
-            $limit--;
-        }
-        // If we've got updates to run...
-        if ( ! empty( $sub_sql ) ) {
-            // Update our actions table.
-            $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET `label` = CASE " . implode ( ' ', $sub_sql ) . " ELSE `label` END;";
-            $this->query( $sql );
-            // Update our meta values.
-            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_value` = CASE " . implode( ' ', $meta_values ) . " ELSE `meta_value` END;";
-            $this->query( $sql );
-        }
-
-
-        // If we have locked processing...
-        if ( $this->lock_process ) {
-            // Record that we have more to do.
-            $form[ 'update' ] = $update;
-            array_push( $this->running[ 0 ][ 'forms' ], $form );
-        } // Otherwise... (Processing isn't locked.)
-        else {
-            // Update our meta keys.
-            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_key` = `key` WHERE `parent_id` IN(" . implode( ',', $action_ids ) . ")";
-            $this->query( $sql );
-            // Bust the cache.
-            $cache[ 'actions' ] = array();
-            // For each action...
-            foreach ( $actions_by_id as $id => $settings ) {
-                // Append the settings for that action to the cache.
-                $action = array();
-                $action[ 'settings' ] = $settings;
-                $action[ 'id' ] = $id;
-                array_push( $cache[ 'actions' ], $action );
-            }
-            // Save the cache, passing 2 as the current stage.
-            WPN_Helper::update_nf_cache( $form[ 'ID' ], $cache, 2 );
-            // Increment our step count.
-            $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) +1;
-        }
-        // Prepare to output our number of steps and current step.
-        $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
-        $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
-
-        // If we do not have locked processing...
-        if ( ! $this->lock_process ) {
-            // If all steps have been completed...
-            if ( empty( $this->running[ 0 ] [ 'forms' ] ) ) {
-                // Run our cleanup method.
-                $this->cleanup();
-            }
-        }
-
-        // Record our current location in the process.
-        update_option( 'ninja_forms_doing_required_updates', $this->running );
-        // Prepare to output the number of updates remaining.
-        $this->response[ 'updatesRemaining' ] = count( $this->running );
         // Respond to the AJAX call.
         $this->respond();
     }
-
 
     /**
      * Function to run any setup steps necessary to begin processing.
@@ -220,6 +165,37 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         $this->running[ 0 ][ 'current' ] = 0;
     }
 
+    /**
+     * Setup our global variables used in other methods.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
+    private function setup_vars()
+    {
+        // See which form we're currently working with.
+        $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
+
+        // Get the actions for that form.
+        $this->actions = Ninja_Forms()->form( $this->form[ 'ID' ] )->get_actions();
+
+        // For each action...
+        foreach ( $this->actions as $action ) {
+            // Add the ID to the list.
+            array_push( $this->action_ids, $action->get_id() );
+            $this->actions_by_id[ $action->get_id() ] = $action->get_settings();
+        }
+
+        // If we're continuing an old process...
+        if ( isset( $this->form[ 'update' ] ) ) {
+            // Fetch our remaining udpates.
+            $this->update = $this->form[ 'update' ];
+        } // Otherwise... (We're beginning a new process.)
+        else {
+            // Copy all IDs to our update list.
+            $this->update = $this->action_ids;
+        }
+    }
 
     /**
      * Function to cleanup any lingering temporary elements of a required update after completion.
@@ -313,6 +289,129 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     {
         $migrations = new NF_Database_Migrations();
         $migrations->do_upgrade( 'cache_collate_actions' );
+    }
+
+    /**
+     * Check to see if we've locked processing.
+     * If we have, then we need to run this process again.
+     *
+     * If we haven't locked processing, prepare to end this process.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
+    private function end_of_step()
+    {
+        // If we have locked processing...
+        if ( $this->lock_process ) {
+            // Record that we have more to do.
+            $this->form[ 'update' ] = $this->update;
+            array_push( $this->running[ 0 ][ 'forms' ], $this->form );
+        } // Otherwise... (Processing isn't locked.)
+        else {
+            // Update our meta keys.
+            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_key` = `key` WHERE `parent_id` IN(" . implode( ',', $this->action_ids ) . ")";
+            $this->query( $sql );
+            /**
+             * Update our form cache with any action changes.
+             */
+            $this->update_form_cache();
+            // Increment our step count.
+            $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) +1;
+        }
+
+
+        // Prepare to output our number of steps and current step.
+        $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
+        $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
+
+        // If we do not have locked processing...
+        if ( ! $this->lock_process ) {
+            // If all steps have been completed...
+            if ( empty( $this->running[ 0 ] [ 'forms' ] ) ) {
+                // Run our cleanup method.
+                $this->cleanup();
+            }
+        }
+
+        // Record our current location in the process.
+        update_option( 'ninja_forms_doing_required_updates', $this->running );
+        // Prepare to output the number of updates remaining.
+        $this->response[ 'updatesRemaining' ] = count( $this->running );
+    }
+
+    /**
+     * If we've made any changes to our form actions, update our form cache to match.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
+    private function update_form_cache()
+    {
+        // Get the cache for that form.
+        $cache = WPN_Helper::get_nf_cache( $this->form[ 'ID' ] );
+        // Bust the cache.
+        $cache[ 'actions' ] = array();
+        // For each action...
+        foreach ( $this->actions_by_id as $id => $settings ) {
+            // Append the settings for that action to the cache.
+            $action = array();
+            $action[ 'settings' ] = $settings;
+            $action[ 'id' ] = $id;
+            array_push( $cache[ 'actions' ], $action );
+        }
+        // Save the cache, passing 2 as the current stage.
+        WPN_Helper::update_nf_cache( $this->form[ 'ID' ], $cache, 2 );
+    }
+
+    /**
+     * Loop over all of our actions and update our database if necessary.
+     * Check each setting against $this->blacklist to make sure we want to insert that value.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
+    private function maybe_update_actions()
+    {
+        // Declare placeholder values.
+        $sub_sql = array();
+        $meta_values = array();
+
+        // While we have actions to update...
+        while ( 0 < count( $this->update ) ) {
+            // If we have hit our limit...
+            if ( 1 > $this->limit ) {
+                // Lock processing.
+                $this->lock_process = true;
+                // Exit the loop.
+                break;
+            }
+            // Get our action to be updated.
+            $action = array_pop( $this->update );
+            // Get our settings.
+            $settings = $this->actions_by_id[ $action ];
+            // Update the new label column.
+            array_push( $sub_sql, "WHEN `id` = " . intval( $action ) . " THEN '" . $this->prepare( $settings[ 'label' ] ) . "'" );
+            // For each setting...
+            foreach ( $settings as $key => $setting ) {
+                // If the key is not blacklisted...
+                if ( ! in_array( $key, $this->blacklist ) ) {
+                    // Add the value to be updated.
+                    array_push( $meta_values, "WHEN `key` = '{$key}' THEN '" . $this->prepare( $setting ) . "'" );
+                }
+            }
+            $this->limit--;
+        }
+
+        // If we've got updates to run...
+        if ( ! empty( $sub_sql ) ) {
+            // Update our actions table.
+            $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET `label` = CASE " . implode ( ' ', $sub_sql ) . " ELSE `label` END;";
+            $this->query( $sql );
+            // Update our meta values.
+            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_value` = CASE " . implode( ' ', $meta_values ) . " ELSE `meta_value` END;";
+            $this->query( $sql );
+        }
     }
 
 }
