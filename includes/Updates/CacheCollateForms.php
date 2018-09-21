@@ -86,6 +86,17 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
 
         // See which form we're currently working with.
         $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
+
+        /**
+         * If we don't have a cache for this form, we need to add one for later processing.
+         * We're going to check that the cache exists and create one if we don't have one.
+         */
+        $cache = WPN_Helper::get_nf_cache( $this->form[ 'ID' ] );
+
+        if ( empty ( $cache ) ) { // No cache exists.
+            // Call our build_nf_cache static method.
+            $form_cache = WPN_Helper::build_nf_cache( $this->form[ 'ID' ] );
+        }
         
         /**
          * Update our form table with the appropriate form settings.

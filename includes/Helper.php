@@ -306,13 +306,54 @@ final class WPN_Helper
         // If we don't already have the data...
         if ( empty( $result ) ) {
             // Insert it.
-	        $sql = $wpdb->prepare( "INSERT INTO `{$wpdb->prefix}nf3_upgrades` (id, cache, stage) VALUES (%d, %s, %s)", intval( $id ), $cache, intval( $stage ) );
+            $sql = $wpdb->prepare( "INSERT INTO `{$wpdb->prefix}nf3_upgrades` (id, cache, stage) VALUES (%d, %s, %s)", intval( $id ), $cache, intval( $stage ) );
         } // Otherwise... (We do have the data.)
         else {
             // Update the existing record.
-	        $sql = $wpdb->prepare( "UPDATE `{$wpdb->prefix}nf3_upgrades` SET cache = %s, stage = %d WHERE id = %d", $cache, intval( $stage ), intval( $id ) );
+            $sql = $wpdb->prepare( "UPDATE `{$wpdb->prefix}nf3_upgrades` SET cache = %s, stage = %d WHERE id = %d", $cache, intval( $stage ), intval( $id ) );
         }
         $wpdb->query( $sql );
+    }
+        
+    /**
+     * Function to build our form cache from the table.
+     * 
+     * @param $id (int) The form ID.
+     * @since 3.3.18
+     * @return  $form_cache Array of form data.
+     * @updated UPDATE_VERSION_ON_MERGE
+     */
+    public static function build_nf_cache( $id ) {
+        $form = Ninja_Forms()->form( $id )->get();
+
+        $form_cache = array(
+            'id'        => $id,
+            'fields'    => array(),
+            'actions'   => array(),
+            'settings'  => $form->get_settings(),
+        );
+        
+        $fields = Ninja_Forms()->form( $id )->get_fields();
+        
+        foreach( $fields as $field ){
+            // If the field is set.
+            if ( ! is_null( $field ) && ! empty( $field ) ) {
+                array_push( $form_cache[ 'fields' ], array( 'settings' => $field->get_settings(), 'id' => $field->get_id() ) );
+            }
+        }
+
+        $actions = Ninja_Forms()->form( $id )->get_actions();
+
+        foreach( $actions as $action ){
+            // If the action is set.
+            if ( ! is_null( $action ) && ! empty( $action ) ) {
+                array_push( $form_cache[ 'actions' ], array( 'settings' => $action->get_settings(), 'id' => $action->get_id() ) );
+            }
+        }
+        
+        WPN_Helper::update_nf_cache( $id, $form_cache );
+
+        return $form_cache;
     }
     
     /**

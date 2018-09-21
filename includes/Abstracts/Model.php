@@ -251,6 +251,8 @@ class NF_Abstracts_Model
                 $this->_settings[ 'label' ] = $field[ 'label' ];
                 $this->_settings[ 'key' ] = $field[ 'key' ];
                 $this->_settings[ 'type' ] = $field[ 'type' ];
+                $this->_settings[ 'field_label' ] = $field[ 'label' ];
+                $this->_settings[ 'field_key' ] = $field[ 'key' ];
             }
         }
 
