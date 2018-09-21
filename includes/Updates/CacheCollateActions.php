@@ -19,14 +19,6 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     private $data = array();
     
     private $running = array();
-    
-    private $lock_process = false;
-    
-    /**
-     * Stores a reference to the global $wpdb object.
-     * @var object
-     */
-    private $db;
 
     /**
      * Stores information about the current form being processed.
@@ -75,6 +67,12 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         'title',
         'key',
     );
+    
+    /**
+     * The table names for our database queries.
+     */
+    private $table;
+    private $meta_table;
 
     /**
      * Constructor
@@ -86,26 +84,25 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
      */
     public function __construct( $data = array(), $running )
     {
-        // Save a reference to wpdb.
-        global $wpdb;
-        $this->db = $wpdb;
-
-        // Set debug for testing or live transactions.
-        $this->debug = false;
-
-        // Define the class variables.
-        $this->_slug = 'CacheCollateActions';
-        $this->_class_name = 'NF_Updates_CacheCollateActions';
+        // Build our arguments array.
+        $args = array(
+            'slug' => 'CacheCollateActions',
+            'class_name' => 'NF_Updates_CacheCollateActions',
+            'debug' => false,
+        );
         $this->data = $data;
         $this->running = $running;
 
         // Call the parent constructor.
-        parent::__construct();
+        parent::__construct( $args );
+        
+        // Set our table names.
+        $this->table = $this->db->prefix . 'nf3_actions';
+        $this->meta_table = $this->db->prefix . 'nf3_action_meta';
 
         // Begin processing.
         $this->process();
     }
-
 
     /**
      * Function to loop over the batch.
@@ -153,7 +150,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         // If we're not debugging...
         if ( ! $this->debug ) {
             // Ensure that our data tables are updated.
-            $this->migrate();
+            $this->migrate( 'cache_collate_actions' );
         }
         // Get a list of our forms...
         $sql = "SELECT ID FROM `{$this->db->prefix}nf3_forms`";
@@ -217,51 +214,6 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         }
     }
 
-
-    /**
-     * Function to prepare our query values for insert.
-     * 
-     * @param $value (Mixed) The value to be escaped for SQL.
-     * @return (String) The escaped (and possibly serialized) value of the string.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function prepare( $value )
-    {
-        // If our value is a number...
-        if ( is_float( $value ) ) {
-            // Exit early and return the value.
-            return $value;
-        }
-        // Serialize the value if necessary.
-        $escaped = maybe_serialize( $value );
-        // Escape it.
-        $escaped = $this->db->_real_escape( $escaped );
-
-        return $escaped;
-    }
-
-
-    /**
-     * Function used to call queries that are gated by debug.
-     * 
-     * @param $sql (String) The query to be run.
-     * @return (Object) The response to the wpdb query call.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function query( $sql )
-    {
-        // If we're not debugging...
-        if ( ! $this->debug ) {
-            // Run the query.
-            return $this->db->query( $sql );
-        }
-        // Otherwise, return false.
-        return false;
-    }
-
-
     /**
      * Function to delete unncessary items from our existing tables.
      * 
@@ -272,23 +224,11 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
     public function delete( $items )
     {
         // Delete all meta for those actions.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_action_meta` WHERE parent_id IN(" . implode( ', ', $items ) . ")";
+        $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $items ) . ")";
         $this->query( $sql );
         // Delete the actions.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_actions` WHERE id IN(" . implode( ', ', $items ) . ")";
+        $sql = "DELETE FROM `{$this->table}` WHERE id IN(" . implode( ', ', $items ) . ")";
         $this->query( $sql );
-    }
-
-
-    /**
-     * Function to run our table migrations.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function migrate()
-    {
-        $migrations = new NF_Database_Migrations();
-        $migrations->do_upgrade( 'cache_collate_actions' );
     }
 
     /**
@@ -310,7 +250,7 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         } // Otherwise... (Processing isn't locked.)
         else {
             // Update our meta keys.
-            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_key` = `key` WHERE `parent_id` IN(" . implode( ',', $this->action_ids ) . ")";
+            $sql = "UPDATE `{$this->meta_table}` SET `meta_key` = `key` WHERE `parent_id` IN(" . implode( ',', $this->action_ids ) . ")";
             $this->query( $sql );
             /**
              * Update our form cache with any action changes.
@@ -406,10 +346,10 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
         // If we've got updates to run...
         if ( ! empty( $sub_sql ) ) {
             // Update our actions table.
-            $sql = "UPDATE `{$this->db->prefix}nf3_actions` SET `label` = CASE " . implode ( ' ', $sub_sql ) . " ELSE `label` END;";
+            $sql = "UPDATE `{$this->table}` SET `label` = CASE " . implode ( ' ', $sub_sql ) . " ELSE `label` END;";
             $this->query( $sql );
             // Update our meta values.
-            $sql = "UPDATE `{$this->db->prefix}nf3_action_meta` SET `meta_value` = CASE " . implode( ' ', $meta_values ) . " ELSE `meta_value` END;";
+            $sql = "UPDATE `{$this->meta_table}` SET `meta_value` = CASE " . implode( ' ', $meta_values ) . " ELSE `meta_value` END;";
             $this->query( $sql );
         }
     }

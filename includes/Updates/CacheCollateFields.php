@@ -20,12 +20,6 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     
     private $running = array();
     
-    private $lock_process = false;
-    
-    private $db;
-
-    // Setup variables for our SQL methods.
-    
     /**
      * Non-associatve array of field ids from the cache.
      * @var array
@@ -76,6 +70,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
      * @var array
      */
     private $form;
+    
+    /**
+     * The table names for our database queries.
+     */
+    private $table;
+    private $meta_table;
 
     /**
      * Constructor
@@ -87,21 +87,21 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
      */
     public function __construct( $data = array(), $running )
     {
-        // Save a reference to wpdb.
-        global $wpdb;
-        $this->db = $wpdb;
-
-        // Set debug for testing or live transactions.
-        $this->debug = false;
-
-        // Define the class variables.
-        $this->_slug = 'CacheCollateFields';
-        $this->_class_name = 'NF_Updates_CacheCollateFields';
+        // Build our arguments array.
+        $args = array(
+            'slug' => 'CacheCollateFields',
+            'class_name' => 'NF_Updates_CacheCollateFields',
+            'debug' => false,
+        );
         $this->data = $data;
         $this->running = $running;
 
         // Call the parent constructor.
-        parent::__construct();
+        parent::__construct( $args );
+        
+        // Set our table names.
+        $this->table = $this->db->prefix . 'nf3_fields';
+        $this->meta_table = $this->db->prefix . 'nf3_field_meta';
 
         // Begin processing.
         $this->process();
@@ -170,7 +170,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         // If we're not debugging...
         if ( ! $this->debug ) {
             // Ensure that our data tables are updated.
-            $this->migrate();
+            $this->migrate( 'cache_collate_fields' );
         }
         // Get a list of our forms...
         $sql = "SELECT ID FROM `{$this->db->prefix}nf3_forms`";
@@ -203,49 +203,6 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     }
 
     /**
-     * Function to prepare our query values for insert.
-     * 
-     * @param $value (Mixed) The value to be escaped for SQL.
-     * @return (String) The escaped (and possibly serialized) value of the string.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function prepare( $value )
-    {
-        // If our value is a number...
-        if ( is_float( $value ) ) {
-            // Exit early and return the value.
-            return $value;
-        }
-        // Serialize the value if necessary.
-        $escaped = maybe_serialize( $value );
-        // Escape it.
-        $escaped = $this->db->_real_escape( $escaped );
-
-        return $escaped;
-    }
-
-    /**
-     * Function used to call queries that are gated by debug.
-     * 
-     * @param $sql (String) The query to be run.
-     * @return (Object) The response to the wpdb query call.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function query( $sql )
-    {
-        // If we're not debugging...
-        if ( ! $this->debug ) {
-            // Run the query.
-            return $this->db->query( $sql );
-        }
-        // Otherwise, return false.
-        return false;
-    }
-
-
-    /**
      * Function to delete unncessary items from our existing tables.
      * 
      * @param $items (Array) The list of ids to be deleted.
@@ -259,25 +216,13 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         }
 
         // Delete all meta for those fields.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_field_meta` WHERE parent_id IN(" . implode( ', ', $this->delete ) . ")";
+        $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $this->delete ) . ")";
         $this->query( $sql );
         // Delete the fields.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $this->delete ) . ")";
+        $sql = "DELETE FROM `{$this->table}` WHERE id IN(" . implode( ', ', $this->delete ) . ")";
         $this->query( $sql );
 
         $this->delete = array();
-    }
-
-
-    /**
-     * Function to run our table migrations.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function migrate()
-    {
-        $migrations = new NF_Database_Migrations();
-        $migrations->do_upgrade( 'cache_collate_fields' );
     }
 
     /**
@@ -342,7 +287,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * We need to cross reference the Fields table to see if these ids exist for this form.
          * If they exist in the table, we don't need to insert them.
          */
-        $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE parent_id = {$this->form[ 'ID' ]}";
+        $sql = "SELECT id FROM `{$this->table}` WHERE parent_id = {$this->form[ 'ID' ]}";
         $db_fields = $this->db->get_results( $sql, 'ARRAY_A' );
         $db_field_ids = array();
         /**
@@ -374,9 +319,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * Cross reference the Fields table to see if these ids exist on other Forms.
          * If an id exists on another form, then we need to change the current field's id and add that field to our submission_updates class var.
          */
-        
-        $sql = "SELECT id FROM `{$this->db->prefix}nf3_fields` WHERE id IN(" . implode( ', ', $this->field_ids ) . ") AND parent_id <> {$this->form[ 'ID' ]}";
+        if ( ! empty( $this->field_ids ) ) {
+        $sql = "SELECT id FROM `{$this->table}` WHERE id IN(" . implode( ', ', $this->field_ids ) . ") AND parent_id <> {$this->form[ 'ID' ]}";
         $duplicates = $this->db->get_results( $sql, 'ARRAY_A' );
+        } else {
+            $duplicates = array();
+        }
         /**
          * If we got something back, there were duplicates.
          */
@@ -440,7 +388,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             }
             
             // Insert into the fields table.
-            $sql = "INSERT INTO `{$this->db->prefix}nf3_fields` ( `id`, label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( " .
+            $sql = "INSERT INTO `{$this->table}` ( `id`, label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( " .
                 $maybe_field_id . ", '" .
                 $this->prepare( $settings[ 'label' ] ) . "', '".
                 $this->prepare( $settings[ 'key' ] ) . "', '" .
@@ -488,7 +436,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         }
 
         // Insert our meta.
-        $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
+        $sql = "INSERT INTO `{$this->meta_table}` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
         $this->query( $sql );
     }
 
@@ -619,7 +567,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             array_push( $flush_ids, $updating );
             $settings = $this->fields_by_id[ $updating ];
             // Update the fields table.
-            $sql = "UPDATE `{$this->db->prefix}nf3_fields` SET label = '" 
+            $sql = "UPDATE `{$this->table}` SET label = '" 
                 . $this->prepare( $settings[ 'label' ] ) 
                 . "', `key` = '" . $this->prepare( $settings[ 'key' ] ) 
                 . "', `type` = '" . $this->prepare( $settings[ 'type' ] ) 
@@ -645,10 +593,10 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             $this->limit--;
         }
         // Flush our existing meta.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_field_meta` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
+        $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
         $this->query( $sql );
         // Insert our updated meta.
-        $sql = "INSERT INTO `{$this->db->prefix}nf3_field_meta` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
+        $sql = "INSERT INTO `{$this->meta_table}` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
         $this->query( $sql );
     }
 

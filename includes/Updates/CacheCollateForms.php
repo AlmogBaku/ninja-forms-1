@@ -18,10 +18,6 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
     private $data = array();
     
     private $running = array();
-    
-    private $lock_process = false;
-    
-    private $db;
 
     /**
      * Stores information about the current form being processed.
@@ -34,10 +30,16 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
      * @var array
      */
     private $blacklist = array(
-            'title',
-            'objectType',
-            'editActive',
-        );
+        'title',
+        'objectType',
+        'editActive',
+    );
+    
+    /**
+     * The table names for our database queries.
+     */
+    private $table;
+    private $meta_table;
 
     /**
      * Constructor
@@ -49,26 +51,25 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
      */
     public function __construct( $data = array(), $running )
     {
-        // Save a reference to wpdb.
-        global $wpdb;
-        $this->db = $wpdb;
-
-        // Set debug for testing or live transactions.
-        $this->debug = false;
-
-        // Define the class variables.
-        $this->_slug = 'CacheCollateForms';
-        $this->_class_name = 'NF_Updates_CacheCollateForms';
+        // Build our arguments array.
+        $args = array(
+            'slug' => 'CacheCollateForms',
+            'class_name' => 'NF_Updates_CacheCollateForms',
+            'debug' => false,
+        );
         $this->data = $data;
         $this->running = $running;
 
         // Call the parent constructor.
-        parent::__construct();
+        parent::__construct( $args );
+        
+        // Set our table names.
+        $this->table = $this->db->prefix . 'nf3_forms';
+        $this->meta_table = $this->db->prefix . 'nf3_form_meta';
 
         // Begin processing.
         $this->process();
     }
-
 
     /**
      * Function to loop over the batch.
@@ -100,7 +101,6 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         $this->respond();
     }
 
-
     /**
      * Function to run any setup steps necessary to begin processing.
      * 
@@ -113,10 +113,10 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         // If we're not debugging...
         if ( ! $this->debug ) {
             // Ensure that our data tables are updated.
-            $this->migrate();
+            $this->migrate( 'cache_collate_forms' );
         }
         // Get a list of our forms...
-        $sql = "SELECT ID FROM `{$this->db->prefix}nf3_forms`";
+        $sql = "SELECT ID FROM `{$this->table}`";
         $forms = $this->db->get_results( $sql, 'ARRAY_A' );
         $this->running[ 0 ][ 'forms' ] = $forms;
         // Record the total number of steps in this batch.
@@ -124,7 +124,6 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         // Record our current step (defaulted to 0 here).
         $this->running[ 0 ][ 'current' ] = 0;
     }
-
 
     /**
      * Function to cleanup any lingering temporary elements of a required update after completion.
@@ -144,62 +143,6 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
             // Call the parent cleanup method.
             parent::cleanup();
         }
-    }
-
-
-    /**
-     * Function to prepare our query values for insert.
-     * 
-     * @param $value (Mixed) The value to be escaped for SQL.
-     * @return (String) The escaped (and possibly serialized) value of the string.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function prepare( $value )
-    {
-        // If our value is a number...
-        if ( is_float( $value ) ) {
-            // Exit early and return the value.
-            return $value;
-        }
-        // Serialize the value if necessary.
-        $escaped = maybe_serialize( $value );
-        // Escape it.
-        $escaped = $this->db->_real_escape( $escaped );
-
-        return $escaped;
-    }
-
-
-    /**
-     * Function used to call queries that are gated by debug.
-     * 
-     * @param $sql (String) The query to be run.
-     * @return (Object) The response to the wpdb query call.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function query( $sql )
-    {
-        // If we're not debugging...
-        if ( ! $this->debug ) {
-            // Run the query.
-            return $this->db->query( $sql );
-        }
-        // Otherwise, return false.
-        return false;
-    }
-
-
-    /**
-     * Function to run our table migrations.
-     * 
-     * @since UPDATE_VERSION_ON_MERGE
-     */
-    public function migrate()
-    {
-        $migrations = new NF_Database_Migrations();
-        $migrations->do_upgrade( 'cache_collate_forms' );
     }
 
     /**
@@ -247,7 +190,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         $settings = Ninja_Forms()->form( $this->form[ 'ID' ] )->get()->get_settings();
         
         // Get our seq_number from meta.
-        $sql = "SELECT `value` FROM `{$this->db->prefix}nf3_form_meta` WHERE `key` = '_seq_num' AND `parent_id` = " . intval( $this->form[ 'ID' ] );
+        $sql = "SELECT `value` FROM `{$this->meta_table}` WHERE `key` = '_seq_num' AND `parent_id` = " . intval( $this->form[ 'ID' ] );
         $result = $this->db->query( $sql, 'ARRAY_A' );
         // Default to 1.
         $seq_num = 1;
@@ -265,11 +208,11 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
         }
         
         // Save the new columns to the forms table.
-        $sql = "UPDATE `{$this->db->prefix}nf3_forms` SET form_title = '" . $this->prepare( $settings[ 'title' ] ) . "', default_label_pos = '" . $settings[ 'default_label_pos' ] . "', show_title = " . intval( $settings[ 'show_title' ] ) . ", clear_complete = " . intval( $settings[ 'clear_complete' ] ) . ", hide_complete = " . intval( $settings[ 'hide_complete' ] ) . ", logged_in = {$logged_in}, seq_num = {$seq_num} WHERE id = " . intval( $this->form[ 'ID' ] ) . ";";
+        $sql = "UPDATE `{$this->table}` SET form_title = '" . $this->prepare( $settings[ 'title' ] ) . "', default_label_pos = '" . $settings[ 'default_label_pos' ] . "', show_title = " . intval( $settings[ 'show_title' ] ) . ", clear_complete = " . intval( $settings[ 'clear_complete' ] ) . ", hide_complete = " . intval( $settings[ 'hide_complete' ] ) . ", logged_in = {$logged_in}, seq_num = {$seq_num} WHERE id = " . intval( $this->form[ 'ID' ] ) . ";";
         $this->query( $sql );
         
         // Remove the existing meta from the form_meta table.
-        $sql = "DELETE FROM `{$this->db->prefix}nf3_form_meta` WHERE parent_id = " . intval( $this->form[ 'ID' ] );
+        $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id = " . intval( $this->form[ 'ID' ] );
         $this->query( $sql );
                 
         $insert_items = array();
@@ -284,7 +227,7 @@ class NF_Updates_CacheCollateForms extends NF_Abstracts_RequiredUpdate
             }
         }
         // Insert the new meta values.
-        $sql = "INSERT INTO `{$this->db->prefix}nf3_form_meta` ( parent_id, `key`, `value`, meta_key, meta_value ) VALUES " . implode( ', ', $insert_items );
+        $sql = "INSERT INTO `{$this->meta_table}` ( parent_id, `key`, `value`, meta_key, meta_value ) VALUES " . implode( ', ', $insert_items );
         $this->query( $sql );
     }
 
