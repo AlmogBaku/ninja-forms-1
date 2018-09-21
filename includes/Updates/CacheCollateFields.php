@@ -261,8 +261,23 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
 
         // Get the fields for our form from the cache.
-        $fields = Ninja_Forms()->form( $this->form[ 'ID' ] )->get_fields();
-        
+        $form_cache = WPN_Helper::get_nf_cache( $this->form[ 'ID' ] );
+        // Create an empty $fields array.
+        $fields = array();
+        /**
+         * Loop over our cached form fields and instantiate a model for each.
+         *     Update its settings to match those in the cache.
+         *     Add it to our $fields array.
+         */
+        foreach( $form_cache[ 'fields' ] as $cached_field ){
+            // Create a new model for this field.
+            $field = new NF_Database_Models_Field( $this->db, $cached_field[ 'id' ], $this->form[ 'ID' ] );
+            // Update settings to match cache.
+            $field->update_settings( $cached_field[ 'settings' ] );
+            // Add this to our $fields array, using the field id as the key.
+            $fields[ $field->get_id() ] = $field;
+        }
+
         /**
          * For each field in our cache, add it to our class vars:
          * field_ids <- non-associatve array of field ids from the cache.
