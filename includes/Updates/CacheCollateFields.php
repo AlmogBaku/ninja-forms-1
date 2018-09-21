@@ -377,6 +377,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
 
         // Store the meta items outside the loop for faster insertion.
         $meta_items = array();
+        $flush_ids = array();
         // While we still have items to insert...
         while ( 0 < count( $this->insert ) ) {
             // If we have hit our limit...
@@ -388,6 +389,9 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             }
             // Get our item to be inserted.
             $inserting = array_pop( $this->insert );
+            if ( is_numeric( $inserting ) ) {
+               array_push( $flush_ids, $inserting ); 
+            }
             $settings = $this->fields_by_id[ $inserting ];
             
             /*
@@ -448,6 +452,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             unset( $this->field_ids[ $field_index ] );
             // Reduce the limit.
             $this->limit--;
+        }
+
+        if ( ! empty ( $flush_ids ) ) {
+            // Flush our existing meta.
+            $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
+            $this->query( $sql );            
         }
 
         // Insert our meta.
@@ -607,9 +617,12 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             // Reduce the limit.
             $this->limit--;
         }
-        // Flush our existing meta.
-        $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
-        $this->query( $sql );
+        if ( ! empty ( $flush_ids ) ) {
+            // Flush our existing meta.
+            $sql = "DELETE FROM `{$this->meta_table}` WHERE parent_id IN(" . implode( ', ', $flush_ids ) . ")";
+            $this->query( $sql );            
+        }
+
         // Insert our updated meta.
         $sql = "INSERT INTO `{$this->meta_table}` ( parent_id, `key`, value, meta_key, meta_value ) VALUES " . implode( ', ', $meta_items );
         $this->query( $sql );
