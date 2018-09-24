@@ -337,7 +337,8 @@ class NF_Updates_CacheCollateActions extends NF_Abstracts_RequiredUpdate
                 // If the key is not blacklisted...
                 if ( ! in_array( $key, $this->blacklist ) ) {
                     // Add the value to be updated.
-                    array_push( $meta_values, "WHEN `key` = '{$key}' THEN '" . $this->prepare( $setting ) . "'" );
+                    $action = intval( $action );
+                    array_push( $meta_values, "WHEN `key` = '{$key}' AND `parent_id` = {$action} THEN '" . $this->prepare( $setting ) . "'" );
                 }
             }
             $this->limit--;
