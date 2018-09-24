@@ -407,7 +407,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             }
             
             // Insert into the fields table.
-            $sql = "INSERT INTO `{$this->table}` ( `id`, label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos ) VALUES ( " .
+            $sql = "INSERT INTO `{$this->table}` ( `id`, label, `key`, `type`, parent_id, field_label, field_key, `order`, required, default_value, label_pos, personally_identifiable ) VALUES ( " .
                 $maybe_field_id . ", '" .
                 $this->prepare( $settings[ 'label' ] ) . "', '".
                 $this->prepare( $settings[ 'key' ] ) . "', '" .
@@ -418,7 +418,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 intval( $settings[ 'order' ] ) . ", " .
                 intval( $settings[ 'required' ] ) . ", '" .
                 $this->prepare( $settings[ 'default_value' ] ) . "', '" .
-                $this->prepare( $settings[ 'label_pos' ] ) . "' )";
+                $this->prepare( $settings[ 'label_pos' ] ) . "', " .
+                intval( $settings[ 'personally_identifiable' ] ) . " )";
 
             $this->query( $sql );
 
@@ -602,7 +603,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 . ", required = " . intval( $settings[ 'required' ] )
                 . ", default_value = '" . $this->prepare( $settings[ 'default_value' ] )
                 . "', label_pos = '" . $this->prepare( $settings[ 'label_pos' ] )
-                . "' WHERE id = " . intval( $updating );
+                . "', personally_identifiable = " . intval( $settings[ 'personally_identifiable' ] )
+                . " WHERE id = " . intval( $updating );
             $this->query( $sql );
             // For each meta of the field...
             foreach ( $settings as $meta => $value ) {
