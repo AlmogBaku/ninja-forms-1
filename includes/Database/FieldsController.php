@@ -15,7 +15,19 @@ final class NF_Database_FieldsController
      * 
      * @var array
      */
-    private $update_fields = array( 'id' => '', 'key' => '', 'label' => '', 'type' => '', 'field_key' => '', 'field_label' => '', 'order' => '', 'default_value' => '', 'label_pos' => '', 'required' => '' );
+    private $update_fields = array( 
+        'id' => '', 
+        'key' => '', 
+        'label' => '', 
+        'type' => '', 
+        'field_key' => '', 
+        'field_label' => '', 
+        'order' => '', 
+        'default_value' => '', 
+        'label_pos' => '', 
+        'required' => '',
+        'personally_identifiable' => '',
+    );
     private $update_field_meta = array();
     private $update_field_meta_chunk = 0;
 
@@ -33,6 +45,7 @@ final class NF_Database_FieldsController
         'required',
         'default_value',
         'label_pos',
+        'personally_identifiable',
         'parent_id',
     );
 
@@ -85,6 +98,7 @@ final class NF_Database_FieldsController
                 'order' => $field_data[ 'settings' ][ 'order' ],
                 'default_value' => $field_data[ 'settings' ][ 'default' ],
                 'label_pos' => $field_data[ 'settings' ][ 'label_pos' ],
+                'personally_identifiable' => absint( $field_data[ 'settings' ][ 'personally_identifiable' ] ),
             );
 
             /**
@@ -262,7 +276,8 @@ final class NF_Database_FieldsController
             empty( $this->update_fields[ 'order'  ] ) ||
             empty( $this->update_fields[ 'required'  ] ) ||
             empty( $this->update_fields[ 'default_value'  ] ) ||
-            empty( $this->update_fields[ 'label_pos'  ] )
+            empty( $this->update_fields[ 'label_pos'  ] ) ||
+            empty( $this->update_fields[ 'personally_identifiable'  ] )
 
             ) return "";
         return "
@@ -293,6 +308,9 @@ final class NF_Database_FieldsController
                 END
             , `required` = CASE {$this->update_fields[ 'required' ]}
                 ELSE `required`
+                END
+            , `personally_identifiable` = CASE {$this->update_fields[ 'personally_identifiable' ]}
+                ELSE `personally_identifiable`
                 END
         ";
     }
