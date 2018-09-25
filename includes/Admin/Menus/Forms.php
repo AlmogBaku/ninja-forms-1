@@ -149,6 +149,8 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             </script>
             <?php
 
+            $required_updates = get_option( 'ninja_forms_needs_updates', 0 );
+
             wp_enqueue_script( 'backbone-radio', Ninja_Forms::$url . 'assets/js/lib/backbone.radio.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'backbone-marionette-3', Ninja_Forms::$url . 'assets/js/lib/backbone.marionette3.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'nf-jbox', Ninja_Forms::$url . 'assets/js/lib/jBox.min.js', array( 'jquery' ) );
@@ -165,7 +167,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
                 'formTelemetry'     => ( get_option( 'nf_form_tel_sent' ) ) ? 0 : 1,
                 'showOptin'         => ( get_option( 'ninja_forms_do_not_allow_tracking' ) ||
                                          get_option( 'ninja_forms_allow_tracking' ) ) ? 0 : 1,
-                'requiredUpdates'    => get_option( 'ninja_forms_needs_updates', 0 ),
+                'requiredUpdates'    => $required_updates,
                 'currentUserEmail'  => $current_user->user_email,
                 'doingCleanup'      => ( ! get_option( 'ninja_forms_data_is_clean' ) &&
                                         isset( $_REQUEST[ 'action' ] ) &&
@@ -176,6 +178,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             wp_enqueue_style( 'nf-dashboard', Ninja_Forms::$url . 'assets/css/dashboard.min.css' );
             wp_enqueue_style( 'nf-jbox', Ninja_Forms::$url . 'assets/css/jBox.css' );
             wp_enqueue_style( 'nf-font-awesome', Ninja_Forms::$url . 'assets/css/font-awesome.min.css' );
+
+            if( $required_updates ) {
+                wp_enqueue_style( 'nf-updates-styles', Ninja_Forms::$url . '/assets/css/required-updates.css' );
+            }
 
             Ninja_Forms::template( 'admin-menu-dashboard.html.php' );
         }
