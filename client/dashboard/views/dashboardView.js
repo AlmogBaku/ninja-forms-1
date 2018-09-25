@@ -56,7 +56,11 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
         initialize: function() {
 
             if( "1" === nfAdmin.requiredUpdates ) {
+                // if we have required updates, redirect them
                 window.location.hash = '#requiredUpdates';
+            } else if ( '#requiredUpdates' === window.location.hash ) {
+                // if no updates, but someone hits update url, give the the dashboard
+                window.location.hash = '';
             }
             
             switch( window.location.hash ) {
@@ -110,7 +114,15 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
         onRender: function() {
 
           if( useServices ) this.showChildView( 'notices', new OAuthView() );
-          if( useServices ) this.showChildView( 'promotions', new PromotionView() );
+          if( useServices && '1' !== nfAdmin.requiredUpdates ) {
+              this.showChildView( 'promotions', new PromotionView() );
+          }
+
+          // if no updates and someone hits the update url, give them the dashboard
+          if( '0' === nfAdmin.requiredUpdates 
+            && '#requiredUpdates' === window.location.hash ) {
+                window.location.hash = '';
+          }
 
             switch( window.location.hash ) {
                 case '#apps':
