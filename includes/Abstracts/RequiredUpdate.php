@@ -22,6 +22,8 @@ abstract class NF_Abstracts_RequiredUpdate
 
     /**
      * Constructor
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function __construct( $data = array() )
     {
@@ -44,6 +46,8 @@ abstract class NF_Abstracts_RequiredUpdate
 
     /**
      * Function to loop over the batch.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function process()
     {
@@ -55,6 +59,8 @@ abstract class NF_Abstracts_RequiredUpdate
 
     /**
      * Function to run any setup steps necessary to begin processing.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function startup()
     {
@@ -66,6 +72,8 @@ abstract class NF_Abstracts_RequiredUpdate
 
     /**
      * Function to cleanup any lingering temporary elements of required updates after completion.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function cleanup()
     {
@@ -73,6 +81,13 @@ abstract class NF_Abstracts_RequiredUpdate
         delete_option( 'ninja_forms_doing_required_updates' );
         // Flag that updates are done.
         update_option( 'ninja_forms_needs_updates', 0 );
+        // Fetch our list of completed updates.
+        $updates = get_option( 'ninja_forms_required_updates', array() );
+        // If we got something back...
+        if ( ! empty( $updates ) ) {
+            // Send out a call to telemetry.
+            Ninja_Forms()->dispatcher()->send( 'required_updates_complete', $updates );
+        }
         // Output that we're done.
         $this->response[ 'updatesRemaining' ] = 0;
         $this->respond();
@@ -81,6 +96,8 @@ abstract class NF_Abstracts_RequiredUpdate
 
     /**
      * Function to dump our JSON response and kill processing.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
      */
     public function respond()
     {
@@ -146,5 +163,26 @@ abstract class NF_Abstracts_RequiredUpdate
         $this->response[ 'queries' ][] = $sql;
         // Return false.
         return false;
+    }
+
+    /**
+     * Function to record the completion of our update in the DB.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     */
+    protected function confirm_complete()
+    {
+        // If we're not debugging...
+        if ( ! $this->debug ) {
+            // Fetch our required updates array.
+            $updates = get_option( 'ninja_forms_required_updates', array() );
+            // Get a timestamp.
+            date_default_timezone_set( 'UTC' );
+            $now = date( "Y-m-d H:i:s" );
+            // Append the current update to the array.
+            $updates[ $this->_slug ] = $now;
+            // Save it.
+            update_option( 'ninja_forms_required_updates', $updates );
+        }
     }
 }
