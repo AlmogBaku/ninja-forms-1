@@ -31,24 +31,36 @@ final class NF_Database_FieldsController
     private $update_field_meta = array();
     private $update_field_meta_chunk = 0;
 
+    private $db_stage_1_complete = true;
+
     /**
-     * Store an array of columns that we want to store in our table rather than meta
+     * Store an array of columns that we want to store in our table rather than meta.
+     *
+     * This array stores the column name and the name of the setting that it maps to.
+     * 
+     * The format is:
+     *
+     * array( 'COLUMN_NAME' => 'SETTING_NAME' )
      */
     private $db_columns = array(
-        'id',
-        'key',
-        'type',
-        'label',
-        'field_key',
-        'field_label',
-        'order',
-        'required',
-        'default_value',
-        'label_pos',
-        'personally_identifiable',
-        'parent_id',
+        'parent_id'                 => 'parent_id',
+        'id'                        => 'id',
+        'key'                       => 'key',
+        'type'                      => 'type',
+        'label'                     => 'label',
+        'field_key'                 => 'key',
+        'field_label'               => 'label',
+        'order'                     => 'order',
+        'required'                  => 'required',
+        'default_value'             => 'default',
+        'label_pos'                 => 'label_pos',
+        'personally_identifiable'   => 'personally_identifiable',
     );
 
+    private $db_bit_columns = array(
+        'required',
+        'personally_identifiable',
+    );
 
     public function __construct( $form_id, $fields_data )
     {
@@ -56,6 +68,28 @@ final class NF_Database_FieldsController
         $this->db = $wpdb;
         $this->form_id = $form_id;
         $this->fields_data = $fields_data;
+
+        /**
+         * Remove new DB columns from our $db_columns list if the user hasn't completed required upgrades stage 1.
+         */
+        $sql = "SHOW COLUMNS FROM {$this->db->prefix}nf3_fields LIKE 'field_key'";
+        $results = $this->db->get_results( $sql );
+        /**
+         * If we don't have the field_key column, we need to remove our new columns.
+         *
+         * Also, set our db stage 1 tracker to false.
+         */
+        if ( empty ( $results ) ) {
+            unset( $this->db_columns[ 'field_key' ] );
+            unset( $this->db_columns[ 'field_label' ] );
+            unset( $this->db_columns[ 'order' ] );
+            unset( $this->db_columns[ 'required' ] );
+            unset( $this->db_columns[ 'default_value' ] );
+            unset( $this->db_columns[ 'label_pos' ] );
+            unset( $this->db_columns[ 'personally_identifiable' ] );
+
+            $this->db_stage_1_complete = false;
+        }
     }
     public function run()
     {
@@ -88,18 +122,28 @@ final class NF_Database_FieldsController
     {
         foreach( $this->fields_data as $field_data ){
             $field_id = $field_data[ 'id' ];
-            $settings = array(
-                'key' => $field_data[ 'settings' ][ 'key' ],
-                'label' => $field_data[ 'settings' ][ 'label' ],
-                'type' => $field_data[ 'settings' ][ 'type' ],
-                'field_key' => $field_data[ 'settings' ][ 'key' ],
-                'field_label' => $field_data[ 'settings' ][ 'label' ],
-                'required' => absint( $field_data[ 'settings' ][ 'required' ] ),
-                'order' => $field_data[ 'settings' ][ 'order' ],
-                'default_value' => $field_data[ 'settings' ][ 'default' ],
-                'label_pos' => $field_data[ 'settings' ][ 'label_pos' ],
-                'personally_identifiable' => absint( $field_data[ 'settings' ][ 'personally_identifiable' ] ),
-            );
+
+            /**
+             * We've defined which items go into our DB, as well as which settings they map to.
+             * 
+             * Loop over our $db_columns array and setup an array for $settings.
+             */
+            $settings = array();
+
+            foreach( $this->db_columns as $column_name => $setting_name ) {
+                // If the setting value is numeric, make sure it's intval'd.
+                if ( is_numeric( $field_data[ 'settings' ][ $setting_name ] ) ) {
+                    $value = intval( $field_data[ 'settings' ][ $setting_name ]  );
+                } else {
+                    $value = $field_data[ 'settings' ][ $setting_name ];
+                }
+
+                if ( in_array( $column_name, $this->db_bit_columns ) ) {
+                    $value = absint( $value );
+                }
+
+                $settings[ $column_name ] = $value;
+            }
 
             /**
              * We need to decide if we need to insert this field or update it in our fields table.
@@ -152,7 +196,7 @@ final class NF_Database_FieldsController
                 // we don't need object type or domain stored in the db
                 if( ! in_array( $key, array( 'objectType', 'objectDomain' ) ) ) {
                     if( isset( $existing_meta[ $field_id ][ $key ] ) ){
-                        if( $value == $existing_meta[ $field_id ][ $key ] ) continue;
+                        if( $value == $existing_meta[ $field_id ][ $key ] && $value == $existing_meta[ $field_id ][ 'meta_key' ][ $key ] ) continue;
                         $this->update_field_meta( $field_id, $key, $value );
                     } else {
                         $this->insert_field_meta( $field_id, $key, $value );
@@ -163,8 +207,18 @@ final class NF_Database_FieldsController
     }
     private function get_existing_meta()
     {
+
+        $sql_select = "m.parent_id, m.key, m.value";
+
+        /**
+         * If we have completed stage 1 of our db migration, pull meta_key and meta_value as well as key and value.
+         */
+        if ( $this->db_stage_1_complete ) {
+            $sql_select .= " , m.meta_key, m.meta_value";
+        }
+
         $results = $this->db->get_results("
-        SELECT m.parent_id, m.key, m.value
+        SELECT {$sql_select}
         FROM `{$this->db->prefix}nf3_field_meta` AS m
         LEFT JOIN `{$this->db->prefix}nf3_fields` AS f
             ON m.parent_id = f.id
@@ -174,6 +228,12 @@ final class NF_Database_FieldsController
         foreach( $results as $meta ){
             if( ! isset( $field_meta[ $meta->parent_id ] ) ) $field_meta[ $meta->parent_id ] = array();
             $field_meta[ $meta->parent_id ][ $meta->key ] = $meta->value;
+            if ( is_null( $meta->meta_value ) ) {
+                $meta_value = '';
+            } else {
+                $meta_value = $meta->meta_value;
+            }
+            $field_meta[ $meta->parent_id ]['meta_key'][ $meta->key ] = $meta_value;
         }
         return $field_meta;
     }
@@ -211,8 +271,8 @@ final class NF_Database_FieldsController
         /**
          * Loop over each of our $this->db_columns to create a value list for our SQL statement.
          */
-        foreach ( $this->db_columns as $col ) {
-            $value = $settings[ $col ];
+        foreach ( $this->db_columns as $column_name => $setting_name ) {
+            $value = $settings[ $column_name ];
             $this->db->escape_by_ref( $value );
             if ( is_numeric( $value ) ) {
                 $this->insert_fields .= "{$value},";
@@ -234,8 +294,8 @@ final class NF_Database_FieldsController
          * Loop over each of our $this->db_columns to create a column list for our SQL statement below.
          */
         $columns = '';
-        foreach( $this->db_columns as $col ) {
-            $columns .= "`{$col}` ,";
+        foreach( $this->db_columns as $column_name => $setting_name ) {
+            $columns .= "`{$column_name}` ,";
         }
 
         $columns = rtrim( $columns, ',' );
@@ -267,52 +327,38 @@ final class NF_Database_FieldsController
     }
     public function get_update_fields_query()
     {
-        if(
-            empty( $this->update_fields[ 'key'   ] ) ||
-            empty( $this->update_fields[ 'label' ] ) ||
-            empty( $this->update_fields[ 'type'  ] ) ||
-            empty( $this->update_fields[ 'field_key'  ] ) ||
-            empty( $this->update_fields[ 'field_label'  ] ) ||
-            empty( $this->update_fields[ 'order'  ] ) ||
-            empty( $this->update_fields[ 'required'  ] ) ||
-            empty( $this->update_fields[ 'default_value'  ] ) ||
-            empty( $this->update_fields[ 'label_pos'  ] ) ||
-            empty( $this->update_fields[ 'personally_identifiable'  ] )
+        /**
+         * Loop over our $db_columns class var and make sure that none of them are empty.
+         *
+         * If they are empty, return an empty string to prevent errors.
+         */
 
-            ) return "";
-        return "
-            UPDATE {$this->db->prefix}nf3_fields
-            SET `key` = CASE {$this->update_fields[ 'key' ]}
-                ELSE `key`
+        foreach ( $this->db_columns as $column_name => $setting_name ) {
+            if ( empty( $this->update_fields[ $column_name ] ) ) {
+                return "";
+            }
+        }
+
+        /**
+         * Build our return statement based upon our $db_columns class var.
+         */
+        
+        $return = "UPDATE {$this->db->prefix}nf3_fields
+            SET ";
+
+        foreach( $this->db_columns as $column_name => $setting_name ) {
+            // We don't need to update our parent_id or our id.
+            if ( 'id' == $column_name || 'parent_id' == $column_name ) {
+                continue;
+            }
+            $return .= "`{$column_name}` = CASE {$this->update_fields[ $column_name ]}
+                ELSE `{$column_name}`
                 END
-            , `label` = CASE {$this->update_fields[ 'label' ]}
-                ELSE `label`
-                END
-            , `type` = CASE {$this->update_fields[ 'type' ]}
-                ELSE `type`
-                END
-            , `field_key` = CASE {$this->update_fields[ 'key' ]}
-                ELSE `field_key`
-                END
-            , `field_label` = CASE {$this->update_fields[ 'label' ]}
-                ELSE `field_label`
-                END
-            , `order` = CASE {$this->update_fields[ 'order' ]}
-                ELSE `order`
-                END
-            , `default_value` = CASE {$this->update_fields[ 'default_value' ]}
-                ELSE `default_value`
-                END
-            , `label_pos` = CASE {$this->update_fields[ 'label_pos' ]}
-                ELSE `label_pos`
-                END
-            , `required` = CASE {$this->update_fields[ 'required' ]}
-                ELSE `required`
-                END
-            , `personally_identifiable` = CASE {$this->update_fields[ 'personally_identifiable' ]}
-                ELSE `personally_identifiable`
-                END
-        ";
+            ,";
+        }
+
+        $return = rtrim( $return, ',' );
+        return $return;
     }
     /*
     |--------------------------------------------------------------------------
@@ -332,17 +378,38 @@ final class NF_Database_FieldsController
         if( ! isset( $this->insert_field_meta[ $this->insert_field_meta_chunk ] ) || ! $this->insert_field_meta[ $this->insert_field_meta_chunk ] ) {
             $this->insert_field_meta[ $this->insert_field_meta_chunk ] = '';
         }
-        $this->insert_field_meta[ $this->insert_field_meta_chunk ] .= "('{$field_id}','{$key}','{$value}' ),";
+
+        $insert_values = "'{$field_id}','{$key}','{$value}'";
+
+        /**
+         * If we have completed stage 1 of our db update process, then we want to add meta_key and meta_value as well as key and value.
+         */
+        if ( $this->db_stage_1_complete ) {
+            $insert_values .= ", '{$key}','{$value}'";
+        }
+  
+        $this->insert_field_meta[ $this->insert_field_meta_chunk ] .= "( {$insert_values} ),";
+
         $counter++;
         if( 0 == $counter % 5000 ) $this->insert_field_meta_chunk++;
     }
+
     public function run_insert_field_meta_query()
     {
         if( ! $this->insert_field_meta ) return "";
         foreach( $this->insert_field_meta as $insert_field_meta ){
             $insert_field_meta = rtrim( $insert_field_meta, ',' ); // Strip trailing comma from SQl.
+            
+            /**
+             * If we have completed stage 1 of our db update process, then we want to insert meta_key and meta_value as well.
+             */
+            $insert_columns = '`parent_id`, `key`, `value`';
+            if ( $this->db_stage_1_complete ) {
+                $insert_columns .= ', `meta_key`, `meta_value`';
+            }
+
             $this->db->query( "
-                INSERT INTO {$this->db->prefix}nf3_field_meta ( `parent_id`, `key`, `value` )
+                INSERT INTO {$this->db->prefix}nf3_field_meta ( {$insert_columns} )
                 VALUES {$insert_field_meta}
             ");
         }
@@ -371,10 +438,17 @@ final class NF_Database_FieldsController
     {
         if( empty( $this->update_field_meta ) ) return '';
         foreach( $this->update_field_meta as $update_field_meta ){
-            $this->db->query("
-                UPDATE {$this->db->prefix}nf3_field_meta as field_meta
-                SET `value` = CASE {$update_field_meta} ELSE `value` END
-            ");
+
+            $sql = "UPDATE {$this->db->prefix}nf3_field_meta as field_meta
+                SET `value` = CASE {$update_field_meta} ELSE `value` END";
+            /**
+             * If we have completed stage 1 of our db update process, then we want to update meta_value as well as value.
+             */
+            if ( $this->db_stage_1_complete ) {
+                $sql .= ", `meta_value` = CASE {$update_field_meta} ELSE `meta_value` END, `meta_key` = CASE WHEN `parent_id` = '-999' THEN NULL ELSE `key` END";
+            }
+
+            $this->db->query( $sql );
             return;
         }
     }
