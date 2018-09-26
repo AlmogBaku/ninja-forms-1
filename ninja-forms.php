@@ -452,7 +452,9 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 add_filter( 'ninja_forms_admin_notices', array( $this, 'data_cleanup_notice' ) );
             }
 			// Remove already completed updates from our filtered list of required updates.
-			add_filter( 'ninja_forms_required_updates', array( $this, 'remove_completed_updates' ), 99 );
+            add_filter( 'ninja_forms_required_updates', array( $this, 'remove_completed_updates' ), 99 );
+            add_filter( 'ninja_forms_required_updates', array( $this, 'remove_bad_updates' ), 99 );
+            
 
 			// Get our list of required updates.
 			$required_updates = Ninja_Forms()->config( 'RequiredUpdates' );
@@ -940,7 +942,68 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 				}
 			}			
 			return $updates;
-		}
+        }
+        
+        /**
+         * Function to deregister updates that have required updates that either
+         * don't exist, or are malformed
+		 * 
+		 * @since UPDATE_TO_LATEST version
+		 * 
+		 * @param $updates (Array) Our array of required updates.
+		 * @return $updates (Array) Our array of required updates. 
+         */
+        public function remove_bad_updates( $updates ) {
+
+            $processed = get_option( 'ninja_forms_required_updates', array() );
+
+            $sorted = array();
+            $queue = array();
+            // While we have not finished removing bad updates...
+            while ( count( $sorted ) < count( $updates ) ) {
+                // For each update we wish to run...
+                foreach ( $updates as $slug => $update ) {
+                    // Migrate the slug to a property.
+                    $update[ 'slug' ] = $slug;
+                    // If we've not already added this to the sorted list...
+                    if ( ! in_array( $update, $sorted ) ) {
+                        // If it has requirements...
+                        if ( ! empty( $update[ 'requires' ] ) ) {
+                            $enqueued = 0;
+                            // For each requirement...
+                            foreach ( $update[ 'requires' ] as $requirement ) {
+                                // If the requirement doesn't exist...
+                                if ( ! isset( $updates[ $requirement ] ) ) {
+                                    // unset the update b/c we are missing requirements
+                                    unset( $updates[ $slug ] );
+                                }
+                                // If the requirement has already been added to the stack...
+                                if ( in_array( $requirement, $queue ) ) {
+                                    $enqueued++;
+                                } // OR If the requirement has already been processed...
+                                elseif ( isset( $processed[ $requirement ] ) ) {
+                                    $enqueued++;
+                                }
+                            }
+                            // If all requirement are met...
+                            if ( $enqueued == count( $update[ 'requires' ] ) ) {
+                                // Add it to the list.
+                                array_push( $sorted, $update );
+                                // Record that we enqueued it.
+                                array_push( $queue, $slug );
+                            }
+                        } // Otherwise... (It has no requirements.)
+                        else {
+                            // Add it to the list.
+                            array_push( $sorted, $update );
+                            // Record that we enqueued it.
+                            array_push( $queue, $slug );
+                        }
+                    }
+                }
+            }
+            return $sorted;
+        }
 
     } // End Class Ninja_Forms
 
