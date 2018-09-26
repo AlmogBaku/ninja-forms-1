@@ -69,6 +69,9 @@ define( [], function() {
 
                             // set up the click event for the button to do updates
                             that.setButtonClickEvent();
+                        } else {
+                           window.location = window.location.origin + 
+                            window.location.pathname + window.location.search;
                         }
 
                     }

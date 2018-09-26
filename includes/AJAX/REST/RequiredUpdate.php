@@ -155,9 +155,10 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 						// For each requirement...
 						foreach ( $update[ 'requires' ] as $requirement ) {
 							// If the requirement doesn't exist...
-							if ( ! isset( $this->updates[ $update[ 'slug' ] ] ) ) {
-								// Exit the function, returning false.
-								return false;
+							if ( ! isset( $this->updates[ $requirement ] ) ) {
+								// unset the update b/c we are missing requirements
+								unset( $current[ $slug ] );
+								unset( $this->updates[ $slug ] );
 							}
 							// If the requirement has already been added to the stack...
 							if ( in_array( $requirement, $queue ) ) {
