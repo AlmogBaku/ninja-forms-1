@@ -192,9 +192,7 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         // Remove the current process from the array.
         array_shift( $this->running );
         // Record to our updates setting that this update is complete.
-        $updates = get_option( 'ninja_forms_required_updates', array() );
-        $updates[ $this->_slug ] = 'complete';
-        update_option( 'ninja_forms_required_updates', $updates );
+        $this->confirm_complete();
         // If we have no updates left to process...
         if ( empty( $this->running ) ) {
             // Call the parent cleanup method.
