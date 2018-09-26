@@ -686,19 +686,19 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
             $this->form[ 'submission_updates' ] = $this->submission_updates;
             array_push( $this->running[ 0 ][ 'forms' ], $this->form );
         } else { // Otherwise... (The step is complete.)
-            // If all steps have been completed...
-            if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
-                // Run our cleanup method.
-                $this->cleanup();
-            } else {
-                // Increment our step count.
-                $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
-            }
+            // Increment our step count.
+            $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
         }
 
         // Prepare to output our number of steps and current step.
         $this->response[ 'stepsTotal' ] = $this->running[ 0 ][ 'steps' ];
         $this->response[ 'currentStep' ] = $this->running[ 0 ][ 'current' ];
+        
+        // If all steps have been completed...
+        if ( empty( $this->running[ 0 ][ 'forms' ] ) ) {
+            // Run our cleanup method.
+            $this->cleanup();
+        }
         
         // Record our current location in the process.
         update_option( 'ninja_forms_doing_required_updates', $this->running );
