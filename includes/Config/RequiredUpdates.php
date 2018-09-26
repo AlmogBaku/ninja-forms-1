@@ -17,11 +17,11 @@ return apply_filters( 'ninja_forms_required_updates', array(
         'requires' => array( 'CacheCollateActions' ),
         'nicename' => __( 'Update Fields Tables', 'ninja-forms' ),
     ),
-//    'CacheCollateObjects' => array(
-//        'class_name' => 'NF_Updates_CacheCollateObjects',
-//        'requires' => array( 'CacheCollateForms' ),
-//        'nicename' => __( 'Update Objects Tables', 'ninja-forms' ),
-//    ),
+    'CacheCollateObjects' => array(
+        'class_name' => 'NF_Updates_CacheCollateObjects',
+        'requires' => array( 'CacheCollateFields' ),
+        'nicename' => __( 'Update Objects Tables', 'ninja-forms' ),
+    ),
 //    'OrphanSubs' => array(
 //        'class_name' => 'NF_Updates_OrphanSubs',
 //        'requires' => array( 'CacheCollateFields' ),

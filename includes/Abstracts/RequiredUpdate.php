@@ -141,8 +141,10 @@ abstract class NF_Abstracts_RequiredUpdate
         if ( ! $this->debug ) {
             // Run the query.
             return $this->db->query( $sql );
-        }
-        // Otherwise, return false.
+        } // Otherwise...
+        // Append the query to the response object.
+        $this->response[ 'queries' ][] = $sql;
+        // Return false.
         return false;
     }
 }
