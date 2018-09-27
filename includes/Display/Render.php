@@ -112,7 +112,7 @@ final class NF_Display_Render
         $maintenance = WPN_Helper::form_in_maintenance( $form_id );
 
         // If maintenance isn't empty and the bool is set to 1 then..
-        if( ! empty( $maintenance ) && true == $maintenance ) {
+        if( true == $maintenance ) {
             // Set a filterable maintenance message and echo it out.
             $maintenance_msg = apply_filters( 'nf_maintenance_message', __( 'This form is currently undergoing maintenance. Please try again later.', 'ninja-forms' ) );
             echo $maintenance_msg;
