@@ -431,11 +431,17 @@ final class WPN_Helper
         global $wpdb;
 
         // Get our maintenance value from the DB and return it at the zero position.
-        $maintenance = $wpdb->get_results(
+        $maintenance = $wpdb->get_row(
             "SELECT `maintenance` FROM `{$wpdb->prefix}nf3_upgrades` WHERE `id` = {$form_id}", 'ARRAY_A'
         );
 
-        return $maintenance[ 0 ];
+        // If maintenance comes back empty...
+        if( empty( $maintenance ) ) {
+            // Set the maintenance position to 0.
+            $maintenance[ 'maintenance' ] = 0;
+        }
+
+        return $maintenance;
     }
 
 } // End Class WPN_Helper
