@@ -457,9 +457,12 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             
 
 			// Get our list of required updates.
-			$required_updates = Ninja_Forms()->config( 'RequiredUpdates' );
-			// If we got back a list of updates...
-			if ( ! empty( $required_updates ) ) {
+            $required_updates = Ninja_Forms()->config( 'RequiredUpdates' );
+            
+            $threshold = 5; // Threshold percentage for any updates/releases
+			// If we got back a list of updates and the gate is open...
+            if ( ! empty( $required_updates ) 
+                &&  WPN_Helper::gated_release( $threshold ) ) {
 				// Record that we have updates to run.
 				update_option( 'ninja_forms_needs_updates', 1 );
 			} // Otherwise... (Sanity check)
@@ -867,6 +870,9 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             $migrations->migrate();
 
             if( Ninja_Forms()->form()->get_forms() ) return;
+
+            // Go ahead and create our randomn number for gated releases in the future
+            $zuul = WPN_Helper::get_zuul();
 
             // Assume we're on a clean installation.
             update_option( 'ninja_forms_data_is_clean', 'true' );
