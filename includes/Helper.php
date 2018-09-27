@@ -377,4 +377,43 @@ final class WPN_Helper
         }
     }
 
+    /**
+     * This funtion gets/creates the Ninja Forms gate keeper( a random integer 
+     * between 1 and 100 ). We will use this number when deciding whether a
+     * particular install is eligible for an upgrade or whatever else we decide
+     * to use it for
+     * 
+     * @return int $zuul
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     */
+    public static function get_zuul() {
+        $zuul = get_option( 'ninja_forms_zuul', -1 );
+
+        if( -1 === $zuul ) {
+            $zuul = rand( 1, 100 );
+            update_option( 'ninja_forms_zuul', $zuul, false );
+        }
+
+        return $zuul;
+    }
+
+    /**
+     * This function will return true/false based on an option( ninja_forms_zuul )
+     * and a threshold that we set. We can use this to limit updates
+     * 
+     * @param $threshold
+     * 
+     * @return bool
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     */
+    public static function gated_release( $threshold = 0 ) {
+        $gatekeeper = $threshold >= self::get_zuul();
+        $gatekeeper = apply_filters( 'ninja_forms_gatekeeper', $gatekeeper );
+        
+        return $gatekeeper;
+      }
+    
+
 } // End Class WPN_Helper
