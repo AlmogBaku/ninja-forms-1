@@ -165,6 +165,7 @@ class NF_Database_Migrations
         delete_option( 'ninja_forms_settings' );
         delete_option( 'ninja_forms_transactional_email_enabled' );
         delete_option( 'ninja_forms_version' );
+        delete_option( 'ninja_forms_zuul' );
 
         /* Delete possible options */
         $wpdb->query( "DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'wp_nf_%'" );
