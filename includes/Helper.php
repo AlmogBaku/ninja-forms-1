@@ -425,9 +425,9 @@ final class WPN_Helper
      *
      * @param $form_id - The ID of the form we are checking.
      *
-     * @return Array containing the maintenance mode bool value.
+     * @return boolean
      */
-    public static function is_maintenance( $form_id ) {
+    public static function form_in_maintenance( $form_id ) {
         global $wpdb;
 
         // Get our maintenance value from the DB and return it at the zero position.
@@ -435,13 +435,15 @@ final class WPN_Helper
             "SELECT `maintenance` FROM `{$wpdb->prefix}nf3_upgrades` WHERE `id` = {$form_id}", 'ARRAY_A'
         );
 
-        // If maintenance comes back empty...
-        if( empty( $maintenance ) ) {
-            // Set the maintenance position to 0.
-            $maintenance[ 'maintenance' ] = 0;
+        /*
+         *  If maintenance isn't empty and basic on maintenance's value
+         *  return a boolean value.
+         */
+        if( ! empty( $maintenance ) && 1 == $maintenance[ 'maintenance' ] ) {
+            return true;
+        } else {
+            return false;
         }
-
-        return $maintenance;
     }
 
 } // End Class WPN_Helper
