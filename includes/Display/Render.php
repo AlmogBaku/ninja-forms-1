@@ -108,6 +108,18 @@ final class NF_Display_Render
             }
         }
 
+        // Get our maintenance value out of the DB.
+        $maintenance = WPN_Helper::is_maintenance( $form_id );
+
+        // If maintenance isn't empty and the bool is set to 1 then..
+        if( ! empty( $maintenance ) && 1 == $maintenance[ 'maintenance' ] ) {
+            // ...return and echo out a message.
+            $maintenance_msg = _e( 'This form is currently under maintenance. Please try again later.', 'ninja-forms' );
+            // Allow the user to filter the maintenance message.
+            return apply_filters( 'nf_maintenance_message', $maintenance_msg);
+        }
+
+
         if( ! apply_filters( 'ninja_forms_display_show_form', true, $form_id, $form ) ) return;
 
         $currency = $form->get_setting( 'currency', Ninja_Forms()->get_setting( 'currency' ) );
