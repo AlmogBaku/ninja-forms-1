@@ -113,10 +113,12 @@ final class NF_Display_Render
 
         // If maintenance isn't empty and the bool is set to 1 then..
         if( ! empty( $maintenance ) && 1 == $maintenance[ 'maintenance' ] ) {
-            // ...return and echo out a message.
-            $maintenance_msg = _e( 'This form is currently under maintenance. Please try again later.', 'ninja-forms' );
-            // Allow the user to filter the maintenance message.
-            return apply_filters( 'nf_maintenance_message', $maintenance_msg);
+            // Set a filterable maintenance message and echo it out.
+            $maintenance_msg = apply_filters( 'nf_maintenance_message', __( 'This form is currently undergoing maintenance. Please try again later.', 'ninja-forms' ) );
+            echo $maintenance_msg;
+
+            // bail.
+            return false;
         }
 
 
