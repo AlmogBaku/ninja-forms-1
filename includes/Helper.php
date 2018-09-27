@@ -413,7 +413,37 @@ final class WPN_Helper
         $gatekeeper = apply_filters( 'ninja_forms_gatekeeper', $gatekeeper );
         
         return $gatekeeper;
-      }
-    
+    }
+
+    /**
+     * Is Maintenance
+     *
+     * Checks the upgrades table to see if the form the user is viewing
+     * is under maintenance mode.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     *
+     * @param $form_id - The ID of the form we are checking.
+     *
+     * @return boolean
+     */
+    public static function form_in_maintenance( $form_id ) {
+        global $wpdb;
+
+        // Get our maintenance value from the DB and return it at the zero position.
+        $maintenance = $wpdb->get_row(
+            "SELECT `maintenance` FROM `{$wpdb->prefix}nf3_upgrades` WHERE `id` = {$form_id}", 'ARRAY_A'
+        );
+
+        /*
+         *  If maintenance isn't empty and basic on maintenance's value
+         *  return a boolean value.
+         */
+        if( ! empty( $maintenance ) && 1 == $maintenance[ 'maintenance' ] ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 } // End Class WPN_Helper
