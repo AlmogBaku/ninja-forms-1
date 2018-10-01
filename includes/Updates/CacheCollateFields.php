@@ -125,6 +125,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * Sets up class vars that are used in subsequent methods.
          */
         $this->setup_vars();
+
+        $this->set_maintenance( $this->db->prefix, $this->form[ 'ID' ] );
         /**
          * Run SQL queries to delete fields if necessary.
          */
@@ -152,11 +154,16 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * If we're done with our step, runs cleanup instead.
          */
         $this->end_of_step();
+
+        $this->disable_maintenance( $this->db->prefix, $this->form[ 'ID' ] );
+
         /**
          * Respond to the AJAX call.
          */
         $this->respond();
     }
+
+
 
     /**
      * Function to run any setup steps necessary to begin processing.

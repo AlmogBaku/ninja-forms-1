@@ -185,4 +185,22 @@ abstract class NF_Abstracts_RequiredUpdate
             update_option( 'ninja_forms_required_updates', $updates );
         }
     }
+
+    public function set_maintenance( $prefix, $id )
+    {
+        $sql = $this->db->prepare( 'UPDATE `' . $prefix . 'nf3_upgrades` SET `maintenance` = 1 WHERE `id` = %d', $id );
+
+        $this->db->query( $sql );
+
+        return;
+    }
+
+    public function disable_maintenance( $prefix, $id )
+    {
+        $sql = $this->db->prepare( 'UPDATE `' . $prefix . 'nf3_upgrades` SET `maintenance` = 0 WHERE `id` = %d', $id );
+
+        $this->db->query( $sql );
+
+        return;
+    }
 }
