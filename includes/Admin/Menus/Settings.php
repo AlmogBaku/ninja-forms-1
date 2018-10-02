@@ -173,6 +173,7 @@ final class NF_Admin_Menus_Settings extends NF_Abstracts_Submenu
             'allow_telemetry' => $allow_tel,
         ));
         wp_enqueue_script( 'nf-ninja-modal', Ninja_Forms::$url . 'assets/js/lib/ninjaModal.js' );
+        wp_enqueue_script( 'nf-ninja-batch-processor', Ninja_Forms::$url . 'assets/js/lib/batch-processor.js' );
         wp_enqueue_style( 'nf-font-awesome', Ninja_Forms::$url . 'assets/css/font-awesome.min.css' );
 
 

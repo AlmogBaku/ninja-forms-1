@@ -40,6 +40,10 @@ class NF_AJAX_REST_BatchProcess extends NF_AJAX_REST_Controller
                     $batch = new NF_Admin_Processes_ExpiredSubmissionCleanup(
                         $request_data );
                     break;
+                case 'import_form':
+                    $batch = new NF_Admin_Processes_ImportForm(
+                        $request_data );
+                    break;
                 default:
                     $data[ 'error' ] = __( 'Invalid request.', 'ninja-forms' );
                     break;

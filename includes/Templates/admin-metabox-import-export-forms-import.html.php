@@ -1,4 +1,5 @@
 <div class="wrap">
+    <button id="nf-import-form" class="button-primary">Import</button>
 
     <form action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="nf_import_security" id="nf_import_security"

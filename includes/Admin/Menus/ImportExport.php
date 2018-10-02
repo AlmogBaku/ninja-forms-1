@@ -161,6 +161,24 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
 
 	    wp_enqueue_script( 'ninja_forms_admin_import_export' );
 
+        wp_localize_script( 'ninja_forms_admin_import_export', 'nf_settings', array(
+            'ajax_url'      => admin_url( 'admin-ajax.php' ),
+            'batch_nonce'   => wp_create_nonce( 'ninja_forms_batch_nonce' ),
+            'i18n'          => array(
+                'trashExpiredSubsMessage'          => __( 'Are you sure you want to trash all expired submissions?', 'ninja-forms' ),
+                'trashExpiredSubsButtonPrimary'    => __( 'Trash', 'ninja-forms' ),
+                'trashExpiredSubsButtonSecondary'  => __( 'Cancel', 'ninja-forms' ),
+            ),
+        ));
+
+        wp_enqueue_script( 'jBox', Ninja_Forms::$url . 'assets/js/lib/jBox.min.js', array( 'jquery' ) );
+        wp_enqueue_style( 'jBox', Ninja_Forms::$url . 'assets/css/jBox.css' );
+        wp_enqueue_script( 'nf-ninja-modal', Ninja_Forms::$url . 'assets/js/lib/ninjaModal.js', array( 'jquery' ) );
+        wp_enqueue_script( 'nf-batch-processor', Ninja_Forms::$url . 'assets/js/lib/batch-processor.js', array( 'jquery' ) );
+        wp_enqueue_style( 'nf-font-awesome', Ninja_Forms::$url . 'assets/css/font-awesome.min.css' );
+
+
+
         Ninja_Forms::template( 'admin-menu-import-export.html.php', compact( 'tabs', 'active_tab' ) );
     }
 

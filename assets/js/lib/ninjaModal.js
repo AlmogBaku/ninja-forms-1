@@ -280,7 +280,7 @@ NinjaModal.prototype.renderTitle = function () {
     // If we have a title...
     if ( '' != this.title ) {
         // Set our title.
-        this.popup.setTitle( this.title );
+        this.popup.setTitle( 'HELLO WORLD!' );
     }
 }
 
