@@ -37,13 +37,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         'seq_num'                   => 'seq_num',
     );
 
-    private $forms_db_bit_columns = array(
-        'show_title',
-        'clear_complete',
-        'hide_complete',
-        'logged_in',
-    );
-
     private $fields_db_columns = array(
         'parent_id'                 => 'parent_id',
         'id'                        => 'id',
@@ -59,11 +52,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         'personally_identifiable'   => 'personally_identifiable',
     );
 
-    private $fields_db_bit_columns = array(
-        'required',
-        'personally_identifiable',
-    );
-
     private $actions_db_columns = array(
         'title'                     => 'title',
         'key'                       =>'key',
@@ -74,8 +62,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         'updated_at'                =>'updated_at',
         'label'                     =>'label',
     );
-
-    private $db_stage_one_complete = true;
 
     /**
      * Constructor
@@ -154,13 +140,22 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             foreach( $this->form[ 'settings' ] as $meta_key => $meta_value ) {
                 $meta_value = maybe_serialize( $meta_value );
                 $wpdb->escape_by_ref( $meta_value );
-                $insert_values .= "( {$this->form[ 'ID' ]}, '{$meta_key}', '{$meta_value}', '{$meta_key}', '{$meta_value}' ),";
+                $insert_values .= "( {$this->form[ 'ID' ]}, '{$meta_key}', '{$meta_value}'";
+                if ( $this->form[ 'db_stage_one_complete'] ) {
+                    $insert_values .= ", '{$meta_key}', '{$meta_value}'";
+                }
+                $insert_values .= "),";
             }
 
             // Remove the trailing comma.
             $insert_values = rtrim( $insert_values, ',' );
+            $insert_columns = '`parent_id`, `key`, `value`';
+            if ( $this->form[ 'db_stage_one_complete'] ) {
+                $insert_columns .= ', `meta_key`, `meta_value`';
+            }
+            
             // Create SQL string.
-            $sql = "INSERT INTO {$wpdb->prefix}nf3_form_meta ( `parent_id`, `key`, `value`, `meta_key`, `meta_value` ) VALUES {$insert_values}";
+            $sql = "INSERT INTO {$wpdb->prefix}nf3_form_meta ( {$insert_columns} ) VALUES {$insert_values}";
             // Run our SQL query.
             $wpdb->query( $sql );
 
@@ -204,13 +199,21 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 foreach ( $action_meta as $meta_key => $meta_value ) {
                     $meta_value = maybe_serialize( $meta_value );
                     $wpdb->escape_by_ref( $meta_value );
-                    $insert_values .= "( {$action_id}, '{$meta_key}', '{$meta_value}', '{$meta_key}', '{$meta_value}' ),";
+                    $insert_values .= "( {$action_id}, '{$meta_key}', '{$meta_value}'";
+                    if ( $this->form[ 'db_stage_one_complete'] ) {
+                        $insert_values .= ", '{$meta_key}', '{$meta_value}'";
+                    }
+                    $insert_values .= "),";
                 }
                 
                 // Remove the trailing comma.
                 $insert_values = rtrim( $insert_values, ',' );
+                $insert_columns = '`parent_id`, `key`, `value`';
+                if ( $this->form[ 'db_stage_one_complete'] ) {
+                    $insert_columns .= ', `meta_key`, `meta_value`';
+                }
                 // Create SQL string.
-                $sql = "INSERT INTO {$wpdb->prefix}nf3_action_meta ( `parent_id`, `key`, `value`, `meta_key`, `meta_value` ) VALUES {$insert_values}";
+                $sql = "INSERT INTO {$wpdb->prefix}nf3_action_meta ( {$insert_columns} ) VALUES {$insert_values}";
 
                 // Run our SQL query.
                 $wpdb->query( $sql );
@@ -219,6 +222,18 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             // Remove our settings and actions array items.
             unset( $this->form[ 'settings' ], $this->form[ 'actions' ] );
         } else { // We have a form ID set.
+            // Remove new field table columns if we haven't completed stage one of our DB conversion.
+            if ( ! $this->form[ 'db_stage_one_complete' ] ) {
+                // Remove field columns added after stage one.
+                unset( $this->fields_db_columns[ 'field_key' ] );
+                unset( $this->fields_db_columns[ 'field_label' ] );
+                unset( $this->fields_db_columns[ 'order' ] );
+                unset( $this->fields_db_columns[ 'required' ] );
+                unset( $this->fields_db_columns[ 'default_value' ] );
+                unset( $this->fields_db_columns[ 'label_pos' ] );
+                unset( $this->fields_db_columns[ 'personally_identifiable' ] );
+            }
+
             /**
              * If we have a Form ID set, then we've already inserted our Form, Form Meta, Actions, and Action Meta.
              * All we have left to insert are fields.
@@ -277,13 +292,21 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 foreach ( $field_meta as $meta_key => $meta_value ) {
                     $meta_value = maybe_serialize( $meta_value );
                     $wpdb->escape_by_ref( $meta_value );
-                    $insert_values .= "( {$field_id}, '{$meta_key}', '{$meta_value}', '{$meta_key}', '{$meta_value}' ),";
+                    $insert_values .= "( {$field_id}, '{$meta_key}', '{$meta_value}'";
+                    if ( $this->form[ 'db_stage_one_complete'] ) {
+                        $insert_values .= ", '{$meta_key}', '{$meta_value}'";
+                    }
+                    $insert_values .= "),";
                 }
                 
                 // Remove the trailing comma.
                 $insert_values = rtrim( $insert_values, ',' );
+                $insert_columns = '`parent_id`, `key`, `value`';
+                if ( $this->form[ 'db_stage_one_complete'] ) {
+                    $insert_columns .= ', `meta_key`, `meta_value`';
+                }
                 // Create SQL string.
-                $sql = "INSERT INTO {$wpdb->prefix}nf3_field_meta ( `parent_id`, `key`, `value`, `meta_key`, `meta_value` ) VALUES {$insert_values}";
+                $sql = "INSERT INTO {$wpdb->prefix}nf3_field_meta ( {$insert_columns} ) VALUES {$insert_values}";
 
                 // Run our SQL query.
                 $wpdb->query( $sql );
@@ -295,6 +318,8 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
         // If we don't have any more fields to insert, we're done.
         if ( empty( $this->form[ 'fields' ] ) ) {
+            // Update our form cache for the new form.
+            WPN_Helper::build_nf_cache( $this->form[ 'ID' ] );
             // Run our cleanup process.
             $this->cleanup();
         } else { // We have fields left to process.
@@ -345,19 +370,14 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
          * Also, set our db stage 1 tracker to false.
          */
         if ( empty ( $results ) ) {
-            unset( $this->fields_db_columns[ 'field_key' ] );
-            unset( $this->fields_db_columns[ 'field_label' ] );
-            unset( $this->fields_db_columns[ 'order' ] );
-            unset( $this->fields_db_columns[ 'required' ] );
-            unset( $this->fields_db_columns[ 'default_value' ] );
-            unset( $this->fields_db_columns[ 'label_pos' ] );
-            unset( $this->fields_db_columns[ 'personally_identifiable' ] );
-
-            $this->db_stage_one_complete = false;
+            unset( $this->actions_db_columns[ 'label' ] );
+            $db_stage_one_complete = false;
+        } else {
+            // Add a form value that stores whether or not we have our new DB columns.
+            $db_stage_one_complete = true;            
         }
 
-        // Add a form value that stores whether or not we have our new DB columns.
-        $this->form[ 'stage_one_complete' ] = $this->db_stage_one_complete;
+        $this->form[ 'stage_one_complete' ] = $db_stage_one_complete;
 
         add_option( 'nf_doing_' . $this->_slug, 'true', false );
     }
