@@ -446,4 +446,27 @@ final class WPN_Helper
         }
     }
 
+    /**
+     * This function either put all forms in maintenance mode or remove maintenance
+     * mode for all forms. Depending on the input parameters
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     * 
+     * @param $mode - Default 0 ( Take all forms out of maintenance mode )
+     */
+    public static function set_forms_maintenance_mode( $mode = 0 ) {
+        global $wpdb;
+
+        // default is 0, so if we get passed bad data, just use 0
+        if( ! in_array( $mode, array( 0, 1 ) ) ) {
+            $mode = 0;
+        }
+
+        // set maintenance flag to $mode (0 or 1)
+        $sql = $wpdb->prepare( "UPDATE `{$wpdb->prefix}nf3_upgrades` SET "
+            . "maintenance = %d", intval( $mode ) );
+        
+        $wpdb->query( $sql );
+    }
+
 } // End Class WPN_Helper
