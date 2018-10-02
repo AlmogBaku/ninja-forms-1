@@ -125,6 +125,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * Sets up class vars that are used in subsequent methods.
          */
         $this->setup_vars();
+
+
         /**
          * Run SQL queries to delete fields if necessary.
          */
@@ -152,11 +154,16 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
          * If we're done with our step, runs cleanup instead.
          */
         $this->end_of_step();
+
+
+
         /**
          * Respond to the AJAX call.
          */
         $this->respond();
     }
+
+
 
     /**
      * Function to run any setup steps necessary to begin processing.
@@ -257,6 +264,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
     {
         // Set the form we're currently working with.
         $this->form = array_pop( $this->running[ 0 ][ 'forms' ] );
+        // Enable maintenance mode on the front end when the fields start processing.
+        $this->enable_maintenance_mode( $this->db->prefix, $this->form[ 'ID' ] );
 
         // Get the fields for our form from the cache.
         $form_cache = WPN_Helper::get_nf_cache( $this->form[ 'ID' ] );
@@ -686,6 +695,8 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
         } else { // Otherwise... (The step is complete.)
             // Increment our step count.
             $this->running[ 0 ][ 'current' ] = intval( $this->running[ 0 ][ 'current' ] ) + 1;
+            // Disable maintenance mode on the front end of the site.
+            $this->disable_maintenance_mode( $this->db->prefix, $this->form[ 'ID' ] );
         }
 
         // Prepare to output our number of steps and current step.

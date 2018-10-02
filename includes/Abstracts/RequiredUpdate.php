@@ -185,4 +185,38 @@ abstract class NF_Abstracts_RequiredUpdate
             update_option( 'ninja_forms_required_updates', $updates );
         }
     }
+
+    /**
+     * Enable Maintenance mode
+     * Enables maintenance mode so the form will not render on the front end while updates are running.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     *
+     * @param $prefix - the db prefix.
+     * @param $form_id - The id of the form.
+     */
+    public function enable_maintenance_mode( $prefix, $form_id )
+    {
+        // Change maintenance column value to 1, run the query and then return.
+        $sql = $this->db->prepare( 'UPDATE `' . $prefix . 'nf3_upgrades` SET `maintenance` = 1 WHERE `id` = %d', $form_id );
+        $this->db->query( $sql );
+        return;
+    }
+
+    /**
+     * Disable Maintenance Mode
+     * Disables maintenance mode, so the form will be displayed on the front end..
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     *
+     * @param $prefix - the db prefix.
+     * @param $form_id - The id of the form.
+     */
+    public function disable_maintenance_mode( $prefix, $form_id )
+    {
+        // Change maintenance column value to 0, run the query and then return.
+        $sql = $this->db->prepare( 'UPDATE `' . $prefix . 'nf3_upgrades` SET `maintenance` = 0 WHERE `id` = %d', $form_id );
+        $this->db->query( $sql );
+        return;
+    }
 }
