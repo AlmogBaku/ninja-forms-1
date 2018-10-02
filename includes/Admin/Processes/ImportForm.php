@@ -13,6 +13,8 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
     private $fields_per_step = 20;
 
+    private $form;
+
     /**
      * Store an array of columns that we want to store in our table rather than meta.
      *
