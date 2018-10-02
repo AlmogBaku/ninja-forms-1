@@ -5,9 +5,6 @@
  */
 class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 {
-
-    protected $expired_subs = array();
-
     private $response = array(
         'batch_complete' => false
     );
