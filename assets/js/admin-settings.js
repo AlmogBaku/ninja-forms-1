@@ -361,4 +361,38 @@ jQuery(document).ready(function($) {
 
     	var deleteModal = new NinjaModal( data );
 	});
+
+	jQuery( '#nfRemoveMaintenanceMode' ).click( function( e ) {
+
+		var that = this;
+
+		jQuery( this ).addClass( 'disabled' ).attr( 'disabled', 'disabled' );
+		jQuery( '#nf_maintenanceModeProgress' ).html("<strong>Removing Maintenance Mode...</strong>" );
+		jQuery( '#nf_maintenanceModeProgress' ).fadeIn( 1 );
+		
+		var data = {
+			action: 'nf_remove_maintenance_mode',
+			security: nf_settings.nonce,
+		};
+		$.post(
+			nf_settings.ajax_url,
+			data
+		).then (function( response ) {
+			response = JSON.parse( response );
+			// if there are errors then, console it out
+			if( response.data.errors ) {
+				console.log( response.data.errors );
+			}
+
+			jQuery( that ).removeClass( 'disabled' ).removeAttr( 'disabled' );
+			jQuery( '#nf_maintenanceModeProgress' ).html("<strong>Done.</strong>" );
+			jQuery( '#nf_maintenanceModeProgress' ).fadeOut( 600 );
+
+		} ).fail( function( xhr, status, error ) {
+			// writes error messages to console to help us debug
+			console.log( xhr.status + ' ' + error + '\r\n' +
+				'There was an error resetting maintenance mode' );
+		});
+
+	} );
 });
