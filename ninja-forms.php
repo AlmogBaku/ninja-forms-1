@@ -982,6 +982,20 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                                 if ( ! isset( $updates[ $requirement ] ) ) {
                                     // unset the update b/c we are missing requirements
                                     unset( $updates[ $slug ] );
+
+                                    $nf_bad_update_transient = get_transient( 'nf_bad_update_requirement' );
+
+                                    if( ! $nf_bad_update_transient ) { 
+                                        // send telemetry so we can keep up with these
+                                        Ninja_Forms()->dispatcher()->send( 'incomplete_update',
+                                            array( 
+                                                    'update' => $slug,
+                                                    'missing_requirement' => $requirement 
+                                                )
+                                        );
+
+                                        set_transient( 'nf_bad_update_requirement', $requirement, 30 * 3600 );
+                                    }
                                 }
                                 // If the requirement has already been added to the stack...
                                 if ( in_array( $requirement, $queue ) ) {
