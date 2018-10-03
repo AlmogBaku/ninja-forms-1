@@ -5,15 +5,15 @@
  */
 class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 {
-    private $response = array(
+    protected $response = array(
         'batch_complete' => false
     );
 
-    private $_slug = 'import_form';
+    protected $_slug = 'import_form';
 
     private $fields_per_step = 20;
 
-    private $form;
+    protected $form;
 
     /**
      * Store an array of columns that we want to store in our table rather than meta.
@@ -36,7 +36,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         'seq_num'                   => 'seq_num',
     );
 
-    private $fields_db_columns = array(
+    protected $fields_db_columns = array(
         'parent_id'                 => 'parent_id',
         'id'                        => 'id',
         'key'                       => 'key',
@@ -51,7 +51,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         'personally_identifiable'   => 'personally_identifiable',
     );
 
-    private $actions_db_columns = array(
+    protected $actions_db_columns = array(
         'title'                     => 'title',
         'key'                       =>'key',
         'type'                      =>'type',
@@ -136,6 +136,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
              * Add them to our "Values" string for insertion later.
              */
             $insert_values = '';
+
             foreach( $this->form[ 'settings' ] as $meta_key => $meta_value ) {
                 $meta_value = maybe_serialize( $meta_value );
                 $wpdb->escape_by_ref( $meta_value );
@@ -334,8 +335,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             update_option( 'nf_import_form', $this->form, false );
         }
 
-        echo wp_json_encode( $this->response );
-        wp_die();
+        $this->respond();
     }
 
     /**
@@ -345,9 +345,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
     {
         global $wpdb;
 
+        // If we aren't passed any form content, bail.
+        if ( empty ( $_POST[ 'extraData' ][ 'content' ] ) ) {
+            $this->cleanup();
+            $this->respond();
+        }
+
         $data = explode( ';base64,', $_POST[ 'extraData' ][ 'content' ] );
         $data = base64_decode( $data[ 1 ] );
-        $data = json_decode( $data, true );
+        // $data = WPN_Helper::utf8_decode( json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data ) ), true ) );
+        $data = json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data ) ), true );
 
         // $data is now a form array.
         $this->form = $data;
@@ -392,6 +399,8 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
         // Tell our JS that we're done.
         $this->response[ 'batch_complete' ] = true;
+        // Return our new Form ID
+        $this->response[ 'form_id' ] = $this->form[ 'ID' ];
     }
 
     /*

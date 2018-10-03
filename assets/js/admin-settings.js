@@ -299,7 +299,7 @@ jQuery(document).ready(function($) {
     		btnPrimaryText: nf_settings.i18n.trashExpiredSubsButtonPrimary,
     		btnSecondaryText: nf_settings.i18n.trashExpiredSubsButtonSecondary,
     		batch_type: 'expired_submission_cleanup',
-    		extraData: [ 'test1', 'test2', 'test3' ]
+    		// extraData: [ 'test1', 'test2', 'test3' ]
     	}
     	new NinjaBatchProcessor( settings );
 	});

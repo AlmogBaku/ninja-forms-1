@@ -161,9 +161,9 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
 
 	    wp_enqueue_script( 'ninja_forms_admin_import_export' );
 
-        wp_localize_script( 'ninja_forms_admin_import_export', 'nf_settings', array(
+        wp_localize_script( 'ninja_forms_admin_import_export', 'nfAdmin', array(
             'ajax_url'      => admin_url( 'admin-ajax.php' ),
-            'batch_nonce'   => wp_create_nonce( 'ninja_forms_batch_nonce' ),
+            'batchNonce'   => wp_create_nonce( 'ninja_forms_batch_nonce' ),
             'i18n'          => array(
                 'trashExpiredSubsMessage'          => __( 'Are you sure you want to trash all expired submissions?', 'ninja-forms' ),
                 'trashExpiredSubsButtonPrimary'    => __( 'Trash', 'ninja-forms' ),

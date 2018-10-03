@@ -155,6 +155,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             wp_enqueue_script( 'backbone-marionette-3', Ninja_Forms::$url . 'assets/js/lib/backbone.marionette3.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'nf-jbox', Ninja_Forms::$url . 'assets/js/lib/jBox.min.js', array( 'jquery' ) );
             wp_enqueue_script( 'nf-ninjamodal', Ninja_Forms::$url . 'assets/js/lib/ninjaModal.js', array( 'jquery' ) );
+            wp_enqueue_script( 'nf-batch-processor', Ninja_Forms::$url . 'assets/js/lib/batch-processor.js', array( 'nf-ninjamodal' ) );
             wp_enqueue_script( 'nf-moment', Ninja_Forms::$url . 'assets/js/lib/moment-with-locales.min.js', array( 'jquery', 'nf-dashboard' ) );
             wp_enqueue_script( 'nf-dashboard', Ninja_Forms::$url . 'assets/js/min/dashboard.min.js', array( 'backbone-radio', 'backbone-marionette-3' ) );
 
@@ -172,6 +173,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
                 'doingCleanup'      => ( ! get_option( 'ninja_forms_data_is_clean' ) &&
                                         isset( $_REQUEST[ 'action' ] ) &&
                                         'cleanup' == $_REQUEST[ 'action' ] ) ? 1 : 0,
+                'builderURL'        => admin_url( 'admin.php?page=ninja-forms&form_id=' ),
             ) );
 
             wp_enqueue_style( 'nf-builder', Ninja_Forms::$url . 'assets/css/builder.css' );
@@ -192,6 +194,11 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         add_submenu_page( 'ninja-forms', '', '', 'read', '', '' );
     }
 
+    /**
+     * TODO: Remove this function and its hook because we are handling template imports via the batch processor.
+     * @since  3.0
+     * @return void
+     */
     private function import_from_template()
     {
         $template = sanitize_title( $_GET['form_id'] );

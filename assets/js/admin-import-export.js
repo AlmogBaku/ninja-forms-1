@@ -19,17 +19,26 @@ jQuery( document ).ready( function( $ ) {
 	 * @param  object e	Click Event
 	 * @return void
 	 */
-	$( document ).on( 'click', '#nf-import-form', function( e ) {
+	$( document ).on( 'click', '#nf-import-form-submit', function( e ) {
+		// Make sure that our file field isn't empty.
+		if ( '' == importFormFile.name ) return false;
+
 		// Settings object for our batch processor
 		var settings = {
-			// Initial content for the popup modal
-    		content: '<h3>Select a file</h3><p><input id="nf-import-file" type="file" /></p>',
-    		btnPrimaryText: 'Import!',
-    		btnSecondaryText: 'Cancel',
-    		// Batch processor slug. Must match what we have set in our PHP settings array.
-    		batch_type: 'import_form',
-    		extraData: importFormFile
+			batch_type: 'import_form',
+    		extraData: importFormFile,
+    		loadingText: 'Importing...',
+    		onCompleteCallback: function( response ) {
+    			// If we don't get back a form ID, then bail.
+    			if ( 'undefined' == typeof response.form_id ) return false;
+
+    			jQuery( '#nf-import-file' ).val('');
+    			var url = jQuery( '#nf-import-url' ).attr( 'href' );
+    			jQuery( '#nf-import-url' ).attr( 'href', url + response.form_id );
+    			jQuery( '#row-nf-import-response' ).show();
+    		}
     	}
+
     	/**
     	 * Instantiate our batch processor.
     	 *
@@ -53,6 +62,11 @@ jQuery( document ).ready( function( $ ) {
 	 * @return {[type]}             [description]
 	 */
 	$( document ).on( 'change', '#nf-import-file', function( e ) {
+		// Hide our success message.
+		jQuery( '#row-nf-import-response' ).hide();
+		// Hide our extension type error.
+		jQuery( '#row-nf-import-type-error' ).hide();
+
 		// Grab the file from the input.
 		var file = e.target.files[0];
 		// If our file var is empty, bail.
@@ -63,14 +77,12 @@ jQuery( document ).ready( function( $ ) {
 		// Use some Regex to get the extension
 		var extension = file.name.match(/\.[0-9a-z]+$/i);
 
-		// If we don't have a .nff extension, bail.
+		// If we don't have a .nff extension, show our type error and bail.
 		if ( '.nff' !== extension[0] ) {
+			jQuery( '#row-nf-import-type-error' ).show();
 			return false;
 		}
 		
-		// Disable the primary button for our batch processing modal.
-		jQuery( '#nf-button-primary-1' ).hide();
-
 		// Instantiate the HTML5 FileReader API.
 		var reader  = new FileReader();
 
@@ -83,7 +95,6 @@ jQuery( document ).ready( function( $ ) {
 		reader.addEventListener( 'load', function () {
 			importFormFile.name = file.name;
 			importFormFile.content = reader.result;
-			jQuery( '#nf-button-primary-1' ).show();
 		}, false);
 
 		// Use the readAsDataURL method of the FileReader API.

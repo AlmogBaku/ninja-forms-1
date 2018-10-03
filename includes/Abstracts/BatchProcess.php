@@ -49,4 +49,10 @@ abstract class NF_Abstracts_BatchProcess
          */
     }
 
+    public function respond()
+    {
+        echo wp_json_encode( $this->response );
+        wp_die();
+    }
+
 }
