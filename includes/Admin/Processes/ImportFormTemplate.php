@@ -65,7 +65,7 @@ class NF_Admin_Processes_ImportFormTemplate extends NF_Admin_Processes_ImportFor
             $db_stage_one_complete = true;            
         }
 
-        $this->form[ 'stage_one_complete' ] = $db_stage_one_complete;
+        $this->form[ 'db_stage_one_complete' ] = $db_stage_one_complete;
 
         add_option( 'nf_doing_' . $this->_slug, 'true', false );
     }
