@@ -252,7 +252,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 if ( ! isset ( $this->form[ 'fields' ][ $i ] ) ) continue;
 
                 $field_settings = $this->form[ 'fields' ][ $i ];
-
                 $field_settings[ 'parent_id' ] = $this->form[ 'ID' ];
                 // Array that tracks which settings need to be meta and which are columns.
                 $field_meta = $field_settings;
@@ -266,9 +265,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                     } else {
                         array_push( $insert_columns_types, '%s' );
                     }
-
-                    // Remove this setting from our action meta tracking array.
-                    // unset( $field_meta[ $column_name ] );
                 }
 
                 // Add our field to the database.
@@ -359,6 +355,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         // Try to utf8 decode our results.
         $data = WPN_Helper::utf8_decode( $decoded_data );
 
+        // If json_encode returns false, then this is an invalid utf8 decode.
         if ( ! json_encode( $data ) ) {
             $data = $decoded_data;
         }
@@ -376,7 +373,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
          */
         $sql = "SHOW COLUMNS FROM {$wpdb->prefix}nf3_fields LIKE 'field_key'";
         $results = $wpdb->get_results( $sql );
-        
+
         /**
          * If we don't have the field_key column, we need to remove our new columns.
          *
@@ -390,7 +387,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $db_stage_one_complete = true;            
         }
 
-        $this->form[ 'stage_one_complete' ] = $db_stage_one_complete;
+        $this->form[ 'db_stage_one_complete' ] = $db_stage_one_complete;
 
         add_option( 'nf_doing_' . $this->_slug, 'true', false );
     }

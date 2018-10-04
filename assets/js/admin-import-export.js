@@ -79,6 +79,8 @@ jQuery( document ).ready( function( $ ) {
 		// If we don't have a .nff extension, show our type error and bail.
 		if ( '.nff' !== extension[0] ) {
 			jQuery( '#row-nf-import-type-error' ).show();
+			importFormFile.name = '';
+			importFormFile.content = '';
 			return false;
 		}
 		
