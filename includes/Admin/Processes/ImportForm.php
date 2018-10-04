@@ -88,7 +88,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         } // Otherwise... (We've already run startup.)
         else {
             // Get our remaining fields from the database.
-            $data = get_option( 'nf_import_form', $this->form );
+            $data = get_option( 'nf_import_form', $this->form, false );
             $this->form = $data;
         }
 
@@ -331,8 +331,9 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $this->form[ 'fields' ] = array_values( $this->form[ 'fields' ] );
             // Get the number of steps we have left. 
             $this->response[ 'step_remaining' ] = $this->get_steps();
+            
             // Save our progress.
-            update_option( 'nf_import_form', $this->form, false );
+            update_option( 'nf_import_form', $this->form, 'no' );
         }
 
         $this->respond();
@@ -353,8 +354,14 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
         $data = explode( ';base64,', $_POST[ 'extraData' ][ 'content' ] );
         $data = base64_decode( $data[ 1 ] );
-        // $data = WPN_Helper::utf8_decode( json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data ) ), true ) );
-        $data = json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data ) ), true );
+        $decoded_data = json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data ) ), true );
+        
+        // Try to utf8 decode our results.
+        $data = WPN_Helper::utf8_decode( $decoded_data );
+
+        if ( ! json_encode( $data ) ) {
+            $data = $decoded_data;
+        }
 
         // $data is now a form array.
         $this->form = $data;
