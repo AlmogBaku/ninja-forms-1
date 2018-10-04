@@ -68,12 +68,12 @@ jQuery(document).ready(function($) {
 	downgradeInput.style.width 			= '100%';
 	downgradeInput.style.height 		= '3em';
 	downgradeCTA 						= document.createElement( 'p' );
-	downgradeCTA.innerHTML 				= nf_settings.i18n.downgradeConfirmMessage;
+	downgradeCTA.innerHTML 				= nfAdmin.i18n.downgradeConfirmMessage;
 	downgradeWarning 					= document.createElement( 'p' );
-	downgradeWarning.innerHTML 			= nf_settings.i18n.downgradeWarningMessage;
+	downgradeWarning.innerHTML 			= nfAdmin.i18n.downgradeWarningMessage;
 	downgradeWarning.style.color 		= 'red';
 	downgradeTitle 						= document.createElement( 'h3' );
-	downgradeTitle.innerHTML 			= nf_settings.i18n.downgradeMessage;
+	downgradeTitle.innerHTML 			= nfAdmin.i18n.downgradeMessage;
 	downgradeContainer 					= document.createElement( 'div' );
 	downgradeContainer.appendChild( downgradeTitle );
     downgradeContainer.appendChild( downgradeWarning );
@@ -105,20 +105,20 @@ jQuery(document).ready(function($) {
 		var last_form = 0;
 		// Gives the user confidence things are happening
 	    $( '#progressMsg' ).html( 'Deleting submissions for '
-	        + nf_settings.forms[ formIndex ].title + "" + ' ( ID: '
-	        + nf_settings.forms[ formIndex ].id + ' )' );
+	        + nfAdmin.forms[ formIndex ].title + "" + ' ( ID: '
+	        + nfAdmin.forms[ formIndex ].id + ' )' );
 		$( '#progressMsg').show();
 		// notify php this is the last one so it delete data and deactivate NF
-	    if( formIndex === nf_settings.forms.length - 1 ) {
+	    if( formIndex === nfAdmin.forms.length - 1 ) {
 	    	last_form = 1;
 	    }
 	    // do this deletion thang
 		$.post(
-			nf_settings.ajax_url,
+			nfAdmin.ajax_url,
 			{
 				'action': 'nf_delete_all_data',
-				'form': nf_settings.forms[ formIndex ].id,
-				'security': nf_settings.nonce,
+				'form': nfAdmin.forms[ formIndex ].id,
+				'security': nfAdmin.nonce,
 				'last_form': last_form
 			}
 		).then (function( response ) {
@@ -126,7 +126,7 @@ jQuery(document).ready(function($) {
 			response = JSON.parse( response );
 			// we expect success and then move to the next form
 			if( response.data.success ) {
-				if( formIndex < nf_settings.forms.length ) {
+				if( formIndex < nfAdmin.forms.length ) {
 					doAllDataDeletions( formIndex )
 				} else {
 					// if we're finished deleting data then redirect to plugins
@@ -139,7 +139,7 @@ jQuery(document).ready(function($) {
 			// writes error messages to console to help us debug
 			console.log( xhr.status + ' ' + error + '\r\n' +
 				'There was an error deleting submissions for '
-					+ nf_settings.forms[ formIndex ].title );
+					+ nfAdmin.forms[ formIndex ].title );
 		});
 	};
 	// Add event listener for delete button
@@ -176,10 +176,10 @@ jQuery(document).ready(function($) {
             'field': {
                 id: $( that ).data( 'id' )
             },
-            'security': nf_settings.nonce
+            'security': nfAdmin.nonce
         };
 
-        $.post( nf_settings.ajax_url, data )
+        $.post( nfAdmin.ajax_url, data )
             .done( function( response ) {
                 $( that ).closest( 'tr').fadeOut().remove();
             });
@@ -194,7 +194,7 @@ jQuery(document).ready(function($) {
 			// TODO: Maybe this should be build using DOM node construction?
             content: downgradeContainer.innerHTML,
             btnPrimary: {
-                text: nf_settings.i18n.downgradeButtonPrimary,
+                text: nfAdmin.i18n.downgradeButtonPrimary,
 				class: 'nfDowngradeButtonPrimary',
                 callback: function( e ) {
                 	// If our "Downgrade" button does not have have an attribute of disabled...
@@ -210,7 +210,7 @@ jQuery(document).ready(function($) {
                 }
             },
             btnSecondary: {
-                text: nf_settings.i18n.downgradeButtonSecondary,
+                text: nfAdmin.i18n.downgradeButtonSecondary,
 				class: 'nfDowngradeButtonSecondary',
                 callback: function( e ) {
                 	// Close the modal if this button is clicked.
@@ -256,7 +256,7 @@ jQuery(document).ready(function($) {
 	} );
     
     // If we're allowed to track site data...
-    if ( '1' == nf_settings.allow_telemetry ) {
+    if ( '1' == nfAdmin.allow_telemetry ) {
         // Show the optout button.
         $( '#nfTelOptin' ).addClass( 'hidden' );
         $( '#nfTelOptout' ).removeClass( 'hidden' );
@@ -295,9 +295,9 @@ jQuery(document).ready(function($) {
 
     jQuery( '#nfTrashExpiredSubmissions' ).click( function( e ) {
     	var settings = {
-    		content: '<p>' + nf_settings.i18n.trashExpiredSubsMessage + '</p>',
-    		btnPrimaryText: nf_settings.i18n.trashExpiredSubsButtonPrimary,
-    		btnSecondaryText: nf_settings.i18n.trashExpiredSubsButtonSecondary,
+    		content: '<p>' + nfAdmin.i18n.trashExpiredSubsMessage + '</p>',
+    		btnPrimaryText: nfAdmin.i18n.trashExpiredSubsButtonPrimary,
+    		btnSecondaryText: nfAdmin.i18n.trashExpiredSubsButtonSecondary,
     		batch_type: 'expired_submission_cleanup',
     		// extraData: [ 'test1', 'test2', 'test3' ]
     	}
