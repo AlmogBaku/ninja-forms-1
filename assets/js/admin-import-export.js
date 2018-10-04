@@ -32,9 +32,8 @@ jQuery( document ).ready( function( $ ) {
     			// If we don't get back a form ID, then bail.
     			if ( 'undefined' == typeof response.form_id ) return false;
 
-    			jQuery( '#nf-import-file' ).val('');
-    			var url = jQuery( '#nf-import-url' ).attr( 'href' );
-    			jQuery( '#nf-import-url' ).attr( 'href', url + response.form_id );
+    			jQuery( '#nf-import-file' ).val('');;
+    			jQuery( '#nf-import-url' ).attr( 'href', nfAdmin.builderURL + response.form_id );
     			jQuery( '#row-nf-import-response' ).show();
     		}
     	}

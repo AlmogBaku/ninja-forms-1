@@ -3,7 +3,7 @@
         <tbody>
             <tr id="row-nf-import-response" style="display:none;background-color:#ffc;">
                 <th></th>
-                <td><?php printf( __( 'Form Imported Successfully. %sView Form%s', 'ninja-forms' ), '<a id="nf-import-url" href="' . admin_url( 'admin.php?page=ninja-forms&form_id=' ) . '">', '</a>' ); ?></td>
+                <td><?php printf( __( 'Form Imported Successfully. %sView Form%s', 'ninja-forms' ), '<a id="nf-import-url" href="#">', '</a>' ); ?></td>
             </tr>
             <tr id="row_nf_import_form">
                 <th scope="row">
