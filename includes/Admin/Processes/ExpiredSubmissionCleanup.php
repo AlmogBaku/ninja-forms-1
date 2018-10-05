@@ -13,9 +13,6 @@ class NF_Admin_Processes_ExpiredSubmissionCleanup extends NF_Abstracts_BatchProc
      */
     public function startup()
     {
-        // This die() causes the batch modal to stay visible.
-        // Remove in production.
-        die();
         // Retrieves the option that contains all of our expiration data.
         $expired_sub_option = get_option( 'nf_sub_expiration', array() );
 
