@@ -272,13 +272,8 @@ NinjaModal.prototype.renderContent = function () {
             this.buttons.primary.dom.onclick = this.buttons.primary.callback;
             this.buttons.secondary.dom.onclick = this.buttons.secondary.callback;
         }
-    } else if ( this.onOpenCallback ) {
-        
-        // this.popup.onOpen = function() {
-        //     console.log( 'still got it' );
-        //     this.onOpenCallback();
-        // }
     }
+    
     // Set our content.
     this.popup.setContent( document.createElement( 'div' ).appendChild( contentBox ).parentElement.innerHTML );
 }
