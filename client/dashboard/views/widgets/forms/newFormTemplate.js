@@ -22,7 +22,7 @@ define( [], function() {
          */
         maybeOpenModal: function( e ) {
             e.preventDefault();
-            // If this isn't an ad, then early return
+            // If this is an ad, open the ad modal.
             if ( 'ad' == this.model.get( 'type' ) ) {
                 // Open our jBox modal
                 var modal = new jBox( 'Modal', {
@@ -34,7 +34,7 @@ define( [], function() {
                 } );
 
                 modal.open();
-            } else {
+            } else { // This is a template, so import it using the batch processor.
                 // Settings object for our batch processor
                 var settings = {
                     // Batch processor slug. Must match what we have set in our PHP settings array.
@@ -52,7 +52,7 @@ define( [], function() {
                 /**
                  * Instantiate our batch processor.
                  *
-                 * This will open the modal and present the user with content and buttons.
+                 * This will open the modal and present the user with content.
                  */
                 new NinjaBatchProcessor( settings );                
             }        	
