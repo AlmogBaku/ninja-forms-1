@@ -32,6 +32,12 @@ class NF_Admin_Processes_ExpiredSubmissionCleanup extends NF_Abstracts_BatchProc
         }
     }
 
+    /**
+     * Function to run any setup steps necessary to begin processing for steps after the first.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
+     */
     public function restart()
     {
         // Get our remaining submissions from record.
@@ -40,6 +46,9 @@ class NF_Admin_Processes_ExpiredSubmissionCleanup extends NF_Abstracts_BatchProc
 
     /**
      * Function to loop over the batch.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
      */
     public function process()
     {
@@ -68,16 +77,20 @@ class NF_Admin_Processes_ExpiredSubmissionCleanup extends NF_Abstracts_BatchProc
 
     /**
      * Function to cleanup any lingering temporary elements of a batch process after completion.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
      */
     public function cleanup()
     {
         delete_option( 'nf_expired_submissions' );
     }
 
-    /*
+    /**
      * Get Steps
      * Determines the amount of steps needed for the step processors.
      *
+     * @since UPDATE_VERSION_ON_MERGE
      * @return int of the number of steps.
      */
     public function get_steps()

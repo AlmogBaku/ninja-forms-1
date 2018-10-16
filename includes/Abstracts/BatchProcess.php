@@ -88,7 +88,7 @@ abstract class NF_Abstracts_BatchProcess
     }
 
     /**
-     * Function to run any setup steps necessary to begin processing.
+     * Function to run any setup steps necessary to begin processing for steps after the first.
      *
      * @since UPDATE_VERSION_ON_MERGE
      * @return  void 
