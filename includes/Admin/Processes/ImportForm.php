@@ -60,6 +60,9 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
     /**
      * Function to run any setup steps necessary to begin processing.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void
      */
     public function startup()
     {
@@ -122,6 +125,9 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
 
     /**
      * Function to loop over the batch.
+     *
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
      */
     public function process()
     {
@@ -197,12 +203,14 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         return $steps;
     }
 
+    /**
+     * Insert our form using $this->_db->insert by building an array of column => value pairs and %s, %d types.
+     *
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
     public function insert_form()
     {
-        /**
-         * Insert our form using $this->_db->insert by building an array of column => value pairs and %s, %d types.
-         * 
-         */
         $insert_columns = array();
         $insert_columns_types = array();
         foreach ( $this->forms_db_columns as $column_name => $setting_name ) {
@@ -212,9 +220,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             } else {
                 array_push( $insert_columns_types, '%s' );
             }
-
-            // Remove this setting from our $this->form[ 'settings' ] array.
-            // unset( $this->form[ 'settings' ][ $setting_name ] );
         }
 
         $this->_db->insert( "{$this->_db->prefix}nf3_forms", $insert_columns, $insert_columns_types );
@@ -229,14 +234,17 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         unset( $this->form[ 'settings' ], $this->form[ 'actions' ] );
     }
 
+    /**
+     * Insert Form Meta.
+     * 
+     * Loop over our remaining form settings that we need to insert into meta.
+     * Add them to our "Values" string for insertion later.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
     public function insert_form_meta()
     {
-        /**
-         * Insert Form Meta.
-         * 
-         * Loop over our remaining form settings that we need to insert into meta.
-         * Add them to our "Values" string for insertion later.
-         */
         $insert_values = '';
 
         foreach( $this->form[ 'settings' ] as $meta_key => $meta_value ) {
@@ -262,13 +270,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         $this->_db->query( $sql );
     }
 
+    /**
+     * Insert Actions and Action Meta.
+     *
+     * Loop over actions for this form and insert actions and action meta.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
     public function insert_actions()
     {
-        /**
-         * Insert Actions and Action Meta.
-         *
-         * Loop over actions for this form and insert actions and action meta.
-         */
         foreach( $this->form[ 'actions' ] as $action_settings ) {
             $action_settings[ 'parent_id' ] = $this->form[ 'ID' ];
             // Array that tracks which settings need to be meta and which are columns.
@@ -283,8 +294,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
                 } else {
                     array_push( $insert_columns_types, '%s' );
                 }
-                // Remove this setting from our action meta tracking array.
-                // unset( $action_meta[ $column_name ] );
             }
 
             // Insert Action
@@ -325,6 +334,18 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         }
     }
 
+    /**
+     * If we have a Form ID set, then we've already inserted our Form, Form Meta, Actions, and Action Meta.
+     * All we have left to insert are fields.
+     *
+     * Loop over our fields array and insert up to $this->fields_per_step.
+     * After we've inserted the field, unset it from our form array.
+     * Update our processing option with $this->form.
+     * Respond with the remaining steps.
+     * 
+     * @since  UPDATE_VERSION_ON_MERGE
+     * @return void
+     */
     public function insert_fields()
     {
         // Remove new field table columns if we haven't completed stage one of our DB conversion.
@@ -339,16 +360,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             unset( $this->fields_db_columns[ 'personally_identifiable' ] );
         }
 
-        /**
-         * If we have a Form ID set, then we've already inserted our Form, Form Meta, Actions, and Action Meta.
-         * All we have left to insert are fields.
-         *
-         * Loop over our fields array and insert up to $this->fields_per_step.
-         * After we've inserted the field, unset it from our form array.
-         * Update our processing option with $this->form.
-         * Respond with the remaining steps.
-         */
-        
         /**
          * Loop over our field array up to $this->fields_per_step.
          */
@@ -413,5 +424,4 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             unset( $this->form[ 'fields' ][ $i ] );
         }
     }
-
 }
