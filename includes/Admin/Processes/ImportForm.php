@@ -63,8 +63,6 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
      */
     public function startup()
     {
-        
-
         // If we aren't passed any form content, bail.
         if ( empty ( $_POST[ 'extraData' ][ 'content' ] ) ) {
             // TODO: When we add error handling to the batch processor, this should be revisited.
