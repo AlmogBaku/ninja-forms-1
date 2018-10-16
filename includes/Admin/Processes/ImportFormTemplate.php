@@ -16,10 +16,20 @@ class NF_Admin_Processes_ImportFormTemplate extends NF_Admin_Processes_ImportFor
 
         // If we haven't been passed a template as extraData, then bail.
         if ( ! isset ( $_POST[ 'extraData' ][ 'template' ] ) || empty ( $_POST[ 'extraData' ][ 'template' ] ) ) {
-            $this->cleanup();
+            $this->batch_complete();
         }
 
         $template_file_name = $_POST[ 'extraData' ][ 'template' ];
+
+        /**
+         * If our template_file_name is set to 'new', then respond with 'new' as our form id.
+         *
+         * This will redirect to the builder with a new form.
+         */
+        if ( 'new' == $template_file_name ) {
+            $this->form[ 'ID' ] = 'new';
+            $this->batch_complete();            
+        }
 
         // Grab the data from the appropriate file location.
         $registered_templates = Ninja_Forms::config( 'NewFormTemplates' );

@@ -43,7 +43,7 @@ define( [], function() {
                     extraData: { template: this.model.get( 'id' ) },
                     onCompleteCallback: function( response ) {
                         // Bail if we don't return a form ID.
-                        if ( 'undefined' == response.form_id ) return false;
+                        if ( 'undefined' == typeof response.form_id ) return false;
 
                         window.location.href = nfAdmin.builderURL + response.form_id;
                     }

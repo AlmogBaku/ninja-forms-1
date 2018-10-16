@@ -13,7 +13,7 @@ class NF_AJAX_REST_NewFormTemplates extends NF_AJAX_REST_Controller
         $templates = Ninja_Forms()->config( 'NewFormTemplates' );
         usort( $templates, array( $this, 'cmp' ) );
         array_unshift( $templates, array(
-            'id'            => 'formtemplate-new',
+            'id'            => 'new',
             'title'         => __( 'Blank Form', 'ninja-forms' ),
             'template-desc' => __( 'The blank form allows you to create any type of form using our drag & drop builder.', 'ninja-forms' ),
             'type'          => 'default'
