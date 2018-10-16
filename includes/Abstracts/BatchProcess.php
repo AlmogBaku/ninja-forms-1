@@ -8,7 +8,7 @@ abstract class NF_Abstracts_BatchProcess
     protected $_db;
 
     /**
-     * [$response description]
+     * Array that holds data we're sending back to the JS front-end.
      * @var array
      */
     protected $response = array(
@@ -63,6 +63,9 @@ abstract class NF_Abstracts_BatchProcess
 
     /**
      * Function to loop over the batch.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void
      */
     public function process()
     {
@@ -73,6 +76,9 @@ abstract class NF_Abstracts_BatchProcess
 
     /**
      * Function to run any setup steps necessary to begin processing.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void
      */
     public function startup()
     {
@@ -80,8 +86,12 @@ abstract class NF_Abstracts_BatchProcess
          * This function intentionally left empty.
          */
     }
+
     /**
      * Function to run any setup steps necessary to begin processing.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
      */
     public function restart()
     {
@@ -90,6 +100,14 @@ abstract class NF_Abstracts_BatchProcess
          */
     }
 
+    /**
+     * Returns how many steps we have in this process.
+     *
+     * If this method isn't overwritten by a child, it defaults to 1.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  int 
+     */
     public function get_steps()
     {
         return 1;
@@ -97,6 +115,9 @@ abstract class NF_Abstracts_BatchProcess
 
     /**
      * Function to cleanup any lingering temporary elements of a batch process after completion.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
      */
     public function cleanup()
     {
@@ -105,6 +126,17 @@ abstract class NF_Abstracts_BatchProcess
          */
     }
 
+    /**
+     * Method called when we are finished with this process.
+     *
+     * Deletes our "doing" option.
+     * Set's our response 'batch_complete' to true.
+     * Runs cleanup().
+     * Responds to the JS front-end.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
+     */
     public function batch_complete()
     {
         // Delete our options.
@@ -116,6 +148,14 @@ abstract class NF_Abstracts_BatchProcess
         $this->respond();
     }
 
+    /**
+     * Method that immediately moves on to the next step.
+     *
+     * Used in child methods to stop processing the current step an dmove to the next.
+     *
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
+     */
     public function next_step()
     {
         // ..see how many steps we have left, update our option, and send the remaining step to the JS.
@@ -123,6 +163,12 @@ abstract class NF_Abstracts_BatchProcess
         $this->respond();
     }
 
+    /**
+     * Method that encodes $this->response and sends the data to the front-end.
+     * 
+     * @since UPDATE_VERSION_ON_MERGE
+     * @return  void 
+     */
     public function respond()
     {
         echo wp_json_encode( $this->response );
