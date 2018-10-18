@@ -161,6 +161,8 @@ class NF_Updates_CacheCollateObjects extends NF_Abstracts_RequiredUpdate
             $this->cleanup();
             // Prepare to output the number of updates remaining.
             $this->response[ 'updatesRemaining' ] = count( $this->running );
+            // Record our current location in the process.
+            update_option( 'ninja_forms_doing_required_updates', $this->running );
             $this->respond();
         }
         // Get the number of rows in the object_meta table.

@@ -22,10 +22,10 @@ return apply_filters( 'ninja_forms_required_updates', array(
         'requires' => array( 'CacheCollateFields' ),
         'nicename' => __( 'Update Objects Tables', 'ninja-forms' ),
     ),
-//    'OrphanSubs' => array(
-//        'class_name' => 'NF_Updates_OrphanSubs',
-//        'requires' => array( 'CacheCollateFields' ),
-//        'nicename' => __( 'Cleanup Orphan Records', 'ninja-forms' ),
-//    ),
+    'CacheCollateCleanup' => array(
+        'class_name' => 'NF_Updates_CacheCollateCleanup',
+        'requires' => array( 'CacheCollateObjects' ),
+        'nicename' => __( 'Cleanup Orphan Records', 'ninja-forms' ),
+    ),
 
 ));
