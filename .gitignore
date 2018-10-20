@@ -19,6 +19,7 @@ deploy-old.sh
 tests/
 vendor/
 composer.lock
+package-lock.json
 
 *.sass-cache
 *.scssc
