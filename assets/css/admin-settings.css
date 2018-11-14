@@ -72,3 +72,9 @@
 .jBox-content {
     overflow: hidden !important;
 }
+
+@media screen and ( max-width: 782px ) {
+    .tablenav.top .actions, .tablenav .view-switch {
+        display:block;
+    }
+}
