@@ -1,0 +1,8 @@
+{
+    "name": "saturday-drive/ninja-forms",
+    "license": "GPL-v3",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    }
+}
