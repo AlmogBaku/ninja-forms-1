@@ -3,7 +3,7 @@
 /**
  * Builds an SQL statement to fetch fields (with settings) for a given form ID.
  */
-class NF_Database_FieldsQueryBuilder
+class NF_Database_MetaQueryBuilder
 {
     protected $table_name = '';
     protected $meta_table_name = '';
@@ -23,7 +23,7 @@ class NF_Database_FieldsQueryBuilder
     /**
      * @return string
      */
-    public function get_field_ids_sql()
+    public function get_ids_sql()
     {
     return "SELECT DISTINCT {$this->table_name}.id FROM {$this->table_name} WHERE {$this->table_name}.parent_id = {$this->parent_id}";
     }
@@ -31,23 +31,23 @@ class NF_Database_FieldsQueryBuilder
     /**
      * @return string
      */
-    public function get_fields_sql()
+    public function get_sql()
     {
         return "
         SELECT *
         FROM $this->table_name
-        WHERE id IN ( {$this->get_field_ids_sql()} )
+        WHERE id IN ( {$this->get_ids_sql()} )
         ";
     }
 
-    public function get_field_meta_sql()
+    public function get_meta_sql()
     {
         return "
             SELECT Meta.parent_id, Meta.key, Meta.value
             FROM $this->table_name as Object
             JOIN $this->meta_table_name as Meta
             ON Object.id = Meta.parent_id
-            WHERE Object.id IN ( {$this->get_field_ids_sql()} )
+            WHERE Object.id IN ( {$this->get_ids_sql()} )
         ";
     }
 }

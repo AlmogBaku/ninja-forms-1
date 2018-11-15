@@ -11,10 +11,10 @@ class NF_Database_FieldsRepository
     public function fetch( $form_id ) {
         $table_name = $this->db->prefix . 'nf3_fields';
         $meta_table_name = $this->db->prefix . 'nf3_field_meta';
-        $query_builder = new NF_Database_FieldsQueryBuilder( $table_name, $meta_table_name, $form_id );
+        $query_builder = new NF_Database_MetaQueryBuilder( $table_name, $meta_table_name, $form_id );
         
-        $fields_sql = $query_builder->get_fields_sql();
-        $field_meta_sql = $query_builder->get_field_meta_sql();
+        $fields_sql = $query_builder->get_sql();
+        $field_meta_sql = $query_builder->get_meta_sql();
 
         $fields = array();
 
