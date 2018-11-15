@@ -25,7 +25,7 @@ class NF_Database_FieldsQueryBuilder
      */
     public function get_field_ids_sql()
     {
-        return "SELECT DISTINCT $this->table_name.id FROM $this->table_name WHERE {$this->table_name}.parent_id = $this->parent_id";
+    return "SELECT DISTINCT {$this->table_name}.id FROM {$this->table_name} WHERE {$this->table_name}.parent_id = {$this->parent_id}";
     }
 
     /**
