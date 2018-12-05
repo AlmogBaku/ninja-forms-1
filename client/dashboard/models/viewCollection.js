@@ -36,6 +36,12 @@ define( [ 'models/viewModel' ], function( ViewModel ) {
             var message, container, messageBox, title, buttons, confirm, cancel, lineBreak;
             var formID = view.model.get( 'id' );
             var formTitle = view.model.get( 'title' );
+            
+            // TODO: Localize this for translations.
+            var nfvi18n = {
+                deleteWarningA: 'You are about to delete the view',
+                deleteWarningB: 'Once deleted, this view cannot be recovered. Proceed with caution.'
+            }
 
             container = document.createElement( 'div' );
             container.style.paddingRight = '20px';
@@ -49,32 +55,8 @@ define( [ 'models/viewModel' ], function( ViewModel ) {
 
             container.classList.add( 'message' );
             title.innerHTML = formTitle;
-            messageBox.innerHTML += nfi18n.deleteWarningA + ' (<strong>'
-	            + formTitle + '</strong>). ' + nfi18n.deleteWarningB;
-            messageBox.appendChild( document.createElement( 'br') );
-            messageBox.appendChild( document.createElement( 'br') );
-
-	        var exportFormLink = document.createElement( 'a' );
-	        // link to export page with this form selected
-	        exportFormLink.href = this.baseUrl + '?page=nf-import-export&exportFormId='
-                + formID;
-	        exportFormLink.innerHTML = '<i class="fa fa-download"' +
-		        ' style="padding:5px;"></i>' + nfi18n.deleteXForm;
-	        exportFormLink.target = '_blank'; // open in new tab
-	        messageBox.appendChild( exportFormLink );
-	        messageBox.appendChild( document.createElement( 'br') );
-
-	        var exportSubmissionLink = document.createElement( 'a' );
-
-	        // link to export submissions page
-	        exportSubmissionLink.href = this.baseUrl + '?page=nf-processing&action=download_all_subs&form_id='
-	            + formID + '&redirect=' + encodeURIComponent( this.baseUrl.replace( 'admin.php', 'edit.php' ) + '?post_status=all&post_type=nf_sub&form_id='
-	            + formID );
-	        exportSubmissionLink.target = '_blank';
-	        exportSubmissionLink.innerHTML = '<i class="fa fa-download" ' +
-	            'style="padding:5px;"></i>' + nfi18n.deleteXSubs;
-
-	        messageBox.appendChild( exportSubmissionLink );
+            messageBox.innerHTML += nfvi18n.deleteWarningA + ' (<strong>'
+	            + formTitle + '</strong>). ' + nfvi18n.deleteWarningB;
             messageBox.appendChild( document.createElement( 'br') );
 
             container.appendChild( messageBox );

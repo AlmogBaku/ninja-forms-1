@@ -10,8 +10,7 @@ define( [], function() {
 		defaults: {
             objectType: 'view',
             id: 0,
-            title: 'unknown',
-            created_at: 'unknown'
+            title: 'unknown'
 		},
 
         url: function() {
@@ -34,7 +33,6 @@ define( [], function() {
         },
         
         initShortcode: function( id ) {
-            // TODO: Update this function to output a proper shortcode.
             var shortcode = '[ninja_view id=' + id + ' mode="directory"]';
             this.set( 'shortcode', shortcode);
         },
@@ -43,11 +41,10 @@ define( [], function() {
          * allowing us to send a POST request instead of DELETE
          */
         destroy: function() {
-            // TODO: Update this to delete a view.
             var that = this;
             jQuery.ajax({
                 type: "POST",
-                url: ajaxurl + '?action=nf_forms&method_override=delete&form_id=' + this.get( 'id' ),
+                url: ajaxurl + '?action=nf_views&method=delete&view_id=' + this.get( 'id' ),
                 success: function( response ){
                     var response = JSON.parse( response );
                     that.collection.remove( that );

@@ -27,13 +27,6 @@ define( [], function() {
                 this.$el.toggleClass( 'show-actions' ).siblings().removeClass( 'show-actions' );
             }
         },
-
-        templateContext: function() {
-            var model = this.model;
-            return {
-                created_at: moment( model.get( 'created_at' ) ).format( 'MM/DD/YY h:mm A' )
-            }
-        }
     } );
     return view;
 } );
