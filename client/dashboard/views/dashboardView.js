@@ -6,7 +6,7 @@
  * @copyright (c) 2017 WP Ninjas
  * @since 3.2
  */
-define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/sections/memberships.js', 'views/oauth.js', 'views/promotion.js' ], function( WidgetView, ServicesView, AppsView, MembershipsView, OAuthView, PromotionView ) {
+define( [ 'views/sections/widgets.js', 'views/sections/views.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/sections/memberships.js', 'views/oauth.js', 'views/promotion.js' ], function( WidgetView, ViewsView, ServicesView, AppsView, MembershipsView, OAuthView, PromotionView ) {
     var view = Marionette.View.extend( {
         template: "#tmpl-nf-dashboard",
 
@@ -43,6 +43,12 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                 e.target.classList.add( 'active' );
                 this.currentView = 'memberships';
             },
+            'click .views a': function(e){
+                this.showChildView( 'content', new ViewsView() );
+                jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
+                e.target.classList.add( 'active' );
+                this.currentView = 'views';
+            },
         },
 
         initialize: function() {
@@ -56,6 +62,9 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     break;
                 case '#memberships':
                     this.currentView = 'memberships';
+                    break;
+                case '#views':
+                    this.currentView = 'views';
                     break;
                 case '#widgets':
                 default:
@@ -84,6 +93,14 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                 jQuery( 'nav.sections .apps a' ).addClass( 'active' );
                 this.currentView = 'apps';
             }, this );
+            nfRadio.channel( 'dashboard' ).reply( 'show:views', function(){
+                this.showChildView('content', new ViewsView() );
+                jQuery( 'nav.sections a.active' ).removeClass( 'active' );
+                jQuery( 'nav.sections .views a' ).addClass( 'active' );
+                this.currentView = 'views';
+            }, this );
+            
+            nfRadio.channel( 'dashboard' ).trigger( 'view:loaded', this );
         },
 
         onRender: function() {
@@ -100,6 +117,9 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     break;
                 case '#services':
                     var childView = new ServicesView();
+                    break;
+                case '#views':
+                    var childView = new ViewsView();
                     break;
                 case '#widgets':
                 default:
