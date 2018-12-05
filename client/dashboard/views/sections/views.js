@@ -43,7 +43,6 @@ define( [
             container.appendChild( title );
             var list = document.createElement( 'select' );
             list.id = 'ninja-view-form-select';
-            list.style.maxWidth = '300px';
             _.each( collection.models, function( model ) {
                 var option = document.createElement( 'option' );
                 option.textContent = model.get( 'title' );
