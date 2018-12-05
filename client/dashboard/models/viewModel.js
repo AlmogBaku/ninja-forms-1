@@ -44,7 +44,11 @@ define( [], function() {
             var that = this;
             jQuery.ajax({
                 type: "POST",
-                url: ajaxurl + '?action=nf_views&method=delete&view_id=' + this.get( 'id' ),
+                data: {
+                    action: 'ninja_views_delete',
+                    view_id: this.get( 'id' )
+                },
+                url: ajaxurl,
                 success: function( response ){
                     var response = JSON.parse( response );
                     that.collection.remove( that );
