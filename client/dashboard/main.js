@@ -40,7 +40,9 @@ jQuery( document ).ready( function( $ ) {
                 this.showView( new DashboardView() );
 
                 this.controllers.forms = new FormsController();
-                this.controllers.views = new ViewsController();
+                if ( 'undefined' != typeof nfvi18n ) {
+                    this.controllers.views = new ViewsController();
+                }
                 if( useServices ) this.controllers.oauth = new OAuthController();
                 if( useServices ) this.controllers.services = new ServicesController();
 

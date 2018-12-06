@@ -36,12 +36,6 @@ define( [ 'models/viewModel' ], function( ViewModel ) {
             var message, container, messageBox, title, buttons, confirm, cancel, lineBreak;
             var formID = view.model.get( 'id' );
             var formTitle = view.model.get( 'title' );
-            
-            // TODO: Localize this for translations.
-            var nfvi18n = {
-                deleteWarningA: 'You are about to delete the view',
-                deleteWarningB: 'Once deleted, this view cannot be recovered. Proceed with caution.'
-            }
 
             container = document.createElement( 'div' );
             container.style.paddingRight = '20px';

@@ -22,7 +22,9 @@ define( [
                 viewsTable.showChildView( 'body', new TableBodyView( { collection: collection } ) );
             });
             this.listenTo( nfRadio.channel( 'dashboard' ), 'fetch:forms', function( collection ){
-                jQuery( '#btn-add-a-view' ).removeClass( 'disabled' ).removeAttr( 'disabled' );
+                if ( 0 < collection.length ) {
+                    jQuery( '#btn-add-a-view' ).removeClass( 'disabled' ).removeAttr( 'disabled' );
+                }
             });
         },
 
@@ -45,6 +47,13 @@ define( [
                 this.showChildView( 'body', new TableLoadingView());
             } else {
                 this.showChildView( 'body', new TableBodyView( { collection: collection } ) );
+            }
+        },
+
+        onDomRefresh: function() {
+            var formsCollection = nfRadio.channel( 'dashboard' ).request( 'get:forms' );
+            if ( 'undefined' != typeof formsCollection && 0 < formsCollection.length ) {
+                jQuery( '#btn-add-a-view' ).removeClass( 'disabled' ).removeAttr( 'disabled' );
             }
         },
 
