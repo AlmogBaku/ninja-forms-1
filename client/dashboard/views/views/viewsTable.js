@@ -21,6 +21,9 @@ define( [
             this.listenTo( nfRadio.channel( 'dashboard' ), 'fetch:views', function( collection ){
                 viewsTable.showChildView( 'body', new TableBodyView( { collection: collection } ) );
             });
+            this.listenTo( nfRadio.channel( 'dashboard' ), 'fetch:forms', function( collection ){
+                jQuery( '#btn-add-a-view' ).removeClass( 'disabled' ).removeAttr( 'disabled' );
+            });
         },
 
         regions: {
