@@ -157,7 +157,7 @@ final class NF_Database_FieldsController
              * Check our DB for a field with this id.
              */
             if ( is_numeric( $field_id ) ) {
-                $field_in_db = $this->db->get_row( "SELECT `id` FROM `{$this->db->prefix}nf3_fields` WHERE `id` = {$field_id}" );
+                $field_in_db = $this->db->get_row( "SELECT `id` FROM `wp_nf3_fields` WHERE `id` = {$field_id}" );
             } else {
                 $field_in_db = array();
             }
