@@ -1,6 +1,14 @@
 stages:
+  - mob
   - testing
   - security
+
+acceptance:
+  stage: mob
+  image: docker:stable 
+  script:
+  - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
+  - cd ninja-forms-testing
 
 phpunit:
   stage: testing
