@@ -8,6 +8,7 @@ acceptance:
   image: docker:stable-git
   services:
     - docker:dind
+    - pip
   script:
   - pip install docker-compose
   - docker-compose --version
