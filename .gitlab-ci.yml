@@ -5,11 +5,15 @@ stages:
 
 acceptance:
   stage: mob
-  image: https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
+  image: docker:stable-git
   services:
     - docker:dind
   script:
-  - docker-compose run --rm codeception run -vvv --html
+    - apk add --no-cache python py2-pip
+    - pip install --no-cache-dir docker-compose
+    - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
+    - cd ninja-forms-testing 
+    - docker-compose run --rm codeception run -vvv --html
 
 phpunit:
   stage: testing
