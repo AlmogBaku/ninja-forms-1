@@ -14,7 +14,7 @@ phpunit:
   - vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/EmailTelemetryTest
 
 codeception:
-  state: testing
+  stage: testing
   image: docker:stable
   services:
     - docker:stable-dind
