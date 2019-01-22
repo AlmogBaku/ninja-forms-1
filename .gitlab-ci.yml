@@ -13,6 +13,14 @@ phpunit:
   - php composer.phar install # Install all project dependencies
   - vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/EmailTelemetryTest
 
+codeception:
+  state: testing
+  image: docker:stable
+  services:
+    - docker:stable-dind
+  script:
+    - docker-compose run --rm codeception run -vvv --html
+
 sast:
   stage: security
   image: docker:stable
@@ -30,3 +38,4 @@ sast:
         "registry.gitlab.com/gitlab-org/security-products/sast:$SP_VERSION" /app/bin/run /code
   artifacts:
     paths: [gl-sast-report.json]
+
