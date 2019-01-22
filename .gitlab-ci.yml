@@ -5,17 +5,10 @@ stages:
 
 acceptance:
   stage: mob
-  image: wordpress 
+  image: docker:stable-git
   services:
     - docker:dind
   script:
-  - sudo su
-  - cat /proc/version
-  - apt-get update -yqq
-  - apt-get install git docker -yqq
-  - apt-get -y install python-pip # Docker Compose prerequisite
-  - pip install docker-compose
-  - service docker start
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
   - docker-compose run --rm codeception run -vvv --html
@@ -48,3 +41,4 @@ sast:
         "registry.gitlab.com/gitlab-org/security-products/sast:$SP_VERSION" /app/bin/run /code
   artifacts:
     paths: [gl-sast-report.json]
+
