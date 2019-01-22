@@ -9,6 +9,7 @@ acceptance:
   script:
   - apt-get update -yqq
   - apt-get install git docker -yqq
+  - cat /proc/version
   - dockerd
   - apt-get -y install python-pip # Docker Compose prerequisite
   - pip install docker-compose
