@@ -9,6 +9,9 @@ acceptance:
   services:
     - docker:dind
   script:
+  - sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  - sudo chmod +x /usr/local/bin/docker-compose
+  - docker-compose --version
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
   - docker-compose run --rm codeception run -vvv --html
