@@ -6,14 +6,15 @@ stages:
 acceptance:
   stage: mob
   image: wordpress 
+  services:
+    - docker:dind
   script:
   - apt-get update -yqq
-  - apt-get install git docker-ce -yqq
+  - apt-get install git -yqq
   - apt-get -y install python-pip # Docker Compose prerequisite
   - pip install docker-compose
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
-  - service docker start
   - docker-compose run --rm codeception run -vvv --html
 
 phpunit:
