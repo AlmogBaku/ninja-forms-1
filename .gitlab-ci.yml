@@ -13,6 +13,7 @@ acceptance:
   - pip install docker-compose
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
+  - service docker start
   - docker-compose run --rm codeception run -vvv --html
 
 phpunit:
