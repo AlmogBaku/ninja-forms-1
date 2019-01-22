@@ -5,9 +5,9 @@ stages:
 
 acceptance:
   stage: mob
-  image: docker:stable 
+  image: wordpress 
   script:
-  - apt install git-all -yqq # Install git, the php image doesn't have installed
+  - apt-get install git-all -yqq # Install git, the php image doesn't have installed
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
 
