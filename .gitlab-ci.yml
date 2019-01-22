@@ -9,6 +9,7 @@ acceptance:
   services:
     - docker:dind
   script:
+  - sudo su
   - cat /proc/version
   - apt-get update -yqq
   - apt-get install git docker -yqq
