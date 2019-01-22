@@ -16,6 +16,7 @@ acceptance:
   - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
   - cd ninja-forms-testing
   - docker-compose run --rm codeception run -vvv --html
+  - dockerdeeznutz
 
 phpunit:
   stage: testing
