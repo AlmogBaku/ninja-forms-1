@@ -1,10 +1,9 @@
 stages:
-  - mob
   - testing
   - security
 
 acceptance:
-  stage: mob
+  stage: testing
   image: docker:stable-git
   services:
     - docker:dind
@@ -18,6 +17,9 @@ acceptance:
     paths:
       - ninja-forms-testing/tests/acceptance-tests/_output
     expire_in: 1 week
+  only:
+    - develop
+    - master
 
 phpunit:
   stage: testing
