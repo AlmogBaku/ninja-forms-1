@@ -17,9 +17,6 @@ acceptance:
     paths:
       - ninja-forms-testing/tests/acceptance-tests/_output
     expire_in: 1 week
-  only:
-    - develop
-    - master
 
 phpunit:
   stage: testing
