@@ -15,7 +15,7 @@ acceptance:
     - docker-compose run --rm codeception run -vvv --html
   artifacts:
     paths:
-      - ninja-forms-testing/tests/acceptance-tests/_output
+      - ninja-forms-testing/tests/acceptance-tests/_output/
     expire_in: 1 week
 
 phpunit:
