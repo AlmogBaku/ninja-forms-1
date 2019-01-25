@@ -12,7 +12,7 @@ acceptance:
     - pip install --no-cache-dir docker-compose
     - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
     - cd ninja-forms-testing 
-    - docker-compose run --rm codeception run -vvv --html
+    - docker-compose run codeception run -vvv --html
   artifacts:
     paths:
       - /project/tests/acceptance-tests/_output/
