@@ -12,7 +12,7 @@ acceptance:
      - "docker-compose run --rm codeception run -vvv --html"
   artifacts:
     paths:
-      - /project/tests/acceptance-tests/_output/
+      - /project/tests/acceptance-tests/_output/report.html
     expire_in: 1 week
 
 phpunit:
