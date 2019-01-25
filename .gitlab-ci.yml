@@ -5,8 +5,7 @@ stages:
 
 
 acceptance:
- build_image:
-   script:
+  script:
      - git clone https://git.saturdaydrive.io/_/ninja-forms/ninja-forms-testing
      - cd ninja-forms-testing 
      - "docker-compose run --rm codeception run -vvv --html"
