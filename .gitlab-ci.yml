@@ -7,6 +7,7 @@ stages:
 acceptance:
   stage: testing
   script:
+     - "docker stop $(docker ps -a -q)"
      - "docker-compose run --rm codeception run -vvv --html"
   artifacts:
     paths:
