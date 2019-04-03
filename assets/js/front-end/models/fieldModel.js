@@ -1,4 +1,4 @@
-define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
+define( ['models/fieldErrorCollection', 'models/fieldRepeatsCollection'], function( fieldErrorCollection, fieldRepeatsCollection ) {
 	var model = Backbone.Model.extend( {
 		defaults: {
 			placeholder: '',
@@ -21,6 +21,7 @@ define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
     		this.bind( 'change', this.changeModel, this );
     		this.bind( 'change:value', this.changeValue, this );
     		this.set( 'errors', new fieldErrorCollection() );
+    		this.set( 'repeats', new fieldRepeatsCollection() );
 
     		/*
 			 * Trigger an init event on two channels:
