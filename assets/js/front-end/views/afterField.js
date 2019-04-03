@@ -29,7 +29,7 @@ define( ['views/fieldErrorCollection', 'views/inputLimit', 'views/fieldRepeatsCo
 				
 					var repeatsEl = jQuery( this.el ).children( '.nf-repeats-wrap' );
 					this.repeatsCollectionView = new fieldRepeatsCollection( { el: repeatsEl, collection: this.model.get( 'repeats' ), fieldModel: this.model } );
-					this.errorCollectionView.render(); 
+					this.repeatsCollectionView.render(); 
         },
 
         changeError: function() {

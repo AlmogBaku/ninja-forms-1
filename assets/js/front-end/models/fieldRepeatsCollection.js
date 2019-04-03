@@ -1,6 +1,6 @@
-define( ['models/fieldModel'], function( fieldModel ) {
+define( ['models/repeatedField'], function( repeatedField ) {
 	var collection = Backbone.Collection.extend( {
-		model: fieldModel
+		model: repeatedField
 	} );
 	return collection;
 } );

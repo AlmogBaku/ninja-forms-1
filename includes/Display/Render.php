@@ -20,6 +20,7 @@ final class NF_Display_Render
         'fields-wrap-no-container',
         'fields-label',
         'fields-error',
+        'fields-repeat',
         'form-error',
         'field-input-limit',
         'field-null'

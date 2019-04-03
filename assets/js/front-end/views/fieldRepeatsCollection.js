@@ -1,7 +1,7 @@
-define( ['views/fieldItem'], function( fieldItem ) {
+define( ['views/fieldRepeatItem'], function( fieldRepeatItem ) {
 	var view = Marionette.CollectionView.extend({
 		tagName: "nf-repeats",
-		childView: fieldItem,
+		childView: fieldRepeatItem,
 
 		initialize: function( options ) {
 			// ...
