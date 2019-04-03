@@ -1,4 +1,4 @@
-define( ['views/fieldErrorCollection', 'views/inputLimit'], function( fieldErrorCollection, InputLimitView ) {
+define( ['views/fieldErrorCollection', 'views/inputLimit', 'views/fieldRepeatsCollection'], function( fieldErrorCollection, InputLimitView, fieldRepeatsCollection ) {
     var view = Marionette.ItemView.extend({
         tagName: 'nf-section',
         template: '#tmpl-nf-field-after',
@@ -25,7 +25,11 @@ define( ['views/fieldErrorCollection', 'views/inputLimit'], function( fieldError
     		if ( 'undefined' != typeof this.model.get( 'input_limit' ) && '' != jQuery.trim( this.model.get( 'input_limit' ) ) ){
     			var inputLimitEl = jQuery( this.el ).children( '.nf-input-limit');
     			this.inputLimitView = new InputLimitView( { el: inputLimitEl, model: this.model } );
-    		}
+				}
+				
+					var repeatsEl = jQuery( this.el ).children( '.nf-repeats-wrap' );
+					this.repeatsCollectionView = new fieldRepeatsCollection( { el: repeatsEl, collection: this.model.get( 'repeats' ), fieldModel: this.model } );
+					this.errorCollectionView.render(); 
         },
 
         changeError: function() {

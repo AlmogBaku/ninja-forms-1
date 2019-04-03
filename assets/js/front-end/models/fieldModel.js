@@ -20,7 +20,7 @@ define( ['models/fieldErrorCollection', 'models/fieldRepeatsCollection'], functi
 
     		this.bind( 'change', this.changeModel, this );
     		this.bind( 'change:value', this.changeValue, this );
-    		this.set( 'errors', new fieldErrorCollection() );
+			this.set( 'errors', new fieldErrorCollection() );
     		this.set( 'repeats', new fieldRepeatsCollection() );
 
     		/*
