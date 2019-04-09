@@ -9,5 +9,7 @@ modules:
     enabled:
         - \Helper\Acceptance
         - WPLoader
-        - WPWebDriver
+        - WPWebDriver:
+            url: 'http://localhost/'
+            browser: chrome
         - WPDb

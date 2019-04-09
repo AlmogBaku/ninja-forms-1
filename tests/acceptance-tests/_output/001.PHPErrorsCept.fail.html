@@ -1,0 +1,77 @@
+<!DOCTYPE html><!--[if IE 8]>
+		<html xmlns="http://www.w3.org/1999/xhtml" class="ie8" lang="en-US">
+	<![endif]--><!--[if !(IE 8) ]><!--><html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><!--<![endif]--><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Log In ‹ default — WordPress</title>
+	<link rel="dns-prefetch" href="//s.w.org" />
+<link rel="stylesheet" id="dashicons-css" href="http://wordpress/wp-includes/css/dashicons.css?ver=5.1" type="text/css" media="all" />
+<link rel="stylesheet" id="buttons-css" href="http://wordpress/wp-includes/css/buttons.css?ver=5.1" type="text/css" media="all" />
+<link rel="stylesheet" id="forms-css" href="http://wordpress/wp-admin/css/forms.css?ver=5.1" type="text/css" media="all" />
+<link rel="stylesheet" id="l10n-css" href="http://wordpress/wp-admin/css/l10n.css?ver=5.1" type="text/css" media="all" />
+<link rel="stylesheet" id="login-css" href="http://wordpress/wp-admin/css/login.css?ver=5.1" type="text/css" media="all" />
+	<meta name="robots" content="noindex,noarchive" />
+	<meta name="referrer" content="strict-origin-when-cross-origin" />
+		<meta name="viewport" content="width=device-width" />
+	<script type="text/javascript">
+addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
+function s(id,pos){g(id).left=pos+'px';}
+function g(id){return document.getElementById(id).style;}
+function shake(id,a,d){c=a.shift();s(id,c);if(a.length&gt;0){setTimeout(function(){shake(id,a,d);},d);}else{try{g(id).position='static';wp_attempt_focus();}catch(e){}}}
+addLoadEvent(function(){ var p=new Array(15,30,15,0,-15,-30,-15,0);p=p.concat(p.concat(p));var i=document.forms[0].id;g(i).position='relative';shake(i,p,20);});
+</script>
+		</head>
+	<body class="login login-action-login wp-core-ui  locale-en-us">
+		<div id="login">
+		<h1><a href="https://wordpress.org/" title="Powered by WordPress">Powered by WordPress</a></h1>
+	<div id="login_error">	<strong>ERROR</strong>: The password you entered for the username <strong>admin</strong> is incorrect. <a href="http://wordpress/wp-login.php?action=lostpassword">Lost your password?</a><br />
+</div>
+
+	<form name="loginform" id="loginform" action="http://wordpress/wp-login.php" method="post" style="position: static; left: 0px;">
+	<p>
+		<label for="user_login">Username or Email Address<br />
+		<input type="text" name="log" id="user_login" aria-describedby="login_error" class="input" value="admin" size="20" autocapitalize="off" /></label>
+	</p>
+	<p>
+		<label for="user_pass">Password<br />
+		<input type="password" name="pwd" id="user_pass" aria-describedby="login_error" class="input" value="" size="20" /></label>
+	</p>
+			<p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label></p>
+	<p class="submit">
+		<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Log In" />
+				<input type="hidden" name="redirect_to" value="http://wordpress/wp-admin/" />
+					<input type="hidden" name="testcookie" value="1" />
+	</p>
+	</form>
+
+			<p id="nav">
+					<a href="http://wordpress/wp-login.php?action=lostpassword">Lost your password?</a>
+				</p>
+	
+	<script type="text/javascript">
+	function wp_attempt_focus(){
+	setTimeout( function(){ try{
+			d = document.getElementById('user_pass');
+	d.value = '';
+		d.focus();
+	d.select();
+	} catch(e){}
+	}, 200);
+	}
+
+			wp_attempt_focus();
+			if(typeof wpOnload=='function')wpOnload();
+			</script>
+
+			<p id="backtoblog"><a href="http://wordpress/">
+		← Back to default	</a></p>
+			
+	</div>
+
+	
+		<script>
+	/(trident|msie)/i.test(navigator.userAgent)&amp;&amp;document.getElementById&amp;&amp;window.addEventListener&amp;&amp;window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&amp;&amp;(t=document.getElementById(e))&amp;&amp;(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+		<div class="clear"></div>
+	
+	
+	</body></html>
