@@ -2,7 +2,8 @@
   "name": "ninja-forms",
   "version": "3.2.0",
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "test": "docker-compose run --rm codeception run -vvv --html"
   },
   "dependencies": {
     "backbone.marionette": "^3.2.0"

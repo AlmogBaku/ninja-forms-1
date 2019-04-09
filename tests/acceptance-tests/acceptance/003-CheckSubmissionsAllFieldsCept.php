@@ -153,7 +153,7 @@ foreach($FieldTypes as $key => $value){
 
             if($key != 'US States'){
 
-                $I->click('div.' . $key2 . ' span.nf-field-label');
+                $I->click('div.' . $key2 . '.nf-field-wrap');
 
                 if($key == 'Hidden'){
                     $I->fillField('#default', 'secret');

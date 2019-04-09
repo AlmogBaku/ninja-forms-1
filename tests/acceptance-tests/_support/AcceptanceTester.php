@@ -34,11 +34,11 @@ class AcceptanceTester extends \Codeception\Actor
             $I->executeJS( "jQuery( '#nf-drawer' ).scrollTop( 600 );" );
             $I->waitForText( $textIdentity );
             $I->click( '[data-id="' . $dataIdentity . '"]');
-            $I->waitForElement( 'div.' . $dataIdentity . ' span.nf-field-label');
+            $I->waitForElement( 'div.' . $dataIdentity . '.nf-field-wrap');
         }else{
             $I->waitForText( $textIdentity );
             $I->click( '[data-id="' . $dataIdentity . '"]');
-            $I->waitForElement( '.' . $dataIdentity );
+            $I->waitForElement( '.' . $dataIdentity . '.nf-field-wrap');
         }
     }
 
