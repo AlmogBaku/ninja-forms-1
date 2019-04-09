@@ -23,119 +23,119 @@ $FieldTypes = array(
         //The data you submitted in the form
         'data' => '1234 Test Lane'
     ),
-    'Checkbox List' => array( 
-        'listcheckbox' => false,
-        'method' => '$I->checkOption(\'input[type="checkbox"][value="one"]\'); 
-                     $I->checkOption(\'input[type="checkbox"][value="two"]\');',
-        'type' => 'input[type="checkbox"]',
-        'data' => array('one', 'two')
-    ),
-    'City' => array(
-        'city' => false,
-        'method' => '$I->fillField("." . $className , "Cactiville");',
-        'type' => 'input',
-        'data' => 'Cactiville'
-    ),
-    'Country' => array(
-        'listcountry' => false,
-        'method' => '$I->selectOption("." . $className, "United States");',
-        'type' => 'select',
-        'data' => 'United States'
-    ),
-    'Date' => array(
-        'date' => false,
-        'method' => '$I->fillField( ".pikaday__display", "02/02/2025"  );',
-        'type' => 'input',
-        'data' => '02/02/2025'
-    ),
-    'Email' => array(
-        'email' => false,
-        'method' => '$I->fillField("." . $className , "test@test.com");',
-        'type' => 'input',
-        'data' => 'test@test.com'
-    ),
-    'First Name' => array(
-        'firstname' => false,
-        'method' => '$I->fillField("." . $className , "Jerry");',
-        'type' => 'input',
-        'data' => 'Jerry'
-    ),
-    'Hidden' => array(
-        'hidden' => true,
-        'type' => 'input',
-        'data' => 'secret'
-    ),
-    'Last Name' => array(
-        'lastname' => false,
-        'method' => '$I->fillField("." . $className , "Seinfeld");',
-        'type' => 'input',
-        'data' => 'Seinfeld'
-    ),
-    'Multi-Select' => array(
-        'listmultiselect' => false,
-        'method' => '$I->selectOption(".listmultiselect", array("One", "Two", "Three"));',
-        'type' => 'select',
-        'data' => array('One', 'Two', 'Three')
-    ),
-    'Number' => array(
-        'number' => true,
-        'method' => '$I->fillField("." . $className , "5");',
-        'type' => 'input',
-        'data' => '5'
-    ),
-    'Paragraph Text' => array(
-        'textarea' => false,
-        'method' => '$I->fillField("." . $className , "Hello, this is a sentence.");',
-        'type' => 'textarea',
-        'data' => 'Hello, this is a sentence.'
-    ),
-    'Phone' => array(
-        'phone' => true,
-        'method' => '$I->fillField("." . $className , "8675309");',
-        'type' => 'input',
-        'data' => '8675309'
-    ),
-    'Radio List' => array(
-        'listradio' => false,
-        'method' => '$I->click( "input[type=\'radio\'][value=\'three\']");',
-        'type' => 'select',
-        'data' => 'Three'
-    ),
-    'Select' => array(
-        'listselect' => false,
-        'method' => '$I->selectOption("." . $className, "Two");',
-        'type' => 'select',
-        'data' => 'Two'
-    ),
-    'Single Checkbox' => array(
-        'checkbox' => false,
-        'method' => '$I->checkOption(".$className");',
-        'type' => 'input[type="checkbox"]',
-        'data' => 'Checked'
-    ),
-    'Single Line Text' => array(
-        'textbox' => false,
-        'method' => '$I->fillField("." . $className , "Mungo Jerry Summertime");',
-        'type' => 'input',
-        'data' => 'Mungo Jerry Summertime'
-    ),
-    'Star Rating' => array(
-        'starrating' => true,
-        'method' => '$I->click(".star[title=\'5\']");',
-        'type' => 'input',
-        'data' => '5'
-    ),
-    'US States' => array(
-        'liststate' => true,
-        'type' => 'select',
-        'data' => '- Select State -'
-    ),
-    'Zip' => array(
-        'zip' => true,
-        'method' => '$I->fillField("." . $className , "86753");',
-        'type' => 'input',
-        'data' => '86753'
-    )
+    // 'Checkbox List' => array( 
+    //     'listcheckbox' => false,
+    //     'method' => '$I->checkOption(\'input[type="checkbox"][value="one"]\'); 
+    //                  $I->checkOption(\'input[type="checkbox"][value="two"]\');',
+    //     'type' => 'input[type="checkbox"]',
+    //     'data' => array('one', 'two')
+    // ),
+    // 'City' => array(
+    //     'city' => false,
+    //     'method' => '$I->fillField("." . $className , "Cactiville");',
+    //     'type' => 'input',
+    //     'data' => 'Cactiville'
+    // ),
+    // 'Country' => array(
+    //     'listcountry' => false,
+    //     'method' => '$I->selectOption("." . $className, "United States");',
+    //     'type' => 'select',
+    //     'data' => 'United States'
+    // ),
+    // 'Date' => array(
+    //     'date' => false,
+    //     'method' => '$I->fillField( ".pikaday__display", "02/02/2025"  );',
+    //     'type' => 'input',
+    //     'data' => '02/02/2025'
+    // ),
+    // 'Email' => array(
+    //     'email' => false,
+    //     'method' => '$I->fillField("." . $className , "test@test.com");',
+    //     'type' => 'input',
+    //     'data' => 'test@test.com'
+    // ),
+    // 'First Name' => array(
+    //     'firstname' => false,
+    //     'method' => '$I->fillField("." . $className , "Jerry");',
+    //     'type' => 'input',
+    //     'data' => 'Jerry'
+    // ),
+    // 'Hidden' => array(
+    //     'hidden' => true,
+    //     'type' => 'input',
+    //     'data' => 'secret'
+    // ),
+    // 'Last Name' => array(
+    //     'lastname' => false,
+    //     'method' => '$I->fillField("." . $className , "Seinfeld");',
+    //     'type' => 'input',
+    //     'data' => 'Seinfeld'
+    // ),
+    // 'Multi-Select' => array(
+    //     'listmultiselect' => false,
+    //     'method' => '$I->selectOption(".listmultiselect", array("One", "Two", "Three"));',
+    //     'type' => 'select',
+    //     'data' => array('One', 'Two', 'Three')
+    // ),
+    // 'Number' => array(
+    //     'number' => true,
+    //     'method' => '$I->fillField("." . $className , "5");',
+    //     'type' => 'input',
+    //     'data' => '5'
+    // ),
+    // 'Paragraph Text' => array(
+    //     'textarea' => false,
+    //     'method' => '$I->fillField("." . $className , "Hello, this is a sentence.");',
+    //     'type' => 'textarea',
+    //     'data' => 'Hello, this is a sentence.'
+    // ),
+    // 'Phone' => array(
+    //     'phone' => true,
+    //     'method' => '$I->fillField("." . $className , "8675309");',
+    //     'type' => 'input',
+    //     'data' => '8675309'
+    // ),
+    // 'Radio List' => array(
+    //     'listradio' => false,
+    //     'method' => '$I->click( "input[type=\'radio\'][value=\'three\']");',
+    //     'type' => 'select',
+    //     'data' => 'Three'
+    // ),
+    // 'Select' => array(
+    //     'listselect' => false,
+    //     'method' => '$I->selectOption("." . $className, "Two");',
+    //     'type' => 'select',
+    //     'data' => 'Two'
+    // ),
+    // 'Single Checkbox' => array(
+    //     'checkbox' => false,
+    //     'method' => '$I->checkOption(".$className");',
+    //     'type' => 'input[type="checkbox"]',
+    //     'data' => 'Checked'
+    // ),
+    // 'Single Line Text' => array(
+    //     'textbox' => false,
+    //     'method' => '$I->fillField("." . $className , "Mungo Jerry Summertime");',
+    //     'type' => 'input',
+    //     'data' => 'Mungo Jerry Summertime'
+    // ),
+    // 'Star Rating' => array(
+    //     'starrating' => true,
+    //     'method' => '$I->click(".star[title=\'5\']");',
+    //     'type' => 'input',
+    //     'data' => '5'
+    // ),
+    // 'US States' => array(
+    //     'liststate' => true,
+    //     'type' => 'select',
+    //     'data' => '- Select State -'
+    // ),
+    // 'Zip' => array(
+    //     'zip' => true,
+    //     'method' => '$I->fillField("." . $className , "86753");',
+    //     'type' => 'input',
+    //     'data' => '86753'
+    // )
 );
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );
