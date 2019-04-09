@@ -1,11 +1,13 @@
-define( ['views/app/itemControls'], function( itemControlsView ) {
+define( ['views/app/itemControls', 'views/fields/preview/element', 'views/fields/preview/label'], function( itemControlsView, previewElementView, previewLabelView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-main-content-field',
 		doingShortcut: false,
 
 		regions: {
-			itemControls: '.nf-item-controls'
+			itemControls: '.nf-item-controls',
+			previewLabel: '.nf-realistic-field--label',
+			previewElement: '.nf-realistic-field--element',
 		},
 
 		initialize: function() {
@@ -29,6 +31,32 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 
 			this.itemControls.show( new itemControlsView( { model: this.model } ) );
 			jQuery( this.el ).disableSelection();
+
+			var type = this.model.get('type');
+			if('phone' == type) type = 'tel';
+			if('spam' == type) type = 'input';
+			if('date' == type) type = 'input';
+			if('confirm' == type) type = 'input';
+			if('quantity' == type) type = 'number';
+			if('terms' == type) type = 'listcheckbox';
+			if('liststate' == type) type = 'listselect';
+			if('listcountry' == type) type = 'listselect';
+			if('listmultiselect' == type) type = 'listselect';
+
+			// Only show preview / realisitic fields when not `html`, `hidden`, `note`, or `recaptcha`.
+			var previewFieldTypeBlacklist = ['html', 'hidden', 'note', 'recaptcha'];
+			var isFieldTypeTemplateAvailable = jQuery('#tmpl-nf-field-' + type).length;
+			if(-1 == previewFieldTypeBlacklist.indexOf(this.model.get('type')) && isFieldTypeTemplateAvailable) {
+				this.previewElement.show( new previewElementView( { model: this.model } ) );
+
+				// Only show the preview label when not `submit`, or `hr`.
+				var showLabelFieldTypeBlacklist = ['submit', 'hr'];
+				if(-1 == showLabelFieldTypeBlacklist.indexOf(this.model.get('type'))) {
+					this.previewLabel.show( new previewLabelView( { model: this.model } ) );
+				}
+
+				jQuery( this.el ).find('.nf-placeholder-label').hide();
+			}
 
 			if ( nfRadio.channel( 'app' ).request( 'is:mobile' ) ) {
 				jQuery( this.el ).on( 'taphold', function( e, touch ) {
@@ -72,6 +100,12 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 					icon.classList.add( 'fa', 'fa-' + type.get( 'icon' ) );
 
 					return icon.outerHTML;
+				},
+				labelPosition: function() {
+					return this.label_pos;
+				},
+				renderDescriptionText: function() {
+					return jQuery.trim(this.desc_text);
 				}
 			};
 		},

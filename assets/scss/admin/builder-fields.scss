@@ -1,3 +1,69 @@
+.nf-realistic-field {
+    font-size: 18px!important;
+}
+
+.nf-field-label {
+    overflow: visible!important;
+}
+
+.nf-realistic-field input[type="text"],
+.nf-realistic-field input[type="email"],
+.nf-realistic-field select {
+    width: 100%;
+    max-width: 100%;
+    background: #f9f9f9;
+    height: 50px!important;
+    padding: 12px;
+    border: 0;
+    color: #787878;
+}
+.ninja-forms-req-symbol {
+    color: red;
+}
+
+.nf-realistic-field button,
+.nf-realistic-field input[type="button"],
+.nf-realistic-field input[type="submit"] {
+    width: auto;
+    height: 50px;
+    padding: 12px;
+    border-radius: 2px;
+    background: #333;
+    border: 0;
+    color: #f7f7f7;
+}
+
+.nf-realistic-field input[type="checkbox"],
+.nf-realistic-field input[type="radio"] {
+    height: 20px;
+    width: 20px;
+}
+
+.nf-realistic-field .nf-realistic-field--element input[type="radio"] {
+    border-width: 2px!important;
+    background: #f7f7f7;
+    box-shadow: none;
+}
+
+.nf-realistic-field ul {
+    margin: 0;
+    list-style-type: none;
+}
+.nf-realistic-field ul li {
+    display: flex;
+    margin-bottom: 12px;
+}
+.nf-realistic-field ul li input[type="checkbox"],
+.nf-realistic-field ul li input[type="radio"] {
+    padding: 12px;
+    margin-top: 4px;
+    margin-right: 5px;
+
+    & + div { // Faux-label element used in the builder.
+        margin-top: 6px; // Align the faux-label vertically.
+    }
+}
+
 .nf-field-wrap {
     background: #fff;
     border: 1px solid #ccc;
@@ -7,11 +73,24 @@
     margin-bottom: 20px;
     padding: 15px 20px;
     position: relative;
+    transition: border-color .25s;
+
+    &:hover {
+        border-color: #ccc;
+    }
+
+    & .nf-item-controls {
+        display: none;
+    }
+
+    &:hover .nf-item-controls {
+        display: block;
+    }
+
     &.active {
         //background: #fafafa;
-        border: 2px solid #84CC1E;
+        border: 2px solid #84CC1E!important;
         color: #424242;
-        font-weight: bold;
         .nf-item-controls {
             font-weight: normal;
             a {

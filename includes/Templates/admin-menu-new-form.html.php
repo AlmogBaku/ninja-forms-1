@@ -159,8 +159,23 @@
 </script>
 
 <script id="tmpl-nf-main-content-field" type="text/template">
-    <div id="{{{ data.getFieldID() }}}" class="{{{ data.renderClasses() }}}" data-id="{{{ data.id }}}">{{{ data.renderIcon() }}}<span class="nf-field-label">{{{ _.escape( data.label ) }}} {{{ data.renderRequired() }}}</span>
+    <div id="{{{ data.getFieldID() }}}" class="{{{ data.renderClasses() }}}" data-id="{{{ data.id }}}">
+
+        <!-- Inline overlay to prevent click-throughs. -->
+        <div style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;"></div>
+
         <div class="nf-item-controls"></div>
+        
+        <div class="nf-placeholder-label">
+            {{{ data.renderIcon() }}}
+            <span class="nf-field-label">{{{ _.escape( data.label ) }}} {{{ data.renderRequired() }}}</span>
+        </div>
+
+        <div class="nf-realistic-field nf-realistic-field--label-{{{data.labelPosition()}}}" id="nf-field-{{{ data.getFieldID() }}}-wrap">
+            <div class="nf-realistic-field--label"></div>
+            <div class="nf-realistic-field--description">{{{ data.renderDescriptionText() }}}</div>
+            <div class="nf-realistic-field--element" ></div>
+        </div>
     </div>
 </script>
 
