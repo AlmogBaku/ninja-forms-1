@@ -2,6 +2,8 @@
 
 final class NF_Display_Render
 {
+    protected static $render_instance_count = 0;
+
     protected static $loaded_templates = array(
         'app-layout',
         'app-before-form',
@@ -351,6 +353,16 @@ final class NF_Display_Render
         }
 
         $fields = apply_filters( 'ninja_forms_display_fields', $fields );
+
+        /* Render Instance Fix */
+        if(self::$render_instance_count) {
+            $form_id .= '_' . self::$render_instance_count;
+            array_walk($fields, function(&$field) {
+                $field['id'] .= '_' . self::$render_instance_count;
+            });
+        }
+        self::$render_instance_count++;
+        /* END Render Instance Fix */
 
         // Output Form Container
         do_action( 'ninja_forms_before_container', $form_id, $form->get_settings(), $form_fields );
