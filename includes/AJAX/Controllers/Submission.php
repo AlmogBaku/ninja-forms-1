@@ -52,6 +52,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 
         /* Render Instance Fix */
         if(strpos($this->_form_id, '_')){
+            $this->_form_instance_id = $this->_form_id;
             list($this->_form_id) = explode('_', $this->_form_id);
 
             $updated_fields = array();
@@ -400,6 +401,9 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         }
 
         do_action( 'ninja_forms_after_submission', $this->_data );
+
+        // Restore form instance ID.
+        $this->_data[ 'form_id' ] = $this->_form_instance_id;
 
         $this->_respond();
     }
