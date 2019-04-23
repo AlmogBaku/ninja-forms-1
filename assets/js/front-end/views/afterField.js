@@ -1,5 +1,5 @@
 define( ['views/fieldErrorCollection', 'views/inputLimit'], function( fieldErrorCollection, InputLimitView ) {
-    var view = Marionette.ItemView.extend({
+    var view = NF_Marionette.ItemView.extend({
         tagName: 'nf-section',
         template: '#tmpl-nf-field-after',
 

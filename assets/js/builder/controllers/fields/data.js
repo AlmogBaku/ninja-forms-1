@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function( fieldCollection, fieldModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		adding: false,
 		removing: false,
 		

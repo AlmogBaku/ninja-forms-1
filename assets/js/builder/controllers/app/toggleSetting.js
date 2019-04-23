@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// We don't want the RTE setting to re-render when the value changes.
 			nfRadio.channel( 'setting-type-toggle' ).reply( 'renderOnChange', function(){ return false } );

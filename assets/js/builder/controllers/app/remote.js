@@ -1,6 +1,6 @@
 
 define( [], function() {
-    return Marionette.Object.extend( {
+    return NF_Marionette.Object.extend( {
         initialize: function() {
             this.listenTo( nfRadio.channel( 'setting' ), 'remote', this.addListener );
         },

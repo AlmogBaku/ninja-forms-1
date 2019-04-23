@@ -10,7 +10,7 @@
  */
 define( ['views/actions/drawer/typeCollection'], function( actionTypeCollectionView ) {
 
-	var view = Marionette.LayoutView.extend( {
+	var view = NF_Marionette.LayoutView.extend( {
 		template: '#tmpl-nf-drawer-content-add-action',
 
 		regions: {

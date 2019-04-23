@@ -8,7 +8,7 @@
  * @since 3.0
  */
 define( ['models/fields/fieldModel', 'views/fields/fieldItem'], function(FieldModel, FieldItemView) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// When our field type buttons are dragged, we need to add or remove the active (blue) class.
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:type', this.addActiveClass );

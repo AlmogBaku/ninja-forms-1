@@ -1,5 +1,5 @@
 define( ['views/advanced/settingItem'], function( settingItem ) {
-	var view = Marionette.CollectionView.extend({
+	var view = NF_Marionette.CollectionView.extend({
 		childView: settingItem
 		
 	});

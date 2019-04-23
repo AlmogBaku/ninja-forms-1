@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/actions/actionCollection', 'models/actions/actionModel'], function( actionCollection, actionModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Load our action collection from our localized form data
 			this.collection = new actionCollection( preloadedFormData.actions );

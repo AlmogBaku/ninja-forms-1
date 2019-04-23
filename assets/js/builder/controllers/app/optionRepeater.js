@@ -11,7 +11,7 @@
  * @since 3.0
  */
 define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection', 'views/app/drawer/optionRepeaterComposite'], function( listOptionModel, listOptionCollection, listCompositeView ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Respond to requests for the childView for list type fields.
 			nfRadio.channel( 'option-repeater' ).reply( 'get:settingChildView', this.getSettingChildView, this );

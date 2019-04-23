@@ -1,5 +1,5 @@
 define([], function() {
-    var controller = Marionette.Object.extend( {
+    var controller = NF_Marionette.Object.extend( {
         initialize: function() {
             this.listenTo( nfRadio.channel( 'product' ), 'init:model', this.register );
             nfRadio.channel( 'product' ).reply( 'get:calcValue', this.getCalcValue, this );

@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// When we add a field, update its key.
 			this.listenTo( nfRadio.channel( 'fields' ), 'add:field', this.newFieldKey );

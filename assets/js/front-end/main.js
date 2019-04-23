@@ -47,11 +47,11 @@ jQuery( document ).ready( function( $ ) {
 			return;
 		}
 
-		var NinjaForms = Marionette.Application.extend({
+		var NinjaForms = NF_Marionette.Application.extend({
 			forms: {},
 			initialize: function( options ) {
 				var that = this;
-				Marionette.Renderer.render = function(template, data){
+				NF_Marionette.Renderer.render = function(template, data){
 					var template = that.template( template );
 					return template( data );
 				};

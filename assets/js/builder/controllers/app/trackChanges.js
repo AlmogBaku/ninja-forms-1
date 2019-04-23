@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/app/changeCollection', 'models/app/changeModel'], function( changeCollection, ChangeModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.collection = new changeCollection();
 			// Respond to any requests to add a change directly.

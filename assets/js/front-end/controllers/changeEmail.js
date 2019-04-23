@@ -4,7 +4,7 @@ define([], function() {
 	var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	var errorID = 'invalid-email';
 
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 
 		initialize: function() {
 			this.listenTo( radioChannel, 'change:modelValue', this.onChangeModelValue );

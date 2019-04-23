@@ -2,7 +2,7 @@ define( [], function() {
 	var radioChannel = nfRadio.channel( 'fields' );
 	var errorID = 'confirm-mismatch';
 
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 
 		initialize: function() {
 			this.listenTo( radioChannel, 'init:model', this.registerConfirm );

@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen to our change filter event.
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'change:filter', this.filterFieldTypes );

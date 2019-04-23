@@ -1,6 +1,6 @@
 define( [ 'views/afterFormContent', 'views/beforeFormContent', 'models/fieldCollection' ], function( AfterFormContent, BeforeFormContent, FieldCollection ) {
 
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: "nf-section",
 		template: "#tmpl-nf-form-layout",
 

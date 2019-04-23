@@ -2,7 +2,7 @@
  * When a form is loaded, enable any rtes in textareas.
  */
 define([], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'textarea' ), 'render:view', this.initTextareaRTEs );
 			this.listenTo( nfRadio.channel( 'textarea' ), 'click:extra', this.clickExtra );

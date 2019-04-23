@@ -10,7 +10,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/itemSetting'], function( itemSettingView ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Respond to requests for field settings child views.
 			nfRadio.channel( 'app' ).reply( 'get:settingChildView', this.getSettingChildView, this );

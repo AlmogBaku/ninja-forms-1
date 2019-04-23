@@ -1,5 +1,5 @@
 define( ['views/app/drawer/itemSettingGroup'], function( itemSettingGroupView ) {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'div',
 		childView: itemSettingGroupView,
 

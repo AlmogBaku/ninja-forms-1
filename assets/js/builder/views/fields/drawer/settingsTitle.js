@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/fields/drawer/addSavedField'], function( addSavedFieldView ) {
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-drawer-content-edit-settings-title-fields',
 

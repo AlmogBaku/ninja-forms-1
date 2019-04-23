@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 
 		deleting: false, // block edit functionality while deleting field
 

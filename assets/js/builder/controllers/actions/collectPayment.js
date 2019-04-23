@@ -7,7 +7,7 @@
  * @since 3.1.7
  */
 define( [], function( settingCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			/*
 			 * When we init a collect payment action model, register a listener for calc changes.

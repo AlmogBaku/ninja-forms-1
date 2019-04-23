@@ -12,7 +12,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/typeSettingFieldset','models/app/settingCollection'], function( fieldsetView, settingCollection ) {
-    return Marionette.Object.extend( {
+    return NF_Marionette.Object.extend( {
 
         /**
          * A reference list of Field List setting models.

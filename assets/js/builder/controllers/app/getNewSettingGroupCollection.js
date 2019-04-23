@@ -8,7 +8,7 @@
  * @since 3.0
  */
 define( [ 'models/app/settingGroupCollection' ], function( SettingGroupCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Respond to requests for a new setting group collection
 			nfRadio.channel( 'app' ).reply( 'get:settingGroupCollectionDefinition', this.getNewSettingGroupCollection, this );

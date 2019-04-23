@@ -7,7 +7,7 @@
  * @since 3.1.7
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			/*
 			 * When we init an action model, register a listener for field deletion.

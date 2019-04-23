@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/advanced/settingsModel'], function( settingsModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'settings' ), 'click:edit', this.clickEdit );
 		},

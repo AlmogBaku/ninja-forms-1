@@ -1,5 +1,5 @@
 define(['controllers/submitButton'], function( submitButton ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		bound: {},
 
 		initialize: function() {

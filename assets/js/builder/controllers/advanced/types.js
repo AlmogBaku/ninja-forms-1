@@ -16,7 +16,7 @@ define( [
 	function(
 		TypeCollection
 	) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Create our field type collection
 			this.collection = new TypeCollection( formSettingTypeData );

@@ -12,7 +12,7 @@
  */
 define( [ 'views/app/header', 'views/app/subHeader' ], function( appHeaderView, appSubHeaderView ) {
 
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: "div",
 		template: "#tmpl-nf-header",
 

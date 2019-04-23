@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			/*
 			 * Set an array of field model attributes to ignore.

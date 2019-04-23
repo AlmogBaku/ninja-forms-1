@@ -2,7 +2,7 @@ define([], function() {
 	var radioChannel = nfRadio.channel( 'date' );
 	var errorID = 'invalid-date';
 
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 
 		initialize: function() {
 			this.listenTo( radioChannel, 'change:modelValue', this.onChangeModelValue );

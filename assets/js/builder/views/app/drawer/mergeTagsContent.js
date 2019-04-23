@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/mergeTagsSection', 'models/app/mergeTagCollection'], function( mergeTagsSectionView, MergeTagCollection ) {
-	var view = Marionette.CollectionView.extend({
+	var view = NF_Marionette.CollectionView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-merge-tags-content',
 		childView: mergeTagsSectionView,

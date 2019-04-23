@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/menu', 'views/app/menuButtons', 'views/app/mobileMenuButton'], function( appMenuCollectionView, appMenuButtonsView, mobileMenuButtonView ) {
-	var view = Marionette.LayoutView.extend( {
+	var view = NF_Marionette.LayoutView.extend( {
 		tagName: 'div',
 		template: '#tmpl-nf-app-header',
 

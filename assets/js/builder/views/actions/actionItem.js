@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( ['views/app/itemControls'], function( itemControlsView ) {
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'tr',
 		template: '#tmpl-nf-action-item',
 

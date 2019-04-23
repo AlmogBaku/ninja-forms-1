@@ -7,7 +7,7 @@
  * @since 3.1.7
  */
 define( [], function( settingCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'actions-save' ), 'init:actionModel', this.initSave );
 		},

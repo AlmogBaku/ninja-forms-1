@@ -3,12 +3,12 @@ var nfRadio = Backbone.Radio;
 jQuery( document ).ready( function( $ ) {
 	require( ['views/app/builder', 'controllers/loadControllers', 'views/loadViews'], function( BuilderView, LoadControllers, LoadViews ) {
 
-		var NinjaForms = Marionette.Application.extend( {
+		var NinjaForms = NF_Marionette.Application.extend( {
 
 			initialize: function( options ) {
 
 				var that = this;
-				Marionette.Renderer.render = function(template, data){
+				NF_Marionette.Renderer.render = function(template, data){
 					var template = that.template( template );
 					return template( data );
 				};

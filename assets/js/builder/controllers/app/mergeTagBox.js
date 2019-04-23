@@ -24,7 +24,7 @@ define( [
     MergeTagFilterView,
     MergeTagBoxLayout
 ) {
-    var controller = Marionette.Object.extend( {
+    var controller = NF_Marionette.Object.extend( {
 
         caret: 0, // Track the caret position of the current setting's input.
         old: '', // THe old merge tag that will be replaced.

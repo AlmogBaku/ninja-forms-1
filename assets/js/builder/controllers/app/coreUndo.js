@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'changes' ).reply( 'undo:changeSetting', this.undoChangeSetting, this );
 			nfRadio.channel( 'changes' ).reply( 'undo:addObject', this.undoAddObject, this );

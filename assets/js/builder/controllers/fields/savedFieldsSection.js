@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Create our collection for saved fields
 			this.collection = new fieldTypeSectionCollection( [

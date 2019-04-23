@@ -1,5 +1,5 @@
 define( ['views/fieldErrorItem'], function( fieldErrorItem ) {
-	var view = Marionette.CollectionView.extend({
+	var view = NF_Marionette.CollectionView.extend({
 		tagName: "nf-errors",
 		childView: fieldErrorItem,
 

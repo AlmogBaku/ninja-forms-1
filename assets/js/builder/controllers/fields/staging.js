@@ -10,7 +10,7 @@
  * @since 3.0
  */
 define( ['models/fields/stagingCollection'], function( stagingCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Create our staged fields collection
 			this.collection = new stagingCollection();

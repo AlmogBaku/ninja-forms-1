@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/mergeTagItem'], function( mergeTagItemView ) {
-	var view = Marionette.CompositeView.extend({
+	var view = NF_Marionette.CompositeView.extend({
 		tagName: 'div',
 		childView: mergeTagItemView,
 		template: '#tmpl-nf-merge-tags-section',

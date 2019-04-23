@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen for messages that are fired before a setting view is rendered.
 			this.listenTo( nfRadio.channel( 'setting-calc_var' ), 'before:renderSetting', this.beforeRenderSetting );

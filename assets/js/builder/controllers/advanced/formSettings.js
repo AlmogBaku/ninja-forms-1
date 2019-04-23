@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/app/settingCollection'], function( settingCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.collection = new settingCollection( formSettings, { objectType: 'settings' } );
 					

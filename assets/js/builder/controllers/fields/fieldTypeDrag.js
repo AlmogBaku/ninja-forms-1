@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function( ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen to our field type draggables and run the appropriate function.
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:type', this.startDrag );

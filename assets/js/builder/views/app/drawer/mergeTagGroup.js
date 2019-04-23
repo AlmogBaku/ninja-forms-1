@@ -5,7 +5,7 @@
  * @since 3.0
  */
 define( [], function() {
-    var view = Marionette.ItemView.extend({
+    var view = NF_Marionette.ItemView.extend({
         tagName: 'li',
         template: '#tmpl-nf-merge-tag-box-section',
         events: {

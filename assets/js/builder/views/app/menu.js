@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/menuItem'], function( appMenuItemView ) {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'div',
 		childView: appMenuItemView,
 

@@ -1,5 +1,5 @@
 define( ['views/fields/drawer/stagedField', 'views/fields/drawer/stagingEmpty'], function( stagedFieldView, stagedFieldsEmptyView ) {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'div',
 		childView: stagedFieldView,
 		emptyView: stagedFieldsEmptyView,

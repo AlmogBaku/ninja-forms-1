@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
-	var view = Marionette.LayoutView.extend( {
+	var view = NF_Marionette.LayoutView.extend( {
 		tagName: 'div',
 		template: '#tmpl-nf-drawer-content-new-form',
 

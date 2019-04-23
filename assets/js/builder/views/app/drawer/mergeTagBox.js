@@ -5,7 +5,7 @@
  * @since 3.0
  */
 define( [], function() {
-    var view = Marionette.LayoutView.extend({
+    var view = NF_Marionette.LayoutView.extend({
         el: '#merge-tags-box',
         template: "#tmpl-nf-merge-tag-box",
 

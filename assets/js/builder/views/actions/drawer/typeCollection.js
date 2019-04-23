@@ -1,5 +1,5 @@
 define( ['views/actions/drawer/typeButton'], function( actionTypeButtonView ) {
-	var view = Marionette.CompositeView.extend( {
+	var view = NF_Marionette.CompositeView.extend( {
 		template: '#tmpl-nf-drawer-action-type-section',
 		childView: actionTypeButtonView,
 

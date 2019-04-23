@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/actions/typeCollection'], function( typeCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen to our change filter event.
 			this.listenTo( nfRadio.channel( 'drawer-addAction' ), 'change:filter', this.filterActionTypes );

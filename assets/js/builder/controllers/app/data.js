@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( ['models/app/appModel'], function( appModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Get the collection that represents all the parts of our application.
 			var appDomainCollection = nfRadio.channel( 'app' ).request( 'get:domainCollection' );

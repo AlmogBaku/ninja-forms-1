@@ -1,5 +1,5 @@
 define( [], function() {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'div',
 
 		initialize: function( data ) {

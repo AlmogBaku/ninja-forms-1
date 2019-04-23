@@ -2,7 +2,7 @@
  * Controller responsible for keeping up with calculations.
  */
 define(['models/calcCollection'], function( CalcCollection ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.calcs = {};
 			this.displayFields = {};

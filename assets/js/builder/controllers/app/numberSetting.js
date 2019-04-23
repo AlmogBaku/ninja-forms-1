@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Respond to requests for field setting filtering.
 			nfRadio.channel( 'number' ).reply( 'before:updateSetting', this.updateSetting, this );

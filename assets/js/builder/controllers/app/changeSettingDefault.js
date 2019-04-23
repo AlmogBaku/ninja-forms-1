@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Respond to requests to update settings.
 			nfRadio.channel( 'app' ).reply( 'change:setting', this.changeSetting, this );

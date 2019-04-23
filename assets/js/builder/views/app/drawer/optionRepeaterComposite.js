@@ -1,5 +1,5 @@
 define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeaterEmpty', 'models/app/optionRepeaterCollection'], function( listOptionView, listEmptyView, listOptionCollection ) {
-	var view = Marionette.CompositeView.extend( {
+	var view = NF_Marionette.CompositeView.extend( {
 		template: '#tmpl-nf-edit-setting-option-repeater-wrap',
 		childView: listOptionView,
 		emptyView: listEmptyView,

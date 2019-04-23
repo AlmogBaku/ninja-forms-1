@@ -1,5 +1,5 @@
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'drawer' ), 'click:undoChanges', this.undoChanges, this );
 			this.listenTo( nfRadio.channel( 'drawer' ), 'click:undoSingle', this.undoSingle, this );

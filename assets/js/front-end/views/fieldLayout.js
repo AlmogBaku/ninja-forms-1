@@ -1,6 +1,6 @@
 define( ['views/fieldItem', 'views/beforeField', 'views/afterField'], function( fieldItem, beforeField, afterField ) {
 
-    var view = Marionette.LayoutView.extend({
+    var view = NF_Marionette.LayoutView.extend({
         tagName: 'nf-field',
 
         regions: {

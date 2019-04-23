@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [ 'models/app/optionRepeaterCollection' ], function( ListOptionCollection ) {
-    var controller = Marionette.Object.extend( {
+    var controller = NF_Marionette.Object.extend( {
         initialize: function() {
             this.listenTo( nfRadio.channel( 'option-repeater-option-label' ), 'update:option', this.updateOptionLabel );
             this.listenTo( nfRadio.channel( 'option-repeater-option-value' ), 'update:option', this.updateOptionValue );

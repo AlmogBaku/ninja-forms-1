@@ -8,7 +8,7 @@
  * @since 3.0
  */
 define( ['models/app/formModel'], function( formModel) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Instantiate Form Model
 			this.model = new formModel( { id: preloadedFormData.id } );

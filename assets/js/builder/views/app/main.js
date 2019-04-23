@@ -13,7 +13,7 @@
  */
 define( [], function() {
 
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-main',
 		className: 'nf-main-test',

@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen to our drawer-related click events.
 			this.listenTo( nfRadio.channel( 'app' ), 'click:openDrawer', this.clickOpenDrawer );

@@ -19,7 +19,7 @@ define( [
 		TypeCollection,
 		SectionCollection
 	) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Config for our settings sections
 			this.sections = new SectionCollection( fieldTypeSections );

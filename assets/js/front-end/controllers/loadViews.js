@@ -8,7 +8,7 @@
  * @since 3.0
  */
 define( ['views/fieldItem', 'views/fieldLayout'], function( fieldItemView, fieldLayoutView ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Reply to requests for our field item view.
 			nfRadio.channel( 'views' ).reply( 'get:fieldItem', this.getFieldItem );

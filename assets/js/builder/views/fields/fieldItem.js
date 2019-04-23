@@ -1,5 +1,5 @@
 define( ['views/app/itemControls', 'views/fields/preview/element', 'views/fields/preview/label'], function( itemControlsView, previewElementView, previewLabelView ) {
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-main-content-field',
 		doingShortcut: false,

@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function( ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen for the start and stop of our field staging dragging
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:fieldStaging', this.startDrag );

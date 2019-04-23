@@ -1,6 +1,6 @@
 define( ['views/beforeForm', 'views/formLayout', 'views/afterForm'], function( BeforeForm, FormLayout, AfterForm ) {
 
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		template: '#tmpl-nf-layout',
 
 		regions: {

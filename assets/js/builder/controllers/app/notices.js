@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'notices' ).reply( 'add', this.addNotice, this );
 			nfRadio.channel( 'notices' ).reply( 'close', this.closeNotice, this );

@@ -1,5 +1,5 @@
 define( ['views/fields/drawer/typeSection'], function( fieldTypeSectionView ) {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'div',
 		childView: fieldTypeSectionView,
 

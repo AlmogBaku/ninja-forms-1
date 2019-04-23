@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen for the start of our sorting.
 			// this.listenTo( nfRadio.channel( 'app' ), 'render:fieldsSortable', this.initWiggle );

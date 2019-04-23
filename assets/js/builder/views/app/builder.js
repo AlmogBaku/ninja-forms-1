@@ -13,7 +13,7 @@
  * @since 3.0
  */
 define( ['views/app/builderHeader', 'views/app/main', 'views/app/mobileMenu', 'views/app/drawer', 'views/app/drawer/mergeTagsContent'], function( headerView, mainView, mobileMenuView, drawerView, mergeTagsContentView ) {
-	var view = Marionette.LayoutView.extend( {
+	var view = NF_Marionette.LayoutView.extend( {
 		template: "#tmpl-nf-builder",
 		el: '#nf-builder',
 

@@ -13,7 +13,7 @@ define( [
 	], function(
 	mergeTagCollection
 	) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.tagSectionCollection = new mergeTagCollection();
 			var that = this;

@@ -11,7 +11,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// When we change our domain, change the hotkeys to those within that object.
 			this.listenTo( nfRadio.channel( 'main' ), 'render:main', this.changeHotkeys );

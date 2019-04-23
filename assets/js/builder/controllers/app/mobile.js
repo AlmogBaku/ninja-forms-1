@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen for clicks on our app menu.
 			this.listenTo( nfRadio.channel( 'app' ), 'click:menu', this.closeMobileMenu );

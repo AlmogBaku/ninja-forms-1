@@ -6,7 +6,7 @@
  * @since 3.0.30
  */
 define( [], function() {
-    var controller = Marionette.Object.extend( {
+    var controller = NF_Marionette.Object.extend( {
         initialize: function() {
             // When the media button is clicked, open the media manager.
             this.listenTo( nfRadio.channel( 'setting-type-media' ), 'click:extra', this.clickExtra );

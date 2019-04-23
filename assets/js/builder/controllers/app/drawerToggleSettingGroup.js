@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Listen for click events on our settings group.
 			this.listenTo( nfRadio.channel( 'drawer' ), 'click:toggleSettingGroup', this.toggleSettingGroup );

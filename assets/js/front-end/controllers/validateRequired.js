@@ -1,5 +1,5 @@
 define([], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'fields' ), 'blur:field', this.validateRequired );
 			this.listenTo( nfRadio.channel( 'fields' ), 'change:field', this.validateRequired );

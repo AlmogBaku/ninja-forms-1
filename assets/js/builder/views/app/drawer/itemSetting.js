@@ -1,5 +1,5 @@
 define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], function( mergeTagsContentView, settingErrorView ) {
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-edit-setting-wrap',
 

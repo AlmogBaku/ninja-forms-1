@@ -5,7 +5,7 @@
  * @since 3.0
  */
 define( [ 'views/app/drawer/mergeTag' ], function( mergeTagView ) {
-    var view = Marionette.CollectionView.extend({
+    var view = NF_Marionette.CollectionView.extend({
         tagName: 'ul',
         childView: mergeTagView,
         calc: false,

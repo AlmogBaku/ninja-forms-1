@@ -1,7 +1,7 @@
 define([], function() {
 	var radioChannel = nfRadio.channel( 'fields' );
 
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			nfRadio.channel( 'fields' ).reply( 'get:field', this.getField );
 		},

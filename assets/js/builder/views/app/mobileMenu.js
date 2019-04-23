@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/mobileMenuItem'], function( mobileMenuItemView ) {
-	var view = Marionette.CompositeView.extend({
+	var view = NF_Marionette.CompositeView.extend({
 		tagName: 'div',
 		template: '#tmpl-nf-mobile-menu',
 		childView: mobileMenuItemView,

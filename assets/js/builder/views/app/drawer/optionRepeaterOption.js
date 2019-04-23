@@ -1,5 +1,5 @@
 define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
-	var view = Marionette.LayoutView.extend({
+	var view = NF_Marionette.LayoutView.extend({
 		tagName: 'div',
 		className: 'nf-table-row',
 		template: '#tmpl-nf-edit-setting-option-repeater-default-row',

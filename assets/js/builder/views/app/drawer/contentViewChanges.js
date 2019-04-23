@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['views/app/drawer/contentViewChangesItem'], function( viewChangesItem ) {
-	var view = Marionette.CollectionView.extend( {
+	var view = NF_Marionette.CollectionView.extend( {
 		tagName: 'table',
         className: 'nf-changes',
 		childView: viewChangesItem

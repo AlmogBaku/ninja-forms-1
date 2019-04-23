@@ -7,7 +7,7 @@
  * @since 3.0
  */
 define( ['models/advanced/settingsModel'], function( settingsModel ) {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			// Load our action collection from our localized form data
 			this.model = new settingsModel( preloadedFormData.settings );

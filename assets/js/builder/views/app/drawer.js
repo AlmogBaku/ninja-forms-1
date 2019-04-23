@@ -8,7 +8,7 @@
  */
 define( ['views/app/drawer/contentEmpty'], function( drawerEmptyView ) {
 
-	var view = Marionette.LayoutView.extend( {
+	var view = NF_Marionette.LayoutView.extend( {
 		template: '#tmpl-nf-drawer',
 
 		regions: {

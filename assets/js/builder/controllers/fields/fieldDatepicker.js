@@ -9,7 +9,7 @@
  * @since 3.0
  */
 define( [], function() {
-	var controller = Marionette.Object.extend( {
+	var controller = NF_Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'setting-type-datepicker' ), 'render:setting', this.addDatepicker );
 		},
