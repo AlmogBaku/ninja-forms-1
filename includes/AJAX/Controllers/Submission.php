@@ -93,7 +93,10 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
                 $this->_respond();
             }
         } else {
-            $this->_form_cache = WPN_Helper::get_nf_cache( $this->_form_id );
+            if( WPN_Helper::use_cache() ) {
+                $this->_form_cache = WPN_Helper::get_nf_cache( $this->_form_id );
+            }
+
         }
 
         // TODO: Update Conditional Logic to preserve field ID => [ Settings, ID ] structure.
@@ -126,7 +129,12 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         // Init Calc Merge Tags.
         $calcs_merge_tags = Ninja_Forms()->merge_tags[ 'calcs' ];
 
-        $form_settings = $this->_form_cache[ 'settings' ];
+        if(isset($this->_form_cache[ 'settings' ] ) ) {
+            $form_settings = $this->_form_cache[ 'settings' ];
+        } else {
+            $form_settings = false;
+        }
+
         if( ! $form_settings ){
             $form = Ninja_Forms()->form( $this->_form_id )->get();
             $form_settings = $form->get_settings();
