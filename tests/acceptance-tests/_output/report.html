@@ -209,13 +209,13 @@
  <body>
    <ul id="toolbar-filter">
      <li> <a href="#" title="Show all" onClick="showAllScenarios()">◯</a></li>
-     <li> <a href="#" title="Successful" onClick="toggleScenarios('scenarioSuccess', this.parentElement)"><strong>✔</strong> 1</a></li>
-     <li> <a href="#" title="Failed" onClick="toggleScenarios('scenarioFailed', this.parentElement)"><strong>✗</strong> 0</a></li>
+     <li> <a href="#" title="Successful" onClick="toggleScenarios('scenarioSuccess', this.parentElement)"><strong>✔</strong> 0</a></li>
+     <li> <a href="#" title="Failed" onClick="toggleScenarios('scenarioFailed', this.parentElement)"><strong>✗</strong> 1</a></li>
      <li> <a href="#" title="Skipped" onClick="toggleScenarios('scenarioSkipped', this.parentElement)"><strong>S</strong> 0</a></li>
      <li> <a href="#" title="Incomplete" onClick="toggleScenarios('scenarioIncomplete', this.parentElement)"><strong>I</strong> 0</a></li>
    </ul>
  <div class="layout">
- <h1>Codeception Results <small><span style="color: green">OK</span> (33.3s)</small></h1>
+ <h1>Codeception Results <small><span style="color: #e74c3c">FAILED</span> (20.4s)</small></h1>
 
 
 
@@ -224,15 +224,15 @@
  <td>
      <h3>Acceptance Tests</h3>
  </td>
-</tr>   <tr class="scenarioRow scenarioSuccess">
+</tr>   <tr class="scenarioRow scenarioFailed">
     <td>
-     <p class="scenarioSuccess" onclick="showHide('1', this)"><span class="toggle">+</span>
-          003-CheckSubmissionsAllFieldsCept: Check all of the fields submissions. <span style="color: #34495e; font-size: 70%;">33.27s</span></p>
+     <p class="scenarioFailed" onclick="showHide('1', this)"><span class="toggle">+</span>
+          003-CheckSubmissionsAllFieldsCept: Check all of the fields submissions. <span style="color: #34495e; font-size: 70%;">20.38s</span></p>
     </td>
    </tr>
-   <tr class="scenarioRow scenarioSuccess">
+   <tr class="scenarioRow scenarioFailed">
     <td>
-     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer1">
+     <table border="0" width="100%" class="scenarioFailed scenarioStepsTable" id="stepContainer1">
 
 
       <tr>
@@ -244,145 +244,30 @@
       </tr>
 
 <tr>
- <td class="stepName " ><p onclick="showHide('5cacf2762dc68', this)"><span class="toggle">+</span> I add a field <span style="color: #732E81">&quot;Address&quot;,&quot;address&quot;,false</span></p>
+ <td class="stepName failedStep" ><p onclick="showHide('5cacfff0725f4', this)"><span class="toggle">+</span> I add a field <span style="color: #732E81">&quot;Address&quot;,&quot;address&quot;,false</span></p>
 
      </td>
 </tr>
 <tr>
  <td class="nostyle">
-  <table border="0" width="100%" class="substeps scenarioStepsTable" id="stepContainer5cacf2762dc68">
+  <table border="0" width="100%" class="substeps scenarioStepsTable" id="stepContainer5cacfff0725f4">
           <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait for text <span style="color: #732E81">&quot;Address&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;[data-id=&quot;address&quot;]&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait for element <span style="color: #732E81">&quot;.address.nf-field-wrap&quot;</span></td>
+       <td class="stepName failedStep">&nbsp;&nbsp;&nbsp;&nbsp;I wait for text <span style="color: #732E81">&quot;Address&quot;</span></td>
       </tr>
 
 
   </table>
  </td>
 </tr>
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I execute js <span style="color: #732E81">&quot;jQuery( '#nf-main' ).scrollTop( 100 );&quot;</span></td>
-      </tr>
 
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;div.address.nf-field-wrap&quot;</span></td>
-      </tr>
+         <tr >
+    <td class="error">
+        Waited for 10 secs but text 'Address' still not found
+    </td>
+</tr>
 
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I execute js <span style="color: #732E81">&quot;jQuery(&quot;h3.toggle:contains('Display')&quot;).attr(&quot;id&quot;, &quot;temporary&quot;);&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;#temporary&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I fill field <span style="color: #732E81">&quot;#element_class&quot;,&quot;address&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;a[title=&quot;Done&quot;]&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait <span style="color: #732E81">1</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;[data-drawerid=&quot;addField&quot;]&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;.nf-close-drawer&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait for text <span style="color: #732E81">&quot;PUBLISH&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;PUBLISH&quot;,&quot;.nf-app-buttons span&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait for element <span style="color: #732E81">&quot;#title&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I fill field <span style="color: #732E81">&quot;#title&quot;,&quot;Stanky New Title&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;.publish&quot;,&quot;#nf-drawer&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait <span style="color: #732E81">5</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;.preview&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I execute in selenium <span style="color: #732E81">&quot;Closure&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait for element visible <span style="color: #732E81">&quot;.nf-form-content&quot;,30</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I fill field <span style="color: #732E81">&quot;.address&quot;,&quot;1234 Test Lane&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I scroll to <span style="color: #732E81">{&quot;css&quot;:&quot;.address&quot;},200</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;Submit&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait <span style="color: #732E81">5</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I am on page <span style="color: #732E81">&quot;/wp-admin/edit.php?post_status=all&amp;post_type=nf_sub&amp;form_id=2&amp;paged=1&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I execute js <span style="color: #732E81">&quot;jQuery( &quot;.row-actions&quot; ).removeClass( &quot;row-actions&quot; );&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I click <span style="color: #732E81">&quot;span.edit &gt; a&quot;</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I wait <span style="color: #732E81">2</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I scroll to <span style="color: #732E81">{&quot;css&quot;:&quot;.inside&quot;}</span></td>
-      </tr>
-
-      <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I see in field <span style="color: #732E81">&quot;input[name=&quot;fields[5]&quot;]&quot;,&quot;1234 Test Lane&quot;</span></td>
-      </tr>
-
-
-         
-         
-         
+         <tr><td class='error'><div class='screenshot'><img src='003.CheckSubmissionsAllFieldsCept.fail.png' alt='failure screenshot'></div></td></tr>
+         <tr><td class='error'>See <a href='003.CheckSubmissionsAllFieldsCept.fail.html' target='_blank'>HTML snapshot</a> of a failed page</td></tr>
      </table>
 
 
@@ -398,11 +283,11 @@
       <table border="0">
        <tr>
         <td width="250" class="scenarioSuccess">Successful scenarios:</td>
-        <td class="scenarioSuccessValue"><strong>1</strong></td>
+        <td class="scenarioSuccessValue"><strong>0</strong></td>
        </tr>
        <tr>
         <td class="scenarioFailed">Failed scenarios:</td>
-        <td class="scenarioFailedValue"><strong>0</strong></td>
+        <td class="scenarioFailedValue"><strong>1</strong></td>
        </tr>
        <tr>
         <td class="scenarioSkipped">Skipped scenarios:</td>
