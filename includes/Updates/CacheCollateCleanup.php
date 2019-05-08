@@ -254,7 +254,7 @@ class NF_Updates_CacheCollateCleanup extends NF_Abstracts_RequiredUpdate
      * Function to perform a simple, single-step delete of orphan data.
      * 
      * @since 3.4.0
-     * @updated UPDATE_VERSION_ON_MERGE
+     * @updated 3.4.11
      */
     private function do_easy_delete()
     {
@@ -276,7 +276,7 @@ class NF_Updates_CacheCollateCleanup extends NF_Abstracts_RequiredUpdate
      * Function to perform a multi-step delete of orphan data.
      * 
      * @since 3.4.0
-     * @updated UPDATE_VERSION_ON_MERGE
+     * @updated 3.4.11
      */
     private function do_step_delete()
     {

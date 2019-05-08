@@ -99,6 +99,14 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 
         }
 
+        // Add Field Keys to _form_data
+        if(! $this->is_preview()){
+            $form_fields = Ninja_Forms()->form($this->_form_id)->get_fields();
+            foreach ($form_fields as $id => $field) {
+                $this->_form_data['fields'][$id]['key'] = $field->get_setting('key');
+            }
+        }
+
         // TODO: Update Conditional Logic to preserve field ID => [ Settings, ID ] structure.
         $this->_form_data = apply_filters( 'ninja_forms_submit_data', $this->_form_data );
 
@@ -535,11 +543,14 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         if($this->_form_instance_id){
             $this->_data[ 'form_id' ] = $this->_form_instance_id;
 
-            $field_errors = array();
-            foreach($this->_errors['fields'] as $field_id => $error){
-                $field_errors[$field_id . '_' . $this->_instance_id] = $error;
+            // Maybe update IDs for field errors, if there are field errors.
+            if(isset($this->_errors['fields']) && $this->_errors['fields']){
+                $field_errors = array();
+                foreach($this->_errors['fields'] as $field_id => $error){
+                    $field_errors[$field_id . '_' . $this->_instance_id] = $error;
+                }
+                $this->_errors['fields'] = $field_errors;
             }
-            $this->_errors['fields'] = $field_errors;
         }
 
         // Set a content type of JSON for the purpose of previnting XSS attacks.
