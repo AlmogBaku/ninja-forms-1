@@ -40,19 +40,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
     private $insert = array();
     
     /**
-     * Non-associatve array that tracks field ids that should be deleted from fields DB table.
-     * @var array
-     */
-    private $delete = array();
-    
-    /**
-     * Associative array that tracks field ids that have changed.
-     * $submission_updates[ old_field_id ] = new_field_id;
-     * @var array
-     */
-    private $submission_updates = array();
-    
-    /**
      * Associatve array that tracks newly inserted fields.
      * $insert_ids[ field_id ] = field_id;
      * @var array
@@ -177,9 +164,9 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
         // If we're not debugging...
         if ( ! $this->debug ) {
             // Ensure that our data tables are updated.
-            $this->migrate( 'cache_collate_fields' );
+            // $this->migrate( 'cache_collate_fields' );
             // Set out new db version.
-            update_option( 'ninja_forms_db_version', '1.3' );
+            // update_option( 'ninja_forms_db_version', '1.3' );
         }
         // Get a list of our forms...
         $sql = "SELECT ID FROM `{$this->db->prefix}nf3_forms`";
@@ -476,103 +463,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
     }
 
     /**
-     * If we have any duplicate field ids, we need to update any existing submissions with the new field ID.
-     *
-     * The $this->submission_updates array will look like:
-     *
-     * $this->submission_updates[ original_id ] = new_id;
-     *
-     * This method:
-     *     Checks to see if we have any fields in our $this->submission_updates array (have a changed ID)
-     *     Makes sure that processing isn't locked
-     *     Loops over fields in our $this->submission_updates array
-     *     Fetches submission post meta for the specific form ID and _field_OLDID
-     *     Uses a SQL UPDATE statement to replace _field_OLDID with _field_NEWID
-     * 
-     * @since  3.4.0
-     * @return void
-     */
-    private function maybe_update_submissions()
-    {
-        // If we don't have any submissions to update OR the lock_process is true, bail early.
-        if ( empty ( $this->submission_updates ) || $this->lock_process ) {
-            return false;
-        }
-            
-        /*
-         * Keep track of old field ids we've used.
-         *     Initially, we set our record array to our current submission updates array.
-         *     When we finish updating an old field, we remove it from the record array.
-         *     When we're done with all fields, we set the submission updates array to the record array.
-         */
-        $submission_updates_record = $this->submission_updates;
-        // Meta key update limit; How many meta keys do we want to update at a time?
-        $meta_key_limit = 200;
-        // Loop through submission updates and query the postmeta table for any meta_key values of _field_{old_id}.
-        foreach ( $this->submission_updates as $old_id => $new_id ) {
-            // Make sure that we haven't reached our query limit.
-            if ( 1 > $this->limit ) {
-                // Lock processing.
-                $this->lock_process = true;
-                // Exit the loop.
-                break;
-            }
-
-            // This sql is designed to grab our old _field_X post meta keys so that we can replace them with new _field_X meta keys.
-            $sql = "SELECT
-                old_field_id.meta_id
-                FROM
-                `{$this->db->prefix}posts` p
-                INNER JOIN `{$this->db->prefix}postmeta` old_field_id ON old_field_id.post_id = p.ID
-                AND old_field_id.meta_key = '_field_{$old_id}'
-                INNER JOIN `{$this->db->prefix}postmeta` form_id ON form_id.post_id = p.ID
-                AND form_id.meta_key = '_form_id'
-
-                WHERE old_field_id.meta_key = '_field_{$old_id}'
-                 AND form_id.meta_value = {$this->form[ 'ID' ]}
-                 AND p.post_type = 'nf_sub'
-                 LIMIT {$meta_key_limit}";
-            // Fetch our sql results.
-            $meta_ids = $this->db->get_results( $sql, 'ARRAY_N' );
-            if ( ! empty( $meta_ids ) ) {
-                // Implode our meta ids so that we can use the result in our update sql.
-                $imploded_ids = implode( ',', call_user_func_array( 'array_merge', $meta_ids ) );
-                // Update all our fetched meta ids with the new _field_ meta key.
-                $sql = "UPDATE `{$this->db->prefix}postmeta`
-                    SET    meta_key = '_field_{$new_id}'
-                    WHERE  meta_id IN ( {$imploded_ids} )";
-
-                $this->query( $sql );
-            }
-
-            /*
-             * Let's make sure that we're done processing all post meta for this old field ID.
-             * 
-             * If the number of meta rows retrieved equals our limit:
-             *     lock processing
-             *     break out of this loop
-             * Else
-             *     we're done with this old field, remove it from our list
-             *     subtract from our $this->limit var
-             */
-            if ( $meta_key_limit === count( $meta_ids ) ) {
-                // Keep anything else from processing.
-                $this->lock_process = true;
-                // Exit this foreach loop.
-                break;
-            } else { // We're done with this old field.
-                // Remove the field ID from our submission array.
-                unset( $submission_updates_record[ $old_id ] );
-                // Decrement our query limit.
-                $this->limit--;
-            }
-
-        } // End foreach
-        // Set our submission updates array to our record array so that we remove any completed old ids.
-        $this->submission_updates = $submission_updates_record;
-    }
-
-    /**
      * If we still have field_ids in our class var, then we need to update the field table.
      *
      * If lock_process is true or we have no field_ids, we bail early.
@@ -642,30 +532,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
     }
 
     /**
-     * If we've inserted any fields that have changed ids, we want to update those ids in our cache.
-     * This method grabs the cache, updates any field ids, then updates the cache.
-     * 
-     * @since  3.4.0
-     * @return void
-     */
-    private function update_form_cache()
-    {
-        // Get a copy of the cache.
-        $cache = WPN_Helper::get_nf_cache($this->form[ 'ID' ] );
-        // For each field in the cache...
-        foreach( $cache[ 'fields' ] as &$field ) {
-            // If we have a new ID for this field...
-            if ( isset( $this->insert_ids[ $field[ 'id' ] ] ) ) {
-                // Update it.
-                $field[ 'id' ] = intval( $this->insert_ids[ $field[ 'id' ] ] );
-            }
-            // TODO: Might also need to append some new settings here (Label)?
-        }
-        // Save the cache, passing 3 as the current stage.
-        WPN_Helper::update_nf_cache( $this->form[ 'ID' ], $cache, 3 );
-    }
-
-    /**
      * After we've done our processing, but before we get to step cleanup, we need to store process information.
      *
      * This method updates our form class var so that it can be passed to the next step.
@@ -694,7 +560,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             // Store our current data location.
             $this->form[ 'insert' ] = $this->insert;
             $this->form[ 'field_ids' ] = $this->field_ids;
-            $this->form[ 'submission_updates' ] = $this->submission_updates;
             array_push( $this->running[ 0 ][ 'forms' ], $this->form );
         } else { // Otherwise... (The step is complete.)
             // Increment our step count.
