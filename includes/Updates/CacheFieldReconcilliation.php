@@ -43,7 +43,7 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
      * The denominator object for calculating our steps.
      * @var Integer
      */
-    private $divisor = 50;
+    private $divisor = 200;
 
     /**
      * Hard limit for the number of querys we run during a single step.
