@@ -140,7 +140,7 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             $offset = $this->running[ 0 ][ 'current' ] * $this->divisor;
         }
 
-        // Get a list of our forms...
+        // Get a list of our fields...
         $sql = "SELECT `id` FROM `{$this->table}` LIMIT {$offset}, {$this->divisor}";
         $this->field_ids = $this->db->get_results( $sql, 'ARRAY_A' );
         $this->field_ids = $this->array_squash( $this->field_ids );
@@ -157,7 +157,7 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             $update_query = $this->get_update_query( $field_meta );
 
             if( $update_query ) {
-                $this->db->query($update_query);
+                $this->query($update_query);
             }
         }
     }
