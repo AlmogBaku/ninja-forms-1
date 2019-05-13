@@ -169,16 +169,40 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
 
         if(0 === count($this->field_ids)) return false;
 
+        $meta_query = $this->get_field_meta_query();"SELECT `parent_id`, `key`, `meta_key`, `meta_value`, `value` FROM `{$this->meta_table}` WHERE `parent_id` IN ({$in_fields}) AND `key` IN ({$meta_keys}) ORDER BY `parent_id` ASC";
+
+        $results = $this->db->get_results( $meta_query, 'ARRAY_A');
+
+        $meta_data = $this->format_field_meta($results);
+
+        return $meta_data;
+    }
+
+    /**
+     * Construct the query to get meta data
+     * 
+     * return String $meta_query
+     */
+    public function get_field_meta_query() {
         $in_fields = implode( ', ', $this->field_ids );
         $meta_keys = "'" . implode( "' , '", $this->meta_keys ) . "'";
 
         $meta_query = "SELECT `parent_id`, `key`, `meta_key`, `meta_value`, `value` FROM `{$this->meta_table}` WHERE `parent_id` IN ({$in_fields}) AND `key` IN ({$meta_keys}) ORDER BY `parent_id` ASC";
 
-        $results = $this->db->get_results( $meta_query, 'ARRAY_A');
+        return $meta_query;
+    }
 
+    /**
+     * Format the data into format that helps us construct the insert/update query
+     * 
+     * @param Array $metadata
+     * 
+     * @return Array $meta_data
+     */
+    public function format_field_meta( $metadata ) {
         $meta_data = array();
 
-        foreach( $results as $meta ) {
+        foreach( $metadata as $meta ) {
             $parent_id = $meta['parent_id'];
             foreach( $meta as $key => $val ) {
 
