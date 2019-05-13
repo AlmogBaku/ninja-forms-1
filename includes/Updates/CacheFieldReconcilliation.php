@@ -1,17 +1,9 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class NF_Updates_CacheCollateFields
+ * Class NF_Updates_CacheFieldReconcilliation
  * 
- * This class manages the step process of running through the CacheCollateFields required update.
- * It will define an object to pull data from (if necessary) to pick back up if exited early.
- * It will run an upgrade function to alter the nf3_fields and nf3_field_meta tables.
- * Then, it will step over each form on the site, following this process:
- * - Fields that exist in the data tables but not in the cache will be deleted.
- * - Fields that exist in the cache but not in the data tables will be inserted.
- * - Fields that exist in the data tables but have an incorrect form ID will be inserted as a new ID and referenced from the cache.
- * - Fields that exist in both will be updated from the cache to ensure the data is correct.
- * After completing the above for every form on the site, it will remove the data object that manages its location.
+ * This allows us to make sure that the data being saved to the database is in the fields table.
  */
 class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
 {
@@ -99,12 +91,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             // Run our startup method.
             $this->startup();
         }
-        
-        /**
-         * Get all of our database variables up and running.
-         * Sets up class vars that are used in subsequent methods.
-         */
-        $this->setup_vars();
 
         /**
          * Get the next round of fields to update
@@ -127,8 +113,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
          */
         $this->respond();
     }
-
-
 
     /**
      * Function to run any setup steps necessary to begin processing.
@@ -282,31 +266,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             // Call the parent cleanup method.
             parent::cleanup();
         }
-    }
-
-    /**
-     * Most of the methods in this class use class vars to access and store data.
-     *
-     * This method sets the initial state of these class vars.
-     * Class vars include:
-     *    $field_ids <- non-associatve array of field ids from the database.
-     *
-     * If we are not running a form for the first time, 
-     * we set class vars based on what we have been passed. 
-     * After setting those class vars, we bail early.
-     * 
-     * If we are running for the first time, set have to hit the database to
-     * get the information for class vars.
-     * This method doesn't perform those operations, but it sets the class vars that the appropriate
-     * methods use to figure out what to add and remove.
-     *
-     * @since  3.4.0
-     * @return void
-     */
-    private function setup_vars()
-    {
-        // Enable maintenance mode on the front end when the fields start processing.
-        // $this->enable_maintenance_mode( $this->db->prefix, $this->form[ 'ID' ] );       
     }
 
     /**
