@@ -124,7 +124,7 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
         // Record that we're processing the update.
         $this->running[ 0 ][ 'running' ] = true;
         
-        $sql = "SELECT ID FROM `{$this->table}`";
+        $sql = "SELECT `id` FROM `{$this->table}`";
         $fields = $this->db->get_results( $sql, 'ARRAY_A' );
         // Record the total number of steps in this batch.
         $this->running[ 0 ][ 'steps' ] = ceil(count( $fields ) / $this->divisor);
@@ -141,7 +141,7 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
         }
 
         // Get a list of our forms...
-        $sql = "SELECT ID FROM `{$this->table}` LIMIT {$offset}, {$this->divisor}";
+        $sql = "SELECT `id` FROM `{$this->table}` LIMIT {$offset}, {$this->divisor}";
         $this->field_ids = $this->db->get_results( $sql, 'ARRAY_A' );
         $this->field_ids = $this->array_squash( $this->field_ids );
         // $this->running[ 0 ][ 'fields' ] = $this->field_ids;
@@ -314,13 +314,13 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
             // If the item has more than 1 attribute...
             if ( 1 < count( $row ) ) {
                 // Assign the data to an associated result.
-                $response[] = intval($row['ID']);
+                $response[] = intval($row['id']);
                 // Unset the id setting, as that will be the key.
-                unset( $response[ $row[ 'ID' ] ][ '' ] );
+                unset( $response[ $row[ 'id' ] ][ '' ] );
             } // Otherwise... (We only have 1 attribute.)
             else {
                 // Add the id to the stack in a non-associated result.
-                $response[] = intval( $row[ 'ID' ] );
+                $response[] = intval( $row[ 'id' ] );
             }
         }
         return $response;
