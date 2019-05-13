@@ -30,7 +30,7 @@ return apply_filters( 'ninja_forms_required_updates', array(
     'CacheFieldReconcilliation' => array(
         'class_name' => 'NF_Updates_CacheFieldReconcilliation',
         'requires' => array( 'CacheCollateCleanup' ),
-        'nicename' => __( 'Reconcile Cache Field Data With Database.', 'ninja-forms' ),
+        'nicename' => __( 'Field Meta Cleanup.', 'ninja-forms' ),
     ),
 
 ));
