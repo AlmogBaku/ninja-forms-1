@@ -70,6 +70,12 @@ define(['controllers/submitButton'], function( submitButton ) {
 		},
 
 		resetLabel: function( response ) {
+			if ( _.size( response.errors.nonce ) > 0 ) {
+				if( 'undefined' != typeof response.errors.nonce.new_nonce && 'undefined' != typeof response.errors.nonce.nonce_ts ) {
+					// Do not reset label for nonce errors, which will re-submit the form.
+					return;
+				}
+			}
 			if ( 'undefined' != typeof this.get( 'oldLabel' ) ) {
 				this.set( 'label', this.get( 'oldLabel' ) );
 			}
