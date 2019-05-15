@@ -1078,7 +1078,22 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 					// Remove it from the list.
 					unset( $updates[ $slug ] );
 				}
-			}			
+            }
+            
+            if( isset( $updates[ 'CacheCollateFields' ] ) 
+                && isset( $updates[ 'CacheFieldReconcilliation' ] ) 
+                && !isset( $processed[ 'CacheFieldReconcilliation' ] ) ) {
+
+                unset( $updates[ 'CacheFieldReconcilliation' ] );
+
+                date_default_timezone_set( 'UTC' );
+                $now = date( "Y-m-d H:i:s" );
+                // Append the current update to the array.
+                $processed[ 'CacheFieldReconcilliation' ] = $now;
+                // Save it.
+                update_option( 'ninja_forms_required_updates', $processed );
+            }
+
 			return $updates;
         }
         
