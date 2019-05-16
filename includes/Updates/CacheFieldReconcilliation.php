@@ -36,12 +36,6 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
      * @var Integer
      */
     private $divisor = 200;
-
-    /**
-     * Hard limit for the number of querys we run during a single step.
-     * @var integer
-     */
-    private $limit = 10;
     
     /**
      * The table names for our database queries.
