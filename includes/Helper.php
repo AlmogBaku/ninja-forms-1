@@ -499,18 +499,22 @@ final class WPN_Helper
      */
     public static function use_cache() {
 
-        $db_version = get_option('ninja_forms_db_version');
-
         $cache_mode = intval( get_option('ninja_forms_cache_mode') );
-
+        // if we've already decided to use the cache return true and exit.
         if( 0 < $cache_mode ) return true;
 
+        $db_version = get_option('ninja_forms_db_version');
+        // If not in cache mode, get the db version and return true if we aren't at a certain threshold version-wise
         if( ! $db_version || version_compare($db_version, '1.4', '<' )) {
+            return true;
+        }
+
+        $finished_updates = get_option( 'ninja_forms_required_updates', false );
+        // make sure we've run the lastest update to reconcile db with cache field values
+        if( $finished_updates && !isset( $finished_updates[ 'CacheFieldReconcilliation' ] ) ) {
             return true;
         }
 
         return false;
     }
-
-
 } // End Class WPN_Helper

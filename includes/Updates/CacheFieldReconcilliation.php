@@ -169,6 +169,9 @@ class NF_Updates_CacheFieldReconcilliation extends NF_Abstracts_RequiredUpdate
 
         if(0 === count($this->field_ids)) return false;
 
+        $in_fields = implode( ', ', $this->field_ids );
+        $meta_keys = "'" . implode( "' , '", $this->meta_keys ) . "'";
+
         $meta_query = $this->get_field_meta_query();"SELECT `parent_id`, `key`, `meta_key`, `meta_value`, `value` FROM `{$this->meta_table}` WHERE `parent_id` IN ({$in_fields}) AND `key` IN ({$meta_keys}) ORDER BY `parent_id` ASC";
 
         $results = $this->db->get_results( $meta_query, 'ARRAY_A');
