@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Ninja Forms
+Plugin Name: Ninja Formz
 Plugin URI: http://ninjaforms.com/
 Description: Ninja Forms is a webform builder with unparalleled ease of use and features.
 Version: 3.4.2
