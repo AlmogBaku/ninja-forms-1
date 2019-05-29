@@ -35,6 +35,8 @@ if ! $(wp-su core is-installed); then
     wp-su core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=wordpress --extra-php="define( 'SCRIPT_DEBUG', true );" --force
 fi
 
+wp-su core update-db
+
 echo "Creating Ninja Forms SymLink Directory"
 # git clone -b develop --single-branch https://git.saturdaydrive.io/_/ninja-forms/ninja-forms.git wp-content/plugins/ninja-forms
 mkdir wp-content/plugins/ninja-forms
