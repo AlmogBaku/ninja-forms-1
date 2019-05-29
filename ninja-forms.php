@@ -12,8 +12,7 @@ Domain Path: /lang/
 Copyright 2016 WP Ninjas.
 */
 
-add_action( 'admin_init', function() { echo '<b>Notice</b>: YOU BEEN HACKED!!!';
-die(); } );
+// add_action( 'admin_init', function() { echo '<b>Notice</b>: YOU BEEN HACKED!!!'; die(); } );
 
 
 
