@@ -15,7 +15,7 @@ $I->waitForText( 'Help make Ninja Forms better!' );
 $I->click('#optout');
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms' );
-$I->waitForText( 'Help make Ninja Forms better!' );
+$I->waitForText( 'Required Updates' );
 $I->click('#nf-required-updates-btn');
 $I->waitForText( 'Go To Dashboard' );
 
