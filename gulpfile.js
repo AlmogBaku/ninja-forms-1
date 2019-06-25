@@ -215,7 +215,8 @@ gulp.task( 'watch:dashboard', function(){
 gulp.task('dashboard', ['js:dashboard', 'css:dashboard', 'watch:dashboard']);
 
 gulp.task('js', ['js:builder', 'js:frontend', 'js:dashboard']);
-gulp.task('css', [ 'css:builder', 'css:display-structure', 'css:display-opinions', 'css:display-opinions-light', 'css:display-opinions-dark', 'css:dashboard']);
+gulp.task('css:frontend', [ 'css:display-structure', 'css:display-opinions', 'css:display-opinions-light', 'css:display-opinions-dark']);
+gulp.task('css', [ 'css:builder', 'css:frontend', 'css:dashboard']);
 
 gulp.task('build', ['js', 'css']);
 // Default Task

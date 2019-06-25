@@ -68,7 +68,7 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
     {
         // If we aren't passed any form content, bail.
         if ( empty ( $_POST[ 'extraData' ][ 'content' ] ) ) {
-            // TODO: When we add error handling to the batch processor, this should be revisited.
+            $this->add_error( 'empty_content', __( 'No export provided.', 'ninja-forms' ), 'fatal' );
             $this->batch_complete();
         }
 
@@ -85,10 +85,13 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
          */
 
         $decoded_data = json_decode( WPN_Helper::json_cleanup( html_entity_decode( $data, ENT_QUOTES ) ), true );
-        
+
         // If we don't have an array, try unserializing
         if ( ! is_array( $decoded_data ) ) {
             $decoded_data = WPN_Helper::maybe_unserialize( $data );
+            if ( ! is_array( $decoded_data ) ) {
+                $decoded_data = json_decode( $decoded_data, true );
+            }
         }
 
         // Try to utf8 decode our results.
@@ -97,6 +100,11 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
         // If json_encode returns false, then this is an invalid utf8 decode.
         if ( ! json_encode( $data ) ) {
             $data = $decoded_data;
+        }
+
+        if ( ! is_array( $data ) ) {
+            $this->add_error( 'decode_failed', __( 'Failed to read export. Please try again.', 'ninja-forms' ), 'fatal' );
+            $this->batch_complete();
         }
 
         $data = $this->import_form_backwards_compatibility( $data );
@@ -382,7 +390,15 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
          */
         for ( $i = 0; $i < $this->fields_per_step; $i++ ) {
             // If we don't have a field, skip this $i.
-            if ( ! isset ( $this->form[ 'fields' ][ $i ] ) ) continue;
+            if ( ! isset ( $this->form[ 'fields' ][ $i ] ) ) {
+                // Remove this field from our fields array.
+                unset( $this->form[ 'fields' ][ $i ] );
+                // If we haven't exceeded the field total...
+                if ( $i < count( $this->form[ 'fields' ] ) ) {
+                    $this->add_error( 'empty_field', __( 'Some fields might not have been imported properly.', 'ninja-forms' ) );
+                }
+                continue;
+            }
 
             $field_settings = $this->form[ 'fields' ][ $i ];
             // Remove a field ID if we have one set.

@@ -7,7 +7,7 @@
  * @copyright (c) 2015 WP Ninjas
  * @since 3.0
  */
-define( [], function() {
+define( ['models/fields/fieldModel', 'views/fields/fieldItem'], function(FieldModel, FieldItemView) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			// When our field type buttons are dragged, we need to add or remove the active (blue) class.
@@ -180,14 +180,14 @@ define( [], function() {
 				var fieldWidth = jQuery( sortableEl ).width();
 				// Set our currentHelper to an object var so that we can access it later.
 				this.currentHelper = ui.helper;
-				// Update our helper label.
-				jQuery( ui.helper ).html( label );
-				// Remove the field type draggable classes and add sortable classes.
-				jQuery( ui.helper ).removeClass( 'nf-field-type-button' ).addClass( 'nf-field-wrap' ).css( { 'width': fieldWidth, 'height': '50px' } );						
-				// Add our hover class if our sortable has been initialized.
-				if ( jQuery( sortableEl ).hasClass( 'ui-sortable' ) ) {
-					jQuery( sortableEl ).addClass( 'nf-droppable-hover' );
-				}
+
+				// Render a fieldItemView using a mock fieldModel.
+				var fieldModel = new FieldModel({ label: fieldType.get( 'nicename' ), type: type });
+				var fieldItemView = new FieldItemView({model:fieldModel});
+				var renderedFieldItemView = fieldItemView.render();
+				var fieldTypeEl = renderedFieldItemView.$el[0];
+				jQuery( ui.helper ).html( fieldTypeEl.outerHTML );
+
 			} else if ( jQuery( ui.item ).hasClass( 'nf-stage' ) ) { // Staging
 				// Get our sortable, and if it's initialized add our hover class.
 				var sortableEl = nfRadio.channel( 'fields' ).request( 'get:sortableEl' );
@@ -256,7 +256,29 @@ define( [], function() {
 		startFieldsSortable: function( ui ) {
 			// If we aren't dragging an item in from types or staging, update our change log.
 			if( ! jQuery( ui.item ).hasClass( 'nf-field-type-draggable' ) && ! jQuery( ui.item ).hasClass( 'nf-stage' ) ) { 
-				jQuery( ui.item ).css( 'opacity', '0.5' ).show();
+				
+				// Maintain origional visibility during drag/sort.
+				jQuery( ui.item ).show();
+
+				// Determine helper based on builder/layout type.
+				if(jQuery(ui.item).hasClass('nf-field-wrap')){
+					var newHelper = jQuery(ui.item).clone();
+				} else if(jQuery(ui.item).parent().hasClass('layouts-cell')) {
+					var newHelper = $parentHelper.clone();
+				} else {
+					var newHelper = jQuery(ui.item).clone();
+				}
+
+				// Remove unecessary item controls from helper.
+				newHelper.find('.nf-item-controls').remove();
+
+				// Update helper with clone's content.
+				jQuery( ui.helper ).html( newHelper.html() );
+
+				jQuery( ui.helper ).css( 'opacity', '0.5' );
+				
+				// Add de-emphasize origional.
+				jQuery( ui.item ).css( 'opacity', '0.25' );
 			}
 			nfRadio.channel( 'fields' ).trigger( 'sortable:start', ui );
 		},

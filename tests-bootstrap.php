@@ -8,6 +8,7 @@ require_once 'includes/Telemetry/Metric.php';
 require_once 'includes/Telemetry/CountMetric.php';
 require_once 'includes/Telemetry/MaxMetric.php';
 require_once 'includes/Telemetry/RepositoryInterface.php';
+require_once 'includes/Handlers/LocaleNumberFormatting.php';
 
 function update_option( $value ) {
     return $value;
@@ -30,5 +31,16 @@ class NF_Telemetry_MockRepository implements NF_Telemetry_RepositoryInterface
     public function save( $new_value )
     {
         return $new_value;
+    }
+}
+
+class NF_MockLocale
+{
+    public $number_format = array();
+
+    public function __construct($thousands_sep = ',', $decimal_point = '.')
+    {
+        $this->number_format['thousands_sep'] = $thousands_sep;
+        $this->number_format['decimal_point'] = $decimal_point;
     }
 }
