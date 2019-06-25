@@ -44,6 +44,7 @@ cp -r /repo/* wp-content/plugins/ninja-forms/
 
 echo 'Activating Ninja Forms'
 wp-su plugin activate ninja-forms
+wp-su option update ninja_forms_needs_updates 0
 
 cd /project
 
