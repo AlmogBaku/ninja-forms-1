@@ -11,6 +11,7 @@ acceptance:
   artifacts:
     when: on_failure
     paths:
+      - /
       - /project/tests/acceptance-tests/_output/report.html
     expire_in: 1 week
 
