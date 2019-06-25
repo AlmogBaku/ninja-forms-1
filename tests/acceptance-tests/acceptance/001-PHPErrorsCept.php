@@ -7,6 +7,7 @@ $I->wantTo( 'check for PHP errors and notices' );
 $I->loginAsAdmin();
 
 $I->amOnPage( '/wp-admin' );
+$I->see( 'Dashboard' );
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );
 $I->dontSeeInSource( '<b>Notice</b>:' );
