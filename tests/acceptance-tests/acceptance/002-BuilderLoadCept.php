@@ -12,9 +12,7 @@ $I->see( 'Ninja Forms is a webform builder with unparalleled ease of use and fea
 $I->wantTo( 'confirm that the dashboard loads properly' );
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms' );
 $I->waitForText( 'Add New' );
-$I->click('#optout');
 
-// $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );
 $I->wantTo( 'confirm that the builder loads properly' );
-$I->click('button.add');
+$I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );
 $I->waitForText( 'Emails & Actions' );
