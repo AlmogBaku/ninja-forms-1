@@ -4,6 +4,8 @@ stages:
 
 codeception:
   stage: acceptance
+  tags:
+    - juice
   script:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
@@ -16,6 +18,8 @@ codeception:
 
 phpunit:
   stage: unit
+  tags:
+    - phpunit
   image: wordpress:4.9.8-php7.1
   script:
   - apt-get update -yqq
