@@ -18,8 +18,6 @@ codeception:
 
 phpunit:
   stage: unit
-  tags:
-    - phpunit
   image: wordpress:4.9.8-php7.1
   script:
   - apt-get update -yqq
