@@ -17,7 +17,8 @@ $I->click('#optout');
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms' );
 $I->waitForText( 'Required Updates' );
 $I->click('#nf-required-updates-btn');
-$I->waitForText( 'Go To Dashboard' );
+$I->wait('20');
+// $I->waitForText( 'Go To Dashboard' );
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms' );
 $I->waitForText( 'Add New' );
