@@ -16,7 +16,7 @@ codeception:
 
 phpunit:
   stage: unit
-  image: wordpress:latest
+  image: wordpress:4.9.8-php7.1
   script:
   - apt-get update -yqq
   - apt-get install git -yqq # Install git, the php image doesn't have installed
