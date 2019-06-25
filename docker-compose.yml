@@ -10,7 +10,7 @@ services:
       - wp-core:/wp-core
     entrypoint: /docker-entrypoint.sh
   wordpress:
-    image: wordpress:latest
+    image: wordpress:latest-php7.1
     depends_on:
       - mysql
       - chrome
