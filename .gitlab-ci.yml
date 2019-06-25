@@ -9,9 +9,9 @@ acceptance:
      - "docker-compose build"
      - "docker-compose run --rm codeception run -vvv --html"
   artifacts:
+    when: on_failure
     paths:
-      - /
-      - /repo/vendor/bin/codecept/project/tests/acceptance-tests/_output/report.html
+      - /project/tests/acceptance-tests/_output/report.html
     expire_in: 1 week
 
 # phpunit:
