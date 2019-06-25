@@ -9,7 +9,7 @@ codeception:
   script:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
-     - "docker-compose run --rm codeception run -vvv --html"
+     - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
     when: on_failure
     paths:
