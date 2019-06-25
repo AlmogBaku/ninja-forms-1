@@ -39,13 +39,9 @@ echo 'Updating Database'
 wp-su core update-db
 
 echo "Creating Ninja Forms SymLink Directory"
-# git clone -b develop --single-branch https://git.saturdaydrive.io/_/ninja-forms/ninja-forms.git wp-content/plugins/ninja-forms
 mkdir wp-content/plugins/ninja-forms
+git clone -b develop --single-branch https://git.saturdaydrive.io/_/ninja-forms/ninja-forms.git wp-content/plugins/ninja-forms
 ln -s /repo/* wp-content/plugins/ninja-forms/
-ls
-ls wp-content
-ls wp-content/plugins
-ls wp-content/plugins/ninja-forms
 
 echo 'Activating Ninja Forms'
 wp-su plugin activate ninja-forms
