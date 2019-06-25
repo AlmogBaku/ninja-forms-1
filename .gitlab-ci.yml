@@ -11,9 +11,7 @@ acceptance:
   artifacts:
     when: on_failure
     paths:
-      - README.md
-      - /README.md
-      - /tests/acceptance-tests/_output/report.html
+      - tests/acceptance-tests/_output/report.html
     expire_in: 1 week
 
 # phpunit:
