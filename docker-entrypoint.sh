@@ -13,7 +13,6 @@ rm -rf /wp-core/wp-content/plugins/ninja-forms
 cd /wp-core
 chown www-data:www-data wp-content/plugins
 chmod 755 wp-content/plugins
-chmod 755 wp-includes/version.php
 
 # Make sure the database is up and running.
 while ! mysqladmin ping -hmysql --silent; do
