@@ -164,12 +164,12 @@ define(['models/calcCollection'], function( CalcCollection ) {
 
             // Scrub unmerged tags (ie deleted/nox-existent fields/calcs, etc).
             eqValues = eqValues.replace( /{([a-zA-Z0-9]|:|_|-)*}/g, 0 );
-
             // Scrub line breaks.
             eqValues = eqValues.replace( /\r?\n|\r/g, '' );
 			// Evaluate the equation and update the value of this model.
 			try {
-				calcModel.set( 'value', Number( mexp.eval( eqValues ) ).toFixed( calcModel.get( 'dec' ) ) );
+				this.debug('Calculation Decoder ' + eqValues + ' -> ' + this.localeDecodeEquation(eqValues) + ' (Setup)');
+				calcModel.set( 'value', Number( mexp.eval( this.localeDecodeEquation(eqValues) ) ).toFixed( calcModel.get( 'dec' ) ) );
 			} catch( e ) {
                 //console.log( calcName );
 				console.log( e );
@@ -214,20 +214,26 @@ define(['models/calcCollection'], function( CalcCollection ) {
 			 */
 			var value = nfRadio.channel( fieldModel.get( 'type' ) ).request( 'get:calcValue', fieldModel );
 
-			// If value is 'undefined', then we got no response. Set value to field model value.
-			if ( 'undefined' == typeof value ) {
-				if ( jQuery.isNumeric( fieldModel.get( 'value' ) ) ) {
-					value = fieldModel.get( 'value' );
-				} else {
-					value = 0;
-				}
+
+			var localeConverter = new nfLocaleConverter(nfi18n.siteLocale, nfi18n.thousands_sep, nfi18n.decimal_point);
+			
+
+			var calcValue = value || fieldModel.get( 'value' );
+			var machineNumber = localeConverter.numberDecoder(calcValue);
+			var formattedNumber = localeConverter.numberEncoder(calcValue);
+
+			if ( 'undefined' !== typeof machineNumber && jQuery.isNumeric( machineNumber ) ) {
+				value = formattedNumber;
+			} else {
+				value = 0;
 			}
+			// }
 
 			if ( ! fieldModel.get( 'visible' ) ) {
 				value = 0;
 			}
-
-			return ( jQuery.isNumeric( value ) ) ? value : 0;
+		
+			return value;
 		},
 
 		/**
@@ -297,19 +303,21 @@ define(['models/calcCollection'], function( CalcCollection ) {
 		 * @return void
 		 */
 		changeField: function( calcModel, fieldModel ) {
+		
 			var key = fieldModel.get( 'key' );
 			var value = this.getCalcValue( fieldModel );
+			
 			this.updateCalcFields( calcModel, key, value );
 			var eqValues = this.replaceAllKeys( calcModel );
 
             // Scrub unmerged tags (ie deleted/nox-existent fields/calcs, etc).
             eqValues = eqValues.replace( /{([a-zA-Z0-9]|:|_|-)*}/g, '0' );
-
             eqValues = eqValues.replace( /\r?\n|\r/g, '' );
             try {
-			     calcModel.set( 'value', Number( mexp.eval( eqValues ) ).toFixed( calcModel.get( 'dec' ) ) );
+				this.debug('Calculation Decoder ' + eqValues + ' -> ' + this.localeDecodeEquation(eqValues) + ' (Change Field)');
+			     calcModel.set( 'value', Number( mexp.eval( this.localeDecodeEquation(eqValues) ) ).toFixed( calcModel.get( 'dec' ) ) );
             } catch( e ) {
-                console.log( e );
+                if(this.debug())console.log( e );
             }
             if( calcModel.get( 'value' ) === 'NaN' ) calcModel.set( 'value', '0' );
 
@@ -385,9 +393,10 @@ define(['models/calcCollection'], function( CalcCollection ) {
 //							calcValue = calcValue.toFixed( 2 );
 //							rounding = false;
 //						}
+						
                         if( 'undefined' != typeof( calcValue ) ) {
-                            calcValue = that.applyLocaleFormatting( calcValue );
-                        }
+                            calcValue = that.applyLocaleFormatting( calcValue, calcModel );
+						}
                         /*
                          * We replace the merge tag with the value
 						 * surrounded by a span so that we can still find it
@@ -403,6 +412,7 @@ define(['models/calcCollection'], function( CalcCollection ) {
                         	value = calcValue;
                         }
 					} );
+					
 					fieldModel.set( 'value', value );
 					if ( ! that.init[ calcModel.get( 'name' ) ] ) {
 						// fieldModel.set( 'reRender', true );
@@ -419,10 +429,12 @@ define(['models/calcCollection'], function( CalcCollection ) {
 
 		changeCalc: function( calcModel, targetCalcModel ) {
 			var eqValues = this.replaceAllKeys( calcModel );
+			
 			eqValues = eqValues.replace( '[', '' ).replace( ']', '' );
             eqValues = eqValues.replace( /\r?\n|\r/g, '' );
             try {
-			     calcModel.set( 'value', Number( mexp.eval( eqValues ) ).toFixed( calcModel.get( 'dec' ) ) );
+				this.debug('Calculation Decoder ' + eqValues + ' -> ' + this.localeDecodeEquation(eqValues) + ' (Change Calc)');
+			     calcModel.set( 'value', Number( mexp.eval( this.localeDecodeEquation( eqValues ) ) ).toFixed( calcModel.get( 'dec' ) ) );
             } catch( e ) {
                 console.log( e );
             }
@@ -436,23 +448,62 @@ define(['models/calcCollection'], function( CalcCollection ) {
          * 
          * @return Str
          */
-        applyLocaleFormatting: function( number ) {
+        applyLocaleFormatting: function( number, calcModel ) {
+
+			var localeConverter = new nfLocaleConverter(nfi18n.siteLocale, nfi18n.thousands_sep, nfi18n.decimal_point);
+
+			var formattedNumber = localeConverter.numberEncoder(number, calcModel.get('dec'));
             
-            // Split our string on the decimal to preserve context.
-            var splitNumber = number.split('.');
-            // If we have more than one element (if we had a decimal point)...
-            if ( splitNumber.length > 1 ) {
-                // Update the thousands and remerge the array.
-                splitNumber[ 0 ] = splitNumber[ 0 ].replace( /\B(?=(\d{3})+(?!\d))/g, nfi18n.thousands_sep );
-                var formattedNumber = splitNumber.join( nfi18n.decimal_point );
-            }
-            // Otherwise (we had no decimal point)...
-            else {
-                // Update the thousands.
-                var formattedNumber = number.replace( /\B(?=(\d{3})+(?!\d))/g, nfi18n.thousands_sep );
-            }
+            // // Split our string on the decimal to preserve context.
+            // var splitNumber = number.split('.');
+            // // If we have more than one element (if we had a decimal point)...
+            // if ( splitNumber.length > 1 ) {
+            //     // Update the thousands and remerge the array.
+            //     splitNumber[ 0 ] = splitNumber[ 0 ].replace( /\B(?=(\d{3})+(?!\d))/g, nfi18n.thousands_sep );
+            //     var formattedNumber = splitNumber.join( nfi18n.decimal_point );
+            // }
+            // // Otherwise (we had no decimal point)...
+            // else {
+            //     // Update the thousands.
+            //     var formattedNumber = number.replace( /\B(?=(\d{3})+(?!\d))/g, nfi18n.thousands_sep );
+            // }
             return formattedNumber;
-        }
+		},
+		
+		localeDecodeEquation: function( eq ) {
+			var result = '';
+			var expression = '';
+			var pattern = /[0-9.,]/;
+			var localeConverter = new nfLocaleConverter(nfi18n.siteLocale, nfi18n.thousands_sep, nfi18n.decimal_point);
+			// This pattern accounts for all whitespace characters (including thin space).
+			eq = eq.replace( /\s/g, '' );
+			eq = eq.replace( /&nbsp;/g, '' );
+			var characters = eq.split('');
+			// foreach ( characters as character ) {
+			characters.forEach( function( character ) {
+				// If the character is numeric or '.' or ','
+				if (pattern.test(character)) {
+					expression = expression + character;
+				} else {
+					// If we reach an operator char, append the expression to the result
+					if ( 0 < expression.length ) {
+						result = result + localeConverter.numberDecoder( expression );
+						expression = '';
+					}
+					result = result + character;
+				}
+			});
+			// The following catches the case of the last character being a digit.
+			if ( 0 < expression.length ) {
+				result = result + localeConverter.numberDecoder( expression );
+			}
+			return result;
+		},
+
+		debug: function(message) {
+			if ( window.nfCalculationsDebug || false ) console.log(message);
+		}
+	
 	});
 
 	return controller;

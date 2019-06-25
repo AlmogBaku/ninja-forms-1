@@ -19,6 +19,7 @@ deploy-old.sh
 vendor/
 composer.lock
 package-lock.json
+*composer.phar
 
 *.sass-cache
 *.scssc

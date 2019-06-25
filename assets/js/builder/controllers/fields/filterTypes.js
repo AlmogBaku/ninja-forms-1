@@ -45,7 +45,13 @@ define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionColle
 				] );
                 
                 // Declare array of fields to hide.
-                var hiddenFields = nfRadio.channel( 'app' ).request( 'update:hiddenFields' ) || [];
+				var hiddenFields = nfRadio.channel( 'app' ).request( 'update:hiddenFields' ) || [];
+				hiddenFields = hiddenFields.concat([
+					'product',
+					'quantity',
+					'shipping',
+					'total'
+				]);
 
                 // Search our results of hidden fields.
                 for ( var i = filteredSectionCollection.models[ 0 ].get( 'fieldTypes' ).length -1; i >= 0; i-- ) {
