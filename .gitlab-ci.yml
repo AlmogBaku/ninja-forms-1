@@ -1,9 +1,9 @@
 stages:
-  - testing
-  # - security
+  - unit
+  - acceptance
 
-acceptance:
-  stage: testing
+codeception:
+  stage: acceptance
   script:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
@@ -14,32 +14,13 @@ acceptance:
       - tests/acceptance-tests/_output/
     expire_in: 1 week
 
-# phpunit:
-#   stage: testing
-#   image: wordpress:latest
-#   script:
-#   - apt-get update -yqq
-#   - apt-get install git -yqq # Install git, the php image doesn't have installed
-#   - apt-get -yqqf install vim wget zip unzip subversion mysql-client libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
-#   - curl -sS https://getcomposer.org/installer | php # Install composer
-#   - php composer.phar install # Install all project dependencies
-#   - vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/EmailTelemetryTest
-
-# sast:
-#   stage: security
-#   image: docker:stable
-#   variables:
-#     DOCKER_DRIVER: overlay2
-#   allow_failure: true
-#   services:
-#     - docker:stable-dind
-#   script:
-#     - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-#     - docker run
-#         --env SAST_CONFIDENCE_LEVEL="${SAST_CONFIDENCE_LEVEL:-3}"
-#         --volume "$PWD:/code"
-#         --volume /var/run/docker.sock:/var/run/docker.sock
-#         "registry.gitlab.com/gitlab-org/security-products/sast:$SP_VERSION" /app/bin/run /code
-#   artifacts:
-#     paths: [gl-sast-report.json]
-
+phpunit:
+  stage: unit
+  image: wordpress:latest
+  script:
+  - apt-get update -yqq
+  - apt-get install git -yqq # Install git, the php image doesn't have installed
+  - apt-get -yqqf install vim wget zip unzip subversion mysql-client libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
+  - curl -sS https://getcomposer.org/installer | php # Install composer
+  - php composer.phar install # Install all project dependencies
+  - vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/EmailTelemetryTest
