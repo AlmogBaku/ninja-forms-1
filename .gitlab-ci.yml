@@ -11,7 +11,7 @@ acceptance:
   artifacts:
     when: on_failure
     paths:
-      - tests/acceptance-tests/_output/report.html
+      - tests/acceptance-tests/_output/
     expire_in: 1 week
 
 # phpunit:
