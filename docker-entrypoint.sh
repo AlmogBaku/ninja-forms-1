@@ -44,11 +44,6 @@ cp -r /repo/* wp-content/plugins/ninja-forms/
 
 echo 'Activating Ninja Forms'
 wp-su plugin activate ninja-forms
-wp-su option update ninja_forms_db_version '1.4'
-wp-su option update ninja_forms_needs_updates '0'
-wp-su option update ninja_forms_allow_tracking 'false'
-wp-su option update ninja_forms_do_not_allow_tracking 'true'
-wp-su option update ninja_forms_optin_reported '0'
 
 cd /project
 
