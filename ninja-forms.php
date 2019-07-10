@@ -525,7 +525,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             global $wpdb;
             $sql = "SELECT COUNT( `id` ) AS total FROM `{$wpdb->prefix}nf3_forms`;";
             $result = $wpdb->get_results( $sql, 'ARRAY_A' );
-            $threshold = 0; // Threshold percentage for our required updates.
+            $threshold = 50; // Threshold percentage for our required updates.
             if ( get_transient( 'ninja_forms_prevent_updates' ) ) {
                 update_option( 'ninja_forms_needs_updates', 0 );
             }
