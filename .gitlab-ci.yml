@@ -13,7 +13,7 @@ codeception:
   tags:
     - juice
   script:
-     - "docker stop $(docker ps -a -q)"
+     - "docker stop $(docker ps -a -q) &> /dev/null"
      - "docker-compose build"
      - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
