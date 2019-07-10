@@ -55,7 +55,7 @@ class NF_Fields_ListCheckbox extends NF_Abstracts_List
         $value = 0;
         if( isset( $field[ 'options' ] ) ) {
             foreach ($field['options'] as $option ) {
-                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] ) ) continue;
+                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] )  || ! is_numeric( $option[ 'calc' ] )) continue;
                 $value +=  $option[ 'calc' ];
             }
         }
