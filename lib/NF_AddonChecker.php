@@ -10,6 +10,8 @@ final class NF_AddonChecker
 
     public function check_plugins()
     {
+        // Exit early if we're not in the admin.
+        if ( ! is_admin() ) return false;
         if ( ! function_exists( 'get_plugins' ) ) {
 
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
