@@ -570,12 +570,12 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                         $sql = "INSERT INTO {$table} (type) VALUES ('log');";
                         $wpdb->query( $sql );
                         $id = $wpdb->insert_id;
-                        $sql = "INSERT INTO {$meta_table} ( parent_id, `key`, `value`, meta_key, meta_value) VALUES ";
+                        $sql = "INSERT INTO {$meta_table} ( parent_id, `key`, `value`) VALUES ";
                         $trace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
                         $trace = maybe_serialize( json_encode( $trace ) );
                         $wpdb->escape_by_ref( $query );
-                        $sql .= "({$id}, 'query', '{$query}', 'query', '{$query}'), ";
-                        $sql .= "({$id}, 'trace', '{$trace}', 'trace', '{$trace}');";
+                        $sql .= "({$id}, 'query', '{$query}'), ";
+                        $sql .= "({$id}, 'trace', '{$trace}');";
                         $wpdb->query( $sql );
                     }
                 }
