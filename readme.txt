@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 3.4.17
+Stable tag: 3.4.18
 License: GPLv2 or later
 
 Ninja Forms is an easy to use drag and drop form builder with an intuitive UI that can be used to create contact forms, email subscription forms, lead generation forms, WordPress registration and login forms, order forms, payment and donation forms, and much more!
@@ -137,7 +137,7 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.17 (12 August 2019) =
+= 3.4.18 (15 August 2019) =
 
 *Security:*
 
@@ -155,13 +155,28 @@ This section describes how to install the plugin and get it working.
 * Submission limits should now be honored for forms that were displayed before the limit was reached.
 * Dynamic option values should now work for ALL list types.
 * Resolved an issue that was causing forms to display as code in some page builders.
+* SendWP registration should no longer cause an error when the SendWP plugin is already installed.
+* Resolved an issue that was causing several of our action settings to display improperly in Firefox.
+* Corrected a problem that was sometimes causing submission of forms with a PayPal action to fail.
 
 *Changes:*
 
 * The Advanced tab in the form builder should now communicate that developer mode is disabled, if that is the case.
-* Added currency support for the Russian Ruble.
+* Added currency support for the Russian Ruble and the Chinese Yuan.
 
 == Changelog ==
+
+= 3.4.18 (15 August 2019) =
+
+*Bugs:*
+
+* SendWP registration should no longer cause an error when the SendWP plugin is already installed.
+* Resolved an issue that was causing several of our action settings to display improperly in Firefox.
+* Corrected a problem that was sometimes causing submission of forms with a PayPal action to fail.
+
+*Changes:*
+
+* Added currency support for the Chinese Yuan.
 
 = 3.4.17 (12 August 2019) =
 
