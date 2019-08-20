@@ -92,7 +92,7 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 			var importLink = jQuery( this.el ).find( '.nf-open-import-tooltip' );
 			var jBox = jQuery( importLink ).jBox( 'Tooltip', {
                 title: '<h3>Please enter your options below:</h3>',
-                content: jQuery( this.el ).find( '.nf-import-options' ),
+                content: ( "1" == nfAdmin.devMode ? jQuery( this.el ).find( '.nf-dev-import-options' ) : jQuery( this.el ).find( '.nf-import-options' ) ),
                 trigger: 'click',
                 closeOnClick: 'body',
                 closeButton: 'box',
