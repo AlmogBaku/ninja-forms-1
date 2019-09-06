@@ -248,7 +248,7 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         // Loop over our options...
         $field[ 'options' ] = apply_filters( 'ninja_forms_render_options', $field[ 'options' ], $field );
         $field[ 'options' ] = apply_filters( 'ninja_forms_render_options_' . $field['type'], $field[ 'options' ], $field );
-	    $field[ 'options' ] = apply_filters( 'ninja_forms_render_options_merge_tags', $field[ 'options' ], $field, $this->form_id );
+	    $field[ 'options' ] = apply_filters( 'ninja_forms_localize_list_labels', $field[ 'options' ], $field, $this->form_id );
         foreach( $field[ 'options' ] as $options ) {
             // ...checks to see if our list has multiple values.
             if( is_array( $field[ 'value' ] ) ) {
