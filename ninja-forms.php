@@ -1306,14 +1306,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
      * @since 3.3.17
      */
     function nf_update_marketing_feed() {
-        // Fetch our membership data.
-        $data = wp_remote_get( 'http://api.ninjaforms.com/feeds/?fetch=memberships' );
-        // If we got a valid response...
-        if ( 200 == $data[ 'response' ][ 'code' ] ) {
-            // Save the data to our option.
-            $data = wp_remote_retrieve_body( $data );
-            update_option( 'ninja_forms_memberships_feed', $data, false );
-        }
         // Fetch our addon data.
         $data = wp_remote_get( 'http://api.ninjaforms.com/feeds/?fetch=addons' );
         // If we got a valid response...
