@@ -13,7 +13,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
     public function __construct()
     {
         if( isset( $_POST[ 'nf_resume' ] ) && isset( $_COOKIE[ 'nf_wp_session' ] ) ){
-            add_action( 'ninja_forms_loaded', array( $this, 'resume' ) );
+            add_action( 'init', array( $this, 'resume' ) );
             return;
         }
 
