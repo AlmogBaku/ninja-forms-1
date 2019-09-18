@@ -37,13 +37,7 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
              * Form Id + 4 consecutive base 36 numbers
              */
             if (!public_link_key) {
-                var public_link_key = formModel.get('id');
-                for (var i = 0; i < 4; i++) {
-                    var char = Math.random().toString(36).slice(-1);
-                    public_link_key += char;
-                };
-                // Apply the public link key to form settings
-                formSettingsDataModel.set('public_link_key', public_link_key);
+                public_link_key = nfRadio.channel('app').request('generate:publicLinkKey');
             }
 
             // apply public link url to settings (ending with key)
