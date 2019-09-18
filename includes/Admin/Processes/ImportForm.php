@@ -279,7 +279,16 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
     {
         $insert_values = '';
 
+        $blacklist = array(
+            'embed_form',
+            'public_link',
+            'public_link_key',
+            'allow_public_link',
+        );
+        $blacklist = apply_filters( 'ninja_forms_excluded_import_form_settings', $blacklist );
+
         foreach( $this->form[ 'settings' ] as $meta_key => $meta_value ) {
+            if ( in_array( $meta_key, $blacklist ) ) continue;
             $meta_value = maybe_serialize( $meta_value );
             $this->_db->escape_by_ref( $meta_value );
             $insert_values .= "( {$this->form[ 'ID' ]}, '{$meta_key}', '{$meta_value}'";

@@ -58,6 +58,7 @@ define(
 		'controllers/app/perfectScroll',
 		'controllers/app/getNewSettingGroupCollection',
 		'controllers/app/settingMedia',
+		'controllers/app/publicLink',
 		/*
 		 * Fields domain controllers
 		 */
@@ -165,6 +166,7 @@ define(
 		PerfectScroll,
 		GetNewSettingGroupCollection,
 		SettingMedia,
+		PublicLink,
 		/*
 		 * Fields domain controllers
 		 */
@@ -260,6 +262,7 @@ define(
 				new TrackKeyDown();
 				new PerfectScroll();
 				new GetNewSettingGroupCollection();
+				new PublicLink();
 				// new Pushstate();
 				/*
 				 * Fields domain controllers
