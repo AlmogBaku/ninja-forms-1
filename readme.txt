@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 3.4.19
+Stable tag: 3.4.20
 License: GPLv2 or later
 
 Ninja Forms is an easy to use drag and drop form builder with an intuitive UI that can be used to create contact forms, email subscription forms, lead generation forms, WordPress registration and login forms, order forms, payment and donation forms, and much more!
@@ -137,16 +137,27 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.19 (16 September 2019) =
+= 3.4.20 (19 September 2019) =
 
 *Bugs:*
 
-* Resolved an error that rarely caused form import to output as successful, when it had actually failed.
-* The unique field restriction should no longer honor "nothing" as a valid value.
-* Removed some deprecated dependencies that were throwing notices in the block editor.
-* Updated list field item import in the form builder to make it less confusing.
+* Resolved an issue that was causing public links to fail on duplicated forms.
+* The merge tag selector box in the form builder should no longer appear halfway off the page on smaller screen sizes.
+* Long field keys should no longer cause the merge tag list to cover up the categories in the merge tag selector box.
+* Resolved an issue that was causing some actions to fail after returning from a redirected payment gateway.
+* List field options on imported forms should now appear in the correct order in the form builder.
 
 == Changelog ==
+
+= 3.4.20 (19 September 2019) =
+
+*Bugs:*
+
+* Resolved an issue that was causing public links to fail on duplicated forms.
+* The merge tag selector box in the form builder should no longer appear halfway off the page on smaller screen sizes.
+* Long field keys should no longer cause the merge tag list to cover up the categories in the merge tag selector box.
+* Resolved an issue that was causing some actions to fail after returning from a redirected payment gateway.
+* List field options on imported forms should now appear in the correct order in the form builder.
 
 = 3.4.19 (16 September 2019) =
 
