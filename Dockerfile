@@ -8,7 +8,7 @@ RUN apt-get update && \
             git \
             zlib1g-dev \
             libssl-dev \
-            mysql-client \
+            mariadb-client \
             sudo less \
         --no-install-recommends && \
         apt-get clean && \
