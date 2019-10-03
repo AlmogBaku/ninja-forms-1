@@ -51,7 +51,8 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
 
 		events: {
 			'click #embed_form + .js-click-copytext': 'copyFormEmbedHandler',
-			'click #public_link + .js-click-copytext': 'copyPublicLinkHandler'
+			'click #public_link + div > .js-click-copytext': 'copyPublicLinkHandler',
+			'click #public_link + div > .js-click-resettext': 'confirmResetPublicLinkHandler'
 		},
 
 		copyFormEmbedHandler: function( e ) {
@@ -68,7 +69,17 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             document.execCommand('copy');
 
             e.target.innerHTML = 'Copied!';
-		}
+        },
+        
+        confirmResetPublicLinkHandler: function( e ) {
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-copytext' ) || node.classList.contains( 'js-click-resettext' ) ) {
+                    node.style.display = 'none';
+                } else {
+                    node.style.display = 'inline-block';
+                }
+            } );
+        }
 	} );
 
 	return view;
