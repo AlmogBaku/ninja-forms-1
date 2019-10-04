@@ -53,6 +53,7 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
 			'click #embed_form + .js-click-copytext': 'copyFormEmbedHandler',
 			'click #public_link + div > .js-click-copytext': 'copyPublicLinkHandler',
 			'click #public_link + div > .js-click-resettext': 'confirmResetPublicLinkHandler',
+			'click #public_link + div > .js-click-confirm': 'resetPublicLinkHandler',
 			'click #public_link + div > .js-click-cancel': 'cancelResetPublicLinkHandler'
 		},
 
@@ -80,6 +81,23 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
                     node.style.display = 'inline-block';
                 }
             } );
+        },
+
+        resetPublicLinkHandler: function ( e ) {
+            // Generate a new link.
+            var public_link_key = nfRadio.channel('app').request('generate:publicLinkKey');
+            var publicLink = nfAdmin.publicLinkStructure.replace('[FORM_ID]', public_link_key);
+            var formSettingsDataModel = nfRadio.channel( 'settings' ).request( 'get:settings' );
+            formSettingsDataModel.set('public_link', publicLink);
+            // Reset the buttons.
+            this.cancelResetPublicLinkHandler( e );
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-resettext' ) ) {
+                    node.innerHTML = 'Link Reset!';
+                }
+            } );
+            // Update the visible public link.
+            jQuery('#public_link').val( publicLink );
         },
 
         cancelResetPublicLinkHandler: function ( e ) {
