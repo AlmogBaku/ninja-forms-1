@@ -63,6 +63,7 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             document.execCommand('copy');
 
             e.target.innerHTML = 'Copied!';
+            setTimeout(function(){ e.target.innerHTML = 'Copy'; }, 1500);
 		},
 
 		copyPublicLinkHandler: function( e ) {
@@ -71,6 +72,7 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             document.execCommand('copy');
 
             e.target.innerHTML = 'Copied!';
+            setTimeout(function(){ e.target.innerHTML = 'Copy'; }, 1500);
         },
         
         confirmResetPublicLinkHandler: function( e ) {
@@ -93,7 +95,22 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             this.cancelResetPublicLinkHandler( e );
             _.each( e.target.parentNode.children, function( node ) {
                 if ( node.classList.contains( 'js-click-resettext' ) ) {
+                    node.style.display = 'inline-block';
+                    node.classList.add('primary');
+                    node.classList.remove('secondary');
                     node.innerHTML = 'Link Reset!';
+                    setTimeout(function(){
+                        node.classList.add('secondary');
+                        node.classList.remove('primary');
+                        node.innerHTML = 'Reset';
+                    }, 1500);
+                } else {
+                    node.style.display = 'none';
+                }
+                if ( node.classList.contains( 'js-click-copytext' ) ) {
+                    setTimeout(function(){
+                        node.style.display = 'inline-block';
+                    }, 1500);
                 }
             } );
             // Update the visible public link.
