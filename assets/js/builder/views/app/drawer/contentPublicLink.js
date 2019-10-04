@@ -52,7 +52,8 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
 		events: {
 			'click #embed_form + .js-click-copytext': 'copyFormEmbedHandler',
 			'click #public_link + div > .js-click-copytext': 'copyPublicLinkHandler',
-			'click #public_link + div > .js-click-resettext': 'confirmResetPublicLinkHandler'
+			'click #public_link + div > .js-click-resettext': 'confirmResetPublicLinkHandler',
+			'click #public_link + div > .js-click-cancel': 'cancelResetPublicLinkHandler'
 		},
 
 		copyFormEmbedHandler: function( e ) {
@@ -74,6 +75,16 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
         confirmResetPublicLinkHandler: function( e ) {
             _.each( e.target.parentNode.children, function( node ) {
                 if ( node.classList.contains( 'js-click-copytext' ) || node.classList.contains( 'js-click-resettext' ) ) {
+                    node.style.display = 'none';
+                } else {
+                    node.style.display = 'inline-block';
+                }
+            } );
+        },
+
+        cancelResetPublicLinkHandler: function ( e ) {
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-cancel' ) || node.classList.contains( 'js-click-confirm' ) ) {
                     node.style.display = 'none';
                 } else {
                     node.style.display = 'inline-block';
