@@ -5,6 +5,12 @@ $I->wantTo( 'check that the builder drawer opens and fields are added' );
 
 // Login to wp-admin
 $I->loginAsAdmin();
+
+if ($I->haveWordPressDatabaseUpdates()) {
+    $I->click('Update WordPress Database');
+    $I->wait(5);
+}
+
 $I->nfHideUpdates( $I );
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );

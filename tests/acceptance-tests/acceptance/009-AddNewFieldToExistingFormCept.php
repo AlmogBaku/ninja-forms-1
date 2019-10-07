@@ -4,6 +4,12 @@ $I = new AcceptanceTester( $scenario );
 $I->wantTo( 'add field to existing form' );
 // Login to wp-admin
 $I->loginAsAdmin();
+
+if ($I->haveWordPressDatabaseUpdates()) {
+     $I->click('Update WordPress Database');
+     $I->wait(5);
+}
+
 $I->nfHideUpdates( $I );
 
 // Make sure we're on our contact form.

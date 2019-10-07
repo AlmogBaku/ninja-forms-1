@@ -6,6 +6,11 @@ $I->wantTo( 'check for PHP errors and notices' );
 // Login to wp-admin
 $I->loginAsAdmin();
 
+if ($I->haveWordPressDatabaseUpdates()) {
+    $I->click('Update WordPress Database');
+    $I->wait(5);
+}
+
 $I->amOnPage( '/wp-admin' );
 $I->see( 'Dashboard' );
 

@@ -5,6 +5,12 @@ $I->wantTo( 'test and verify a currency masked field in a calculation' );
 
 // Login to wp-admin
 $I->loginAsAdmin();
+
+if ($I->haveWordPressDatabaseUpdates()) {
+  $I->click('Update WordPress Database');
+  $I->wait(5);
+}
+
 $I->nfHideUpdates( $I );
 
 /**

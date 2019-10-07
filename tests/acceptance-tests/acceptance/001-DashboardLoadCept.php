@@ -5,6 +5,12 @@ $I->wantTo( 'confirm that the dashboard loads properly' );
 // Login to wp-admin
 $I->loginAsAdmin();
 
+if ($I->haveWordPressDatabaseUpdates()) {
+    $I->click('Update WordPress Database');
+    $I->wait(5);
+}
+
+
 $I->amOnPage( '/wp-admin/plugins.php' );
 $I->see( 'Ninja Forms' );
 $I->see( 'Ninja Forms is a webform builder with unparalleled ease of use and features.' );

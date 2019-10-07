@@ -4,6 +4,12 @@ $I = new AcceptanceTester( $scenario );
 $I->wantTo( 'make sure the date picker shows up properly' );
 // Login to wp-admin
 $I->loginAsAdmin();
+
+if ($I->haveWordPressDatabaseUpdates()) {
+     $I->click('Update WordPress Database');
+     $I->wait(5);
+}
+
 $I->nfHideUpdates( $I );
 
 $I->amOnPage( '/wp-admin/admin.php?page=ninja-forms&form_id=new' );

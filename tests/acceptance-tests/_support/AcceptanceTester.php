@@ -23,4 +23,19 @@ class AcceptanceTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * Check for WordPress Database Updates
+     */
+    public function haveWordPressDatabaseUpdates()
+    {
+        try {
+            $this->see('Database Update Required');
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
