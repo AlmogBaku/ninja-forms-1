@@ -16,7 +16,7 @@ codeception:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
      # Wait until WordPress is loaded to continue 
-     - "bash -c 'while [[ \"$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:45673)\" != \"200"\ ]]; do sleep 5; done'"
+     - bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:45673)" != "200" ]]; do sleep 5; done'
      - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
     when: on_failure
