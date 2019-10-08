@@ -15,14 +15,7 @@ codeception:
   script:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
-     - >
-       # Wait until the docker containers are connected properly.
-       echo -en $(status_message "Attempting to connect to wordpress...")
-       until $(curl -L http://localhost:45673 -so - 2>&1 | grep -q "WordPress"); do
-           echo -n '.'
-           sleep 3
-       done
-       echo 'Connected to WordPress'
+     - "until $(curl -L http://localhost:45673 -so - 2>&1 | grep -q "WordPress"); sleep 3; done"
      - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
     when: on_failure
