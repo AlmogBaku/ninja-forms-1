@@ -15,7 +15,7 @@ codeception:
   script:
      - "docker stop $(docker ps -a -q)"
      - "docker-compose build"
-     - "until $(curl -L http://localhost:45673 -so - 2>&1 | grep -q "WordPress"); sleep 3; done"
+     - until $(curl -L http://localhost:45673 -so - 2>&1 | grep -q "WordPress"); sleep 3; done
      - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
     when: on_failure
