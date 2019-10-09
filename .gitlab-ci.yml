@@ -18,7 +18,7 @@ codeception:
      # Get WordPress running first.
      - "docker-compose up -d"
      # Wait until WordPress is loaded to continue 
-     - bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:45673)" != "200" ]]; do sleep 5; done'
+     - "sleep 5"
      # Now test
      - "docker-compose run --rm codeception run -vvv --html --fail-fast"
   artifacts:
