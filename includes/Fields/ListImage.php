@@ -17,6 +17,8 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     protected $_templates = 'listimage';
 
+    protected $_settings =  array( 'multi_select', 'list_orientation', 'max_columns' );
+
     public function __construct()
     {
         parent::__construct();

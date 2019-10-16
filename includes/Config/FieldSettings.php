@@ -171,6 +171,49 @@ return apply_filters( 'ninja_forms_field_settings', array(
     ),
 
     /*
+     * List Display Style
+     */
+    'list_orientation' => array(
+        'name' => 'list_orientation',
+        'type' => 'button-toggle',
+        'width' => 'full',
+        'group' => 'primary',
+        'options' => array(
+            array( 'label' => __( 'Horizontal', 'ninja-forms' ), 'value' => 'horizontal' ),
+            array( 'label' => __( 'Vertical', 'ninja-forms' ), 'value' => 'vertical' )
+        ),
+        'label' => __( 'List Orientation', 'ninja-forms' ),
+        'value' => 'horizontal',
+    ),
+
+    /*
+     * Max Columns
+     */
+    'max_columns'       => array(
+        'name'          => 'max_columns',
+        'type'          => 'number',
+        'label'         => __( 'Max Columns', 'ninja-forms'),
+        'width'         => 'one-half',
+        'group'         => 'primary',
+        'value'         => '',
+        'deps'          => array(
+            'list_orientation' => 'horizontal'
+        ),
+    ),
+
+    /*
+     * Multi-select
+     */
+    'multi_select' => array(
+        'name' => 'multi_select',
+        'type' => 'toggle',
+        'label' => __( 'Allow Multiple Selections', 'ninja-forms' ),
+        'width' => 'one-half',
+        'group' => 'primary',
+        'value' => FALSE,
+    ),
+
+    /*
      * OPTIONS
      */
 
