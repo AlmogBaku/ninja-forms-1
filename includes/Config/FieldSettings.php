@@ -204,8 +204,8 @@ return apply_filters( 'ninja_forms_field_settings', array(
     /*
      * Multi-select
      */
-    'multi_select' => array(
-        'name' => 'multi_select',
+    'allow_multi_select' => array(
+        'name' => 'allow_multi_select',
         'type' => 'toggle',
         'label' => __( 'Allow Multiple Selections', 'ninja-forms' ),
         'width' => 'one-half',
