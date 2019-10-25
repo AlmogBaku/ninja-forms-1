@@ -1,5 +1,22 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
+if( class_exists( '\SendWP\Mailer', FALSE ) ) {
+    $sendwp_promo = array(
+        'name' => 'sendwp_promo', 
+        'type' => 'html',
+        'value' => '',
+    );
+} else {
+    $sendwp_promo = array(
+        'name' => 'sendwp_promo',
+        'type' => 'html',
+        'group' => 'primary',
+        'value' => '<div style="text-align:center;">Submission emails not being delivered? <a href="#" class="nf-send-wp-promo">SendWP Can Help!</a></div>',
+        'width' => 'full'
+    );
+}
+
+
 return apply_filters( 'ninja_forms_action_email_settings', array(
 
     /*
@@ -7,6 +24,8 @@ return apply_filters( 'ninja_forms_action_email_settings', array(
     | Primary Settings
     |--------------------------------------------------------------------------
     */
+   
+   'sendwp_promo' => $sendwp_promo,
 
     /*
      * To
