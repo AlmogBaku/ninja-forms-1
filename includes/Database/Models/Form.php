@@ -638,6 +638,20 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 continue;
             }
 
+            $blacklist = array(
+                '_njf_open_block',
+                '_njf_close_block',
+                '_div_start',
+                '_div_end',
+                '_fieldset_start',
+                '_fieldset_end'
+                );
+
+            if ( in_array( $field[ 'type' ], $blacklist ) ) {
+                unset( $import[ 'fields' ][ $key ] );
+                continue;
+            }
+
             // TODO: Split Credit Card field into multiple fields.
             $field = $this->import_field_backwards_compatibility( $field );
 
