@@ -511,6 +511,13 @@ Label Three
     </div>
 </script>
 
+<script id="tmpl-nf-edit-setting-image-option-repeater-wrap" type="text/template">
+    <div class="{{{ data.renderClasses() }}}" {{{ data.renderVisible() }}}>
+        {{{ data.renderSetting() }}}
+        <span class="nf-setting-error"></span>
+    </div>
+</script>
+
 <script id="tmpl-nf-edit-setting-error" type="text/template">
     <div>{{{ data.error || data.warning }}}</div>
 </script>
@@ -699,6 +706,21 @@ Label Three
     </fieldset>
 </script>
 
+<script id="tmpl-nf-edit-setting-image-option-repeater" type="text/template">
+
+    <fieldset class="nf-listimage-options {{{ data.renderFieldsetClasses() }}}" {{{ data.renderVisible() }}}>
+        <legend>{{{ data.label }}}</legend>
+        <div class="nf-div-table">
+            <div class="nf-table-row nf-table-header">
+                {{{ data.renderHeaders() }}}
+            </div>
+
+            <div class="nf-listimage-options-tbody">
+            </div>
+        </div>
+    </fieldset>
+</script>
+
 <script id="tmpl-nf-edit-setting-option-repeater-empty" type="text/template">
 
 </script>
@@ -713,11 +735,60 @@ Label Three
     </div>
     <#
         var columns = data.getColumns();
-
+        
         if ( 'undefined' != typeof columns.label ) {
         #>
              <div>
                 <input type="text" class="setting" value="{{{ data.label }}}" data-id="label">
+            </div>
+            <#
+        }
+    #>
+    <#
+        if ( 'undefined' != typeof columns.value ) {
+            #>
+             <div>
+                <input type="text" class="setting" value="{{{ data.value }}}" data-id="value">
+            </div>
+            <#
+        }
+    #>
+    <#
+        if ( 'undefined' != typeof columns.calc ) {
+        #>
+             <div>
+                <input type="text" class="setting" value="{{{ data.calc }}}" data-id="calc">
+            </div>
+            <#
+        }
+    #>
+    <#
+        if ( 'undefined' != typeof columns.selected ) {
+            #>
+            <div>
+                <input type="checkbox" class="setting" class="nf-checkbox" {{{ ( 1 == data.selected ) ? 'checked="checked"' : '' }}} value="1" data-id="selected">
+            </div>
+            <#
+        }
+    #>
+
+    <div>
+        <span class="dashicons dashicons-dismiss nf-delete"></span>
+    </div>
+</script>
+
+<script id="tmpl-nf-edit-setting-image-option-repeater-default-row" type="text/template">
+    <div>
+        <span class="dashicons dashicons-menu handle"></span>
+    </div>
+    <#
+        var columns = data.getColumns();
+
+        if ( 'undefined' != typeof columns.image ) {
+        #>
+             <div class='has-merge-tags'>
+                <input type="text" class="setting" value="{{{ data.image }}}" data-id="image">
+                <span class="extra open-media-manager dashicons dashicons-admin-media merge-tags"></span>
             </div>
             <#
         }

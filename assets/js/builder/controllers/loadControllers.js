@@ -71,6 +71,7 @@ define(
 		'controllers/fields/sortable',
 		'controllers/fields/data',
 		'controllers/app/optionRepeater',
+		'controllers/app/imageOptionRepeater',
 		'controllers/fields/editActive',
 		'controllers/fields/fieldSettings',
 		'controllers/fields/fieldCreditCard',
@@ -179,6 +180,7 @@ define(
 		MainContentFieldsSortable,
 		FieldData,
 		OptionRepeater,
+		imageOptionRepeater,
 		FieldsEditActive,
 		FieldSettings,
 		FieldCreditCard,
@@ -272,7 +274,7 @@ define(
 				 */
 				new Fieldset();
 				new OptionRepeater();
-
+				new imageOptionRepeater();
 				new FieldTypes();
 				new FieldTypeDrag();
 				new FieldStagingDrag();
