@@ -17,7 +17,13 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     protected $_templates = 'listimage';
 
-    protected $_settings =  array( 'allow_multi_select', 'list_orientation', 'max_columns' );
+    protected $_settings =  array( 'image_options', 'allow_multi_select', 'list_orientation', 'max_columns' );
+
+    protected $_settings_exclude = array('options');
+
+    // protected $_settings_all_fields = array(
+    //     'key', 'label', 'label_pos', 'required', 'classes', 'admin_label', 'help', 'description','allow_multi_select', 'list_orientation', 'max_columns'
+    // );
 
     public function __construct()
     {

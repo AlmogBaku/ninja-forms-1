@@ -252,6 +252,44 @@ return apply_filters( 'ninja_forms_field_settings', array(
     ),
 
     /*
+     * IMAGE OPTIONS
+     */
+
+    'image_options' => array(
+        'name' => 'image_options',
+        'type' => 'image-option-repeater',
+        'label' => __( 'Image Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . __( 'Add New', 'ninja-forms' ) . '</a>',
+        'width' => 'full',
+        'group' => 'primary',
+        // 'value' => 'option-repeater',
+        'value' => array(
+            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
+            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
+            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
+        ),
+        'columns'           => array(
+            'image'          => array(
+                'header'    => __( 'Image', 'ninja-forms' ),
+                'default'   => '',
+            ),
+
+            'value'         => array(
+                'header'    => __( 'Value', 'ninja-forms' ),
+                'default'   => '',
+            ),
+            'calc'          => array(
+                'header'    =>__( 'Calc Value', 'ninja-forms' ),
+                'default'   => '',
+            ),
+            'selected'      => array(
+                'header'    => '<span class="dashicons dashicons-yes"></span>',
+                'default'   => 0,
+            ),
+        ),
+
+    ),
+
+    /*
     |--------------------------------------------------------------------------
     | Restriction Settings
     |--------------------------------------------------------------------------
