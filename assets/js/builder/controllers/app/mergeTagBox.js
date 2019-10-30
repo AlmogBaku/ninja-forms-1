@@ -59,7 +59,7 @@ define( [
             nfRadio.channel( 'mergeTags' ).reply( 'insert:tag', this.insertTag.bind( this ) );
 
             /** OPTION REPEATER */
-            this.listenTo( nfRadio.channel( 'option-repeater' ), 'add:option', function( model ){console.log('kr sucks donkey dick')
+            this.listenTo( nfRadio.channel( 'option-repeater' ), 'add:option', function( model ){
                 var selector = '#' + model.cid + ' .has-merge-tags input.setting';
                 jQuery( selector ).on( 'focus', function( event ){
                    that.focusCallback( event, selector, 'option-repeater' );
@@ -72,7 +72,7 @@ define( [
             } );
             this.listenTo( nfRadio.channel( 'drawer' ), 'opened', function(){
                 jQuery( '.nf-list-options .merge-tags' ).off( 'click' );
-                // jQuery( '.nf-list-options .merge-tags' ).on( 'click', this.mergeTagsButtonClick );
+                jQuery( '.nf-list-options .merge-tags' ).on( 'click', this.mergeTagsButtonClick );
             } );
 
             /* CALCULATIONS */
