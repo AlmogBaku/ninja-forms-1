@@ -80,11 +80,6 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
             nfRadio.channel( 'image-option-repeater' ).trigger( 'change:option', e, this.model, this.dataModel, this.settingModel, this );
         },
 
-        // openMediaModal: function( e ) {
-        //     console.log('something');
-        //     nfRadio.channel( 'setting-type-media' ).trigger( 'click:extra' );
-        // },
-
         deleteOption: function( e ) {
             nfRadio.channel( 'image-option-repeater' ).trigger( 'click:deleteOption', this.model, this.collection, this.dataModel, this );
         },
@@ -102,13 +97,16 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
             }
         },
 
-        clickExtra: function( e, settingModel, dataModel, settingView ) {
+        clickExtra: function(e, settingModel, dataModel, settingView) {
             
-            var textEl = jQuery( e.target ).parent().find( '.setting' );
-            var mainDiv = jQuery( e.target ).parent().parent().first();
+            var textEl = jQuery(e.target).parent().find('.setting');
+            
+            var optionContainerDiv = jQuery(e.target).parent().parent();
+
+            var valueEl = jQuery(optionContainerDiv[0]).find('[data-id="value"]');
             
             if ( jQuery( e.target ).hasClass( 'open-media-manager' )
-                && this.el.id === mainDiv[0].id) {
+                && this.el.id === optionContainerDiv[0].id) {
                 // If the frame already exists, re-open it.
                 if ( this.meta_image_frame ) {
                     this.meta_image_frame.open();
@@ -127,7 +125,9 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
                 this.meta_image_frame.on('select', function(){
                     // Grabs the attachment selection and creates a JSON representation of the model.
                     var media_attachment = that.meta_image_frame.state().get('selection').first().toJSON();
-                    textEl.val( media_attachment.url ).change();
+
+                    textEl.val(media_attachment.url).change();
+                    valueEl.val(media_attachment.filename).change();
                 });
 
                 // Opens the media library frame.
