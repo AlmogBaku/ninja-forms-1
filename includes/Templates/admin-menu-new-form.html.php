@@ -529,6 +529,18 @@ Label Three
     </label>
 </script>
 
+<script id="tmpl-nf-edit-setting-copyresettext" type="text/template">
+    <label style="position:relative;" for="{{{ data.name }}}" class="{{{ data.renderLabelClasses() }}}">{{{ data.label }}} {{{ data.renderTooltip() }}}
+        <input type="text" class="setting" id="{{{ data.name }}}" value="{{{ data.value }}}" readonly="readonly" />
+        <div style="position:absolute;top:50%;right:5px;">
+            <button class="nf-button primary js-click-copytext" style="padding:0px 15px;"><?php echo __('Copy', 'ninja-forms'); ?></button>
+            <button class="nf-button secondary js-click-resettext" style="padding:0px 15px;"><?php echo __('Reset', 'ninja-forms'); ?></button>
+            <button class="nf-button primary js-click-confirm" style="padding:0px 15px;display:none;"><?php echo __('Confirm Reset', 'ninja-forms'); ?></button>
+            <button class="nf-button secondary js-click-cancel" style="padding:0px 15px;display:none;"><?php echo __('Cancel', 'ninja-forms'); ?></button>
+        </div>
+    </label>
+</script>
+
 <script id="tmpl-nf-edit-setting-media" type="text/template">
     <label for="{{{ data.name }}}" class="{{{ data.renderLabelClasses() }}} has-merge-tags">{{{ data.label }}} {{{ data.renderTooltip() }}}
         <input type="text" class="setting" id="{{{ data.name }}}" value="{{{ data.value }}}" placeholder="{{{ data.placeholder }}}" />

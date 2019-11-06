@@ -51,7 +51,10 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
 
 		events: {
 			'click #embed_form + .js-click-copytext': 'copyFormEmbedHandler',
-			'click #public_link + .js-click-copytext': 'copyPublicLinkHandler'
+			'click #public_link + div > .js-click-copytext': 'copyPublicLinkHandler',
+			'click #public_link + div > .js-click-resettext': 'confirmResetPublicLinkHandler',
+			'click #public_link + div > .js-click-confirm': 'resetPublicLinkHandler',
+			'click #public_link + div > .js-click-cancel': 'cancelResetPublicLinkHandler'
 		},
 
 		copyFormEmbedHandler: function( e ) {
@@ -60,6 +63,7 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             document.execCommand('copy');
 
             e.target.innerHTML = 'Copied!';
+            setTimeout(function(){ e.target.innerHTML = 'Copy'; }, 1500);
 		},
 
 		copyPublicLinkHandler: function( e ) {
@@ -68,7 +72,60 @@ define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
             document.execCommand('copy');
 
             e.target.innerHTML = 'Copied!';
-		}
+            setTimeout(function(){ e.target.innerHTML = 'Copy'; }, 1500);
+        },
+        
+        confirmResetPublicLinkHandler: function( e ) {
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-copytext' ) || node.classList.contains( 'js-click-resettext' ) ) {
+                    node.style.display = 'none';
+                } else {
+                    node.style.display = 'inline-block';
+                }
+            } );
+        },
+
+        resetPublicLinkHandler: function ( e ) {
+            // Generate a new link.
+            var public_link_key = nfRadio.channel('app').request('generate:publicLinkKey');
+            var publicLink = nfAdmin.publicLinkStructure.replace('[FORM_ID]', public_link_key);
+            var formSettingsDataModel = nfRadio.channel( 'settings' ).request( 'get:settings' );
+            formSettingsDataModel.set('public_link', publicLink);
+            // Reset the buttons.
+            this.cancelResetPublicLinkHandler( e );
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-resettext' ) ) {
+                    node.style.display = 'inline-block';
+                    node.classList.add('primary');
+                    node.classList.remove('secondary');
+                    node.innerHTML = 'Link Reset!';
+                    setTimeout(function(){
+                        node.classList.add('secondary');
+                        node.classList.remove('primary');
+                        node.innerHTML = 'Reset';
+                    }, 1500);
+                } else {
+                    node.style.display = 'none';
+                }
+                if ( node.classList.contains( 'js-click-copytext' ) ) {
+                    setTimeout(function(){
+                        node.style.display = 'inline-block';
+                    }, 1500);
+                }
+            } );
+            // Update the visible public link.
+            jQuery('#public_link').val( publicLink );
+        },
+
+        cancelResetPublicLinkHandler: function ( e ) {
+            _.each( e.target.parentNode.children, function( node ) {
+                if ( node.classList.contains( 'js-click-cancel' ) || node.classList.contains( 'js-click-confirm' ) ) {
+                    node.style.display = 'none';
+                } else {
+                    node.style.display = 'inline-block';
+                }
+            } );
+        }
 	} );
 
 	return view;
