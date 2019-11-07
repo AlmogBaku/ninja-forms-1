@@ -98,7 +98,8 @@ RADIO & CHECKBOX LISTS
 ----------------------------------*/
 
 .list-radio-wrap,
-.list-checkbox-wrap {
+.list-checkbox-wrap,
+.list-image-wrap {
     .nf-field-element {
         ul, li {
             list-style: none !important;
@@ -125,6 +126,17 @@ RADIO & CHECKBOX LISTS
                 float: left;
                 margin-top: .25em;
             }
+        }
+    }
+}
+
+.listimage-wrap {
+    & .nf-checked-label {
+        & img {
+            border-color: #0050f0;
+            border-width: 1.5px;
+            border-style: solid;
+            transition: all .5s;
         }
     }
 }

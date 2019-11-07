@@ -784,20 +784,21 @@ Label Three
     <#
         var columns = data.getColumns();
 
-        if ( 'undefined' != typeof columns.image ) {
+        if ( 'undefined' != typeof columns.label ) {
         #>
-             <div class='has-merge-tags'>
-                <input type="text" class="setting" value="{{{ data.image }}}" data-id="image">
-                <span class="extra open-media-manager dashicons dashicons-admin-media merge-tags"></span>
+             <div>
+                <input type="text" class="setting" value="{{{ data.label }}}" data-id="label">
             </div>
             <#
         }
+        
     #>
     <#
         if ( 'undefined' != typeof columns.value ) {
             #>
              <div class='image-option-media-value'>
                 <input type="text" class="setting" value="{{{ data.value }}}" data-id="value">
+                <input type="hidden" class="setting" value="{{{ data.image_id }}}" data-id="image_id">
             </div>
             <#
         }
@@ -824,6 +825,25 @@ Label Three
     <div>
         <span class="dashicons dashicons-dismiss nf-delete"></span>
     </div>
+    <br/>
+    
+    <div class='has-merge-tags' style='margin-left:40px;width:45%;display:inline-block;'>
+        <label style="width:95%;">
+            <span><?php _e('Image', 'ninja-forms'); ?></span><br/>
+            <input type="text" class="setting" value="{{{ data.image }}}" data-id="image" style="width: 100%;">
+            <span class="extra open-media-manager dashicons dashicons-admin-media merge-tags" style="top:30px;"></span>
+        </label>
+    </div>
+    <div class="option-image-container" style="display:inline-block;width:45%;">
+    <#
+        if (data.image && 0 < data.image.length) {
+        #>
+            <img src="{{{ data.image }}}" style="max-width:100px;max-height:100px;display:inline-block;"/>
+        <#
+        }
+    #>
+    </div>
+    <hr style="border-top: 1px solid #ccc;" />       
 </script>
 
 <script id="tmpl-nf-edit-setting-html" type="text/template">

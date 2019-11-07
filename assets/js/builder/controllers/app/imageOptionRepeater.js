@@ -66,14 +66,14 @@ define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection'
 				before: before,
 				after: after
 			}
-
-			var image = {
+			
+			var label = {
 				object: dataModel.get( 'objectType' ),
-				image: dataModel.get( 'image' ),
-				change: 'Option ' + model.get( 'image' ) + ' ' + name + ' changed from ' + before + ' to ' + after
+				label: dataModel.get( 'label' ),
+				change: 'Option ' + model.get( 'label' ) + ' ' + name + ' changed from ' + before + ' to ' + after
 			};
 
-			nfRadio.channel( 'changes' ).request( 'register:change', 'changeSetting', model, changes, image );
+			nfRadio.channel( 'changes' ).request( 'register:change', 'changeSetting', model, changes, label );
 			nfRadio.channel( 'image-option-repeater' ).trigger( 'update:option', model, dataModel, settingModel, optionView );
 			nfRadio.channel( 'image-option-repeater-option-' + name  ).trigger( 'update:option', e, model, dataModel, settingModel, optionView );
 			nfRadio.channel( 'image-option-repeater-' + settingModel.get( 'name' ) ).trigger( 'update:option', model, dataModel, settingModel, optionView );
