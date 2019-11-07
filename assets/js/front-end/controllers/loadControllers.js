@@ -7,6 +7,7 @@ define(
 		'controllers/changeDate',
 		'controllers/fieldCheckbox',
 		'controllers/fieldCheckboxList',
+		'controllers/fieldImageList',
 		'controllers/fieldRadio',
 		'controllers/fieldNumber',
 		'controllers/mirrorField',
@@ -48,6 +49,7 @@ define(
 		ChangeDate,
 		FieldCheckbox,
 		FieldCheckboxList,
+		FieldImageList,
 		FieldRadio,
 		FieldNumber,
 		MirrorField,
@@ -96,6 +98,7 @@ define(
 				 */
 				new FieldCheckbox();
 				new FieldCheckboxList();
+				new FieldImageList();
 				new FieldRadio();
 				new FieldNumber();
 				new FieldSelect();

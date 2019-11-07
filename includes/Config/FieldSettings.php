@@ -263,16 +263,15 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group' => 'primary',
         // 'value' => 'option-repeater',
         'value' => array(
-            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
-            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
-            array( 'image'  => '', 'value' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
+            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
+            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
+            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
         ),
         'columns'           => array(
-            'image'          => array(
-                'header'    => __( 'Image', 'ninja-forms' ),
+            'label'          => array(
+                'header'    => __( 'Label', 'ninja-forms' ),
                 'default'   => '',
             ),
-
             'value'         => array(
                 'header'    => __( 'Value', 'ninja-forms' ),
                 'default'   => '',

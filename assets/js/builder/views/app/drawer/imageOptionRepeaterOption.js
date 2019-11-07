@@ -100,10 +100,11 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
         clickExtra: function(e, settingModel, dataModel, settingView) {
             
             var textEl = jQuery(e.target).parent().find('.setting');
-            
-            var optionContainerDiv = jQuery(e.target).parent().parent();
+            var optionContainerDiv = jQuery(e.target).parent().parent().parent();
 
             var valueEl = jQuery(optionContainerDiv[0]).find('[data-id="value"]');
+
+            var imageIdEl = jQuery(optionContainerDiv[0]).find('[data-id="image_id"]');
             
             if ( jQuery( e.target ).hasClass( 'open-media-manager' )
                 && this.el.id === optionContainerDiv[0].id) {
@@ -125,9 +126,23 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
                 this.meta_image_frame.on('select', function(){
                     // Grabs the attachment selection and creates a JSON representation of the model.
                     var media_attachment = that.meta_image_frame.state().get('selection').first().toJSON();
-
+                    
                     textEl.val(media_attachment.url).change();
                     valueEl.val(media_attachment.filename).change();
+                    imageIdEl.val(media_attachment.id).change();
+                    var img_container = optionContainerDiv.find('.option-image-container');
+
+                    if(img_container) {
+                        $imgs = jQuery(img_container).find('img');
+                        if($imgs.length > 0) {
+                            jQuery($imgs[0]).attr('src', media_attachment.url);
+                        } else {
+                            var new_img = document.createElement('img');
+                            new_img.style="max-width:100px;display:inline-block;";
+                            new_img.src = media_attachment.url;
+                            jQuery(img_container).append(new_img);
+                        }
+                    }
                 });
 
                 // Opens the media library frame.
@@ -268,6 +283,7 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
                             optionNode.setAttribute( 'selected', 'selected' );
                         }
                         optionNode.setAttribute( 'value', option.value );
+                        optionNode.setAttribute( 'image_id', option.image_id);
                         optionNode.setAttribute( 'image', option.image );
                         optionNode.innerText = option.image;
                         select.appendChild( optionNode );
