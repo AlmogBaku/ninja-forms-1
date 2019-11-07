@@ -16,7 +16,13 @@ define( [], function() {
 		},
 
 		initialize: function() {
-			if ( 'undefined' == typeof this.get( 'type' ) ) return;
+			var type = this.get('type');
+			if ( 'undefined' == typeof type ) return;
+
+			if (type === 'listimage') {
+				this.get = this.listimageGet;
+				this.set = this.listimageSet;
+			}
 
 			// Listen for model attribute changes
 			this.on( 'change', this.changeSetting, this );
@@ -53,6 +59,21 @@ define( [], function() {
 			nfRadio.channel( 'fields-' + this.get( 'type' ) ).trigger( 'init:fieldModel', this );
 
 			this.listenTo( nfRadio.channel( 'app' ), 'fire:updateFieldKey', this.updateFieldKey );
+		},
+
+		listimageGet: function(attr) {
+            if(attr === 'options') {
+					attr = 'image_options';
+			}
+
+            return Backbone.Model.prototype.get.call(this, attr);
+		},
+		
+		listimageSet: function(attributes, options) {
+			if ('options' === attributes) {
+				attributes = 'image_options';
+			}
+			return Backbone.Model.prototype.set.call(this, attributes, options);
 		},
 
 		/**
