@@ -21,8 +21,6 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     protected $option_type = 'radio';
 
-    protected $_old_classname = 'list-radio';
-
     protected $_settings =  ['label', 'image_options', 'show_option_labels', 'allow_multi_select', 'list_orientation', 'num_columns'];
 
     protected $_settings_exclude = ['options'];
@@ -102,12 +100,12 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     public function get_calc_value($value, $field)
     {
+        $selected = explode( ',', $value );
+        $value = 0;
         if (isset($field['image_options'])) {
             foreach ($field['image_options'] as $option) {
-                if (!isset($option['value']) || $value != $option['value'] || !isset($option['calc'])) {
-                    continue;
-                }
-                return $option['calc'];
+                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] )  || ! is_numeric( $option[ 'calc' ] )) continue;
+                $value +=  $option[ 'calc' ];
             }
         }
         return $value;

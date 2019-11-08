@@ -161,15 +161,34 @@ define([], function() {
         },
 
         getCalcValue: function( fieldModel ) {
-            var calc_value = 0;
-            var options = fieldModel.get( 'options' );
-            if ( 0 != options.length ) {
-                _.each( fieldModel.get( 'value' ), function( val ) {
-                    var tmp_opt = _.find( options, function( opt ) { return opt.value == val } );
-                    calc_value = Number( calc_value ) + Number( tmp_opt.calc );
-                } );
-            }
-            return calc_value;
+			var calc_value = 0;
+			var options = fieldModel.get( 'options' );
+			if ( 0 != options.length ) {
+				/*
+				 * Check to see if this is a multi-select list.
+				 */
+				if ( 1 == parseInt( fieldModel.get( 'allow_multi_select' ) ) ) {
+					/*
+					 * We're using a multi-select, so we need to check out any selected options and add them together.
+					 */
+					_.each( fieldModel.get( 'value' ), function( val ) {
+						var tmp_opt = _.find( options, function( opt ) { return opt.value == val } );
+						calc_value += Number( tmp_opt.calc );
+					} );
+				} else {
+					/*
+					 * We are using a single select, so our selected option is in the 'value' attribute.
+					 */
+					var selected = _.find( options, function( opt ) { return fieldModel.get( 'value' ) == opt.value } );
+					/*
+					 * If we have a selcted value, use it.
+					 */
+					if ( 'undefined' !== typeof selected ) {
+                        calc_value = selected.calc;
+					}	
+				}
+			}
+			return calc_value;
         },
 
         beforeUpdateField: function( el, model ) {
