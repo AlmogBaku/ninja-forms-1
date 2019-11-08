@@ -36,6 +36,8 @@ class NF_Fields_ListImage extends NF_Abstracts_List
         add_filter('ninja_forms_merge_tag_calc_value_' . $this->_type, [$this, 'get_calc_value'], 10, 2);
 
         add_filter('ninja_forms_localize_field_listimage', [$this,'localizeField'], 10, 2);
+
+        add_filter('ninja_forms_localize_field_listimage_preview', [$this,'localizeField'], 10, 2);
     }
 
     public function admin_form_element($id, $value)
@@ -100,8 +102,8 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     public function get_calc_value($value, $field)
     {
-        if (isset($field['options'])) {
-            foreach ($field['options'] as $option) {
+        if (isset($field['image_options'])) {
+            foreach ($field['image_options'] as $option) {
                 if (!isset($option['value']) || $value != $option['value'] || !isset($option['calc'])) {
                     continue;
                 }
