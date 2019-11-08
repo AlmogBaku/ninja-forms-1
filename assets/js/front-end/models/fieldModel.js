@@ -17,17 +17,17 @@ define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
 		initialize: function() {
 			var type = this.get('type');
 
-			if(type === 'listimage') {
-				this.get = this.listimageGet;
-				this.set = this.listimageSet;
-			}
-
 			this.set( 'formID', this.collection.options.formModel.get( 'id' ) );
 			this.listenTo( nfRadio.channel( 'form-' + this.get( 'formID' ) ), 'reset', this.resetModel );
 
     		this.bind( 'change', this.changeModel, this );
     		this.bind( 'change:value', this.changeValue, this );
     		this.set( 'errors', new fieldErrorCollection() );
+
+			if (type === 'listimage') {
+				this.get = this.listimageGet;
+				this.set = this.listimageSet;
+			}
 
     		/*
 			 * Trigger an init event on two channels:

@@ -56,11 +56,14 @@ define([], function() {
             }
             var that = this;
 
-            var max_columns = parseInt(this.max_columns) || 1;
+            var num_columns = parseInt(this.num_columns) || 1;
             var current_column = 1;
             var current_row = 1;
             
             _.each( this.image_options, function( image, index ) {
+                if (!this.show_option_labels) {
+                    image.label = '';
+                }
                 if( Array.isArray( this.value ) ) {
                 	if( Array.isArray( this.value[ 0 ] ) && -1 !== _.indexOf( this.value[ 0 ], image.value ) ) {
                 		valueFound = true;
@@ -82,10 +85,10 @@ define([], function() {
                     image.visible = true;
                 }
                 
-                if(that.list_orientation === 'horizontal' && current_column <= max_columns) {
+                if(that.list_orientation === 'horizontal' && current_column <= num_columns) {
                     image.styles = "margin:auto;grid-column: " + current_column + "; grid-row = " + current_row;
 
-                    if(current_column === max_columns) {
+                    if(current_column === num_columns) {
                         current_column = 1;
                         current_row += 1;
                     } else {

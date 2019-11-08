@@ -19,11 +19,6 @@ define( [], function() {
 			var type = this.get('type');
 			if ( 'undefined' == typeof type ) return;
 
-			if (type === 'listimage') {
-				this.get = this.listimageGet;
-				this.set = this.listimageSet;
-			}
-
 			// Listen for model attribute changes
 			this.on( 'change', this.changeSetting, this );
 
@@ -43,6 +38,11 @@ define( [], function() {
 			 */
 			if ( 'saved' == fieldType.get( 'section' ) ) {
 				this.set( 'type', fieldType.get( 'type' ) );
+			}
+
+			if (type === 'listimage') {
+				this.get = this.listimageGet;
+				this.set = this.listimageSet;
 			}
 
 			/*

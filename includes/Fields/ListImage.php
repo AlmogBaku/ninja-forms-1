@@ -23,7 +23,7 @@ class NF_Fields_ListImage extends NF_Abstracts_List
 
     protected $_old_classname = 'list-radio';
 
-    protected $_settings =  ['label', 'image_options', 'allow_multi_select', 'list_orientation', 'max_columns'];
+    protected $_settings =  ['label', 'image_options', 'show_option_labels', 'allow_multi_select', 'list_orientation', 'num_columns'];
 
     protected $_settings_exclude = ['options'];
 
@@ -120,7 +120,7 @@ class NF_Fields_ListImage extends NF_Abstracts_List
                     $img_alt = get_post_meta($img['image_id'], '_wp_attachment_image_alt');
 
                     $field['settings']['image_options'][$index]['img_title'] = $post->post_title;
-                    if (is_array($img_alt)) {
+                    if (is_array($img_alt) && ! empty($img_alt)) {
                         $field['settings']['image_options'][$index]['alt_text'] = $img_alt[0];
                     } else {
                         $field['settings']['image_options'][$index]['alt_text'] = '';
