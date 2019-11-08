@@ -131,12 +131,27 @@ RADIO & CHECKBOX LISTS
 }
 
 .listimage-wrap {
-    & .nf-checked-label {
-        & img {
-            border-color: #0050f0;
-            border-width: 1.5px;
+    li {
+        width: 100%;
+        height: 100%;
+        display: inline-grid;
+        label {
+            padding: 5px;
+            border-width: 2px;
             border-style: solid;
-            transition: all .5s;
+            border-color: transparent;
+            &.nf-checked-label {
+                border-width: 2px;
+                border-style: solid;
+                border-color: #0050F0;
+                transition: all .5s;
+            }
+            img {
+                display: block;
+            }
+        }
+        input {
+            display: none;
         }
     }
 }
@@ -188,12 +203,19 @@ COLORS
 As minimal as possible
 ----------------------------------*/
 .ninja-forms-req-symbol,
-.nf-error-msg, {
+.nf-error-msg {
     color: #E80000;
 }
 .nf-error {
     .ninja-forms-field {
         border: 1px solid #E80000;
+    }
+    &.listimage-wrap {
+        .nf-field-element {
+            ul {
+                border: 1px solid #E80000;
+            }
+        }
     }
 }
 .nf-field-submit-error {

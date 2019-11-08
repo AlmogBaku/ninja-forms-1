@@ -1,5 +1,5 @@
 <script id="tmpl-nf-field-listimage" type="text/template">
-    <ul aria-describedby="nf-error-{{{ data.id }}}" style="display:grid;grid-row-gap: 10px;grid-column-gap: 10px;">
+    <ul aria-describedby="nf-error-{{{ data.id }}}" style="display:grid;grid-row-gap: 5px;grid-column-gap: 5px;">
         {{{ data.renderOptions() }}}
     </ul>
 </script>
@@ -17,7 +17,7 @@
                id="nf-label-field-{{{ data.fieldID }}}-{{{ data.index }}}"
                class="{{{ ( data.isSelected ) ? 'nf-checked-label' : '' }}}">{{{ data.label }}}
 
-               <img src="{{{data.image}}}" alt="{{{data.alt_text}}}" title="{{{data.img_title}}}" style="max-width: 100%;height: auto;margin-bottom: 10px;"/>
+               <img src="{{{data.image}}}" alt="{{{data.alt_text}}}" title="{{{data.img_title}}}" style="max-width: 100%;height: auto;"/>
         </label>
     </li>
 </script>

@@ -189,20 +189,20 @@ return apply_filters( 'ninja_forms_field_settings', array(
     /*
      * Max Columns
      */
-    'max_columns'       => array(
-        'name'          => 'max_columns',
+    'num_columns'       => array(
+        'name'          => 'num_columns',
         'type'          => 'number',
-        'label'         => __( 'Max Columns', 'ninja-forms'),
+        'label'         => __( 'Number of Columns', 'ninja-forms'),
         'width'         => 'one-half',
         'group'         => 'primary',
-        'value'         => '',
+        'value'         => 3,
         'deps'          => array(
             'list_orientation' => 'horizontal'
         ),
     ),
 
     /*
-     * Multi-select
+     * Allow multi-select
      */
     'allow_multi_select' => array(
         'name' => 'allow_multi_select',
@@ -211,6 +211,18 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'width' => 'one-half',
         'group' => 'primary',
         'value' => FALSE,
+    ),
+
+    /*
+     * Show option labels
+     */
+    'show_option_labels' => array(
+        'name' => 'show_option_labels',
+        'type' => 'toggle',
+        'label' => __( 'Show Labels', 'ninja-forms' ),
+        'width' => 'one-half',
+        'group' => 'primary',
+        'value' => TRUE,
     ),
 
     /*
@@ -263,9 +275,9 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group' => 'primary',
         // 'value' => 'option-repeater',
         'value' => array(
-            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
-            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
-            array( 'image'  => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
         ),
         'columns'           => array(
             'label'          => array(

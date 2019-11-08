@@ -105,6 +105,8 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
             var valueEl = jQuery(optionContainerDiv[0]).find('[data-id="value"]');
 
             var imageIdEl = jQuery(optionContainerDiv[0]).find('[data-id="image_id"]');
+
+            var labelEl = jQuery(optionContainerDiv[0]).find('[data-id="label"]');
             
             if ( jQuery( e.target ).hasClass( 'open-media-manager' )
                 && this.el.id === optionContainerDiv[0].id) {
@@ -129,6 +131,7 @@ define( ['views/app/drawer/optionRepeaterError'], function( ErrorView ) {
                     
                     textEl.val(media_attachment.url).change();
                     valueEl.val(media_attachment.filename).change();
+                    labelEl.val(media_attachment.title).change();
                     imageIdEl.val(media_attachment.id).change();
                     var img_container = optionContainerDiv.find('.option-image-container');
 
