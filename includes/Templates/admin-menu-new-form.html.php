@@ -830,7 +830,7 @@ Label Three
     <div class='has-merge-tags' style='margin-left:40px;padding:0px 15px;width:45%;display:inline-block;'>
         <label style="width:95%;text-transform:none;font-size:12px;">
             <span><?php _e('Image', 'ninja-forms'); ?></span><br/>
-            <input type="text" class="setting" value="{{{ data.image }}}" data-id="image" style="width: 100%;margin-top: 5px;">
+            <input type="text" class="setting" value="{{{ data.image }}}" data-id="image" style="width: 100%;margin-top: 5px;" disabled>
             <span class="extra open-media-manager dashicons dashicons-admin-media merge-tags" style="top:30px;"></span>
         </label>
     </div>
