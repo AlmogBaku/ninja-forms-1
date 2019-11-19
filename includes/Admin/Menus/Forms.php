@@ -564,27 +564,28 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
 
         $saved_fields = Ninja_Forms()->form()->get_fields( array( 'saved' => 1) );
+        if (is_array($saved_fields) && 0 < count($saved_fields)) {
+            foreach( $saved_fields as $saved_field ){
 
-        foreach( $saved_fields as $saved_field ){
+                $settings = $saved_field->get_settings();
+                unset( $settings['cellcid'] );
 
-            $settings = $saved_field->get_settings();
-            unset( $settings['cellcid'] );
+                $id     = $saved_field->get_id();
+                $type   = $settings[ 'type' ];
+                $label  = $settings[ 'label' ];
 
-            $id     = $saved_field->get_id();
-            $type   = $settings[ 'type' ];
-            $label  = $settings[ 'label' ];
+                $field_type_settings[ $id ] = $field_type_settings[ $type ];
+                $field_type_settings[ $id ][ 'id' ] = $id;
+                $field_type_settings[ $id ][ 'type' ] = $type;
+                $field_type_settings[ $id ][ 'nicename' ] = $label;
+                $field_type_settings[ $id ][ 'section' ] = 'saved';
 
-            $field_type_settings[ $id ] = $field_type_settings[ $type ];
-            $field_type_settings[ $id ][ 'id' ] = $id;
-            $field_type_settings[ $id ][ 'type' ] = $type;
-            $field_type_settings[ $id ][ 'nicename' ] = $label;
-            $field_type_settings[ $id ][ 'section' ] = 'saved';
+                $defaults = $field_type_settings[ $id ][ 'settingDefaults' ];
+                $defaults = array_merge( $defaults, $settings );
+                $defaults[ 'saved' ] = TRUE;
 
-            $defaults = $field_type_settings[ $id ][ 'settingDefaults' ];
-            $defaults = array_merge( $defaults, $settings );
-            $defaults[ 'saved' ] = TRUE;
-
-            $field_type_settings[ $id ][ 'settingDefaults' ] = $defaults;
+                $field_type_settings[ $id ][ 'settingDefaults' ] = $defaults;
+            }
         }
 
         ?>
