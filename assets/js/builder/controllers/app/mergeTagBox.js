@@ -335,6 +335,10 @@ define( [
         mergeTagsButtonClick: function( e ){
             var $this = jQuery( this );
 
+            if ($this.hasClass('open-media-manager')) {
+                return;
+            }
+
             if( $this.siblings().hasClass( 'merge-tag-focus' ) ){
                 nfRadio.channel( 'mergeTags' ).request( 'insert:tag', '' );
                 jQuery( '#merge-tags-box' ).css( 'display', 'none' );
