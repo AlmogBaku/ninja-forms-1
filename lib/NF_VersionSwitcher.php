@@ -92,9 +92,11 @@ final class NF_VersionSwitcher
         if( ! get_option( 'ninja_forms_load_deprecated' ) ) {
             $args[ 'title' ] = __( 'DEBUG: Switch to 2.9.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=rollback';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_settings_nonce' );
         } else {
             $args[ 'title' ] = __( 'DEBUG: Switch to 3.0.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=upgrade';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_upgrade_nonce' );
         }
         $wp_admin_bar->add_node($args);
     }
