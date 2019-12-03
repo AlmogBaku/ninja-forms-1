@@ -54,17 +54,21 @@ final class NF_VersionSwitcher
 
             switch( $_GET[ 'nf-switcher' ] ){
                 case 'upgrade':
-                    update_option( 'ninja_forms_load_deprecated', FALSE );
-                    update_option( 'ninja_forms_upgrade_complete', true );
-                    do_action( 'ninja_forms_upgrade' );
-                    $notice = '&nf-upgrade=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_upgrade_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', FALSE );
+                        update_option( 'ninja_forms_upgrade_complete', true );
+                        do_action( 'ninja_forms_upgrade' );
+                        $notice = '&nf-upgrade=complete';
+                    }
                     break;
                 case 'rollback':
-                    update_option( 'ninja_forms_load_deprecated', TRUE );
-                    update_option( 'ninja_forms_upgrade_complete', false );
-                    $this->rollback_activation();
-                    do_action( 'ninja_forms_rollback' );
-                    $notice = '&nf-rollback=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_settings_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', TRUE );
+                        update_option( 'ninja_forms_upgrade_complete', false );
+                        $this->rollback_activation();
+                        do_action( 'ninja_forms_rollback' );
+                        $notice = '&nf-rollback=complete';
+                    }
                     break;
             }
 
