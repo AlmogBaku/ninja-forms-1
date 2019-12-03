@@ -724,6 +724,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 
         public function plugins_loaded()
         {
+            unload_textdomain('ninja-forms');
             load_plugin_textdomain( 'ninja-forms', false, basename( dirname( __FILE__ ) ) . '/lang' );
 
             /*
