@@ -54,17 +54,21 @@ final class NF_VersionSwitcher
 
             switch( $_GET[ 'nf-switcher' ] ){
                 case 'upgrade':
-                    update_option( 'ninja_forms_load_deprecated', FALSE );
-                    update_option( 'ninja_forms_upgrade_complete', true );
-                    do_action( 'ninja_forms_upgrade' );
-                    $notice = '&nf-upgrade=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_upgrade_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', FALSE );
+                        update_option( 'ninja_forms_upgrade_complete', true );
+                        do_action( 'ninja_forms_upgrade' );
+                        $notice = '&nf-upgrade=complete';
+                    }
                     break;
                 case 'rollback':
-                    update_option( 'ninja_forms_load_deprecated', TRUE );
-                    update_option( 'ninja_forms_upgrade_complete', false );
-                    $this->rollback_activation();
-                    do_action( 'ninja_forms_rollback' );
-                    $notice = '&nf-rollback=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_settings_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', TRUE );
+                        update_option( 'ninja_forms_upgrade_complete', false );
+                        $this->rollback_activation();
+                        do_action( 'ninja_forms_rollback' );
+                        $notice = '&nf-rollback=complete';
+                    }
                     break;
             }
 
@@ -88,9 +92,11 @@ final class NF_VersionSwitcher
         if( ! get_option( 'ninja_forms_load_deprecated' ) ) {
             $args[ 'title' ] = __( 'DEBUG: Switch to 2.9.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=rollback';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_settings_nonce' );
         } else {
             $args[ 'title' ] = __( 'DEBUG: Switch to 3.0.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=upgrade';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_upgrade_nonce' );
         }
         $wp_admin_bar->add_node($args);
     }

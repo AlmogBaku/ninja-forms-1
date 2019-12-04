@@ -204,7 +204,7 @@ jQuery(document).ready(function($) {
                     	// ...split the url based on the question mark from the query string...
                     	url = url.split( '?' );
                     	// build the downgrade url and redirect the user.
-                    	url[0] = url[0] + '?page=ninja-forms&nf-switcher=rollback';
+                    	url[0] = url[0] + '?page=ninja-forms&nf-switcher=rollback&security=' + nfAdmin.nonce;
                     	window.location.replace( url[0] );
 					}
                 }
