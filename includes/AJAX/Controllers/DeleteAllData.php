@@ -4,6 +4,7 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 {
 	public function __construct()
 	{
+		// Ajax call handled in 'delete_all_data' in this file.
 		add_action( 'wp_ajax_nf_delete_all_data', array( $this, 'delete_all_data' ) );
 	}
 

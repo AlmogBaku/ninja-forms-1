@@ -6,6 +6,7 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
 
     public function __construct()
     {
+        // Ajax call handled in 'update' in this file
         add_action( 'wp_ajax_nf_preview_update', array( $this, 'update' ) );
 
         add_filter( 'ninja_forms_run_action_settings', array( $this, 'filter_action_settings' ), 10, 4 );

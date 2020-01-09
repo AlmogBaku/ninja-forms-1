@@ -1,5 +1,6 @@
 <?php
 
+// Ajax called handled just below
 add_action( 'wp_ajax_ninja_forms_sendwp_remote_install', 'wp_ajax_ninja_forms_sendwp_remote_install_handler' );
 
 function wp_ajax_ninja_forms_sendwp_remote_install_handler () {

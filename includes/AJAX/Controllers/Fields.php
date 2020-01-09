@@ -6,6 +6,7 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 
 	public function __construct()
 	{
+		// Ajax call handed in 'maybe_delete_field' in this file
 		add_action( 'wp_ajax_nf_maybe_delete_field', array( $this,
 			'maybe_delete_field' ) );
 

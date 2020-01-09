@@ -29,7 +29,8 @@ final class NF_Tracking
 
         // Temporary: Report previously opted-in users that were not already reported. @todo Remove after a couple of versions.
 //        add_action( 'admin_init', array( $this, 'report_optin' ) );
-
+        
+        // Ajax call handled in 'maybe_opt_in' in this file
         add_action( 'wp_ajax_nf_optin', array( $this, 'maybe_opt_in' ) );
         add_filter( 'ninja_forms_check_setting_allow_tracking',  array( $this, 'check_setting' ) );
         add_filter( 'ninja_forms_update_setting_allow_tracking', array( $this, 'update_setting' ) );

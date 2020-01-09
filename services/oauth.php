@@ -43,6 +43,7 @@ class OAuth
       ] ) );
     });
 
+    // These Ajax calls handled in 'connect' and 'disconnect', respectively
     add_action( 'wp_ajax_nf_oauth_connect', [ $this, 'connect' ] );
     add_action( 'wp_ajax_nf_oauth_disconnect', [ $this, 'disconnect' ] );
   }

@@ -8,8 +8,9 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
     {
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 
+        // All Ajax call here are handled in this file
         add_action( 'wp_ajax_nf_ajax_get_new_nonce', array( $this, 'get_new_nonce' ) );
-	    add_action( 'wp_ajax_nopriv_nf_ajax_get_new_nonce', array( $this, 'get_new_nonce' ) );
+        add_action( 'wp_ajax_nopriv_nf_ajax_get_new_nonce', array( $this, 'get_new_nonce' ) );
         add_action( 'wp_ajax_nf_save_form',   array( $this, 'save' )   );
         add_action( 'wp_ajax_nf_delete_form', array( $this, 'delete' ) );
         add_action( 'wp_ajax_nf_remove_maintenance_mode', array( $this, 'remove_maintenance_mode' ) );
@@ -167,7 +168,7 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
             $this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
             $this->_respond();
         }
-        
+
         check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
         WPN_Helper::set_forms_maintenance_mode();

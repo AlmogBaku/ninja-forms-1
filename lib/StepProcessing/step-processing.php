@@ -63,6 +63,7 @@ class NF_Step_Processing
 //            //set_time_limit( 0 );
 //        }
 
+        // Ajax call handled in 'processing' in this file
         add_action( 'wp_ajax_nf_' . $this->action, array( $this, 'processing' ) );
     }
 
