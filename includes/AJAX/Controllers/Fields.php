@@ -16,6 +16,21 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 	 * delete field modal
 	 */
 	public function maybe_delete_field() {
+
+		// Does the current user have admin privileges
+		if (!current_user_can('manage_options')) {
+			$this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+			$this->_respond();
+		}
+
+		// If we don't have a nonce...
+        // OR if the nonce is invalid...
+        if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_builder_nonce')) {
+            // Kick the request out now.
+            $this->_data['errors'] = __('Request forbidden.', 'ninja-forms');
+            $this->_respond();
+        }
+
 		$field_id = $_REQUEST[ 'fieldID' ];
 //		$field_key = $_REQUEST[ 'fieldKey' ];
 

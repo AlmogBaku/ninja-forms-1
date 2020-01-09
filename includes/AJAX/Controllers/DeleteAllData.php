@@ -15,6 +15,14 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 			$this->_respond();
 		}
 
+		// If we don't have a nonce...
+        // OR if the nonce is invalid...
+        if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_dashboard_nonce')) {
+            // Kick the request out now.
+            $this->_data['errors'] = __('Request forbidden.', 'ninja-forms');
+            $this->_respond();
+        }
+
 		check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
 		global $wpdb;
