@@ -22,6 +22,12 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
     public function save()
     {
+        // Does the current user have admin privileges
+        if (!current_user_can('manage_options')) {
+            $this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_respond();
+        }
+
         check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         if( ! isset( $_POST[ 'form' ] ) ){
@@ -137,6 +143,12 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
     public function delete()
     {
+        // Does the current user have admin privileges
+        if (!current_user_can('manage_options')) {
+            $this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_respond();
+        }
+
         check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $this->_respond();
@@ -150,6 +162,12 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
      */
     public function remove_maintenance_mode() {
 
+        // Does the current user have admin privileges
+        if (!current_user_can('manage_options')) {
+            $this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_respond();
+        }
+        
         check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
         WPN_Helper::set_forms_maintenance_mode();
