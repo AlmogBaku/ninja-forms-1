@@ -11,7 +11,7 @@ define( ['models/formModel'], function( FormModel ) {
 		comparator: 'title',
 		tmpNum: 1,
         url: function() {
-            return ajaxurl + "?action=nf_forms";
+            return ajaxurl + "?action=nf_forms&security=" + nfAdmin.ajaxNonce;
         },
 
 		initialize: function() {
@@ -164,7 +164,7 @@ define( ['models/formModel'], function( FormModel ) {
             var that = this;
             jQuery.ajax({
                 type: "POST",
-                url: ajaxurl + '?action=nf_forms&clone_id=' + view.model.get( 'id' ) + '&security=' + nfAdmin.ajaxNonce,
+                url: ajaxurl + '?action=nf_forms&clone_id=' + view.model.get( 'id' ),
                 success: function( response ){
                     var response = JSON.parse( response );
 
