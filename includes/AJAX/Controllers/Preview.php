@@ -13,6 +13,12 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
 
     public function update()
     {
+        // Does the current user have admin privileges
+        if (!current_user_can('manage_options')) {
+            $this->_data['errors'] = __('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+            $this->_respond();
+        }
+
         check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $form = json_decode( stripslashes( $_POST['form'] ), ARRAY_A );
