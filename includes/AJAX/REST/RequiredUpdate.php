@@ -18,7 +18,13 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
      */
     public function post( $request_data )
     {
-        $data = array();
+		$data = array();
+		
+		// Does the current user have admin privileges
+		if (!current_user_can('manage_options')) {
+			$data['error'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+			return $data;
+		}
 
         // If we don't have a nonce...
         // OR if the nonce is invalid...

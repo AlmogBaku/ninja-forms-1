@@ -9,6 +9,12 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 
 	public function delete_all_data()
 	{
+		// Does the current user have admin privileges
+		if (!current_user_can('manage_options')) {
+			$this->_data['errors'] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+			$this->_respond();
+		}
+
 		check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
 		global $wpdb;
