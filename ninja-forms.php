@@ -579,8 +579,8 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 	     */
 	    function plugin_get_default_privacy_content() {
 		    return
-			    '<h2>' . __( 'Ninja Forms allows you to collect personal information' ) . '</h2>' .
-			    '<p>' . __( 'If you are using Ninja Forms to collect personal information, you should consult a legal professional for your use case.' ) . '</p>';
+			    '<h2>' . esc_html__( 'Ninja Forms allows you to collect personal information', 'ninja-forms' ) . '</h2>' .
+			    '<p>' . esc_html__( 'If you are using Ninja Forms to collect personal information, you should consult a legal professional for your use case.', 'ninja-forms' ) . '</p>';
 	    }
 
         /**
@@ -924,7 +924,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         {
             if( ! $form_id ) return;
 
-            $noscript_message = __( 'Notice: JavaScript is required for this content.', 'ninja-forms' );
+            $noscript_message = esc_html__( 'Notice: JavaScript is required for this content.', 'ninja-forms' );
             $noscript_message = apply_filters( 'ninja_forms_noscript_message', $noscript_message );
 
             Ninja_Forms()->template( 'display-noscript-message.html.php', array( 'message' => $noscript_message ) );
@@ -1051,11 +1051,11 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             // Allow plugin to filter the output error trigger
             if ( WP_DEBUG && apply_filters( 'ninja_forms_deprecated_function_trigger_error', $show_errors ) ) {
                 if ( ! is_null( $replacement ) ) {
-                    trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Ninja Forms version %2$s! Use %3$s instead.', 'ninja-forms' ), $deprecated, $version, $replacement ) );
+                    trigger_error( sprintf( esc_html__( '%1$s is <strong>deprecated</strong> since Ninja Forms version %2$s! Use %3$s instead.', 'ninja-forms' ), $deprecated, $version, $replacement ) );
                     // trigger_error(  print_r( $backtrace, 1 ) ); // Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
                     // Alternatively we could dump this to a file.
                 } else {
-                    trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Ninja Forms version %2$s.', 'ninja-forms' ), $deprecated, $version ) );
+                    trigger_error( sprintf( esc_html__( '%1$s is <strong>deprecated</strong> since Ninja Forms version %2$s.', 'ninja-forms' ), $deprecated, $version ) );
                     // trigger_error( print_r( $backtrace, 1 ) );// Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
                     // Alternatively we could dump this to a file.
                 }
@@ -1244,11 +1244,11 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
      */
     function nf_custom_cron_job_recurrence( $schedules ) {
         $schedules[ 'nf-monthly' ] = array(
-            'display' => __( 'Once per month', 'ninja-forms' ),
+            'display' => esc_html__( 'Once per month', 'ninja-forms' ),
             'interval' => 2678400,
         );
         $schedules[ 'nf-weekly' ] = array(
-            'display' => __( 'Once per week', 'ninja-forms' ),
+            'display' => esc_html__( 'Once per week', 'ninja-forms' ),
             'interval' => 604800,
         );
         return $schedules;
