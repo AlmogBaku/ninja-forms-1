@@ -102,18 +102,18 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         // Build our new views.
         $views[ 'all' ] = '<a href="' . admin_url( 'edit.php?post_status=all&post_type=nf_sub'  ) . $form_id . '">'
-                        . __( 'Completed', 'ninja-forms' ) . '</a>';
+                        . esc_html__( 'Completed', 'ninja-forms' ) . '</a>';
 
         $views[ 'trash' ] = '<a href="' . admin_url( 'edit.php?post_status=trash&post_type=nf_sub' ) . $form_id . '">'
-                            . __( 'Trashed', 'ninja-forms' ) . '</a>';
+                            . esc_html__( 'Trashed', 'ninja-forms' ) . '</a>';
 
         // Checks to make sure we have a post status.
         if( ! empty( $_GET[ 'post_status' ] ) ) {
             // Depending on the domain set the value to plain text.
             if ( 'all' == $_GET[ 'post_status' ] ) {
-                $views[ 'all' ] = __( 'Completed', 'ninja-forms' );
+                $views[ 'all' ] = esc_html__( 'Completed', 'ninja-forms' );
             } else if ( 'trash' == $_GET[ 'post_status' ] ) {
-                $views[ 'trash' ] = __( 'Trashed', 'ninja-forms' );
+                $views[ 'trash' ] = esc_html__( 'Trashed', 'ninja-forms' );
             }
         }
 
@@ -122,7 +122,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
     public function get_page_title()
     {
-        return __( 'Submissions', 'ninja-forms' );
+        return esc_html__( 'Submissions', 'ninja-forms' );
     }
 
     /**
@@ -168,7 +168,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         $cols = array(
             'cb'    => '<input type="checkbox" />',
-            'seq_num' => __( '#', 'ninja-forms' ),
+            'seq_num' => esc_html__( '#', 'ninja-forms' ),
         );
 
         $fields = Ninja_Forms()->form( $form_id )->get_fields();
@@ -189,7 +189,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         }
 
-        $cols[ 'sub_date' ] = __( 'Date', 'ninja-forms' );
+        $cols[ 'sub_date' ] = esc_html__( 'Date', 'ninja-forms' );
 
         return $cols;
     }
@@ -361,8 +361,8 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
             ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    jQuery('<option>').val('export').text('<?php _e('Export', 'ninja-forms')?>').appendTo("select[name='action']");
-                    jQuery('<option>').val('export').text('<?php _e('Export', 'ninja-forms')?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('export').text('<?php esc_html_e('Export', 'ninja-forms')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('export').text('<?php esc_html_e('Export', 'ninja-forms')?>').appendTo("select[name='action2']");
                     <?php
                     if ( ( isset ( $_POST['action'] ) && $_POST['action'] == 'export' ) || ( isset ( $_POST['action2'] ) && $_POST['action2'] == 'export' ) ) {
                         ?>
@@ -379,7 +379,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
                     $url = admin_url( 'admin.php?page=nf-processing&action=download_all_subs&form_id=' . absint( $_REQUEST['form_id'] ) . '&redirect=' . $redirect );
                     $url = esc_url( $url );
                     ?>
-                    var button = '<a href="<?php echo $url; ?>" class=<?php __( "button-secondary nf-download-all", 'ninja-forms' ) ;?> . '>' . <?php echo __( 'Download All Submissions', 'ninja-forms' ); ?></a>';
+                    var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all">' . <?php echo esc_html__( 'Download All Submissions', 'ninja-forms' ); ?></a>';
 //                    jQuery( '#doaction2' ).after( button );
                     <?php
                 }
