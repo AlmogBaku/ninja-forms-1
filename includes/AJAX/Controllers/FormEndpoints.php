@@ -62,7 +62,7 @@ class NF_AJAX_Controllers_FormEndpoints extends NF_Abstracts_Controller
 
         $form_title = $form->get_setting( 'title' );
 
-        $new_form_title = $form_title . " - " . __( 'copy', 'ninja-forms' );
+        $new_form_title = $form_title . " - " . esc_html__( 'copy', 'ninja-forms' );
 
         $new_form->update_setting( 'title', $new_form_title );
 
