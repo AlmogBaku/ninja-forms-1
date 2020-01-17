@@ -39,7 +39,7 @@ class NF_Admin_CPT_Submission
         // Filter our hidden columns by form ID.
         add_action( 'wp', array( $this, 'filter_hidden_columns' ) );
 
-        // Save our hidden columns by form id.
+        // Save our hidden columns by form id. Ajax call handed in 'hide_columns' in this file
         add_action( 'wp_ajax_nf_hide_columns', array( $this, 'hide_columns' ) );
         
         add_action( 'trashed_post', array( $this, 'nf_trash_sub' ) );

@@ -25,9 +25,15 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         }
 
 
+        // Ajax calls here are both handled by 'submit' in this file
         add_action( 'wp_ajax_nf_ajax_submit',   array( $this, 'submit' )  );
         add_action( 'wp_ajax_nopriv_nf_ajax_submit',   array( $this, 'submit' )  );
 
+        /**
+         * Ajax calls here are handled by 'resume' in this file. These calls
+         * are normally made by the application when returning from 'PayPal' or
+         * 'Stripe'.
+         */
         add_action( 'wp_ajax_nf_ajax_resume',   array( $this, 'resume' )  );
         add_action( 'wp_ajax_nopriv_nf_ajax_resume',   array( $this, 'resume' )  );
     }

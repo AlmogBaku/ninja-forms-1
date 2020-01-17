@@ -1,5 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Ajax call handled just below this add_action call
 add_action( 'wp_ajax_ninja_forms_ajax_migrate_database', 'ninja_forms_ajax_migrate_database' );
 function ninja_forms_ajax_migrate_database(){
     if( ! current_user_can( apply_filters( 'ninja_forms_admin_upgrade_migrate_database_capabilities', 'manage_options' ) ) ) return;
@@ -20,6 +21,7 @@ function ninja_forms_ajax_migrate_database(){
     wp_die();
 }
 
+// Ajax call handled just below this 'add_action' call
 add_action( 'wp_ajax_ninja_forms_ajax_import_form', 'ninja_forms_ajax_import_form' );
 function ninja_forms_ajax_import_form(){
     if( ! current_user_can( apply_filters( 'ninja_forms_admin_upgrade_import_form_capabilities', 'manage_options' ) ) ) return;
@@ -42,6 +44,7 @@ function ninja_forms_ajax_import_form(){
     wp_die();
 }
 
+// Ajax call handled just below this 'add_action' call
 add_action( 'wp_ajax_ninja_forms_ajax_import_fields', 'ninja_forms_ajax_import_fields' );
 function ninja_forms_ajax_import_fields(){
     if( ! current_user_can( apply_filters( 'ninja_forms_admin_upgrade_import_fields_capabilities', 'manage_options' ) ) ) return;

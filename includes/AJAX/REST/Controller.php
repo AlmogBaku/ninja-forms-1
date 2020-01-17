@@ -17,6 +17,17 @@ abstract class NF_AJAX_REST_Controller extends NF_Abstracts_Controller
     public function __construct()
     {
         if( $this->action ) {
+            /**
+             * The function that handles these actions are located in the
+             * classes that extend this class. The action is usually of the type 'get', 'post', or 'delete'
+             * These files inlcude:
+             *  NF_AJAX_REST_BatchProcess
+             *  NF_AJAX_REST_Forms
+             *  NF_AJAX_REST_NewFormTemplates
+             *  NF_AJAX_REST_RequiredUpdate
+             *
+             * And any other class that extends this class(NF_AJAX_REST_Controller)
+             */
             add_action('wp_ajax_' . $this->action, array($this, 'route'));
         }
     }
@@ -44,7 +55,10 @@ abstract class NF_AJAX_REST_Controller extends NF_Abstracts_Controller
             $this->_errors[] = esc_html__( 'Endpoint does not exist.', 'ninja-forms' );
             $this->_respond();
         }
-
+        /**
+         * This call get the $_REQUEST info for the call(post, get, etc.)
+         * being called.
+         */
         $request_data = $this->get_request_data();
 
         try {

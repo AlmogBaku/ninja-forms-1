@@ -4,11 +4,26 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 {
 	public function __construct()
 	{
+		// Ajax call handled in 'delete_all_data' in this file.
 		add_action( 'wp_ajax_nf_delete_all_data', array( $this, 'delete_all_data' ) );
 	}
 
 	public function delete_all_data()
 	{
+		// Does the current user have admin privileges
+		if (!current_user_can('manage_options')) {
+			$this->_data['errors'] = __('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			$this->_respond();
+		}
+
+		// If we don't have a nonce...
+        // OR if the nonce is invalid...
+        if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_dashboard_nonce')) {
+            // Kick the request out now.
+            $this->_data['errors'] = __('Request forbidden.', 'ninja-forms');
+            $this->_respond();
+        }
+
 		check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
 		global $wpdb;
