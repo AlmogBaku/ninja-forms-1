@@ -33,7 +33,7 @@ class NF_Whip
         $message[] = '<strong>' . __( 'Your site could be faster and more secure with a newer PHP version.', 'ninja-forms' ) . '</strong><br /><br />';
         $message[] = __( 'Hosts have the ability to update your PHP version, but sometimes they don\'t dare to do that because they\'re afraid they\'ll break your site.', 'ninja-forms' ) . '<br /><br />';
         $message[] = '<strong>' .__( 'Which version should I update?', 'ninja-forms' ) . '</strong><br /><br />';
-        $message[] = sprintf( __( 'You should update your PHP version to either 5.6 or to 7.0 or 7.1. On a normal WordPress site, switching to PHP 5.6 should never cause issues. We would however actually recommend you switch to PHP7. There are some plugins that are not ready for PHP7 though, so do some testing first. Yoast have an article on how to test whether that\'s an option for you %1$shere%2$s. PHP7 is much faster than PHP 5.6. It\'s also the only PHP version still in active development and therefore the better option for your site in the long run.', 'ninja-forms' ) . '<br /><br />',
+        $message[] = sprintf( __( 'You should update your PHP version to either 5.6 or to 7.3 or 7.4. On a normal WordPress site, switching to PHP 5.6 should never cause issues. We would, however, actually recommend you switch to PHP7. There are some plugins that are not ready for PHP7 though, so do some testing first. Yoast have an article on how to test whether that\'s an option for you %1$shere%2$s. PHP7 is much faster than PHP 5.6. It\'s also the only PHP version still in active development and therefore the better option for your site in the long run.', 'ninja-forms' ) . '<br /><br />',
 				'<a href="https://yoa.st/wg" target="_blank">',
 				'</a>'
 			);
