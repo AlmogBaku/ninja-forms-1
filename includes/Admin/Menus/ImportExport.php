@@ -87,7 +87,7 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
         if( ! current_user_can( $capability ) ) return;
 
         if( isset( $_REQUEST[ 'nf_export_form' ] ) && $_REQUEST[ 'nf_export_form' ] ){
-            $form_id = $_REQUEST[ 'nf_export_form' ];
+            $form_id = absint($_REQUEST[ 'nf_export_form' ]);
             Ninja_Forms()->form( $form_id )->export_form();
         }
     }
@@ -114,7 +114,8 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
         if( ! current_user_can( apply_filters( 'ninja_forms_admin_export_fields_capabilities', 'manage_options' ) ) ) return;
 
         if( isset( $_REQUEST[ 'nf_export_fields' ] ) && $_REQUEST[ 'nf_export_fields' ] ){
-            $field_ids = $_REQUEST[ 'nf_export_fields' ];
+            $field_ids = (array) $_REQUEST[ 'nf_export_fields' ];
+            $field_ids = array_map('esc_attr', $field_ids);
 
             $fields = array();
             foreach( $field_ids as $field_id ){
@@ -144,7 +145,7 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
         );
 
         $tab_keys = array_keys( $tabs );
-        $active_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : reset( $tab_keys );
+        $active_tab = ( isset( $_GET[ 'tab' ] ) ) ? WPN_Helper::sanitize_text_field($_GET[ 'tab' ]) : reset( $tab_keys );
 
         $this->add_meta_boxes();
 
@@ -237,7 +238,7 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
     		$selected = '';
 
     		if( isset( $_REQUEST[ 'exportFormId' ] )
-		        && $form->get_id() == $_REQUEST[ 'exportFormId' ] ) {
+		        && $form->get_id() == absint($_REQUEST[ 'exportFormId' ]) ) {
     			$selected = 'selected';
 		    }
     		$forms[] = array(

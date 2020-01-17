@@ -16,7 +16,11 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 	 * delete field modal
 	 */
 	public function maybe_delete_field() {
-		$field_id = $_REQUEST[ 'fieldID' ];
+
+		if (!isset($_REQUEST['fieldID']) || empty($_REQUEST['fieldID'])) {
+			$this->_respond();
+		}
+		$field_id = absint($_REQUEST[ 'fieldID' ]);
 //		$field_key = $_REQUEST[ 'fieldKey' ];
 
 		global $wpdb;

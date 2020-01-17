@@ -133,7 +133,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         $this->_form_data = Ninja_Forms()->session()->get( 'nf_processing_form_data' );
         $this->_form_cache = Ninja_Forms()->session()->get( 'nf_processing_form_cache' );
         $this->_data = Ninja_Forms()->session()->get( 'nf_processing_data' );
-        $this->_data[ 'resume' ] = $_POST[ 'nf_resume' ];
+        $this->_data[ 'resume' ] = WPN_Helper::sanitize_text_field($_POST[ 'nf_resume' ]);
 
         $this->_form_id = $this->_data[ 'form_id' ];
 
