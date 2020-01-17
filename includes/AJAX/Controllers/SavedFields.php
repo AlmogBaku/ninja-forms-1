@@ -17,7 +17,7 @@ class NF_AJAX_Controllers_SavedFields extends NF_Abstracts_Controller
     {
         // Does the current user have admin privileges
         if (!current_user_can('manage_options')) {
-            $this->_errors[] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_errors[] = esc_html__('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
             $this->_respond();
         }
 
@@ -44,7 +44,7 @@ class NF_AJAX_Controllers_SavedFields extends NF_Abstracts_Controller
     {
         // Does the current user have admin privileges
         if (!current_user_can('manage_options')) {
-            $this->_errors[] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_errors[] = esc_html__('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
             $this->_respond();
         }
 
@@ -62,7 +62,7 @@ class NF_AJAX_Controllers_SavedFields extends NF_Abstracts_Controller
     {
         // Does the current user have admin privileges
         if (!current_user_can('manage_options')) {
-            $this->_errors[] = __('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
+            $this->_errors[] = esc_html__('Access denied. You must have admin privileges to view this data.', 'ninja-forms');
             $this->_respond();
         }
 

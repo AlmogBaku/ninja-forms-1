@@ -16,7 +16,7 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
     {
         // Does the current user have admin privileges
         if (!current_user_can('manage_options')) {
-            $this->_data['errors'] = __('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+            $this->_data['errors'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
             $this->_respond();
         }
 

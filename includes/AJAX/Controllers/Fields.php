@@ -20,7 +20,7 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 
 		// Does the current user have admin privileges
 		if (!current_user_can('manage_options')) {
-			$this->_data['errors'] = __('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			$this->_data['errors'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
 			$this->_respond();
 		}
 
@@ -28,7 +28,7 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
         // OR if the nonce is invalid...
         if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_builder_nonce')) {
             // Kick the request out now.
-            $this->_data['errors'] = __('Request forbidden.', 'ninja-forms');
+            $this->_data['errors'] = esc_html__('Request forbidden.', 'ninja-forms');
             $this->_respond();
         }
 
