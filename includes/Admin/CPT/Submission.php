@@ -238,9 +238,12 @@ class NF_Admin_CPT_Submission
 
         $sub = Ninja_Forms()->form()->sub( $nf_sub_id )->get();
 
-        foreach ( $_POST['fields'] as $field_id => $user_value ) {
-            $user_value = apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $nf_sub_id );
-            $sub->update_field_value( $field_id, $user_value );
+        if (isset($_POST['fields'])) {
+            $post_fields = WPN_Helper::esc_html($_POST['fields']);
+            foreach ( $post_fields as $field_id => $user_value ) {
+                $user_value = apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $nf_sub_id );
+                $sub->update_field_value( $field_id, $user_value );
+            }
         }
 
         $sub->save();

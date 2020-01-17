@@ -161,13 +161,13 @@ class NF_Admin_AllFormsTable extends WP_List_Table
         // If orderby is set, use this as the sort column
         if(!empty($_GET['orderby']))
         {
-            $orderby = $_GET['orderby'];
+            $orderby = WPN_Helper::sanitize_text_field($_GET['orderby']);
         }
 
         // If order is set use this as the order
         if(!empty($_GET['order']))
         {
-            $order = $_GET['order'];
+            $order = WPN_Helper::sanitize_text_field($_GET['order']);
         }
 
 

@@ -80,7 +80,7 @@ final class NF_Admin_Menus_Settings extends NF_Abstracts_Submenu
         );
 
         $tab_keys = array_keys( $tabs );
-        $active_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : reset( $tab_keys );
+        $active_tab = ( isset( $_GET[ 'tab' ] ) ) ? WPN_Helper::sanitize_text_field($_GET[ 'tab' ]) : reset( $tab_keys );
 
         wp_enqueue_style( 'nf-admin-settings', Ninja_Forms::$url . 'assets/css/admin-settings.css' );
 
@@ -221,7 +221,7 @@ final class NF_Admin_Menus_Settings extends NF_Abstracts_Submenu
 
         if( ! isset( $_POST[ $this->_prefix ] ) ) return;
 
-        $settings = $_POST[ 'ninja_forms' ];
+        $settings = WPN_Helper::sanitize_text_field($_POST[ 'ninja_forms' ]);
 
         if( isset( $settings[ 'currency' ] ) ){
             $currency = sanitize_text_field( $settings[ 'currency' ] );

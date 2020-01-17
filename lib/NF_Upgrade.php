@@ -38,20 +38,20 @@ function ninja_forms_ajax_import_form(){
         $form->save();
     }
 
-    echo json_encode( array( 'export' => $_POST[ 'import' ], 'import' => $import ) );
+    echo json_encode( array( 'export' => WPN_Helper::esc_html($_POST['import']), 'import' => $import ) );
     wp_die();
 }
 
 add_action( 'wp_ajax_ninja_forms_ajax_import_fields', 'ninja_forms_ajax_import_fields' );
 function ninja_forms_ajax_import_fields(){
     if( ! current_user_can( apply_filters( 'ninja_forms_admin_upgrade_import_fields_capabilities', 'manage_options' ) ) ) return;
-    $fields = stripslashes( $_POST[ 'fields' ] ); // TODO: How to sanitize serialized string?
+    $fields = stripslashes( WPN_Helper::esc_html($_POST[ 'fields' ]) ); // TODO: How to sanitize serialized string?
     $fields = maybe_unserialize( $fields );
 
     foreach( $fields as $field ) {
         Ninja_Forms()->form()->import_field( $field, $field[ 'id' ], TRUE );
     }
 
-    echo json_encode( array( 'export' => $_POST[ 'fields' ], 'import' => $fields ) );
+    echo json_encode( array( 'export' => WPN_Helper::esc_html($_POST['fields']), 'import' => $fields ) );
     wp_die();
 }
