@@ -469,12 +469,11 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 
             add_action( 'nf_weekly_promotion_update', array( self::$instance, 'nf_run_promotion_manager' ) );
             add_action( 'activated_plugin', array( self::$instance, 'nf_bust_promotion_cache_on_plugin_activation' ), 10, 2 );
-                        
 
             // Checks php version and..
-            if( PHP_VERSION < 5.6 ) {
+            if (version_compare(PHP_VERSION, '7.2.0', '<')) {
                 // Pulls in the whip notice if the user is.
-                add_action( 'admin_init', array( self::$instance, 'nf_whip_notice' ) );
+                add_action( 'admin_init', array( self::$instance, 'nf_php_version_whip_notice' ) );
             }
             
             add_action( 'admin_init', array( self::$instance, 'nf_do_telemetry' ) );
@@ -594,6 +593,19 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         {
             require_once self::$dir . '/includes/Libraries/Whip/NF_Whip.php';
             return new NF_Whip();
+        }
+
+        /**
+         * NF PHP Version Whip Notice
+         * If the user is on a version below PHP 7.2 then we get an instance of the
+         * NF PHP Version Whip class which will add a non-dismissible admin notice.
+         *
+         * @return NF_Php_Version_Whip
+         */
+        public function nf_php_version_whip_notice()
+        {
+            require_once self::$dir . '/includes/Libraries/Whip/NF_Php_Version_Whip.php';
+            return new NF_Php_Version_Whip();
         }
         
         /**
