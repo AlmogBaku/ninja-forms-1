@@ -59,7 +59,7 @@ function wp_ajax_ninja_forms_sendwp_remote_install_handler () {
     if( ! function_exists('sendwp_get_server_url') ) {
         ob_end_clean();
         echo json_encode( array(
-            'error' => __( 'Something went wrong. SendWP was not installed correctly.' ),
+            'error' => esc_html__( 'Something went wrong. SendWP was not installed correctly.' ),
             'install' => $install,
             ) );
         exit;
