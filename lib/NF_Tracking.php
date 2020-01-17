@@ -126,13 +126,15 @@ final class NF_Tracking
         /**
          * Send our optin event
          */
-        if ( isset ( $_REQUEST[ 'send_email' ] ) ) {
-            $send_email = absint( $_REQUEST[ 'send_email' ] );
-            $user_email = $_REQUEST[ 'user_email' ];
-            add_option( 'ninja_forms_optin_email', $user_email, '', 'no' );
-        } else {
-            $send_email = 0;
-            $user_email = '';
+        $send_email = 0;
+        $user_email = '';
+
+        if (isset($_REQUEST['send_email'])
+            && isset($_REQUEST['user_email'])
+            && is_email($_REQUEST['user_email'])) {
+                $send_email = absint($_REQUEST['send_email']);
+                $user_email = sanitize_email($_REQUEST['user_email']);
+                add_option('ninja_forms_optin_email', $user_email, '', 'no');
         }
 
         $this->report_optin( array( 'send_email' => $send_email, 'user_email' => $user_email ) );
@@ -161,8 +163,8 @@ final class NF_Tracking
         
         $data = array();
         $user_email = get_option( 'ninja_forms_optin_email' );
-        if ( $user_email ) {
-            $data[ 'user_email' ] = $user_email;
+        if ($user_email && is_email($user_email)) {
+            $data['user_email'] = sanitize_email($user_email);
         }
         Ninja_Forms()->dispatcher()->send( 'optout', $data );
         delete_option( 'ninja_forms_optin_email' );

@@ -11,7 +11,7 @@ final class NF_Display_Preview
     {
         if ( ! isset( $_GET['nf_preview_form'] ) ) return;
 
-        $this->_form_id = $_GET['nf_preview_form'];
+        $this->_form_id = WPN_Helper::sanitize_text_field($_GET['nf_preview_form']);
 
         add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 

@@ -54,20 +54,20 @@ class NF_AJAX_REST_BatchProcess extends NF_AJAX_REST_Controller
 	{
 		$request_data = array();
 
-		if( isset( $_REQUEST[ 'batch_type' ] ) && $_REQUEST[ 'batch_type' ] ){
-			$request_data[ 'batch_type' ] = $_REQUEST[ 'batch_type' ];
+		if (isset($_REQUEST['batch_type']) && $_REQUEST['batch_type']) {
+			$request_data['batch_type'] = WPN_Helper::sanitize_text_field($_REQUEST['batch_type']);
 		}
 
-		if( isset( $_REQUEST[ 'data' ] ) && $_REQUEST[ 'data' ] ){
-			$request_data[ 'data' ] = $_REQUEST[ 'data' ];
+		if (isset($_REQUEST['data']) && $_REQUEST['data']) {
+			$request_data['data'] = WPN_Helper::sanitize_text_field($_REQUEST['data']);
 		}
 
-		if( isset( $_REQUEST[ 'security' ] ) && $_REQUEST[ 'security' ] ){
-			$request_data[ 'security' ] = $_REQUEST[ 'security' ];
+		if (isset($_REQUEST['security']) && $_REQUEST['security']) {
+			$request_data['security'] = WPN_Helper::sanitize_text_field($_REQUEST['security']);
 		}
 
-		if( isset( $_REQUEST[ 'action' ] ) && $_REQUEST[ 'action' ] ){
-			$request_data[ 'action' ] = $_REQUEST[ 'action' ];
+		if (isset($_REQUEST['action']) && $_REQUEST['action']) {
+			$request_data['action'] = WPN_Helper::sanitize_text_field($_REQUEST['action']);
 		}
 
 		return $request_data;

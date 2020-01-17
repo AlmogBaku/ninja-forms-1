@@ -71,8 +71,8 @@ class NF_Admin_Processes_ImportForm extends NF_Abstracts_BatchProcess
             $this->add_error( 'empty_content', esc_html__( 'No export provided.', 'ninja-forms' ), 'fatal' );
             $this->batch_complete();
         }
-
-        $data = explode( ';base64,', $_POST[ 'extraData' ][ 'content' ] );
+        $extra_content = WPN_Helper::esc_html($_POST[ 'extraData' ][ 'content']);
+        $data = explode( ';base64,', $extra_content );
         $data = base64_decode( $data[ 1 ] );
         
         /**

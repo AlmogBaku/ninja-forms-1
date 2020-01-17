@@ -176,7 +176,10 @@ class NF_Admin_UserDataRequests {
 		$this->user = get_user_by( 'email', $email_address );
 		$this->request_email = $email_address;
 
-		$request_id = $_REQUEST[ 'id' ];
+		if (!isset($_REQUEST['id']) || empty($_REQUEST['id'])) {
+			return array();
+		}
+		$request_id = absint($_REQUEST[ 'id' ]);
 
 		$make_anonymous = get_post_meta( $request_id, 'nf_anonymize_data',
 			true);
