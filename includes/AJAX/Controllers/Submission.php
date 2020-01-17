@@ -88,7 +88,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         // If we don't have a numeric form ID...
         if ( ! is_numeric( $this->_form_id ) ) {
             // Kick the request out without processing.
-            $this->_errors[] = __( 'Form does not exist.', 'ninja-forms' );
+            $this->_errors[] = esc_html__( 'Form does not exist.', 'ninja-forms' );
             $this->_respond();
         }
 
@@ -100,8 +100,8 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
          * back to the form.
          */
         if ( $is_maintenance ) {
-            $this->_errors[ 'form' ][] = apply_filters( 'nf_maintenance_message', __( 'This form is currently undergoing maintenance. Please ', 'ninja-forms' )
-                . '<a href="' . $_SERVER[ 'HTTP_REFERER' ] . '">' . __( 'click here ', 'ninja-forms' ) . '</a>' . __( 'to reload the form and try again.', 'ninja-forms' )  ) ;
+            $this->_errors[ 'form' ][] = apply_filters( 'nf_maintenance_message', esc_html__( 'This form is currently undergoing maintenance. Please ', 'ninja-forms' )
+                . '<a href="' . $_SERVER[ 'HTTP_REFERER' ] . '">' . esc_html__( 'click here ', 'ninja-forms' ) . '</a>' . esc_html__( 'to reload the form and try again.', 'ninja-forms' )  ) ;
             $this->_respond();
         }
 
@@ -110,7 +110,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             $this->_form_cache = get_user_option( 'nf_form_preview_' . $this->_form_id );
 
             if( ! $this->_form_cache ){
-                $this->_errors[ 'preview' ] = __( 'Preview does not exist.', 'ninja-forms' );
+                $this->_errors[ 'preview' ] = esc_html__( 'Preview does not exist.', 'ninja-forms' );
                 $this->_respond();
             }
         } else {
@@ -546,7 +546,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         $error = error_get_last();
         if( $error !== NULL && in_array( $error[ 'type' ], array( E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR ) ) ) {
 
-            $this->_errors[ 'form' ][ 'last' ] = __( 'The server encountered an error during processing.', 'ninja-forms' );
+            $this->_errors[ 'form' ][ 'last' ] = esc_html__( 'The server encountered an error during processing.', 'ninja-forms' );
 
             if( current_user_can( 'manage_options' ) && isset( $error[ 'message' ] ) ){
                 $this->_errors[ 'form' ][ 'last_admin' ] = '<pre>' . $error[ 'message' ] . '</pre>';
@@ -567,7 +567,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             && json_last_error() ){
             $this->_errors[] = json_last_error_msg();
         } else {
-            $this->_errors[] = __( 'An unexpected error occurred.', 'ninja-forms' );
+            $this->_errors[] = esc_html__( 'An unexpected error occurred.', 'ninja-forms' );
         }
 
         $this->_respond();

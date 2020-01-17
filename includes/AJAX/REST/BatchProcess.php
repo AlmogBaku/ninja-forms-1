@@ -27,7 +27,7 @@ class NF_AJAX_REST_BatchProcess extends NF_AJAX_REST_Controller
         // OR if the nonce is invalid...
         if ( ! isset( $request_data[ 'security' ] ) || ! wp_verify_nonce( $request_data[ 'security' ], 'ninja_forms_batch_nonce' ) ) {
             // Kick the request out now.
-            $data[ 'error' ] = __( 'Request forbidden.', 'ninja-forms' );
+            $data[ 'error' ] = esc_html__( 'Request forbidden.', 'ninja-forms' );
             return $data;
         }
         
@@ -40,12 +40,12 @@ class NF_AJAX_REST_BatchProcess extends NF_AJAX_REST_Controller
                 $batch_class = $batch_processes[ $batch_type ][ 'class_name' ];
                 $batch = new $batch_class( $request_data );
             } else {
-                $data[ 'error' ] = __( 'Invalid request.', 'ninja-forms' );
+                $data[ 'error' ] = esc_html__( 'Invalid request.', 'ninja-forms' );
             }
         } // Otherwise... (We don't have a batch type.)
         else {
             // Kick the request out.
-            $data[ 'error' ] = __( 'Invalid request.', 'ninja-forms' );
+            $data[ 'error' ] = esc_html__( 'Invalid request.', 'ninja-forms' );
         }
         return $data;
     }

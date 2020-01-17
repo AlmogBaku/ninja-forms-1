@@ -30,7 +30,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
         // OR if the nonce is invalid...
         if ( ! isset( $request_data[ 'security' ] ) || ! wp_verify_nonce( $request_data[ 'security' ], 'ninja_forms_required_update_nonce' ) ) {
             // Kick the request out now.
-            $data[ 'error' ] = __( 'Request forbidden.', 'ninja-forms' );
+            $data[ 'error' ] = esc_html__( 'Request forbidden.', 'ninja-forms' );
 			return $data;
         }
 		$doing_updates = get_option( 'ninja_forms_doing_required_updates' );

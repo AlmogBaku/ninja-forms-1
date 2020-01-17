@@ -67,10 +67,10 @@ function wp_ajax_ninja_forms_sendwp_remote_install_handler () {
     
     echo json_encode( array(
         'partner_id' => 16,
-        'register_url' => sendwp_get_server_url() . '_/signup',
-        'client_name' => sendwp_get_client_name(),
-        'client_secret' => sendwp_get_client_secret(),
-        'client_redirect' => sendwp_get_client_redirect(),
+        'register_url' => esc_url(sendwp_get_server_url() . '_/signup'),
+        'client_name' => esc_attr( sendwp_get_client_name() ),
+        'client_secret' => esc_attr( sendwp_get_client_secret() ),
+        'client_redirect' => esc_url(sendwp_get_client_redirect()),
     ) );
     exit;
 }
