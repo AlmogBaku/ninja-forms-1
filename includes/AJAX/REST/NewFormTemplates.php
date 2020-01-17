@@ -12,14 +12,14 @@ class NF_AJAX_REST_NewFormTemplates extends NF_AJAX_REST_Controller
     {
         // Does the current user have admin privileges
         if (!current_user_can('manage_options')) {
-            return ['error' => __('Access denied. You must have admin privileges to view this data.', 'ninja-forms')];
+            return ['error' => esc_html__('Access denied. You must have admin privileges to view this data.', 'ninja-forms')];
         }
 
         // If we don't have a nonce...
         // OR if the nonce is invalid...
         if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_dashboard_nonce')) {
             // Kick the request out now.
-            $data['error'] = __('Request forbidden.', 'ninja-forms');
+            $data['error'] = esc_html__('Request forbidden.', 'ninja-forms');
             return $data;
         }
 

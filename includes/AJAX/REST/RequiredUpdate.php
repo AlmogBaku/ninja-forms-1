@@ -22,7 +22,7 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 		
 		// Does the current user have admin privileges
 		if (!current_user_can('manage_options')) {
-			$data['error'] = __('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			$data['error'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
 			return $data;
 		}
 
