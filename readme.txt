@@ -6,7 +6,7 @@ Tested up to: 5.3
 Stable tag: 3.4.22
 License: GPLv2 or later
 
-Ninja Forms is an easy to use drag and drop form builder with an intuitive UI that can be used to create contact forms, email subscription forms, lead generation forms, WordPress registration and login forms, order forms, payment and donation forms, and much more!
+The 100% beginner friendly WordPress form builder. Drag & drop form fields to build beautiful, professional contact forms in minutes.
 
 == Description ==
 
