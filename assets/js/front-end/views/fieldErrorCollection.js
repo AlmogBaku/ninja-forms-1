@@ -12,12 +12,17 @@ define( ['views/fieldErrorItem'], function( fieldErrorItem ) {
                 this.fieldModel.removeWrapperClass( 'nf-error' );
                 this.fieldModel.removeWrapperClass( 'nf-fail' );
                 this.fieldModel.addWrapperClass( 'nf-pass' );
-                this.fieldModel.setInvalid( false );
+				this.fieldModel.setInvalid( false );
+				jQuery("#nf-field-" + this.fieldModel.id).removeAttr('aria-describedby');
+
+				document.getElementById("nf-field-" + this.fieldModel.id).removedAttribute('aria-describedby');
             } else {
                 this.fieldModel.removeWrapperClass( 'nf-pass' );
                 this.fieldModel.addWrapperClass( 'nf-fail' );
                 this.fieldModel.addWrapperClass( 'nf-error' );
-                this.fieldModel.setInvalid( true );
+				this.fieldModel.setInvalid( true );
+				
+				document.getElementById("nf-field-" + this.fieldModel.id).setAttribute('aria-describedby', "nf-error-" + this.fieldModel.id);
             }
 
 		}
