@@ -123,6 +123,10 @@ define( [], function() {
 					if ( 'undefined' != typeof this.customLabelClasses ) {
 						classes = this.customLabelClasses( classes );
 					}
+
+					if(this.label_pos === 'hidden') {
+						classes += ' screen-reader-text ';
+					}
 					return classes;
 				},
 
