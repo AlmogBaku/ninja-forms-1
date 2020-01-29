@@ -1,7 +1,9 @@
 <script id="tmpl-nf-field-listcheckbox" type="text/template">
-    <ul aria-describedby="nf-error-{{{ data.id }}}">
-        {{{ data.renderOptions() }}}
-    </ul>
+    <fieldset id="nf-field-{{{ data.id }}}" style="border:none;">
+        <ul aria-describedby="nf-error-{{{ data.id }}}">
+            {{{ data.renderOptions() }}}
+        </ul>
+    </fieldset>
 </script>
 
 <script id='tmpl-nf-field-listcheckbox-option' type='text/template'>
