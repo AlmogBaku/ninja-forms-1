@@ -25,7 +25,7 @@ class NF_AJAX_REST_Forms extends NF_AJAX_REST_Controller
 
         // If we don't have a nonce...
         // OR if the nonce is invalid...
-        if (isset($request_data['security']) || !wp_verify_nonce($request_data['security'], 'ninja_forms_dashboard_nonce')) {
+        if (!isset($request_data['security']) || !wp_verify_nonce($request_data['security'], 'ninja_forms_dashboard_nonce')) {
             // Kick the request out now.
             $data['error'] = esc_html__('Request forbidden.', 'ninja-forms');
             return $data;
