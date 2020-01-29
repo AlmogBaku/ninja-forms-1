@@ -164,7 +164,7 @@ define( ['models/formModel'], function( FormModel ) {
             var that = this;
             jQuery.ajax({
                 type: "POST",
-                url: ajaxurl + '?action=nf_forms&clone_id=' + view.model.get( 'id' ),
+                url: ajaxurl + '?action=nf_forms&clone_id=' + view.model.get( 'id' ) + '&security=' + nfAdmin.ajaxNonce,
                 success: function( response ){
                     var response = JSON.parse( response );
 
