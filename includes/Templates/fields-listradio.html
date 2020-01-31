@@ -1,9 +1,7 @@
 <script id="tmpl-nf-field-listradio" type="text/template">
-    <fieldset id="nf-field-{{{ data.id }}}" style="border:none;">
-        <ul aria-describedby="nf-error-{{{ data.id }}}">
-            {{{ data.renderOptions() }}}
-        </ul>
-    </fieldset>
+    <ul aria-describedby="nf-error-{{{ data.id }}}">
+        {{{ data.renderOptions() }}}
+    </ul>
 </script>
 
 <script id='tmpl-nf-field-listradio-option' type='text/template'>
