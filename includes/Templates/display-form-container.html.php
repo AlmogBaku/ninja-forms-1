@@ -14,7 +14,7 @@
 <?php if(Ninja_Forms()->form( $form_id )->get()->get_setting('show_title') === 1) { ?>
 	aria-labelledby="nf-form-title-<?php echo $form_id ?>" 
 <?php } else { ?>
-	aria-label="<?php echo Ninja_Forms()->form( $form_id )->get()->get_setting( 'title' );?>"
+	aria-label="<?php echo esc_attr(Ninja_Forms()->form( $form_id )->get()->get_setting( 'title' ));?>"
 <?php } ?>
 aria-describedby="nf-form-errors-<?php echo $form_id; ?>" role="form">
 
