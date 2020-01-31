@@ -59,7 +59,9 @@ class NF_AJAX_REST_BatchProcess extends NF_AJAX_REST_Controller
 		}
 
 		if (isset($_REQUEST['data']) && $_REQUEST['data']) {
-			$request_data['data'] = WPN_Helper::sanitize_text_field($_REQUEST['data']);
+            // @TODO: Find a way to safely sanitize this later.
+            // sanitize_text_field overcorrects, breaking "actual" data.
+			$request_data['data'] = $_REQUEST['data'];
 		}
 
 		if (isset($_REQUEST['security']) && $_REQUEST['security']) {
