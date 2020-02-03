@@ -583,19 +583,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 	    }
 
         /**
-         * NF Whip Notice
-         * If the user is on a version below PHP 5.6 then we get an instance of the
-         * NF Whip class which will add a non-dismissible admin notice.
-         *
-         * @return NF_Whip
-         */
-        public function nf_whip_notice()
-        {
-            require_once self::$dir . '/includes/Libraries/Whip/NF_Whip.php';
-            return new NF_Whip();
-        }
-
-        /**
          * NF PHP Version Whip Notice
          * If the user is on a version below PHP 7.2 then we get an instance of the
          * NF PHP Version Whip class which will add a non-dismissible admin notice.
