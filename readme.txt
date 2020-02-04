@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 5.1
 Tested up to: 5.3
-Stable tag: 3.4.22
+Stable tag: 3.4.22.1
 License: GPLv2 or later
 
 The 100% beginner friendly WordPress form builder. Drag & drop form fields to build beautiful, professional contact forms in minutes.
@@ -303,21 +303,21 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.22 (21 November 2019) =
+= 3.4.22.1 (4 February 2020) =
 
-*Bugs:*
+*Security:*
 
-* The unique field restriction should no longer block payment actions from completing.
-* Corrected an error that was preventing the current list of favorite fields from displaying in any location.
-* Updated some of our builder styles to account for updates in WordPress 5.3.
-* Corrected an error that sometimes caused the images in the select image field to not be found.
-* Disabled an internal error logging function that was sometimes causing bloat in our database tables.
-
-*Changes:*
-
-* Email actions now support file attachments from the WordPress media library.
+* Hardened the authorization security on several of our form endpoints.
+* Audited all translation functions to prevent injection attacks.
 
 == Changelog ==
+
+= 3.4.22.1 (4 February 2020) =
+
+*Security:*
+
+* Hardened the authorization security on several of our form endpoints.
+* Audited all translation functions to prevent injection attacks.
 
 = 3.4.22 (21 November 2019) =
 
