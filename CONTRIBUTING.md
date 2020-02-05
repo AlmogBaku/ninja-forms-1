@@ -6,7 +6,7 @@ This document describes the workflow for contributing to Ninja Forms. It is expe
 
 Because each commit and MR MUST reference an issue number, without exception. So the first step is to open an issue exception. Issues should include:
 
-* A descriptive a short title
+* A short but descriptive title
     * NOT Acceptable: "Form submission busted"
     * Acceptable: "JavaScript error on form submission with required checkbox group field"
 * A detailed description of the bug or feature. Including:
