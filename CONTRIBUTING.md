@@ -41,7 +41,8 @@ The first example says what we did. The second example says we fixed a bug, but 
 Every single commit MUST have a descriptive title and a reference to the issue number in the commit message. If you are working on issue 4242 and the issue is to fix a missing dependency for conditionals then your commit message will be something 
 
 * ACCEPTABLE: "added missing dependency for conditional logic #4242".
-* NOT ACCEPTABLE: "added missing dependency for conditional logic and fixed a typo in conditional editor #4242" <- Commit is for two thNOT ACCEPTABLE: "added missing dependency for conditional logi2"". <- Commit message is missing # so Github will not associate it with the issue number.
+* NOT ACCEPTABLE: "added missing dependency for conditional logic and fixed a typo in conditional editor #4242" <- Commit is for two things  
+* NOT ACCEPTABLE: "added missing dependency for conditional logic." <- Commit message is missing # so Github will not associate it with the issue number.
 * NOT ACCEPTABLE: "fixed conditional logic #4242". <- No explanation of what changed.
 
 ## Submitting An MR
