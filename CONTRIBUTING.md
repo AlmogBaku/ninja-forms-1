@@ -4,7 +4,7 @@ This document describes the workflow for contributing to Ninja Forms. It is expe
 
 ## Opening Isssues
 
-Beacuse each commit and MR MUST reference an issue number, without exception. So the first step is to open an issue exception. Issues shoudl include:
+Because each commit and MR MUST reference an issue number, without exception. So the first step is to open an issue exception. Issues should include:
 
 * A descriptive a short title
     * NOT Acceptable: "Form submission busted"
