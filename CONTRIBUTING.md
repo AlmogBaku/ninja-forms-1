@@ -1,6 +1,6 @@
 # Contibuting To Ninja Forms
 
-This document describes the workflow for contributing to Ninja Forms. It is expected that engineers employed by Saturday Drive will follow these standards. If you are a community memeber who wants to contribute, that is great. We really appreciate if you follow these standards and it makes it more likely we will aprove your merge request.
+This document describes the workflow for contributing to Ninja Forms. It is expected that engineers employed by Saturday Drive will follow these standards. If you are a community member who wants to contribute, that is great. We really appreciate if you follow these standards and it makes it more likely we will approve your merge request.
 
 ## Opening Isssues
 
