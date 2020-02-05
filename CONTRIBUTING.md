@@ -65,4 +65,4 @@ In the issue description, you MUST include:
 * Describe your automated tests.
     * What tests did you add to prove the issue exists and that it was fixed.
 * Attatch exports of any forms or other configuration files that you used to test.
-    * You did the work, don't make a team mate re do it.
+    * You did the work, don't make a team mate re-do it.
