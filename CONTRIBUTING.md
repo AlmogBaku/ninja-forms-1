@@ -20,7 +20,7 @@ NOTE: Security-related bugs should be opened as confidential issues.
 
 All changes to Ninja Forms should be made on a branch, that is branched from the "develop" branch. You should NOT make commits to develop, including in your own fork. Always create a new branch.
 
-When working on ANY change, work MUST be done on a feature branch named for the issue. In the form of `feature/<issue-number>-short-description` For example, if assigned issue #4242 and it relates to input event binding, use branch `feature/4242-input-binding`.
+When working on ANY change, work MUST be done on a feature branch named for the issue. In the form of `<issue-number>-short-description` For example, if assigned issue #4242 and it relates to input event binding, use branch `4242-input-binding`.
 
 The issue number MUST go first in the branch name. Please keep branch names short.
 
