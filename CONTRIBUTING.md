@@ -55,7 +55,7 @@ Name the MR with a short title that describes the change. The auto-generated tit
 
 In the issue description, you MUST include:
 
-* A reference to the issue(s) MR resolves.
+* A reference to the issue(s) the MR resolves.
     * If no issue exists, create one.
 * Include the issue number in the description, not the title.
     * This links the issue and the MR, making it easier to find the issue from the MR and the MR from the issue.
