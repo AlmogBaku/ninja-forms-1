@@ -93,6 +93,7 @@
                 </div>
             <?php endforeach; ?>
 
+            <input type="hidden" name="update_ninja_forms_settings_nonce" value="<?php echo wp_create_nonce( "ninja_forms_settings_nonce" ); ?>">
             <input type="hidden" name="update_ninja_forms_settings">
             <input type="submit" class="button button-primary" value="<?php echo $save_button_text; ?>">
 
