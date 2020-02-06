@@ -27,7 +27,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         if(isset($arguments[0]['calc'])) {
             return $this->merge_tags[ $name ][ 'calc_value' ];
         }
-        return WPN_Helper::remove_script_tags($this->merge_tags[ $name ][ 'field_value' ]);
+        // return WPN_Helper::remove_script_tags($this->merge_tags[ $name ][ 'field_value' ]);
+        return strip_tags($this->merge_tags[ $name ][ 'field_value' ]);
     }
 
     public function all_fields()
@@ -53,7 +54,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
             $return .= '<tr><td>' . apply_filters('ninja_forms_merge_label', $field[ 'label' ], $field, $this->form_id) .':</td><td>' . $field[ 'value' ] . '</td></tr>';
         }
         $return .= '</table>';
-        return WPN_Helper::remove_script_tags($return);
+        // return WPN_Helper::remove_script_tags($return);
+        return strip_tags($return, '<table><tr><td>');
     }
 
     public function all_fields_table()
@@ -93,7 +95,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
             $return .= '<tr><td valign="top">' . apply_filters('ninja_forms_merge_label', $field[ 'label' ], $field, $this->form_id) .':</td><td>' . $field[ 'value' ] . '</td></tr>';
         }
         $return .= '</table>';
-        return WPN_Helper::remove_script_tags($return);
+        // return WPN_Helper::remove_script_tags($return);
+        return strip_tags($return, '<table><tr><td>');
     }
 
 
@@ -140,7 +143,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
             $return .= '<tr><td valign="top">' . apply_filters('ninja_forms_merge_label', $field[ 'label' ], $field, $this->form_id) .':</td><td>' . $field[ 'value' ] . '</td></tr>';
         }
         $return .= '</table>';
-        return WPN_Helper::remove_script_tags($return);
+        // return WPN_Helper::remove_script_tags($return);
+        return strip_tags($return, '<table><tr><td>');
     }
 
     // TODO: Is this being used?

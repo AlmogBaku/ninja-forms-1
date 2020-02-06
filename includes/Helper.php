@@ -518,8 +518,4 @@ final class WPN_Helper
 
         return false;
     }
-
-    public static function remove_script_tags($param) {
-        return str_replace('<script>', '', str_replace('</script>', '', $param));
-    }
 } // End Class WPN_Helper
