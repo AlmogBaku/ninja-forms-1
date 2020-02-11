@@ -87,7 +87,7 @@ class NF_Extension_Updater
         $license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
         if ( 'invalid' == $license_data->license ) {
-            $error = '<span style="color: red;">' . __( 'Could not activate license. Please verify your license key', 'ninja-forms' ) . '</span>';
+            $error = '<span style="color: red;">' . esc_html__( 'Could not activate license. Please verify your license key', 'ninja-forms' ) . '</span>';
             
             if ( isset ( $_REQUEST[ 'nf_debug' ] ) && 1 == absint( $_REQUEST[ 'nf_debug' ] ) ) {
                 // Add an error to our admin notice if nf_debug is turned on.
@@ -108,7 +108,7 @@ class NF_Extension_Updater
 
     public function show_license_error_notice( $notices ) {
         $notices[ 'license_error' ] = array(
-            'title' => __( 'License Activation Error', 'ninja-forms' ),
+            'title' => esc_html__( 'License Activation Error', 'ninja-forms' ),
             'msg' => '<pre>' . $this->_last_error . '</pre>',
             'int' => 0,
             'ignore_spam' => true,
@@ -199,11 +199,11 @@ class NF_Extension_Updater
                 <td colspan="5" style="background-color:#fef7f1;">
                     <div class="update-message notice inline notice-error notice-alt" style="margin: 10px 0 5px;">
                         <p>
-                            ' . sprintf( __( 'An update is available for %s, however, you are not able to update at this time.', 'ninja-forms' ), 'Ninja Forms - ' . $this->product_nice_name ) . '
+                            ' . sprintf( esc_html__( 'An update is available for %s, however, you are not able to update at this time.', 'ninja-forms' ), 'Ninja Forms - ' . $this->product_nice_name ) . '
                             <br />
-                            <strong>' . sprintf( __( 'The new version requires at least PHP %s, and your PHP version is %s.', 'ninja-forms' ), $php_requires, PHP_VERSION ) . '</strong>
+                            <strong>' . sprintf( esc_html__( 'The new version requires at least PHP %s, and your PHP version is %s.', 'ninja-forms' ), $php_requires, PHP_VERSION ) . '</strong>
                             <br />
-                            ' . sprintf( __( 'Please contact your host to upgrade your site\'s PHP version. %sRead more about updating your PHP version and WordPress%s.' ), '<a href="https://wordpress.org/about/requirements/" target="_blank">', '</a>' ) . '
+                            ' . sprintf( esc_html__( 'Please contact your host to upgrade your site\'s PHP version. %sRead more about updating your PHP version and WordPress%s.' ), '<a href="https://wordpress.org/about/requirements/" target="_blank">', '</a>' ) . '
                         </p>
                     </div>
                 </td>
