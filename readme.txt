@@ -309,7 +309,7 @@ This section describes how to install the plugin and get it working.
 
 * Patched a delayed XSS vulnerability in our email action.
 * Hardened the authorization security on our settings page.
-* Patched a stored XSS vulnerability on our settings page.
+* Patched a stored XSS vulnerability on our settings page. Many thanks to Ben Armstrong at Spider Sec Ltd for practicing responsible disclosure!
 
 *Bugs:*
 
