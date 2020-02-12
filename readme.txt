@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 5.1
 Tested up to: 5.3
-Stable tag: 3.4.22.1
+Stable tag: 3.4.23
 License: GPLv2 or later
 
 The 100% beginner friendly WordPress form builder. Drag & drop form fields to build beautiful, professional contact forms in minutes.
@@ -303,14 +303,43 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.22.1 (4 February 2020) =
+= 3.4.23 (12 February 2020) =
 
 *Security:*
 
-* Hardened the authorization security on several of our form endpoints.
-* Audited all translation functions to prevent injection attacks.
+* Patched a delayed XSS vulnerability in our email action.
+* Hardened the authorization security on our settings page.
+* Patched a stored XSS vulnerability on our settings page.
+
+*Bugs:*
+
+* Ninja Forms should now properly honor user profile language settings if they are not the site default.
+* Opening the form builder should no longer result in a php warning about an invalid argument.
+* Cleaned up our publish code to avoid a few other php warnings.
+
+*Changes:*
+
+* Updated our event registration template to be more accessibility compliant.
 
 == Changelog ==
+
+= 3.4.23 (12 February 2020) =
+
+*Security:*
+
+* Patched a delayed XSS vulnerability in our email action.
+* Hardened the authorization security on our settings page.
+* Patched a stored XSS vulnerability on our settings page.
+
+*Bugs:*
+
+* Ninja Forms should now properly honor user profile language settings if they are not the site default.
+* Opening the form builder should no longer result in a php warning about an invalid argument.
+* Cleaned up our publish code to avoid a few other php warnings.
+
+*Changes:*
+
+* Updated our event registration template to be more accessibility compliant.
 
 = 3.4.22.1 (4 February 2020) =
 
