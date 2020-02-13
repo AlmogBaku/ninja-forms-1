@@ -31,19 +31,19 @@ Each commit message MUST include the issue number. If no issue exists, create on
 
 Each commit should change ONE thing and one thing ONLY. If your commit message uses "and" you're probably doing more than one thing in a commit.
 
-[Commit messages should be impartive](https://chris.beams.io/posts/git-commit/) :
+[Commit messages should be impartive](https://chris.beams.io/posts/git-commit/#imperative) :
 
-* ACCEPTABLE: "Added event binding for inputs #4242"
-* NOT ACCEPTABLE: "fixed event binding #4242"
+* ACCEPTABLE: "Add event binding for inputs #4242" <- imperative mood
+* NOT ACCEPTABLE: "Fixed event binding #4242" <- indicative mood
 
 The first example says what we did. The second example says we fixed a bug, but how? By adding event binding, so write that.
 
 Every single commit MUST have a descriptive title and a reference to the issue number in the commit message. If you are working on issue 4242 and the issue is to fix a missing dependency for conditionals then your commit message will be something 
 
-* ACCEPTABLE: "added missing dependency for conditional logic #4242".
-* NOT ACCEPTABLE: "added missing dependency for conditional logic and fixed a typo in conditional editor #4242" <- Commit is for two things  
-* NOT ACCEPTABLE: "added missing dependency for conditional logic." <- Commit message is missing # so Github will not associate it with the issue number.
-* NOT ACCEPTABLE: "fixed conditional logic #4242". <- No explanation of what changed.
+* ACCEPTABLE: "Add missing dependency for conditional logic #4242".
+* NOT ACCEPTABLE: "Add missing dependency for conditional logic and fixed a typo in conditional editor #4242" <- Commit is for two things  
+* NOT ACCEPTABLE: "Add missing dependency for conditional logic." <- Commit message is missing # so Github will not associate it with the issue number.
+* NOT ACCEPTABLE: "Fix conditional logic #4242". <- No explanation of what changed.
 
 ## Submitting An MR
 Once you have a made a commit, open an MR, and mark it as work in progress. It is generally very good to submit an MR before it is complete for discussion.
