@@ -812,6 +812,12 @@ Label Three
                 <input type="text" class="setting" value="{{{ data.value }}}" data-id="value">
             </div>
             <#
+        } else {
+            #>
+            <div style='display:none;'>
+                <input type="text" class="setting" value="{{{ data.value }}}" data-id="value">
+            </div>
+            <#
         }
     #>
     <#
