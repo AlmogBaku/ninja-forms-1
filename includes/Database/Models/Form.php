@@ -67,6 +67,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 	    $this->delete_submissions();
 
         WPN_Helper::delete_nf_cache( $this->_id );
+
+        do_action( 'ninja_forms_after_form_delete', $this->_id );
     }
 
     private function delete_submissions( ) {
