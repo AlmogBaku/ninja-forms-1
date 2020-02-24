@@ -189,7 +189,7 @@ class NF_Extension_Updater
         $php_requires = isset( $plugin_data[ 'php_requires' ] ) ? $plugin_data[ 'php_requires' ] : '';
         
         // Return early if the current PHP version is equal to or greater than the PHP version required by the new version of this add-on.
-        if ( 0 <= version_compare( PHP_VERSION, $php_requires ) ) {
+        if ( version_compare( PHP_VERSION, $php_requires, '>=' ) ) {
             return false;
         }
 
