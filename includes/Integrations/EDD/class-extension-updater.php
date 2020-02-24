@@ -186,7 +186,7 @@ class NF_Extension_Updater
      */
     public function maybe_prevent_update( $plugin_file, $plugin_data, $plugin_status )
     {
-        $php_requires = isset ( $plugin_data[ 'php_requires' ] ) ? $plugin_data[ 'php_requires' ] : '';
+        $php_requires = isset( $plugin_data[ 'php_requires' ] ) ? $plugin_data[ 'php_requires' ] : '';
         
         // Return early if the current PHP version is equal to or greater than the PHP version required by the new version of this add-on.
         if ( 0 <= version_compare( PHP_VERSION, $php_requires ) ) {
