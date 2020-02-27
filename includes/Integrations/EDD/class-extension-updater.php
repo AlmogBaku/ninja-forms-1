@@ -169,22 +169,52 @@ class NF_Extension_Updater
         );
 
         // Hook into the "after plugin row" display for this Ninja Forms add-on.
-        add_action( 'after_plugin_row_' . plugin_basename( $this->file ), array( $this, 'maybe_prevent_update' ), 9, 3 );
-
+        add_action( 'after_plugin_row_' . plugin_basename( $this->file ), array( $this, 'maybe_prevent_update_notice' ), 9, 3 );
+        // Filter that expects either a bool false to continue install or a WP_Error to prevent installation of an update.
+        add_filter( 'upgrader_pre_install', array( $this, 'maybe_prevent_install' ), 10, 2 );
     } // function auto_update
+
+    /**
+     * Function that maybe prevents a plugin update from installing if the php version is not high enough.
+     *         
+     * @since  UPDATE_VERSION       
+     * @param  bool   $default   false
+     * @param  array  $extra     array sent by the filter we're using.
+     * @return bool/WP_ERROR     $default if we bail early, WP_ERROR if we don't.
+     */
+    public function maybe_prevent_install( $default, $extra )
+    {
+        // If the plugin being installed isn't this one, bail.
+        $plugin = plugin_basename( $this->file );
+        if( $plugin != $extra[ 'plugin' ] ) {
+            return $default;
+        }
+
+        // Grab our WP Updates transient so that we can check the minimum PHP version
+        $update_transient = get_option( '_site_transient_update_plugins' );
+        // Check to see if we have a php_requires setting for our update.
+        $php_requires = isset( $update_transient->response[ $plugin ]->php_requires ) ? $update_transient->response[ $plugin ]->php_requires : false;
+
+        // If we don't have a php_requires setting or our php version meets the php_requires setting, bail.
+        if( empty( $php_requires ) || version_compare( PHP_VERSION, $php_requires, '>=' ) ) {
+            return $default;
+        }
+
+        return new WP_Error( 'php_minimum_version', sprintf( esc_html__( 'The new version requires at least PHP %s, and your PHP version is %s.', 'ninja-forms' ), $php_requires, PHP_VERSION ), esc_html__( 'Please contact your host to upgrade your site\'s PHP version.' ) );
+    }
 
     /**
      * Check to see if this plugin update has a minimum PHP version.
      * If it does, make sure that we meet it.
      * If we don't meet it, then show the user an error message with a link to WordPress.org's minimum requirements page.
      * 
-     * @since  3.4.23
+     * @since  UPDATE_VERSION
      * @param  string  $plugin_file   plugin file for the row we're looking at
      * @param  array   $plugin_data   update data from the WordPress plugin update check
      * @param  string  $plugin_status is this plugin active, inactive, etc.
      * @return void
      */
-    public function maybe_prevent_update( $plugin_file, $plugin_data, $plugin_status )
+    public function maybe_prevent_update_notice( $plugin_file, $plugin_data, $plugin_status )
     {
         $php_requires = isset( $plugin_data[ 'php_requires' ] ) ? $plugin_data[ 'php_requires' ] : '';
         
