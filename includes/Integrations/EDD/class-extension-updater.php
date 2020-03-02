@@ -177,7 +177,7 @@ class NF_Extension_Updater
     /**
      * Function that maybe prevents a plugin update from installing if the php version is not high enough.
      *         
-     * @since  UPDATE_VERSION       
+     * @since  3.4.24       
      * @param  bool   $default   false
      * @param  array  $extra     array sent by the filter we're using.
      * @return bool/WP_ERROR     $default if we bail early, WP_ERROR if we don't.
@@ -208,7 +208,7 @@ class NF_Extension_Updater
      * If it does, make sure that we meet it.
      * If we don't meet it, then show the user an error message with a link to WordPress.org's minimum requirements page.
      * 
-     * @since  UPDATE_VERSION
+     * @since  3.4.24
      * @param  string  $plugin_file   plugin file for the row we're looking at
      * @param  array   $plugin_data   update data from the WordPress plugin update check
      * @param  string  $plugin_status is this plugin active, inactive, etc.
