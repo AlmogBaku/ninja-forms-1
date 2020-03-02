@@ -404,7 +404,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
      * @param  string  $table_name Name of the table we want to update.
      * @return array   Associative array like: ['insert' => "`column1`, "`column2`", etc", 'select' => "`column1`, etc."]
      */
-    private function get_sql_queries( $table_name, $db_stage_one_complete = true )
+    private static function get_sql_queries( $table_name, $db_stage_one_complete = true )
     {
         /**
          * These arrays contain the columns in our database.
