@@ -20,6 +20,9 @@ vendor/
 composer.lock
 package-lock.json
 *composer.phar
+yarn.lock
+
+wordpress/
 
 *.sass-cache
 *.scssc

@@ -8,13 +8,9 @@
         "lint": "composer run lint:compatibility",
         "lint:config": "phpcs --config-set installed_paths vendor/phpcompatibility/php-compatibility",
         "lint:compatibility": "phpcs ninja-forms-views.php --standard=PHPCompatibility --runtime-set testVersion 5.2",
-        "wp:start": "docker-compose start",
-        "wp:stop": "docker-compose stop",
-        "wp:setup": "docker-compose up -d && composer run wp:install",
-        "wp:install": "docker-compose run --rm cli wp core install --url=localhost:8228 --title=Views --admin_user=admin --admin_password=password --admin_email=admin@localhost.test"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
+        "phpunit/phpunit": "^7.3",
         "lucatume/wp-browser": "2.2.37",
         "squizlabs/php_codesniffer": "3.*",
         "phpcompatibility/php-compatibility": "dev-master"

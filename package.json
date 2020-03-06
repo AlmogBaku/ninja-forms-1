@@ -49,8 +49,18 @@
     "test:e2e": "wp-scripts test-e2e --config e2e/jest.config.js",
     "test:unit": "wp-scripts test-unit-js --config jest.config.js",
     "storybook": "start-storybook",
-    "storybook:build": "build-storybook -c .storybook -o .storybook/build"
+    "storybook:build": "build-storybook -c .storybook -o .storybook/build",
+    "start:env": "wp-scripts start",
+    "env": "wp-scripts env"
   },
+  "wp-env": {
+    "plugin-dir": "ninja-forms",
+    "plugin-name": "Ninja Forms",
+    "welcome-logo": [
+    "[Ninja Face Here]"
+    ],
+    "welcome-build-command": "yarn start:env"
+    },
   "repository": {
     "type": "git",
     "url": "https://git.saturdaydrive.io/_/ninja-forms/ninja-forms"
