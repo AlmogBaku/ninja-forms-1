@@ -7,7 +7,7 @@
         "test": "phpunit --bootstrap vendor/autoload.php tests/",
         "lint": "composer run lint:compatibility",
         "lint:config": "phpcs --config-set installed_paths vendor/phpcompatibility/php-compatibility",
-        "lint:compatibility": "phpcs ninja-forms-views.php --standard=PHPCompatibility --runtime-set testVersion 5.2",
+        "lint:compatibility": "phpcs ninja-forms-views.php --standard=PHPCompatibility --runtime-set testVersion 5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.3",
