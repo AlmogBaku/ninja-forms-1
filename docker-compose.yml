@@ -1,4 +1,4 @@
-version: '2'
+version: '3.1'
 
 services:
   codeception:
@@ -10,27 +10,46 @@ services:
       - wp-core:/wp-core
     entrypoint: /docker-entrypoint.sh
   wordpress:
-    image: wordpress:4.9.8-php7.1
-    depends_on:
-      - mysql
-      - chrome
-    volumes:
-      - wp-core:/var/www/html
+    image: wordpress
     ports:
-      - 45673:80
+      - 8228:80
     environment:
       WORDPRESS_DB_PASSWORD: wordpress
-
+      WORDPRESS_DEBUG: 1
+      ABSPATH: /usr/src/wordpress/
+    volumes:
+      - wp-core:/var/www/html
+      - .:/var/www/html/wp-content/plugins/ninja-forms-views
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+  cli:
+    image: wordpress:cli
+    volumes:
+    - wordpress:/var/www/html
+    - .:/var/www/html/wp-content/plugins/ninja-forms-views
+    - ./wp-content/plugins:/var/www/html/wp-content/plugins
+    environment:
+      WORDPRESS_DB_PASSWORD: password
+      ABSPATH: /usr/src/wordpress/
   mysql:
-    image: mariadb:latest
+    image: mysql:5.7
     environment:
        MYSQL_ROOT_PASSWORD: wordpress
        MYSQL_DATABASE: wordpress
        MYSQL_USER: wordpress
        MYSQL_PASSWORD: wordpress
-    ports:
-      - 3306:3306
-
+  wordpress_phpunit:
+    image: chriszarate/wordpress-phpunit
+    environment:
+      PHPUNIT_DB_HOST: mysql
+    volumes:
+      - .:/app
+      - testsuite:/tmp
+  composer:
+    image: composer
+    volumes:
+      - .:/app
   chrome:
     environment:
       - DBUS_SESSION_BUS_ADDRESS=/dev/null
@@ -41,4 +60,5 @@ services:
       - '4444'
       - '5900:5900'
 volumes:
+  testsuite:
   wp-core:
