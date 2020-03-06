@@ -24,6 +24,11 @@ if( version_compare( PHP_VERSION, '5.6', '>=' ) ) {
   include_once dirname( __FILE__ ) . '/services/bootstrap.php';
 }
 
+// Ninja Forms Gutenberg blocks require PHP v7.1+
+if ( version_compare( PHP_VERSION, '7.1.0', '>=' ) ) {
+    include_once dirname( __FILE__ ) . '/gutenberg/bootstrap.php';
+}
+
 function ninja_forms_three_table_exists(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'nf3_forms';

@@ -1,0 +1,17 @@
+# Logs
+*.log
+
+# Composer
+/vendor/
+
+# NPM
+/node_modules/
+
+# Local WordPress
+/wp-content/
+
+# WP Scripts Block Editor
+/build/
+
+# Storybook
+.storybook/build/

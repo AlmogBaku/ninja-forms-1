@@ -1,0 +1,42 @@
+{
+  "name": "ninja-forms-views",
+  "version": "1.0.0",
+  "description": "A submissions table display application for Ninja Forms integrated with the WordPress Block Editor.",
+  "main": "build/index.js",
+  "dependencies": {
+    "@testing-library/react": "^9.4.0",
+    "@wordpress/block-editor": "^3.5.0",
+    "@wordpress/components": "^9.0.0",
+    "@wordpress/element": "^2.11.0",
+    "faker": "^4.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-table": "^7.0.0-rc.15",
+    "react-test-renderer": "^16.12.0",
+    "styled-components": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@storybook/react": "^5.3.9",
+    "@wordpress/scripts": "^6.2.0",
+    "babel-loader": "^8.0.6"
+  },
+  "scripts": {
+    "start": "wp-scripts start src/block.js src/render.js",
+    "start:block": "wp-scripts start src/block.js",
+    "start:render": "wp-scripts start src/render.js",
+    "build": "wp-scripts build src/block.js src/render.js",
+    "build:block": "wp-scripts build src/block.js",
+    "build:render": "wp-scripts build src/render.js",
+    "test:e2e": "wp-scripts test-e2e --config e2e/jest.config.js",
+    "test:unit": "wp-scripts test-unit-js --config jest.config.js",
+    "storybook": "start-storybook",
+    "storybook:build": "build-storybook -c .storybook -o .storybook/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.saturdaydrive.io/_/views/ninja-forms-views"
+  },
+  "author": "",
+  "license": "GPL-2.0-only"
+}

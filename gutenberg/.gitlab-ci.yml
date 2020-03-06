@@ -1,0 +1,23 @@
+stages:
+  - lint
+  - test
+
+before_script:
+  - apt-get update -yqq
+  - apt-get install git -yqq # Install git, the php image doesn't have installed
+  - apt-get -yqqf install vim wget zip unzip subversion mariadb-client libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
+  - curl -sS https://getcomposer.org/installer | php # Install composer
+  - php composer.phar install # Install all project dependencies
+
+phpcs:
+  stage: lint
+  image: wordpress
+  script:
+  - php composer.phar run lint:config
+  - php composer.phar run lint:compatibility
+
+phpunit:
+  stage: test
+  image: wordpress
+  script:
+  - php composer.phar run test
