@@ -21,6 +21,9 @@ composer.lock
 yarn.lock
 package-lock.json
 *composer.phar
+yarn.lock
+
+wordpress/
 
 wordpress/
 

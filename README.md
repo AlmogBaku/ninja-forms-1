@@ -67,6 +67,24 @@ This section describes how to install the plugin and get it working.
 
 Shortcodes have been re-implemented. They are used like so: `[ninja_forms id=#]` where # is the ID number of the form you want to display.
 
+## Testing and Developmemt
+
+This section describes how to install a docker development environment to develop and test Ninja Forms functionality
+
+1. Clone the repo
+2. `cd` into the `ninja-forms` directory
+3. run `composer install`
+4. run `yarn`
+
+Once you have your packages installed, install your docker environment
+
+1. run `yarn env install`
+2. run `yarn env start` to start your environment
+   1. You should be able to view your development site at: `http://localhost:8889`
+3. run `yarn env stop` to stop your environment
+
+
+
 ## Use
 
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/)
