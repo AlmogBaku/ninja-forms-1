@@ -1,12 +1,23 @@
 {
   "name": "ninja-forms",
-  "version": "3.2.0",
-  "scripts": {
-    "gulp": "gulp",
-    "test": "jest ./assets/js/tests/*"
-  },
+  "version": "3.4.24",
+  "description": "Ninja Forms drag-n-drop form builder for WordPress",
+  "main": "build/index.js",
   "dependencies": {
-    "backbone.marionette": "^3.2.0"
+    "backbone.marionette": "^3.2.0",
+    "@testing-library/react": "^9.4.1",
+    "@wordpress/blocks": "^6.12.1",
+    "@wordpress/block-editor": "^3.5.0",
+    "@wordpress/components": "^9.2.3",
+    "@wordpress/element": "^2.11.0",
+    "@wordpress/e2e-test-utils": "^4.3.1",
+		"@wordpress/i18n": "^3.9.0",
+    "faker": "^4.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-table": "^7.0.0-rc.15",
+    "react-test-renderer": "^16.12.0",
+    "styled-components": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -23,6 +34,40 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
     "intl": "^1.2.5",
-    "jest": "^24.5.0"
-  }
+    "jest": "^24.5.0",
+    "@babel/core": "^7.8.3",
+    "@storybook/react": "^5.3.9",
+    "@wordpress/scripts": "^7.1.2",
+    "babel-loader": "^8.0.6"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "test": "jest ./assets/js/tests/*",
+    "start:block": "wp-scripts start src/block.js",
+    "start:render": "wp-scripts start src/render.js",
+    "build": "wp-scripts build src/block.js src/render.js",
+    "build:block": "wp-scripts build src/block.js",
+    "build:render": "wp-scripts build src/render.js",
+    "test:e2e": "wp-scripts test-e2e --config e2e/jest.config.js",
+    "test:unit": "wp-scripts test-unit-js --config jest.config.js",
+    "storybook": "start-storybook",
+    "storybook:build": "build-storybook -c .storybook -o .storybook/build",
+    "start": "wp-scripts start",
+    "stop": "wp-scripts stop",
+    "env": "wp-scripts env"
+  },
+  "wp-env": {
+    "plugin-dir": "ninja-forms",
+    "plugin-name": "Ninja Forms",
+    "welcome-logo": [
+    "[Ninja Face Here]"
+    ],
+    "welcome-build-command": "yarn start"
+    },
+  "repository": {
+    "type": "git",
+    "url": "https://git.saturdaydrive.io/_/ninja-forms/ninja-forms"
+  },
+  "author": "Saturday Drive, LLC",
+  "license": "GPL-2.0-only"
 }
