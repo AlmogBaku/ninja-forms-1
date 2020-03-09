@@ -7,7 +7,7 @@ final class HashTest extends TestCase
 {
     public function testTokenValidates(): void
     {
-        $token = new NinjaForms\Views\Authentication\Token( 'private_key' );
+        $token = new NinjaForms\Blocks\Authentication\Token( 'private_key' );
         $this->assertTrue(
             $token->validate(
                 $token->create( 'public_key' )
@@ -17,7 +17,7 @@ final class HashTest extends TestCase
 
     public function testTokenDoesNotValidate(): void
     {
-        $token = new NinjaForms\Views\Authentication\Token( 'private_key' );
+        $token = new NinjaForms\Blocks\Authentication\Token( 'private_key' );
         $this->assertFalse(
             $token->validate( 'malformed_token' )
         );

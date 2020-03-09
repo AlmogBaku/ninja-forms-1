@@ -8,7 +8,7 @@
 /** IMPORTANT: This file MUST be PHP 5.2 compatible */
 
 // Check for the autoloader - common development issue.
-if(file_exists($autoloader = plugin_dir_path(__FILE__) . '/vendor/autoload.php')) {
+if(file_exists($autoloader = plugin_dir_path(__FILE__) . '../vendor/autoload.php')) {
     require $autoloader;
 } else {
     add_action( 'admin_notices', 'ninja_forms_views_autoloader_notice' );

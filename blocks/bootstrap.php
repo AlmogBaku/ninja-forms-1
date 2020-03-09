@@ -2,28 +2,28 @@
 
 add_action('init', function() {
 
-    $token = NinjaForms\Views\Authentication\TokenFactory::make();
-    $publicKey = NinjaForms\Views\Authentication\KeyFactory::make();
+    $token = NinjaForms\Blocks\Authentication\TokenFactory::make();
+    $publicKey = NinjaForms\Blocks\Authentication\KeyFactory::make();
  
     // automatically load dependencies and version
-    $block_asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block.asset.php');
+    $block_asset_file = include(plugin_dir_path(__FILE__) . '../build/block.asset.php');
 
     wp_register_script(
         'ninja-forms/submissions-table/block',
-        plugins_url( 'build/block.js', __FILE__ ),
+        plugins_url('../build/block.js', __FILE__),
         $block_asset_file['dependencies'],
         $block_asset_file['version']
     );
 
     wp_localize_script('ninja-forms/submissions-table/block', 'ninjaFormsViews', [
-        'token' => $token->create( $publicKey ),
+        'token' => $token->create($publicKey),
     ]);
 
-    $render_asset_file = include( plugin_dir_path( __FILE__ ) . 'build/render.asset.php');
+    $render_asset_file = include(plugin_dir_path(__FILE__) . '../build/render.asset.php');
 
     wp_register_script(
         'ninja-forms/submissions-table/render',
-        plugins_url( 'build/render.js', __FILE__ ),
+        plugins_url( '../build/render.js', __FILE__ ),
         $render_asset_file['dependencies'],
         $render_asset_file['version']
     );
@@ -49,14 +49,14 @@ add_action('init', function() {
 add_action( 'rest_api_init', function () {
 
     $tokenAuthenticationCallback = function( WP_REST_Request $request ) {
-        $token = NinjaForms\Views\Authentication\TokenFactory::make();
+        $token = NinjaForms\Blocks\Authentication\TokenFactory::make();
         return $token->validate( $request->get_header('X-NinjaFormsViews-Auth') );
     };
 
     register_rest_route( 'ninja-forms-views/', 'forms', array(
         'methods' => 'GET',
         'callback' => function( WP_REST_Request $request ) {
-            $formsBuilder = (new NinjaForms\Views\DataBuilder\FormsBuilderFactory)->make();
+            $formsBuilder = (new NinjaForms\Blocks\DataBuilder\FormsBuilderFactory)->make();
             return $formsBuilder->get();
         },
         'permission_callback' => $tokenAuthenticationCallback,
@@ -73,7 +73,7 @@ add_action( 'rest_api_init', function () {
             ],
         ],
         'callback' => function( WP_REST_Request $request ) {
-            $fieldsBuilder = (new NinjaForms\Views\DataBuilder\FieldsBuilderFactory)->make( 
+            $fieldsBuilder = (new NinjaForms\Blocks\DataBuilder\FieldsBuilderFactory)->make( 
                 $request->get_param( 'id' )
              );
             return $fieldsBuilder->get();
@@ -108,7 +108,7 @@ add_action( 'rest_api_init', function () {
             ]
         ],
         'callback' => function( WP_REST_Request $request ) {
-            $submissionsBuilder = (new NinjaForms\Views\DataBuilder\SubmissionsBuilderFactory)->make( 
+            $submissionsBuilder = (new NinjaForms\Blocks\DataBuilder\SubmissionsBuilderFactory)->make( 
                 $request->get_param( 'id' ),
                 $request->get_param( 'perPage' ),
                 $request->get_param( 'page' )

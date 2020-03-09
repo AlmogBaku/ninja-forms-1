@@ -14,7 +14,7 @@ final class SecretTest extends TestCase
         $secret = false;
 
         $this->assertNotEmpty(
-            NinjaForms\Views\Authentication\SecretStore::getOrCreate()
+            NinjaForms\Blocks\Authentication\SecretStore::getOrCreate()
         );
     }
 
@@ -22,7 +22,7 @@ final class SecretTest extends TestCase
     {
         define( 'NINJA_FORMS_VIEWS_SECRET', 'private_key' );
 
-        $this->assertEquals( 'private_key', NinjaForms\Views\Authentication\SecretStore::getOrCreate() );
+        $this->assertEquals( 'private_key', NinjaForms\Blocks\Authentication\SecretStore::getOrCreate() );
     }
 
     public function testWrongTypeSecretSelfCorrects(): void
@@ -31,7 +31,7 @@ final class SecretTest extends TestCase
         $secret  = new stdClass();
 
         $this->assertTrue(
-            is_string( NinjaForms\Views\Authentication\SecretStore::getOrCreate() )
+            is_string( NinjaForms\Blocks\Authentication\SecretStore::getOrCreate() )
         );
     }
 }

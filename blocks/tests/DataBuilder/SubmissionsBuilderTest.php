@@ -15,7 +15,7 @@ final class SubmissionsBuilderTest extends TestCase
             '_field_1' => 'Example Form',
             'my_textbox' => 'Example Form',
         ]];
-        $submissionsBuilder = new NinjaForms\Views\DataBuilder\SubmissionsBuilder($submissions);
+        $submissionsBuilder = new NinjaForms\Blocks\DataBuilder\SubmissionsBuilder($submissions);
         $this->assertEquals(
             $submissionsBuilder->get(),
             [
@@ -34,7 +34,7 @@ final class SubmissionsBuilderTest extends TestCase
                 '/uploads/image2.png',
             ]),
         ]];
-        $submissionsBuilder = new NinjaForms\Views\DataBuilder\SubmissionsBuilder($submissions);
+        $submissionsBuilder = new NinjaForms\Blocks\DataBuilder\SubmissionsBuilder($submissions);
         $this->assertEquals(
             $submissionsBuilder->get(),
             [

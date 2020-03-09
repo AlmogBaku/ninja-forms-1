@@ -43,8 +43,8 @@
   "scripts": {
     "gulp": "gulp",
     "test": "jest ./assets/js/tests/*",
-    "start:block": "wp-scripts start src/block.js",
-    "start:render": "wp-scripts start src/render.js",
+    "start:block": "wp-scripts start blocks/src/block.js",
+    "start:render": "wp-scripts start blocks/src/render.js",
     "build": "wp-scripts build src/block.js src/render.js",
     "build:block": "wp-scripts build src/block.js",
     "build:render": "wp-scripts build src/render.js",

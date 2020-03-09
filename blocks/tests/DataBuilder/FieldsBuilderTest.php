@@ -12,7 +12,7 @@ final class FieldsBuilderTest extends TestCase
             'type' => 'textbox',
             'label' => 'Example Field',
         ]];
-        $fieldsBuilder = new NinjaForms\Views\DataBuilder\FieldsBuilder($fields);
+        $fieldsBuilder = new NinjaForms\Blocks\DataBuilder\FieldsBuilder($fields);
         $this->assertEquals(
             $fieldsBuilder->get(),
             [
@@ -48,7 +48,7 @@ final class FieldsBuilderTest extends TestCase
                 'label' => '',
             ],
         ];
-        $fieldsBuilder = new NinjaForms\Views\DataBuilder\FieldsBuilder($fields);
+        $fieldsBuilder = new NinjaForms\Blocks\DataBuilder\FieldsBuilder($fields);
         $this->assertEquals(
             $fieldsBuilder->get(),
             [

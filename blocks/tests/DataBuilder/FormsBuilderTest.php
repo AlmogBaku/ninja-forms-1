@@ -7,7 +7,7 @@ final class FormsBuilderTest extends TestCase
 {
     public function testReturnsKeyedArray(): void
     {
-        $formsBuilder = new NinjaForms\Views\DataBuilder\FormsBuilder([[
+        $formsBuilder = new NinjaForms\Blocks\DataBuilder\FormsBuilder([[
             'id' => 1,
             'title' => 'Example Form',
         ]]);
