@@ -18,8 +18,11 @@ deploy.sh
 deploy-old.sh
 vendor/
 composer.lock
+yarn.lock
 package-lock.json
 *composer.phar
+
+wordpress/
 
 *.sass-cache
 *.scssc
