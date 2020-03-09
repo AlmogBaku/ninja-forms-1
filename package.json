@@ -5,10 +5,13 @@
   "main": "build/index.js",
   "dependencies": {
     "backbone.marionette": "^3.2.0",
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/react": "^9.4.1",
+    "@wordpress/blocks": "^6.12.1",
     "@wordpress/block-editor": "^3.5.0",
-    "@wordpress/components": "^9.0.0",
+    "@wordpress/components": "^9.2.3",
     "@wordpress/element": "^2.11.0",
+    "@wordpress/e2e-test-utils": "^4.3.1",
+		"@wordpress/i18n": "^3.9.0",
     "faker": "^4.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -34,13 +37,12 @@
     "jest": "^24.5.0",
     "@babel/core": "^7.8.3",
     "@storybook/react": "^5.3.9",
-    "@wordpress/scripts": "^6.2.0",
+    "@wordpress/scripts": "^7.1.2",
     "babel-loader": "^8.0.6"
   },
   "scripts": {
     "gulp": "gulp",
     "test": "jest ./assets/js/tests/*",
-    "start": "wp-scripts start src/block.js src/render.js",
     "start:block": "wp-scripts start src/block.js",
     "start:render": "wp-scripts start src/render.js",
     "build": "wp-scripts build src/block.js src/render.js",
@@ -50,7 +52,8 @@
     "test:unit": "wp-scripts test-unit-js --config jest.config.js",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook -c .storybook -o .storybook/build",
-    "start:env": "wp-scripts start",
+    "start": "wp-scripts start",
+    "stop": "wp-scripts stop",
     "env": "wp-scripts env"
   },
   "wp-env": {
@@ -59,7 +62,7 @@
     "welcome-logo": [
     "[Ninja Face Here]"
     ],
-    "welcome-build-command": "yarn start:env"
+    "welcome-build-command": "yarn start"
     },
   "repository": {
     "type": "git",
