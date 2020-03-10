@@ -83,7 +83,9 @@ Once you have your packages installed, install your docker environment
    1. You should be able to view your development site at: `http://localhost:8889`
 3. run `yarn env stop` to stop your environment
 
+To test your php code with phpunit
 
+1.  run `yarn env test-php`
 
 ## Use
 
