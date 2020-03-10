@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
     "scripts": {
         "test:old": "vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/",
-        "test": "phpunit --bootstrap vendor/autoload.php tests/",
+        "test": "phpunit --bootstrap vendor/autoload.php blocks/tests/",
         "lint": "composer run lint:compatibility",
         "lint:config": "phpcs --config-set installed_paths vendor/phpcompatibility/php-compatibility",
         "lint:compatibility": "phpcs ninja-forms-views.php --standard=PHPCompatibility --runtime-set testVersion 5.2"

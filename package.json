@@ -43,9 +43,9 @@
   "scripts": {
     "gulp": "gulp",
     "test": "jest ./assets/js/tests/*",
-    "start:block": "wp-scripts start blocks/src/submission-table/sub-table-block.js",
-    "start:render": "wp-scripts start blocks/src/submission-table/sub-table-render.js",
-    "build": "wp-scripts build blocks/src/submission-table/sub-table-block.js blocks/src/submission-table/sub-table-render.js",
+    "start:block": "wp-scripts start blocks/src/views/submission-table/sub-table-block.js",
+    "start:render": "wp-scripts start blocks/src/views/submission-table/sub-table-render.js",
+    "build": "wp-scripts build blocks/src/views/submission-table/sub-table-block.js blocks/src/views/submission-table/sub-table-render.js",
     "build:block": "wp-scripts build src/block.js",
     "build:render": "wp-scripts build src/render.js",
     "test:e2e": "wp-scripts test-e2e --config e2e/jest.config.js",
