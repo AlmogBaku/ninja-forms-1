@@ -87,6 +87,10 @@ To test your php code with phpunit
 
 1.  run `yarn env test-php`
 
+To test you javascript code
+
+1. run `yarn test:unit`
+
 ## Use
 
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/)
