@@ -4,13 +4,13 @@
     "minimum-stability": "dev",
     "scripts": {
         "test:old": "vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/",
-        "test": "phpunit --bootstrap vendor/autoload.php blocks/tests/",
+        "test": "phpunit --bootstrap vendor/autoload.php blocks/views/tests/",
         "lint": "composer run lint:compatibility",
         "lint:config": "phpcs --config-set installed_paths vendor/phpcompatibility/php-compatibility",
         "lint:compatibility": "phpcs ninja-forms-views.php --standard=PHPCompatibility --runtime-set testVersion 5.2"
     },
     "autoload": {
-        "psr-4": {"NinjaForms\\Blocks\\": "blocks/includes/"}
+        "psr-4": {"NinjaForms\\Blocks\\": "./blocks/views/includes/"}
     },
     "require-dev": {
         "phpunit/phpunit": "^7.3",

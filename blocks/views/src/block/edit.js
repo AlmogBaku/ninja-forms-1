@@ -17,7 +17,7 @@ import {
     FieldCheckboxList
 } from "./components"
 
-import FormsSubmissionsTable from '../../../components/table-view'
+import FormsSubmissionsTable from '../components/table-view'
 
 export const Edit = (props) => {
 
