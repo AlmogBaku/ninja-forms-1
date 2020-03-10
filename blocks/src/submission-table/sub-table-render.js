@@ -1,11 +1,11 @@
 import { render } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import FormsSubmissionsTable from './components/table-view'
+import FormsSubmissionsTable from '../components/table-view'
 
-import { createAuthMiddleware } from './data/middleware'
+import { createAuthMiddleware } from '../data/middleware'
 apiFetch.use( createAuthMiddleware( window.ninjaFormsViews.token ) )
 
-import Store from './data/store'
+import Store from '../data/store'
 import { withSelect, registerStore, select } from '@wordpress/data';
 registerStore('ninja-forms-views', Store)
 

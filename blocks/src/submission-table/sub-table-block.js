@@ -5,10 +5,10 @@ import { Placeholder, Spinner, SelectControl } from '@wordpress/components';
 
 import metadata from './block/block.json'
 import { Edit } from './block/edit'
-import Store from './data/store'
+import Store from '../data/store'
 
 import apiFetch from '@wordpress/api-fetch';
-import { createAuthMiddleware } from './data/middleware'
+import { createAuthMiddleware } from '../data/middleware'
 apiFetch.use( createAuthMiddleware( window.ninjaFormsViews.token ) )
 
 registerStore( 'ninja-forms-views', Store )

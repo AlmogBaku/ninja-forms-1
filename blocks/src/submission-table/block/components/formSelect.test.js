@@ -1,4 +1,4 @@
-import forms from '../data/forms'
+import forms from '../../../data/forms'
 import { FormSelect } from './formSelect';
 import {
 render, //test renderer

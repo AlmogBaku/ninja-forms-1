@@ -1,4 +1,4 @@
-import forms from '../data/forms'
+import forms from '../../../data/forms'
 import { FieldCheckboxList } from './fieldCheckboxList';
 import {
     render, //test renderer

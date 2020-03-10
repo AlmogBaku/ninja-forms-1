@@ -351,7 +351,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                  * Blocks
                  */
 
-                require_once Ninja_Forms()::$dir . 'blocks/ninja-forms-views.php';
+                require_once Ninja_Forms()::$dir . 'blocks/ninja-forms-blocks.php';
                 
                 /*
                  * Submission Metabox
