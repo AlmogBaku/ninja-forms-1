@@ -5,7 +5,7 @@ import {
    fireEvent, //fires events on nodes,
 } from "@testing-library/react";
 
-describe("Editor componet", () => {
+describe("Editor component", () => {
     afterEach(cleanup);
 
     it("matches snapshot", () => {

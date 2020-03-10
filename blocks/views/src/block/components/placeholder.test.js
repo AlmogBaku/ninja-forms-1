@@ -1,4 +1,4 @@
-import forms from '../data/forms'
+import forms from '../../data/forms'
 import Placeholder from './placeholder';
 import {
     render, //test renderer
@@ -6,7 +6,7 @@ import {
     fireEvent, //fires events on nodes,
 } from "@testing-library/react";
 
-describe("Editor componet", () => {
+describe("Editor component", () => {
     afterEach(cleanup);
 
     it("matches snapshot", () => {
