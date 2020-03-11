@@ -91,6 +91,12 @@ To test you javascript code
 
 1. run `yarn test:unit`
 
+If you find that your javascript unit testing are failing and the errors mention `obsolete snapshot`, try running 
+
+`yarn test:unit -u`
+
+The `-u` flag clears out old snapshot allowing for the creation of new ones.
+
 ## Use
 
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/)
