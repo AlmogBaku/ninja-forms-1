@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Editor componet matches snapshot 1`] = `
+exports[`Editor component matches snapshot 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
@@ -45,7 +45,7 @@ Object {
             <option
               value="1"
             >
-              Example Contact Form
+              Test Form
             </option>
           </select>
         </div>
@@ -77,7 +77,7 @@ Object {
           <option
             value="1"
           >
-            Example Contact Form
+            Test Form
           </option>
         </select>
       </div>

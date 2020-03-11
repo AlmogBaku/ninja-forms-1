@@ -20,7 +20,6 @@ import {
 import FormsSubmissionsTable from '../components/table-view'
 
 export const Edit = (props) => {
-
     // return <pre>{JSON.stringify(props, null, 2)}</pre>
     // const newSelectedFields = form.formFields.slice(0, 5).map((field) => field.fieldId)
 

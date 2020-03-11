@@ -49,7 +49,7 @@
     "build:block": "wp-scripts build blocks/views/src/sub-table-block.js",
     "build:render": "wp-scripts build blocks/views/src/sub-table-render.js",
     "test:e2e": "wp-scripts test-e2e --config e2e/jest.config.js",
-    "test:unit": "wp-scripts test-unit-js --config jest.config.js",
+    "test:unit": "wp-scripts test-unit-js",
     "storybook": "start-storybook",
     "storybook:build": "build-storybook -c .storybook -o .storybook/build",
     "start": "wp-scripts start",

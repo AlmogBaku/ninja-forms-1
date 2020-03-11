@@ -8,10 +8,10 @@ import {
 
 describe("Editor component", () => {
     afterEach(cleanup);
-
+    
     it("matches snapshot", () => {
         const props = {
-            fields: Object.values(forms[1].formFields),
+            fields: Object.values(forms[1].fields),
             isChecked: () => false,
             onChange: jest.fn()
         }

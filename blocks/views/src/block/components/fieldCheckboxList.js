@@ -5,7 +5,7 @@ export const FieldCheckboxList = ({fields, isChecked, onChange}) => {
         <ul>
             {fields.map((field) => {
                 return (
-                    <li>
+                    <li key={"li_" + field.id}>
                         <CheckboxControl
                             key={field.id}
                             label={field.label}

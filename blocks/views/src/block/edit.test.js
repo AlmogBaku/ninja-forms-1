@@ -5,11 +5,15 @@ import {
    fireEvent, //fires events on nodes,
 } from "@testing-library/react";
 
+import forms from "../data/forms";
+
 describe("Editor component", () => {
     afterEach(cleanup);
 
     it("matches snapshot", () => {
-      const attributes = { formId: 1 };
+      const attributes = {
+            formId: 1
+    };
       const setAttributes = jest.fn();
       expect(
         render(
@@ -17,6 +21,9 @@ describe("Editor component", () => {
             {...{
               attributes,
               setAttributes,
+              forms: {},
+              fields: forms[1].fields,
+              submissions: forms[1].submissions,
               clientId: "random-id",
               className: "wp-blocks-whatever"
             }}

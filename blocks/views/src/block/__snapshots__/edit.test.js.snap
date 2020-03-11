@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Editor componet matches snapshot 1`] = `
+exports[`Editor component matches snapshot 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
@@ -21,35 +21,45 @@ Object {
       style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;"
     />
     <div>
-      <table
-        style="width: 100%;"
+      <div
+        class="sc-AxjAm cYunTa"
       >
-        <thead
-          style="text-align: left;"
+        <table
+          role="table"
         >
-          <tr />
-        </thead>
-        <tbody>
-          <tr />
-          <tr />
-        </tbody>
-      </table>
+          <thead />
+          <tbody
+            role="rowgroup"
+          />
+        </table>
+        <div
+          style="display: flex; justify-content: space-between;"
+        >
+          <div />
+          <div />
+        </div>
+      </div>
     </div>
   </body>,
   "container": <div>
-    <table
-      style="width: 100%;"
+    <div
+      class="sc-AxjAm cYunTa"
     >
-      <thead
-        style="text-align: left;"
+      <table
+        role="table"
       >
-        <tr />
-      </thead>
-      <tbody>
-        <tr />
-        <tr />
-      </tbody>
-    </table>
+        <thead />
+        <tbody
+          role="rowgroup"
+        />
+      </table>
+      <div
+        style="display: flex; justify-content: space-between;"
+      >
+        <div />
+        <div />
+      </div>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

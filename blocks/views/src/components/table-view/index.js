@@ -29,7 +29,10 @@ export default ({formId, selectedFields, fields, submissions}) => {
     }
 
     const more = submissions[submissions.length-1] && submissions[submissions.length-1].length
-    const data = submissions.flat()
+    
+    const data = submissions.map((sub_item) => {
+        return sub_item[0];
+    })
 
     return <Table columns={columns} data={data} initialPageIndex={pageIndex} loadMore={loadMore} more={more} loading={loadingPageIndex} />
 };
