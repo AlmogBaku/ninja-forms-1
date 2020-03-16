@@ -67,36 +67,6 @@ This section describes how to install the plugin and get it working.
 
 Shortcodes have been re-implemented. They are used like so: `[ninja_forms id=#]` where # is the ID number of the form you want to display.
 
-## Testing and Developmemt
-
-This section describes how to install a docker development environment to develop and test Ninja Forms functionality
-
-1. Clone the repo
-2. `cd` into the `ninja-forms` directory
-3. run `composer install`
-4. run `yarn`
-
-Once you have your packages installed, install your docker environment
-
-1. run `yarn env install`
-2. run `yarn env start` to start your environment
-   1. You should be able to view your development site at: `http://localhost:8889`
-3. run `yarn env stop` to stop your environment
-
-To test your php code with phpunit
-
-1.  run `yarn env test-php`
-
-To test you javascript code
-
-1. run `yarn test:unit`
-
-If you find that your javascript unit testing are failing and the errors mention `obsolete snapshot`, try running 
-
-`yarn test:unit -u`
-
-The `-u` flag clears out old snapshot allowing for the creation of new ones.
-
 ## Use
 
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/)
@@ -104,3 +74,52 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 ## Requested Features
 
 If you have any feature requests, please feel free to visit [ninjaforms.com](http://ninjaforms.com) and let us know!
+
+## Testing and Development
+
+This section describes how to install a docker development environment to develop and test Ninja Forms functionality.
+
+### Requirements:
+- git
+- node
+- yarn
+    - Please use yarn, not npm.
+- Docker
+- PHP
+
+### Installation
+
+- Clone the repo
+    - `git clone git@git.saturdaydrive.io:_/ninja-forms/ninja-forms.git`
+- Switch into the `ninja-forms` directory
+    - `cd ninja-forms`
+- Install PHP dependencies:
+    - `composer install`
+- Install JS dependencies:
+    - `yarn`
+    
+### Local Development
+Once you have your packages installed, install a local WordPress site for development. We use [@wordpress-scripts/env](https://developer.wordpress.org/block-editor/packages/packages-env/) a Docker-based development environment:
+
+- Install
+    - `yarn env install`
+    - This step will take awhile to run.
+- Start the local site
+    - `yarn env start`
+    -You should be able to view your development site at: `http://localhost:8889`
+
+You can run `yarn env stop` to stop your environment
+
+### Testing
+
+- To test your php code with phpunit
+    - `yarn env test-php`
+- To test you javascript code
+    - `yarn test:unit`
+
+Some tips:
+
+- If you find that your JavaScript unit testing are failing and the errors mention `obsolete snapshot`, try: 
+    - `yarn test:unit -u`
+    - The `-u` flag clears out old snapshot allowing for the creation of new ones.
+- Please add other common issues you find, that might be helpful to others here.
