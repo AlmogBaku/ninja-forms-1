@@ -23,8 +23,13 @@ package-lock.json
 *composer.phar
 yarn.lock
 
-wordpress/
+# WP Scripts Block Editor
+/build/
 
+# Local WordPress
+/wp-content/
+
+# ignore local environment wordpress
 wordpress/
 
 *.sass-cache

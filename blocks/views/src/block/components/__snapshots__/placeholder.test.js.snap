@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor component matches snapshot 1`] = `
+<div>
+  <div
+    class="components-placeholder is-small"
+  >
+    <iframe
+      aria-hidden="true"
+      aria-label="resize-listener"
+      frameborder="0"
+      src="about:blank"
+      style="display: block; opacity: 0; position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+      tabindex="-1"
+    />
+    <div
+      class="components-placeholder__label"
+    >
+      <div
+        size="24"
+        style="margin-right: 10px;"
+      >
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          height="15pt"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          version="1.0"
+          viewBox="0 0 624.000000 309.000000"
+          width="30pt"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="#000000"
+            stroke="none"
+            transform="translate(0.000000,309.000000) scale(0.100000,-0.100000)"
+          >
+            <path
+              d="M5890 2759 c-138 -28 -199 -42 -235 -54 -22 -8 -55 -16 -72 -20 -18
+ -4 -35 -11 -38 -16 -4 -5 -14 -9 -24 -9 -36 0 -256 -104 -381 -181 -202 -123
+ -441 -334 -563 -496 -18 -23 -37 -43 -43 -43 -6 0 -29 17 -51 38 -246 231
+ -460 373 -794 525 -77 36 -196 78 -314 112 -33 9 -75 21 -93 27 -19 5 -57 14
+ -85 18 -29 4 -77 13 -107 18 -256 50 -625 49 -880 0 -30 -6 -75 -14 -100 -18
+ -53 -9 -130 -27 -185 -45 -22 -8 -55 -16 -72 -20 -18 -4 -35 -11 -38 -16 -4
+ -5 -15 -9 -25 -9 -11 0 -34 -6 -52 -14 -18 -8 -73 -31 -122 -51 -500 -207
+ -956 -604 -1238 -1077 -58 -99 -178 -338 -178 -356 0 -6 -6 -23 -14 -39 -18
+ -35 -59 -148 -76 -208 -8 -28 -48 -191 -72 -295 -16 -72 -29 -214 -35 -377
+ l-5 -153 369 0 370 0 17 103 c47 266 178 482 383 629 67 48 326 188 348 188 4
+ 0 21 6 38 14 18 7 50 20 72 29 22 8 58 22 80 31 49 19 182 57 295 84 544 127
+ 1099 104 1625 -69 50 -17 99 -34 110 -39 11 -5 49 -21 85 -35 312 -127 497
+ -270 628 -486 67 -111 131 -297 132 -381 0 -73 -28 -68 381 -68 l369 0 0 138
+ c-1 75 -5 166 -10 202 -5 36 -14 95 -19 132 -16 119 -74 349 -107 426 -8 18
+ -14 39 -14 46 0 7 -9 35 -21 62 -11 27 -24 58 -29 69 -21 50 -56 127 -93 204
+ -29 61 -37 88 -30 100 12 19 109 50 328 105 188 48 240 60 540 121 253 52 345
+ 84 345 119 0 20 -103 107 -290 244 -198 146 -190 140 -190 155 0 7 27 34 60
+ 61 57 47 216 206 270 271 66 78 130 193 130 233 0 20 -30 52 -67 71 -25 13
+ -148 13 -213 0z"
+            />
+            <path
+              d="M1559 320 c-81 -43 -150 -155 -165 -270 l-7 -50 262 0 261 0 -5 28
+ c-35 163 -94 261 -183 298 -47 19 -120 17 -163 -6z"
+            />
+            <path
+              d="M3569 320 c-81 -43 -149 -154 -165 -273 l-6 -47 261 0 261 0 -5 28
+ c-35 164 -93 260 -182 297 -48 20 -120 18 -164 -5z"
+            />
+          </g>
+        </svg>
+      </div>
+      Submissions Table
+    </div>
+    <div
+      class="components-placeholder__instructions"
+    >
+      Select a form to display the submissions.
+    </div>
+    <div
+      class="components-placeholder__fieldset"
+    >
+      <div>
+        Inside Content
+      </div>
+    </div>
+  </div>
+</div>
+`;
