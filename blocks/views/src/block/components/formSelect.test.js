@@ -11,9 +11,12 @@ describe("Editor component", () => {
 
     it("matches snapshot", () => {
         const props = { forms: forms, formId: 1, onChange: jest.fn() }
-        expect(render(
+
+        const {container} = render(
             <FormSelect {...props} />
-        )).toMatchSnapshot();
+        );
+
+        expect(container).toMatchSnapshot();
     });
 
     it("changes value", () => {

@@ -15,9 +15,11 @@ describe("Editor component", () => {
             isChecked: () => false,
             onChange: jest.fn()
         }
-        expect(render(
+
+        const {container} = render(
             <FieldCheckboxList {...props} />
-        )).toMatchSnapshot();
+        );
+        expect(container).toMatchSnapshot();
     });
 
 });

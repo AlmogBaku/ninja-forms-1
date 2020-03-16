@@ -11,9 +11,12 @@ describe("Editor component", () => {
 
     it("matches snapshot", () => {
         const props = { inside: <div>Inside Content</div> }
-        expect(render(
+
+        const {container} = render(
             <Placeholder {...props} />
-        )).toMatchSnapshot();
+        )
+
+        expect(container).toMatchSnapshot();
     });
 
 });

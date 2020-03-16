@@ -15,21 +15,22 @@ describe("Editor component", () => {
             formId: 1
     };
       const setAttributes = jest.fn();
-      expect(
-        render(
-          <Edit
-            {...{
-              attributes,
-              setAttributes,
-              forms: {},
-              fields: forms[1].fields,
-              submissions: forms[1].submissions,
-              clientId: "random-id",
-              className: "wp-blocks-whatever"
-            }}
-          />
-        )
-      ).toMatchSnapshot();
+
+      const {container} = render(
+        <Edit
+          {...{
+            attributes,
+            setAttributes,
+            forms: {},
+            fields: forms[1].fields,
+            submissions: forms[1].submissions,
+            clientId: "random-id",
+            className: "wp-blocks-whatever"
+          }}
+        />
+      )
+      
+      expect(container).toMatchSnapshot();
     });
 
 });
