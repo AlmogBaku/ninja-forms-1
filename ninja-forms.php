@@ -693,7 +693,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 'ninja-forms-multi-part',
                 'ninja-forms-layout-styles', // Account for development environments.
                 'ninja-forms-style',
-                'ninja-shop',
                 'ninja-mail', // Account for Ninja Mail as legacy for SendWP.
                 'sendwp'
             );

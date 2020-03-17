@@ -13,7 +13,6 @@ class NF_PromotionManager
     {
         $this->set_promotions();
         $this->maybe_remove_personal();
-        $this->maybe_remove_ninja_shop();
         $this->maybe_remove_sendwp();
         $this->sort_active_promotions_by_locations();
     }
@@ -93,13 +92,6 @@ class NF_PromotionManager
         }
     }
 
-    private function maybe_remove_ninja_shop()
-    {
-        if( ( ! $this->are_product_fields_in_use() && ! $this->are_calculations_in_use() ) || $this->is_ninja_shop_active() ) {
-            $this->remove_promotion( 'ninja-shop' );
-        }
-    }
-
     private function maybe_remove_personal() 
     {
         if( $this->is_personal_active() ) {
@@ -167,14 +159,6 @@ class NF_PromotionManager
         if( $calcs[ 'total' ] > 0 ) {
             return true; 
         }
-        return false;
-    }
-
-    private function is_ninja_shop_active()
-    {
-        if( class_exists( 'IT_Exchange', FALSE ) ) {
-            return true;
-        } 
         return false;
     }
 
