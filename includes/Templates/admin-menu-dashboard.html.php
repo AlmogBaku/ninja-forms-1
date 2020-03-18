@@ -117,28 +117,28 @@
         <h2 class="widget-title">What do you need from your WordPress forms?</h2>
         <ul>
           <li>
-            <a href="#">Build smarter, beautiful forms without code</a>
+            <a href="#popular">Build smarter, beautiful forms without code</a>
           </li>
           <li>
-            <a href="#">Better document sharing to take my business further</a>
+            <a href="#documents">Better document sharing to take my business further</a>
           </li>
           <li>
-            <a href="#">Accept payments and donations</a>
+            <a href="#payments">Accept payments and donations</a>
           </li>
           <li>
-            <a href="#">Connect directly to my email marketing service</a>
+            <a href="#marketing">Connect directly to my email marketing service</a>
           </li>
           <li>
-            <a href="#">Help and manage my users</a>
+            <a href="#website">Help and manage my users</a>
           </li>
           <li>
-            <a href="#">Connect directly to my company's CRM service</a>
+            <a href="#crm">Connect directly to my company's CRM service</a>
           </li>
           <li>
-            <a href="#">Send notifications to Slack, Trello, and over SMS</a>
+            <a href="#notifications">Send notifications to Slack, Trello, and over SMS</a>
           </li>
           <li>
-            <a href="#">Connect to 1,000s of other services</a>
+            <a href="#misc">Connect to 1,000s of other services</a>
           </li>
         </ul>
         <h3>Having a tough time choosing just a few? Bundle and save big with a membership!</h3>
