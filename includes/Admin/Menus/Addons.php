@@ -81,7 +81,27 @@ final class NF_Admin_Menus_Addons extends NF_Abstracts_Submenu
             }
         }
 
-        Ninja_Forms::template( 'admin-menu-addons.html.php', compact( 'items', 'notices' ) );
+        $groups = [
+            'popular' => self::filterItemsByCategroy( $items, 'form-function-design' ),
+            'documents' => self::filterItemsByCategroy( $items, 'file-management' ),
+            'payments' => self::filterItemsByCategroy( $items, 'payment-gateways' ),
+            'marketing' => self::filterItemsByCategroy( $items, 'email-marketing' ),
+            'website' => self::filterItemsByCategroy( $items, 'user-management' ),
+            'crm' => self::filterItemsByCategroy( $items, 'crm-integrations' ),
+            'notifications' => self::filterItemsByCategroy( $items, 'notification-workflow' ),
+            'misc' => self::filterItemsByCategroy( $items, 'custom-integrations' ),
+        ];
+        
+
+        Ninja_Forms::template( 'admin-menu-addons.html.php', compact( 'items', 'notices', 'groups' ) );
+    }
+
+    public static function filterItemsByCategroy( $items, $category ) {
+        return array_filter( $items, function( $item ) use ($category) {
+            return array_filter( $item['categories'], function( $itemCategory ) use ($category){
+                return $category === $itemCategory['slug'];
+            });
+        });
     }
 
 } // End Class NF_Admin_Addons
