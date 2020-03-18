@@ -114,8 +114,37 @@
 <script id="tmpl-nf-apps" type="text/template">
 
     <div class="widget widget-plan-notice">
-        <p class="widget-title">What else comes with Ninja Forms?</p>
-        <a class="nf-button primary feature-list-link" href="https://ninjaforms.com/features/?utm_source=Ninja+Forms+Plugin&utm_medium=Apps+and+Integrations&utm_campaign=Dashboard+Features+Link" target="_blank" rel="noopener">We're glad you asked! Checkout our full list of features! <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+        <h2 class="widget-title">What do you need from your WordPress forms?</h2>
+        <ul>
+          <li>
+            <a href="#">Build smarter, beautiful forms without code</a>
+          </li>
+          <li>
+            <a href="#">Better document sharing to take my business further</a>
+          </li>
+          <li>
+            <a href="#">Accept payments and donations</a>
+          </li>
+          <li>
+            <a href="#">Connect directly to my email marketing service</a>
+          </li>
+          <li>
+            <a href="#">Help and manage my users</a>
+          </li>
+          <li>
+            <a href="#">Connect directly to my company's CRM service</a>
+          </li>
+          <li>
+            <a href="#">Send notifications to Slack, Trello, and over SMS</a>
+          </li>
+          <li>
+            <a href="#">Connect to 1,000s of other services</a>
+          </li>
+        </ul>
+        <h3>Having a tough time choosing just a few? Bundle and save big with a membership!</h3>
+        <a class="nf-button primary" target="_blank" rel="noopener"
+           href="https://ninjaforms.com/pricing/?utm_source=Ninja+Forms+Plugin&utm_medium=Apps+and+Integrations&utm_campaign=NavBox" 
+           >View Memberships</a>
         <div><em>All plans include a 14 day money back guarantee.</em></div>
         <div>Requires a current active license and subject to our <a href="https://ninjaforms.com/terms-conditions/?utm_medium=plugin&utm_source=plugin-dashboard&utm_campaign=Ninja+Forms+Memberships&utm_content=Terms+Conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>.</div>
     </div>
