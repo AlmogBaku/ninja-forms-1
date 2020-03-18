@@ -5,5 +5,10 @@
     "require-dev": {
         "phpunit/phpunit": "^7",
     	"lucatume/wp-browser": "2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "NinjaForms\\Notifications\\": "includes/Notifications/src"
+        }
     }
 }
