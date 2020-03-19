@@ -132,36 +132,6 @@ class NF_PromotionManager
         $this->promotions = $sorted_locations;
     }
 
-    /**
-     * Checks the DB to see if product fields are being used. 
-     */
-    private function are_product_fields_in_use()
-    {
-        global $wpdb;
-
-        $query = "SELECT id FROM `" . $wpdb->prefix . "nf3_fields` WHERE type = 'product'"; 
-        $fields = $wpdb->get_results( $query, 'ARRAY_A' ); 
-        
-        if( ! empty( $fields ) ) {
-            return true; 
-        }
-        return false; 
-    }
-
-    private function are_calculations_in_use()
-    {
-        global $wpdb;
-
-        // TODO: change the key to meta_key once DB changes have been fully implemented. 
-        $query = "SELECT count( id ) as total FROM `" . $wpdb->prefix . "nf3_form_meta` WHERE  `key` = 'calculations' AND value <> 'a:0:{}'"; 
-        $calcs = $wpdb->get_row( $query, 'ARRAY_A' ); 
-
-        if( $calcs[ 'total' ] > 0 ) {
-            return true; 
-        }
-        return false;
-    }
-
     private function is_sendwp_active()
     {
         if( class_exists( '\SendWP\Mailer', FALSE ) ) {
