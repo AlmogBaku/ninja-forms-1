@@ -145,8 +145,6 @@
         <a class="nf-button primary" target="_blank" rel="noopener"
            href="https://ninjaforms.com/pricing/?utm_source=Ninja+Forms+Plugin&utm_medium=Apps+and+Integrations&utm_campaign=NavBox" 
            >View Memberships</a>
-        <div><em>All plans include a 14 day money back guarantee.</em></div>
-        <div>Requires a current active license and subject to our <a href="https://ninjaforms.com/terms-conditions/?utm_medium=plugin&utm_source=plugin-dashboard&utm_campaign=Ninja+Forms+Memberships&utm_content=Terms+Conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>.</div>
     </div>
 
     <?php Ninja_Forms()->menus[ 'add-ons']->display(); ?>
