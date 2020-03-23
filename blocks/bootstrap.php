@@ -19,7 +19,7 @@ add_action('init', function() {
         'token' => $token->create($publicKey),
     ]);
 
-    $render_asset_file = include(plugin_dir_path(__FILE__) . '../build/render.asset.php');
+    $render_asset_file = include(plugin_dir_path(__FILE__) . '../build/sub-table-render.asset.php');
 
     wp_register_script(
         'ninja-forms/submissions-table/render',
