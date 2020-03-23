@@ -408,7 +408,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 /*
                  * Gutenberg
                  */
-                self::$instance->gutenblock = new NF_FormBlock();
+                // self::$instance->gutenblock = new NF_FormBlock();
 
                 /*
                  * Opt-In Tracking

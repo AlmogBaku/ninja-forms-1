@@ -43,6 +43,42 @@ add_action('init', function() {
             }
         }
     ) );
+
+    $form_block_asset_file = include(plugin_dir_path(__FILE__) . '../build/form-block.asset.php');
+
+    wp_register_script(
+        'ninja-forms/blocks/form',
+        plugins_url('../build/form-block.js', __FILE__),
+        $form_block_asset_file['dependencies'],
+        $form_block_asset_file['version']
+    );
+   
+    wp_localize_script('ninja-forms/blocks/form', 'ninjaFormsBlock', [
+        'token' => $token->create($publicKey),
+    ]);
+
+    function render_form($args)
+    {
+        // return '[ninja-forms id=' . $args['formID'] . ']';
+        if (!isset($args[ 'formID' ])) {
+            return 'cannot display';
+        }
+
+        ob_start();
+        Ninja_Forms()->display($args['formID'], TRUE);
+        return ob_get_clean();
+    }
+    
+    register_block_type('ninja-forms/form-block', array(
+        'editor_script' => 'ninja-forms/blocks/form',
+        'render_callback' => 'render_form',
+        'attributes' => [
+            'formID' => [
+                'type' => 'string',
+                'default' => '1',
+            ]
+        ]
+    ));
  
 });
 

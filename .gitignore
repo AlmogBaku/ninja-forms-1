@@ -22,6 +22,7 @@ yarn.lock
 package-lock.json
 *composer.phar
 yarn.lock
+yarn-error.log
 
 # WP Scripts Block Editor
 /build/

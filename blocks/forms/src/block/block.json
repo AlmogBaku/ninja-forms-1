@@ -1,0 +1,17 @@
+{
+    "attributes": {
+        "alignment": {
+            "type": "string",
+            "default": "none"
+        },
+        "formID": {
+            "type": "string"
+        },
+        "formName": {
+            "type": "string"
+        },
+        "selectedFields": {
+            "type": "array"
+        }
+    }
+}
