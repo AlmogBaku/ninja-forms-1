@@ -38,6 +38,20 @@ add_action( 'wp_ajax_nf_services', function(){
       </div>
       ',
     ],
+    'sendwp' => [
+      'name' => esc_html__( 'SendWP - Transactional Email', 'ninja-forms' ),
+      'slug' => 'sendwp',
+      'installPath' => 'sendwp/sendwp.php',
+      'description' => 'SendWP makes getting emails delivered as simple as a few clicks. So you can relax, knowing those important emails are being delivered on time.',
+      'enabled' => null,
+      'learnMore' => '
+        <div>
+          <h2>Getting WordPress email into an inbox just got a lot easier</h2>
+          <p>SendWP makes getting emails delivered as simple as a few clicks. So you can relax, knowing those important emails are being delivered on time.</p>
+          <button style="display:block;width:100%;text-align:center;" class="nf-button primary" onclick="Backbone.Radio.channel( \'dashboard\' ).request( \'install:service\', \'sendwp\' );var spinner = document.createElement(\'span\'); spinner.classList.add(\'dashicons\', \'dashicons-update\', \'dashicons-update-spin\'); this.innerHTML = spinner.outerHTML; console.log( spinner )">Signup for SendWP</button>
+        </div>
+      ',
+    ]
   ] );
   wp_die( json_encode( [ 'data' => array_values( $services ) ] ) );
 });
