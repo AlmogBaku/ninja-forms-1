@@ -5,5 +5,13 @@
     "require-dev": {
         "phpunit/phpunit": "^7",
     	"lucatume/wp-browser": "2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "NinjaForms\\Achievements\\": "includes/Achievements/src"
+        }
+    },
+    "require": {
+        "league/container": "^3.3"
     }
 }
