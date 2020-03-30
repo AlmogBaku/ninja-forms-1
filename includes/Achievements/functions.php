@@ -2,25 +2,24 @@
 
 namespace NinjaForms\Achievements;
 
-$formCount = new Metrics\Count( 2 );
+$formCount = Metrics\Factory::makeFormCount();
+$submisisonCount = Metrics\Factory::makeSubmissionCount();
 
 $collection = ModelFactory::collectionFromArray(
         include_once plugin_dir_path(__FILE__) . 'achievements.php'
     )
-    ->where( 'metric', 'formCount' )
-    ->whereCallback( 'threshold', function( $item ) use ( $formCount ) {
-        return $formCount->isAtLeast( $item->get('threshold') );
+    ->where( 'metric', 'submissionCount' )
+    ->whereCallback( 'threshold', function( $item ) use ( $submisisonCount ) {
+        return $submisisonCount->isAtLeast( $item->get('threshold') );
     })
 ;
 
-$achievement = $collection->pop();
-
-add_action( 'admin_notices', function() use  ( $achievement ) {
-    if( $achievement->message ) {
+if($achievement = $collection->pop()) {
+    add_action( 'admin_notices', function() use  ( $achievement ) {
         $view = new Views\AdminNotice( $achievement->message );
         echo $view->render();
-    }
-});
+    });
+}
 
 add_action( 'wp_ajax_ninja_forms_dismiss_notification', function() {
     if(isset($_POST['noticeId'])){
