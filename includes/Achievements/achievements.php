@@ -18,6 +18,12 @@ return [
         'metric' => 'submissionCount',
         'threshold' => 1,
         'message' => 'Congratulations on your first form submission! Loving Ninja Forms? If you have an extra 60 seconds, showing your support with a 5 star review helps us grow!',  
-    ]
+    ],
+
+    [
+        'metric' => 'formDisplayCount',
+        'threshold' => 1,
+        'message' => 'Lots of people looking at your forms!',
+    ],
     
 ];

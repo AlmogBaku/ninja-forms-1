@@ -16,4 +16,10 @@ class Factory
         $submissionCount = wp_count_posts( $type = 'nf_sub' );
         return new Count( $submissionCount->publish );
     }
+
+    public static function makeFormDisplayCount()
+    {
+        $formDisplayCount = get_option('ninja_forms_display_count', $default = 0);
+        return new Count( $formDisplayCount );
+    }
 }

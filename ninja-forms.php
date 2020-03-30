@@ -443,7 +443,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 }
                 require_once self::$dir . 'includes/Integrations/EDD/class-extension-updater.php';
                 
-                
+                require_once Ninja_Forms::$dir . 'includes/Achievements/load.php';
 
                 // If Ninja Forms was just upgraded...
                 if ( $plugin_upgrade ) {
@@ -508,8 +508,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             if ( isset ( $_GET[ 'nf-upgrade' ] ) && 'complete' == $_GET[ 'nf-upgrade' ] ) {
                 Ninja_Forms()->dispatcher()->send( 'upgrade' );
             }
-
-            require_once Ninja_Forms::$dir . 'includes/Achievements/load.php';
 
             add_filter( 'ninja_forms_dashboard_menu_items', array( $this, 'maybe_hide_dashboard_items' ) );
 
