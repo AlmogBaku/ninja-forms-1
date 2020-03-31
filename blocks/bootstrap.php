@@ -59,7 +59,7 @@ add_action( 'rest_api_init', function () {
             $formsBuilder = (new NinjaForms\Blocks\DataBuilder\FormsBuilderFactory)->make();
             return $formsBuilder->get();
         },
-        'permission_callback' => $tokenAuthenticationCallback,
+        'permission_callback' => '__return_true',
     ));
 
     register_rest_route( 'ninja-forms-views/', 'forms/(?P<id>\d+)/fields', [
