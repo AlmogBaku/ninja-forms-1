@@ -1,12 +1,39 @@
 <?php
 
+/**
+ * Register blocks and there scripts
+ */
 add_action('init', function() {
+    /**
+     * Form Block
+     */
+    // automatically load dependencies and version
+    $block_asset_file = include dirname(__DIR__,1) . '/build/form-block.asset.php';
+    $block = (array)json_decode(file_get_contents( __DIR__ . '/form/block.json'),true);
 
+    wp_register_script(
+        'ninja-forms/form',
+        plugins_url('../build/form-block.js', __FILE__),
+        $block_asset_file['dependencies'],
+        $block_asset_file['version']
+    );
+
+    register_block_type('ninja-forms/form', array_merge($block,[
+        'title' => __( 'Ninja Form', 'ninja-form'),
+        'render_callback' => function($atts){
+            return ninja_forms_return_echo( 'ninja_forms_display_form', $atts['formId'] );
+        },
+        'editor_script' => 'ninja-forms/form'
+    ]));
+
+
+    /**
+     * Views Block
+     */
     $token = NinjaForms\Blocks\Authentication\TokenFactory::make();
     $publicKey = NinjaForms\Blocks\Authentication\KeyFactory::make();
  
     // automatically load dependencies and version
-
     $block_asset_file = include dirname(__DIR__,1) . '/build/sub-table-block.asset.php';
 
     wp_register_script(
@@ -46,6 +73,30 @@ add_action('init', function() {
  
 });
 
+/**
+ * Localize data for blocks
+ */
+add_action( 'admin_enqueue_scripts', function (){
+    //Get all forms, to base form selector on.
+    $formsBuilder = (new NinjaForms\Blocks\DataBuilder\FormsBuilderFactory)->make();
+    $forms = $formsBuilder->get();
+    if( ! empty($forms)){
+        //Escape for use in JavaScript
+        foreach($forms as $key => $form ){
+            $forms[$key] = [
+                'formId' => absint($form['formId']),
+                'formTitle' => esc_textarea($form['formTitle'])
+            ];
+        }
+    }
+   wp_localize_script('ninja-forms/form','nfFormsBlock',[
+       'forms'=> $forms//array keys escaped above
+   ]);
+});
+
+/**
+ * Register REST API routes related to blocks
+ */
 add_action( 'rest_api_init', function () {
 
     $tokenAuthenticationCallback = function( WP_REST_Request $request ) {

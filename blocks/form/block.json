@@ -1,0 +1,9 @@
+{
+  "icon": "feedback",
+  "category": "common",
+  "attributes": {
+    "formId": {
+      "type": "string"
+    }
+  }
+}
