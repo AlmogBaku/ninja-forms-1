@@ -6,7 +6,8 @@ add_action('init', function() {
     $publicKey = NinjaForms\Blocks\Authentication\KeyFactory::make();
  
     // automatically load dependencies and version
-    $block_asset_file = include(plugin_dir_path(__FILE__) . '../build/sub-table-block.asset.php');
+
+    $block_asset_file = include dirname(__DIR__,1) . '/build/sub-table-block.asset.php';
 
     wp_register_script(
         'ninja-forms/submissions-table/block',
@@ -19,8 +20,7 @@ add_action('init', function() {
         'token' => $token->create($publicKey),
     ]);
 
-    $render_asset_file = include(plugin_dir_path(__FILE__) . '../build/render.asset.php');
-
+    $render_asset_file = include dirname(__DIR__,1) . '/build/sub-table-render.asset.php';
     wp_register_script(
         'ninja-forms/submissions-table/render',
         plugins_url( '../build/sub-table-render.js', __FILE__ ),
