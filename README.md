@@ -126,11 +126,11 @@ Some tips:
 
 ### Compiling JavaScript And CSS
 
-Most JavaScript and CSS is developed in the "assets" directory. To compile to those assets:
+Most JavaScript and CSS is developed in the "assets" directory or "client". To compile to those assets:
 
 `yarn gulp`
 
-The blocks are developed in the "blocks" directory. We use [@wordpress-scripts](https://www.npmjs.com/package/@wordpress/scripts) to compile the blocks JavaScript and CSS.
+The blocks are developed in the "blocks" directory. We use [@wordpress-scripts](https://www.npmjs.com/package/@wordpress/scripts) to compile the blocks JavaScript and CSS. The build tooling for blocks could be used for other parts of the plugin.
 
 - Start watcher for blocks, including there front-end clients:
     - `yarn start:blocks`
