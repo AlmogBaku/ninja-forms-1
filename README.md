@@ -97,7 +97,7 @@ This section describes how to install a docker development environment to develo
     - `composer install`
 - Install JS dependencies:
     - `yarn`
-    
+   
 ### Local Development
 Once you have your packages installed, install a local WordPress site for development. We use [@wordpress-scripts/env](https://developer.wordpress.org/block-editor/packages/packages-env/) a Docker-based development environment:
 
@@ -116,10 +116,23 @@ You can run `yarn env stop` to stop your environment
     - `yarn env test-php`
 - To test you javascript code
     - `yarn test:unit`
-
+   
 Some tips:
-
+   
 - If you find that your JavaScript unit testing are failing and the errors mention `obsolete snapshot`, try: 
-    - `yarn test:unit -u`
-    - The `-u` flag clears out old snapshot allowing for the creation of new ones.
+   - `yarn test:unit -u`
+   - The `-u` flag clears out old snapshot allowing for the creation of new ones.
 - Please add other common issues you find, that might be helpful to others here.
+
+### Compiling JavaScript And CSS
+
+Most JavaScript and CSS is developed in the "assets" directory. To compile to those assets:
+
+`yarn gulp`
+
+The blocks are developed in the "blocks" directory. We use [@wordpress-scripts](https://www.npmjs.com/package/@wordpress/scripts) to compile the blocks JavaScript and CSS.
+
+- Start watcher for blocks, including there front-end clients:
+    - `yarn start:blocks`
+- Build all blocks for "production" -- release to WordPress.org:
+    - `yarn build:blocks`
