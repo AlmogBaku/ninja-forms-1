@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@storybook/react": "^5.3.9",
+    "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/scripts": "^7.1.2",
     "autoprefixer": "^6.3.6",
     "babel-loader": "^8.0.6",
@@ -39,7 +40,8 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
     "intl": "^1.2.5",
-    "jest": "^24.5.0"
+    "jest": "^24.5.0",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "gulp": "gulp",
