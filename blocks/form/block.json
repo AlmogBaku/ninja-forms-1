@@ -1,9 +1,12 @@
 {
-  "icon": "feedback",
-  "category": "common",
-  "attributes": {
-    "formId": {
-      "type": "string"
-    }
-  }
+	"icon": "feedback",
+	"category": "common",
+	"attributes": {
+		"formId": {
+			"type": "string"
+		},
+		"formTitle": {
+			"type": "string"
+		}
+	}
 }
