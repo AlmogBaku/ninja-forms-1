@@ -14,6 +14,7 @@ export default function(props) {
 	 * Get the title of a form, by id.
 	 */
 	const getFormTitle = formId => {
+		formId = parseInt(formId, 10);
 		if (!forms.length) {
 			return undefined;
 		}

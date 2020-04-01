@@ -29,7 +29,13 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
 /**
  * Ninja Forms block UI
  */
-export default function Edit(formId, formTitle, forms, setAttributes) {
+export default function Edit({
+	formId,
+	formTitle,
+	forms,
+	setAttributes,
+	labelText
+}) {
 	const { getFormTitle } = useForms({ forms });
 	const updateChosenForm = formId => {
 		setAttributes({
@@ -38,10 +44,29 @@ export default function Edit(formId, formTitle, forms, setAttributes) {
 		});
 	};
 
+	if (!formId) {
+		return (
+			<Placeholder>
+				<ChooseForm
+					label={labelText ? labelText : "Choose Form"}
+					formId={formId}
+					forms={forms}
+					onChange={updateChosenForm}
+					labelText={labelText}
+				/>
+			</Placeholder>
+		);
+	}
+
 	return (
 		<React.Fragment>
 			<InspectorControls>
-				<ChooseForm formId={formId} forms={forms} onChange={updateChosenForm} />
+				<ChooseForm
+					formId={formId}
+					forms={forms}
+					onChange={updateChosenForm}
+					labelText={labelText}
+				/>
 			</InspectorControls>
 			<ServerSideRender
 				block="ninja-forms/form"

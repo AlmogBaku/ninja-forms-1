@@ -36,4 +36,22 @@ describe("use forms hook", () => {
 		expect(result.current.asSelectOptions()[2].label).toEqual("Unreal Form");
 		expect(result.current.asSelectOptions()[1].value).toEqual(2);
 	});
+
+	it("Always compares form ids as number", () => {
+		const forms = {
+			2: {
+				formId: 2,
+				formTitle: "Clay"
+			},
+			2: {
+				formId: 2,
+				formTitle: "Distortions"
+			}
+		};
+		const { result } = renderHook(() => {
+			return useForms({ forms });
+		});
+		//Pass as string
+		expect(result.current.getFormTitle("2")).toEqual("Distortions");
+	});
 });

@@ -1,53 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ChooseForm matches snapshot 1`] = `
-<div>
-  <div
-    class="components-base-control"
-  >
-    <div
-      class="components-base-control__field"
-    >
-      <label
-        class="components-base-control__label"
-        for="inspector-select-control-0"
-      >
-        Choose Form
-      </label>
-      <select
-        class="components-select-control__input"
-        id="inspector-select-control-0"
-      >
-        <option>
-          ---
-        </option>
-        <option
-          value="1"
-        >
-          Fake Form
-        </option>
-        <option
-          value="2"
-        >
-          Real Form
-        </option>
-        <option
-          value="3"
-        >
-          Unreal Form
-        </option>
-        <option
-          value="4"
-        >
-          Mystery Form
-        </option>
-      </select>
-    </div>
-  </div>
-</div>
-`;
+exports[`Form block Edit callback Renders form preview 1`] = `<div />`;
 
-exports[`Form block Edit callback Matches snapshot 1`] = `
+exports[`Form block Edit callback Renders placeholder 1`] = `
 <div>
   <div
     class="components-placeholder is-small"
@@ -84,6 +39,26 @@ exports[`Form block Edit callback Matches snapshot 1`] = `
           >
             <option>
               ---
+            </option>
+            <option
+              value="1"
+            >
+              Fake Form
+            </option>
+            <option
+              value="2"
+            >
+              Real Form
+            </option>
+            <option
+              value="3"
+            >
+              Unreal Form
+            </option>
+            <option
+              value="4"
+            >
+              Mystery Form
             </option>
           </select>
         </div>
