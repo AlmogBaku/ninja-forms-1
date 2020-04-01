@@ -26,24 +26,22 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
 	);
 };
 
-export default function Edit(formId, forms, onChange) {
+/**
+ * Ninja Forms block UI
+ */
+export default function Edit(formId, formTitle, forms, setAttributes) {
 	const { getFormTitle } = useForms({ forms });
-
-	const formTitle = React.useMemo(() => {
-		return getFormTitle(formId);
-	}, [forms, formId, getFormTitle]);
-	if (formId) {
-		return (
-			<Placeholder>
-				<ChooseForm formId={formId} forms={forms} onChange={onChange} />
-			</Placeholder>
-		);
-	}
+	const updateChosenForm = formId => {
+		setAttributes({
+			formId: formId,
+			formTitle: getFormTitle(formId)
+		});
+	};
 
 	return (
 		<React.Fragment>
 			<InspectorControls>
-				<ChooseForm formId={formId} forms={forms} onChange={onChange} />
+				<ChooseForm formId={formId} forms={forms} onChange={updateChosenForm} />
 			</InspectorControls>
 			<ServerSideRender
 				block="ninja-forms/form"

@@ -13,7 +13,7 @@ export default function(props) {
 	/**
 	 * Get the title of a form, by id.
 	 */
-	function getFormTitle(formId) {
+	const getFormTitle = formId => {
 		if (!forms.length) {
 			return undefined;
 		}
@@ -22,12 +22,12 @@ export default function(props) {
 			return form.formTitle;
 		}
 		return undefined;
-	}
+	};
 
 	/**
 	 * Get forms as array of ooptions for select control
 	 */
-	function asSelectOptions() {
+	const asSelectOptions = () => {
 		if (!forms.length) {
 			return [];
 		}
@@ -37,7 +37,7 @@ export default function(props) {
 				value: form.formId
 			};
 		});
-	}
+	};
 
 	return {
 		getFormTitle,
