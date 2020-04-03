@@ -9,7 +9,7 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
     /**
      * @var int
      */
-    public $priority = 4;
+    public $position = 4;
 
     public function __construct()
     {   
