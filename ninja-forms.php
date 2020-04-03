@@ -443,7 +443,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 }
                 require_once self::$dir . 'includes/Integrations/EDD/class-extension-updater.php';
                 
-                require_once Ninja_Forms::$dir . 'includes/Achievements/load.php';
+                require_once Ninja_Forms::$dir . 'includes/Milestones/load.php';
 
                 // If Ninja Forms was just upgraded...
                 if ( $plugin_upgrade ) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace NinjaForms\Achievements\Metrics;
+namespace NinjaForms\Milestones\Metrics;
 
 class Count
 {

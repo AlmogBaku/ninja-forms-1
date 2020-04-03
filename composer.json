@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "NinjaForms\\Achievements\\": "includes/Achievements/src"
+            "NinjaForms\\Milestones\\": "includes/Milestones/src"
         }
     },
     "require": {

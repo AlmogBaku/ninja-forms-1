@@ -1,6 +1,6 @@
 <?php
 
-namespace NinjaForms\Achievements;
+namespace NinjaForms\Milestones;
 
 add_action('admin_init', function() {
 
@@ -10,20 +10,20 @@ add_action('admin_init', function() {
         'formDisplayCount' => Metrics\Factory::makeFormDisplayCount(),
     ];
 
-    $achievements = include_once plugin_dir_path(__FILE__) . 'achievements.php';
-    $collection = ModelFactory::collectionFromArray( $achievements )
+    $milestones = include_once plugin_dir_path(__FILE__) . 'milestones.php';
+    $collection = ModelFactory::collectionFromArray( $milestones )
         ->whereCallback( 'threshold', function( $item ) use ( $metrics ) {
             return $metrics[ $item->get('metric') ]->isAtLeast( $item->get('threshold') );
         })
     ;
 
-    if($achievement = $collection->pop()) {
+    if($milestone = $collection->pop()) {
 
-        add_filter( 'nf_admin_notices', function( $notices ) use ( $achievement )  {
-            $notices[ $achievement->uid ] = [
-                'title' => esc_html__( $achievement->title, 'ninja-forms' ),
-                'msg' => $achievement->message,
-                'link' => $achievement->links,
+        add_filter( 'nf_admin_notices', function( $notices ) use ( $milestone )  {
+            $notices[ $milestone->uid ] = [
+                'title' => esc_html__( $milestone->title, 'ninja-forms' ),
+                'msg' => $milestone->message,
+                'link' => $milestone->links,
                 'int' => 0,
                 'blacklist' => array( 'ninja-forms-three' ),
             ];

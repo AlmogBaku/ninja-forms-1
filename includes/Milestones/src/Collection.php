@@ -1,6 +1,6 @@
 <?php
 
-namespace NinjaForms\Achievements;
+namespace NinjaForms\Milestones;
 
 class Collection
 {
