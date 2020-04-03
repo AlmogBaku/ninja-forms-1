@@ -36,7 +36,7 @@ add_action('admin_init', function() {
 });
 
 /**
- * Update form display count.
+ * Update form display count (excludes form previews).
  */
 add_action( 'ninja_forms_before_container', function( $formId ) {
     $formDisplayCount = get_option('ninja_forms_display_count', $default = 0);
