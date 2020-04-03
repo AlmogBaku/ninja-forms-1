@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         dismiss.addEventListener('click', function() {
             jQuery.post( ajaxurl, {
                     'action': 'ninja_forms_dismiss_notification',
-                    'noticeId': noticeId
+                    'noticeId': noticeId,
+                    '_wpnonce': ninjaFormsAchievements.dismissNonce,
             });
         })
     })

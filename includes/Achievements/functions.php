@@ -45,7 +45,15 @@ add_action( 'ninja_forms_before_container', function( $formId ) {
 }, 10, 1 );
 
 add_action( 'wp_ajax_ninja_forms_dismiss_notification', function() {
+
     if(isset($_POST['noticeId'])){
+
+        $nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : false;
+        if ( ! wp_verify_nonce( $nonce, 'ninja_forms_dismiss_notification' ) ) {
+            // This nonce is not valid.
+            die( 'Security check' ); 
+        }
+
         $noticeId = sanitize_text_field( $_POST['noticeId'] );
         // @todo log notice as dismissed.
         wp_die(1); // Don't forget to stop execution afterward.
@@ -55,4 +63,7 @@ add_action( 'wp_ajax_ninja_forms_dismiss_notification', function() {
 add_action( 'admin_enqueue_scripts', function() {
     $script = include( plugin_dir_path( __FILE__ ) . 'assets/script.asset.php');
     wp_register_script( 'ninja-forms-achievements', $script['source'], $script['dependencies'], $script['version'], $script['in_footer'] );
+    wp_localize_script( 'ninja-forms-achievements', 'ninjaFormsAchievements', [
+        'dismissNonce' => wp_create_nonce( 'ninja_forms_dismiss_notification' ),
+    ] );
 });
