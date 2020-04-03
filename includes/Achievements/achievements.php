@@ -4,7 +4,7 @@ return [
 
     [
         'metric' => 'formCount',
-        'threshold' => 1,
+        'threshold' => 2, // Accounting for the default contact form, a form count of 2 means the user created a form.
         'message' => 'Love using Ninja Forms? Your support helps us grow and continue adding new features. Please consider leaving us a 5 Star Review on WordPress.org!',
     ],
 
