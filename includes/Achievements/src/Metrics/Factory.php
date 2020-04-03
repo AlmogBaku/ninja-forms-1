@@ -7,7 +7,7 @@ class Factory
     public static function makeFormCount()
     {
         global $wpdb;
-        $formCount = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}nf3_forms");
+        $formCount = $wpdb->get_var( "SELECT COUNT(`id`) FROM {$wpdb->prefix}nf3_forms");
         return new Count( $formCount );
     }
 
