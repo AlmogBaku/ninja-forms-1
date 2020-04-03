@@ -1,11 +1,11 @@
-import React from "react";
 import {
 	Placeholder,
-	ServerSideRender,
-	SelectControl
+	SelectControl,
 } from "@wordpress/components";
 import { InspectorControls } from "@wordpress/block-editor";
 import useForms from "./useForms";
+import FormPreviewIFrame from "./FormPreviewIFrame";
+import {ServerSideRender} from "@wordpress/server-side-render";
 
 /**
  * Form chooser select control
@@ -31,16 +31,18 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
  */
 export default function Edit({
 	formId,
-	formTitle,
 	forms,
 	setAttributes,
-	labelText
+	labelText,
+	siteUrl,
+ 	previewToken
 }) {
 	const { getFormTitle } = useForms({ forms });
+	const formTitle =  formId ? getFormTitle(formId) : '';
 	const updateChosenForm = formId => {
 		setAttributes({
 			formId: formId,
-			formTitle: getFormTitle(formId)
+			formTitle
 		});
 	};
 
@@ -68,13 +70,7 @@ export default function Edit({
 					labelText={labelText}
 				/>
 			</InspectorControls>
-			<ServerSideRender
-				block="ninja-forms/form"
-				attributes={{
-					formId,
-					formTitle
-				}}
-			/>
+			<FormPreviewIFrame siteUrl={siteUrl} previewToken={previewToken} formId={formId} />
 		</React.Fragment>
 	);
 }

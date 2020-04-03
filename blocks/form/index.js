@@ -5,7 +5,8 @@ import { registerBlockType } from "@wordpress/blocks";
 
 //Saved forms should have been set in this variable using wp_localize_script
 const nfFormsBlock = window.nfFormsBlock || {};
-const { forms } = nfFormsBlock;
+const { forms,siteUrl,previewToken } = nfFormsBlock;
+
 registerBlockType("ninja-forms/form", {
 	...block,
 	title: __("Ninja Form", "ninja-forms"),
@@ -16,6 +17,8 @@ registerBlockType("ninja-forms/form", {
 				formId={attributes.formId}
 				formTitle={attributes.formTitle}
 				setAttributes={setAttributes}
+				siteUrl={siteUrl}
+				previewToken={previewToken}
 			/>
 		);
 	},

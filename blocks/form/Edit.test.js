@@ -1,7 +1,8 @@
 import Edit, { ChooseForm } from "./Edit";
 import { render, fireEvent } from "@testing-library/react";
 import forms from "./forms.fixture.js";
-
+const siteUrl  = 'https://ninjaforms.com';
+const	previewToken = 'fff';
 describe("Form block Edit callback", () => {
 	it("Renders placeholder", () => {
 		const setAttributes = jest.fn();
@@ -11,6 +12,8 @@ describe("Form block Edit callback", () => {
 				setAttributes={setAttributes}
 				formTitle={"Real Form"}
 				forms={forms}
+				siteUrl={siteUrl}
+				previewToken={previewToken}
 			/>
 		);
 		expect(container.querySelectorAll(".components-placeholder").length).toBe(
@@ -30,6 +33,8 @@ describe("Form block Edit callback", () => {
 				formTitle={"Real Form"}
 				formId={"2"}
 				forms={forms}
+				siteUrl={siteUrl}
+				previewToken={previewToken}
 			/>
 		);
 		expect(container.querySelectorAll(".components-placeholder").length).toBe(
@@ -46,6 +51,8 @@ describe("Form block Edit callback", () => {
 				formTitle={""}
 				formId={""}
 				forms={forms}
+				siteUrl={siteUrl}
+				previewToken={previewToken}
 			/>
 		);
 
