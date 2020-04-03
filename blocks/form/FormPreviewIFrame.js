@@ -5,10 +5,16 @@ import {Spinner} from '@wordpress/components'
  * Display a form preview in an iframe
  */
 export default  function FormPreviewIFrame({formId,siteUrl,previewToken}){
+    //Reference to element with iFrame
     const iFrameRef = React.useRef();
+    //track loading state of iframe so we can show a spinner
     const [isLoading,setIsLoading] = React.useState(true);
-    const [height,setHeight] = React.useState('');
-    const [width,setWidth] = React.useState('');
+    //The height that the iFrame should have.
+    const [height,setHeight] = React.useState(0);
+    //The width that the iFrame should have.
+    const [width,setWidth] = React.useState('auto');
+
+    //On load callback for iFrame
     const onLoad = () => {
         //Remove loading spinner
         setIsLoading(false);
@@ -23,8 +29,8 @@ export default  function FormPreviewIFrame({formId,siteUrl,previewToken}){
             }
             //else, use form
             else{
-                    setWidth(form.scrollWidth);
-                    setHeight(form.scrollHeight);
+                setWidth(form.scrollWidth);
+                setHeight(form.scrollHeight);
             }
 
     };
@@ -32,15 +38,20 @@ export default  function FormPreviewIFrame({formId,siteUrl,previewToken}){
         <div className={'nf-iframe-container'}>
             <div className={'nf-iframe-overlay'}>
                 {isLoading && <Spinner/>}
-                <iframe onLoad={onLoad}
-                        scrolling={'no'}
-                        style={{
-                            width: 'initial'
-                        }}
-                        width={width ? width : 'auto'}
-                        src={`${siteUrl}?nf_preview_form=${formId}&nf_iframe=${previewToken}`}
-                        height={height ? height : 0}
-                        ref={ref=>iFrameRef.current = ref} />
+                <iframe
+                    //URL includes set form Id and nonce
+                    src={`${siteUrl}?nf_preview_form=${formId}&nf_iframe=${previewToken}`}
+                    //Capture ref
+                    ref={ref=>iFrameRef.current = ref}
+                    style={{
+                        //WordPress sets 100% width on iFrames, this overrides that.
+                        width: 'initial'
+                    }}
+                    onLoad={onLoad}
+                    scrolling={'no'}
+                    height={height ? height : 0}
+                    width={width ? width : 'auto'}
+                />
             </div>
         </div>
     )
