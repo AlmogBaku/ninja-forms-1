@@ -4,33 +4,30 @@ namespace NinjaForms\Achievements;
 
 add_action('admin_init', function() {
 
-    // Check user permissions.
-    if(!current_user_can( apply_filters( 'ninja_forms_admin_parent_menu_capabilities', 'manage_options' ) )) {
-        return;
-    }
+    $metrics = [
+        'formCount' => Metrics\Factory::makeFormCount(),
+        'submissionCount' => Metrics\Factory::makeSubmissionCount(),
+        'formDisplayCount' => Metrics\Factory::makeFormDisplayCount(),
+    ];
 
-    // Check site settings.
-    if( 1 === Ninja_Forms()->get_setting( 'disable_admin_notices', 0 ) ) { 
-        return;
-    }
-
-    $formCount = Metrics\Factory::makeFormCount();
-    $submisisonCount = Metrics\Factory::makeSubmissionCount();
-    $formDisplayCount = Metrics\Factory::makeFormDisplayCount();
-
-    $collection = ModelFactory::collectionFromArray(
-            include_once plugin_dir_path(__FILE__) . 'achievements.php'
-        )
-        ->where( 'metric', 'formDisplayCount' )
-        ->whereCallback( 'threshold', function( $item ) use ( $formDisplayCount ) {
-            return $formDisplayCount->isAtLeast( $item->get('threshold') );
+    $achievements = include_once plugin_dir_path(__FILE__) . 'achievements.php';
+    $collection = ModelFactory::collectionFromArray( $achievements )
+        ->whereCallback( 'threshold', function( $item ) use ( $metrics ) {
+            return $metrics[ $item->get('metric') ]->isAtLeast( $item->get('threshold') );
         })
     ;
 
     if($achievement = $collection->pop()) {
-        add_action( 'admin_notices', function() use  ( $achievement ) {
-            $view = new Views\AdminNotice( $achievement->message );
-            echo $view->render();
+
+        add_filter( 'nf_admin_notices', function( $notices ) use ( $achievement )  {
+            $notices[ $achievement->uid ] = [
+                'title' => esc_html__( $achievement->title, 'ninja-forms' ),
+                'msg' => $achievement->message,
+                'link' => $achievement->links,
+                'int' => 0,
+                'blacklist' => array( 'ninja-forms-three' ),
+            ];
+            return $notices;
         });
     }
 });
@@ -43,27 +40,3 @@ add_action( 'ninja_forms_before_container', function( $formId ) {
     $formDisplayCount++;
     update_option('ninja_forms_display_count', $formDisplayCount);
 }, 10, 1 );
-
-add_action( 'wp_ajax_ninja_forms_dismiss_notification', function() {
-
-    if(isset($_POST['noticeId'])){
-
-        $nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : false;
-        if ( ! wp_verify_nonce( $nonce, 'ninja_forms_dismiss_notification' ) ) {
-            // This nonce is not valid.
-            die( 'Security check' ); 
-        }
-
-        $noticeId = sanitize_text_field( $_POST['noticeId'] );
-        // @todo log notice as dismissed.
-        wp_die(1); // Don't forget to stop execution afterward.
-    }
-} );
-
-add_action( 'admin_enqueue_scripts', function() {
-    $script = include( plugin_dir_path( __FILE__ ) . 'assets/script.asset.php');
-    wp_register_script( 'ninja-forms-achievements', $script['source'], $script['dependencies'], $script['version'], $script['in_footer'] );
-    wp_localize_script( 'ninja-forms-achievements', 'ninjaFormsAchievements', [
-        'dismissNonce' => wp_create_nonce( 'ninja_forms_dismiss_notification' ),
-    ] );
-});

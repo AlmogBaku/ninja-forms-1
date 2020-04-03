@@ -4,9 +4,12 @@ namespace NinjaForms\Achievements;
 
 class Model
 {
+    public $uid;
     public $metric;
     public $threshold;
+    public $title;
     public $message;
+    public $links;
 
     public function get( $property )
     {
