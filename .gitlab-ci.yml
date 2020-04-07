@@ -12,8 +12,8 @@ before_script:
   - apt-get install git -yqq
 
   # Install MySQL client
-  - apt-get install default-mysql-client
-  - apt-get install default-libmysqlclient-dev
+  - apt-get -yqq install default-mysql-client
+  - apt-get -yqq install default-libmysqlclient-dev
 
   # install the required packages for the running CI tests
   - apt-get -yqqf install vim wget zip unzip subversion libmcrypt-dev --fix-missing
