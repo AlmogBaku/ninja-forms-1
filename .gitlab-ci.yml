@@ -20,11 +20,3 @@ phpunit:
     - php composer.phar install # Install all project dependencies
   script:
     - vendor/bin/phpunit -c phpunit-ci.xml.dist
-
-JavaScript tests
-    stage: unit
-    image: node:latest
-    script:
-      - cd wp-content/plugins/cf-mailchimp
-      - yarn
-      - npm run test:ci
