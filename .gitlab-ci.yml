@@ -11,8 +11,12 @@ before_script:
   - apt-get update -yqq
   - apt-get install git -yqq
 
-  # instll the required packages for the running CI tests
-  - apt-get -yqqf install vim wget zip unzip subversion mysql-client libmcrypt-dev libmysqlclient-dev --fix-missing
+  # Install MySQL client
+  - apt-get install default-mysql-client
+  - apt-get install default-libmysqlclient-dev
+
+  # install the required packages for the running CI tests
+  - apt-get -yqqf install vim wget zip unzip subversion libmcrypt-dev --fix-missing
 
   # Install mysql driver
   - docker-php-ext-install mysqli pdo_mysql mbstring
