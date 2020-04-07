@@ -7,13 +7,15 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - vendor/
+    - node_modules/
 
-phpunit:
+# PHP "Unit" Tests With WordPress
+PHP Unit Tests:
   stage: unit
   image: wordpress:5.4.0-php7.3-fpm
   before_script:
     - apt-get update -yqq
-    - apt-get install -yqq mariadb-client
+    - apt-get install -yqq mariadb-client # install Mariadb client
     - apt-get install git -yqq # Install git, the php image doesn't have installed
     - apt-get -yqqf install vim wget zip unzip subversion libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
     - curl -sS https://getcomposer.org/installer | php # Install composer
@@ -21,7 +23,8 @@ phpunit:
   script:
     - vendor/bin/phpunit -c phpunit-ci.xml.dist
 
-JavaScript tests:
+# JavaScript Unit Tests Without WordPress
+JavaScript Tests:
   stage: unit
   image: node:latest
   before_script:
