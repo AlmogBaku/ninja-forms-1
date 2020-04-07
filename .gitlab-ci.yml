@@ -13,7 +13,7 @@ phpunit:
   image: wordpress:5.4.0-php7.3-fpm
   before_script:
     - apt-get update -yqq
-    - apt get update -yqq mariadb-client
+    - apt-get update -yqq mariadb-client
     - apt-get install git -yqq # Install git, the php image doesn't have installed
     - apt-get -yqqf install vim wget zip unzip subversion libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
     - curl -sS https://getcomposer.org/installer | php # Install composer
