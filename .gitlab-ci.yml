@@ -20,3 +20,11 @@ phpunit:
     - php composer.phar install # Install all project dependencies
   script:
     - vendor/bin/phpunit -c phpunit-ci.xml.dist
+
+JavaScript tests:
+  stage: unit
+  image: node:latest
+  before_script:
+    - yarn
+  script:
+    - yarn test:ci
