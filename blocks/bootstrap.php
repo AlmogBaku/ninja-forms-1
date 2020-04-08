@@ -21,7 +21,6 @@ add_action('init', function () {
     register_block_type('ninja-forms/form', array_merge($block, [
         'title' => __('Ninja Form', 'ninja-form'),
         'render_callback' => function ($atts) {
-        var_dump($atts);exit;
             $formId = isset($atts['formId']) ? $atts['formId'] : 1;
             ob_start();
             Ninja_Forms()->display( absint($formId), true );

@@ -40,7 +40,7 @@ registerBlockType("ninja-forms/submissions-table", {
 			return (
 				<Placeholder>
 					<SelectControl
-						label="Select a form"
+						label="Select Form"
 						onChange={newFormId => props.setAttributes({ formId: newFormId })}
 						options={[{ key: 0, label: "-", value: 0 }].concat(formOptions)}
 					/>

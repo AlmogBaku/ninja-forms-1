@@ -1,9 +1,21 @@
 import React from "react";
-import { Placeholder, SelectControl } from "@wordpress/components";
+import { SelectControl, Placeholder } from "@wordpress/components";
 import { InspectorControls } from "@wordpress/block-editor";
 import useForms from "./useForms";
 import FormPreviewIFrame from "./FormPreviewIFrame";
+import { NinjaIcon } from "./icon";
 
+const BlockPlaceholder = props => {
+	return (
+		<Placeholder
+			icon={<div style={{ marginRight: "10px" }}>{NinjaIcon}</div>}
+			label="Ninja Form"
+			instructions="Display a form"
+		>
+			{props.children}
+		</Placeholder>
+	);
+};
 /**
  * Form chooser select control
  */
@@ -15,7 +27,7 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
 	}, [forms, asSelectOptions]);
 	return (
 		<SelectControl
-			label={labelText ? labelText : "Choose Form"}
+			label={labelText ? labelText : "Select Form"}
 			value={formId}
 			onChange={onChange}
 			options={options}
@@ -45,15 +57,15 @@ export default function Edit({
 
 	if (!formId) {
 		return (
-			<Placeholder>
+			<BlockPlaceholder>
 				<ChooseForm
-					label={labelText ? labelText : "Choose Form"}
+					label={labelText ? labelText : "Select Form"}
 					formId={formId}
 					forms={forms}
 					onChange={updateChosenForm}
 					labelText={labelText}
 				/>
-			</Placeholder>
+			</BlockPlaceholder>
 		);
 	}
 
