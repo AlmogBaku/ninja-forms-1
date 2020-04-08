@@ -10,10 +10,6 @@ require_once 'includes/Telemetry/MaxMetric.php';
 require_once 'includes/Telemetry/RepositoryInterface.php';
 require_once 'includes/Handlers/LocaleNumberFormatting.php';
 
-function update_option( $value ) {
-    return $value;
-}
-
 class NF_Telemetry_MockRepository implements NF_Telemetry_RepositoryInterface
 {
     protected $value;

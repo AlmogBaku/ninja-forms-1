@@ -406,11 +406,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 self::$instance->widgets[] = new NF_Widget();
 
                 /*
-                 * Gutenberg
-                 */
-                self::$instance->gutenblock = new NF_FormBlock();
-
-                /*
                  * Opt-In Tracking
                  */
                 self::$instance->tracking = new NF_Tracking();

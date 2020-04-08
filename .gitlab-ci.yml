@@ -6,29 +6,28 @@ stages:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-  - vendor/
+    - vendor/
+    - node_modules/
 
-codeception:
-  stage: acceptance
-  tags:
-    - juice
-  script:
-     - "docker stop $(docker ps -a -q)"
-     - "docker-compose build"
-     - "docker-compose run --rm codeception run -vvv --html --fail-fast"
-  artifacts:
-    when: on_failure
-    paths:
-      - tests/acceptance-tests/_output/
-    expire_in: 1 week
-
-phpunit:
+# PHP "Unit" Tests With WordPress
+PHP Unit Tests:
   stage: unit
-  image: wordpress:4.9.8-php7.1
+  image: wordpress:5.4.0-php7.3-fpm
+  before_script:
+    - apt-get update -yqq
+    - apt-get install -yqq mariadb-client # install Mariadb client
+    - apt-get install git -yqq # Install git, the php image doesn't have installed
+    - apt-get -yqqf install vim wget zip unzip subversion libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
+    - curl -sS https://getcomposer.org/installer | php # Install composer
+    - php composer.phar install # Install all project dependencies
   script:
-  - apt-get update -yqq
-  - apt-get install git -yqq # Install git, the php image doesn't have installed
-  - apt-get -yqqf install vim wget zip unzip subversion mysql-client libmcrypt-dev --fix-missing # instll the required packages for the running CI tests.
-  - curl -sS https://getcomposer.org/installer | php # Install composer
-  - php composer.phar install # Install all project dependencies
-  - vendor/bin/phpunit --bootstrap tests-bootstrap.php tests/includes/EmailTelemetryTest
+    - vendor/bin/phpunit -c phpunit-ci.xml.dist
+
+# JavaScript Unit Tests Without WordPress
+JavaScript Tests:
+  stage: unit
+  image: node:latest
+  before_script:
+    - yarn
+  script:
+    - yarn test:ci
