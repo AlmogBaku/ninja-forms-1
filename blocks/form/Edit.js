@@ -1,11 +1,8 @@
-import {
-	Placeholder,
-	SelectControl,
-} from "@wordpress/components";
+import React from "react";
+import { Placeholder, SelectControl } from "@wordpress/components";
 import { InspectorControls } from "@wordpress/block-editor";
 import useForms from "./useForms";
 import FormPreviewIFrame from "./FormPreviewIFrame";
-import {ServerSideRender} from "@wordpress/server-side-render";
 
 /**
  * Form chooser select control
@@ -35,11 +32,11 @@ export default function Edit({
 	setAttributes,
 	labelText,
 	siteUrl,
- 	previewToken
+	previewToken
 }) {
 	const { getFormTitle } = useForms({ forms });
-	const formTitle =  formId ? getFormTitle(formId) : '';
 	const updateChosenForm = formId => {
+		const formTitle = formId ? getFormTitle(formId) : "";
 		setAttributes({
 			formId: formId,
 			formTitle
@@ -70,7 +67,11 @@ export default function Edit({
 					labelText={labelText}
 				/>
 			</InspectorControls>
-			<FormPreviewIFrame siteUrl={siteUrl} previewToken={previewToken} formId={formId} />
+			<FormPreviewIFrame
+				siteUrl={siteUrl}
+				previewToken={previewToken}
+				formId={formId}
+			/>
 		</React.Fragment>
 	);
 }
