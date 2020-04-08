@@ -82,14 +82,38 @@ final class NF_Admin_Menus_Addons extends NF_Abstracts_Submenu
         }
 
         $groups = [
-            'popular' => self::filterItemsByCategroy( $items, 'form-function-design' ),
-            'documents' => self::filterItemsByCategroy( $items, 'file-management' ),
-            'payments' => self::filterItemsByCategroy( $items, 'payment-gateways' ),
-            'marketing' => self::filterItemsByCategroy( $items, 'email-marketing' ),
-            'website' => self::filterItemsByCategroy( $items, 'user-management' ),
-            'crm' => self::filterItemsByCategroy( $items, 'crm-integrations' ),
-            'notifications' => self::filterItemsByCategroy( $items, 'notification-workflow' ),
-            'misc' => self::filterItemsByCategroy( $items, 'custom-integrations' ),
+            'popular' => [
+                'title' => __( 'You Can Build Smart, Beautiful WordPress Forms!', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'form-function-design' ),
+            ],
+            'documents' => [
+                'title' => __( 'Better Document Sharing will Take Your Business Further', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'file-management' ),
+            ],
+            'payments' => [
+                'title' => __( 'Accept Payments & Donations Without Breaking the Bank', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'payment-gateways' ),
+            ],
+            'marketing' => [
+                'title' => __( 'Want to Attract More Subscribers to Your Mailing Lists?', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'email-marketing' ),
+            ],
+            'website' => [
+                'title' => __( 'Let Your Users Do More, and Do More for Your Users', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'user-management' ),
+            ],
+            'crm' => [
+                'title' => __( 'Generate More Leads Than You Ever Thought Possible', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'crm-integrations' ),
+            ],
+            'notifications' => [
+                'title' => __( 'Never Miss an Important Submission or Lead Again!', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'notification-workflow' ),
+            ],
+            'misc' => [
+                'title' => __( 'Don’t See Your Favorite Service Above? We Can Likely Still Help.', 'ninja-forms' ),
+                'items' => self::filterItemsByCategroy( $items, 'custom-integrations' ),
+            ],
         ];
         
 
