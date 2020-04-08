@@ -9,10 +9,14 @@ import {
 describe("Editor component", () => {
 	afterEach(cleanup);
 
-	it.skip("matches snapshot", () => {
+	it("matches snapshot", () => {
 		const props = { inside: <div>Inside Content</div> };
 
-		const { container } = render(<Placeholder {...props} />);
+		const { container } = render(
+			<Placeholder>
+				<div>Inside Content</div>
+			</Placeholder>
+		);
 
 		expect(container).toMatchSnapshot();
 	});
