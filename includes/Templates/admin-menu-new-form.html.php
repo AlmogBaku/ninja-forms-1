@@ -269,7 +269,9 @@
 
 <script id="tmpl-nf-drawer-content-add-action" type="text/template">
     <span id="nf-drawer-primary"></span>
-    <span id="nf-drawer-secondary"></span>
+    <div class="nf-actions-items-available">
+        <span id="nf-drawer-secondary"></span>
+    </div>
 </script>
 
 <script id="tmpl-nf-drawer-content-view-changes-item" type="text/template">
