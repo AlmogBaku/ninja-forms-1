@@ -15,11 +15,14 @@
     if ( !$u_id ) $u_id = apply_filters( 'ninja_forms_affiliate_id', false );
     ?>
 
-    <?php foreach( $groups as $group => $groupItems): ?>
+    <?php foreach( $groups as $slug => $group): ?>
 
-        <div id="<?php echo $group; ?>" class="apps-container">
+        <h3 id="<?php echo $slug; ?>"><?php echo $group[ 'title' ]; ?></h2>
 
-        <?php foreach ($groupItems as $item): ?>
+        <div class="apps-container">
+
+
+        <?php foreach ($group['items'] as $item): ?>
 
         <?php
             $link = $item[ 'link' ];
