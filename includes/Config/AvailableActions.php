@@ -49,7 +49,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
 
     'createposts'           => array(
         'name'              => 'createposts',
-        'nicename:'         => 'Front-End Posting',
+        'nicename'         => 'Front-End Posting',
         'link'              => 'https://ninjaforms.com/extensions/front-end-posting/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Front-End+Posting',
         'plugin_path'       => 'ninja-forms-post-creation/ninja-forms-post-creation.php',
         'modal_content'     => '<div class="available-action-modal">
@@ -84,7 +84,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'plugin_path'       => 'ninja-forms-slack/ninja-forms-slack.php',
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/slack.png"/>
-                                    <p>In order to use this action, you need Emma for Ninja Forms.</p>
+                                    <p>In order to use this action, you need Slack for Ninja Forms.</p>
                                     <p>Add users to Slack teams and send form submission data to a Slack channel using Ninja Forms.</p>
                                     <div class="actions">
                                         <a target="_blank" href="https://ninjaforms.com/extensions/slack/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Slack" title="Slack" class="primary nf-button">Learn More</a>
@@ -154,7 +154,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
 
     'emma'                  => array(
         'name'              => 'emma',
-        'nicename:'         => 'Emma',
+        'nicename'         => 'Emma',
         'link'              => 'https://ninjaforms.com/extensions/emma/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Emma',
         'plugin_path'       => '',
         'modal_content'     => '<div class="available-action-modal">
