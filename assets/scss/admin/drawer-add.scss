@@ -118,8 +118,8 @@
 }
 .nf-action-items {
     .nf-item {
-        height: 100px;
-        line-height: 75px;
+        height: 50px;
+        line-height: 30px;
         cursor: pointer;
         &.nf-has-img {
             background-position: center center;
@@ -143,8 +143,6 @@
 .nf-actions-items-available .nf-item {
     color: white;
     background-color: #ccc;
-    height: 50px;
-    line-height: 30px;
 }
 
 .nf-field-type-button {
