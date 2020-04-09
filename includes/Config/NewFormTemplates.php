@@ -97,8 +97,9 @@ $ads = array(
         'type'                          => 'ad',
         'modal-title'                   => 'Get Stripe for Ninja Forms',
         'modal-content'                 => '<div class="modal-template">
-                                                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WdFmgAffA50" allowfullscreen="" name="fitvid0" frameborder="0"></iframe></div>
+                                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/stripe.png"/>
                                                 <p>In order to use this template, you need Stripe for Ninja Forms.</p>
+                                                <p>Did you know you can accept credit card payments or donations from any form? Single payments, subscriptions, and more!</p>
                                                 <div class="actions">
                                                     <a target="_blank" href="https://ninjaforms.com/extensions/stripe/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Stripe+Payment" title="Stripe" class="primary nf-button">Learn More</a>
                                                 </div>

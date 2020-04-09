@@ -251,7 +251,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/stripe.png"/>
                                 <p>In order to use this action, you need Stripe for Ninja Forms.</p>
-                                <p>The Stripe extension allows you to <strong>accept credit card payments</strong> directly from your WordPress website using the secure Stripe Checkout process. Customers never leave your site, instead completing their payments from the customizable Stripe Checkout modal window.</p>
+                                <p>Did you know you can accept credit card payments or donations from any form? Single payments, subscriptions, and more!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/stripe/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Stripe" title="Stripe" class="primary nf-button">Learn More</a>
                                 </div>
