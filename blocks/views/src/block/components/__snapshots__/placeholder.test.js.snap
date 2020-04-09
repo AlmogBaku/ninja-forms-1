@@ -4,6 +4,7 @@ exports[`Editor component matches snapshot 1`] = `
 <div>
   <div
     class="components-placeholder is-small"
+    style="align-items: center;"
   >
     <iframe
       aria-hidden="true"
@@ -78,8 +79,12 @@ exports[`Editor component matches snapshot 1`] = `
     <div
       class="components-placeholder__fieldset"
     >
-      <div>
-        Inside Content
+      <div
+        style="margin: auto; width: 50%;"
+      >
+        <div>
+          Inside Content
+        </div>
       </div>
     </div>
   </div>

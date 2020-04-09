@@ -8,8 +8,16 @@ export default props => {
 			icon={<div style={{ marginRight: "10px" }}>{NinjaIcon}</div>}
 			label="Submissions Table"
 			instructions="Select a form to display the submissions."
+			style={{ alignItems: "center" }}
 		>
-			{props.children}
+			<div
+				style={{
+					margin: "auto",
+					width: "50%"
+				}}
+			>
+				{props.children}
+			</div>
 		</Placeholder>
 	);
 };
