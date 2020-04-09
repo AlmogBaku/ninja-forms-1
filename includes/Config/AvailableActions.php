@@ -75,7 +75,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/trello.png"/>
                                 <p>In order to use this action, you need Trello for Ninja Forms.</p>
-                                <p>This extension allows you to create Trello cards from you Ninja Forms submissions. You can control the card name and description from your form inputs, assign members to the card by default, set the card labels and its position. You can also set form inputs to be links attached to the cards.</p>
+                                <p>Create a new Trello card with data from any WordPress form submission. Map fields to card details, assign members and labels, upload images, embed links.</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/trello/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Trello" title="Trello" class="primary nf-button">Learn More</a>
                                 </div>
