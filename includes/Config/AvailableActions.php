@@ -107,7 +107,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/webhooks.png"/>
                                 <p>In order to use this action, you need WebHooks for Ninja Forms.</p>
-                                <p>Do you need to integrate your form with several different web services? Maybe you’d like to subscribe a user to a Feedblitz email list, or populate a remote CRM with your user’s submitted data. The Webhooks extension allows you to send form data to a remote URL using either a GET or POST request.</p>
+                                <p>Can\'t find a WordPress integration for the service you love? Send WordPress forms data to any external URL using a simple GET or POST request!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/webhooks/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=WebHooks" title="WebHooks" class="primary nf-button">Learn More</a>
                                 </div>
