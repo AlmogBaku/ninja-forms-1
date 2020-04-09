@@ -703,6 +703,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             unset( $form_settings_types[ 'uploads_modal' ] );
         }
 
+        if( class_exists( 'NF_Pdf_Submissions' ) ) {
+            unset( $form_settings_types[ 'pdf_modal' ] );
+        }
+
         ?>
         <script>
         var formSettingTypeData = <?php echo wp_json_encode( array_values( $form_settings_types ) )?>;
