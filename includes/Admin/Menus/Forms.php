@@ -630,6 +630,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 
             if( ! isset( $action[ 'name' ] ) || ! $action[ 'name' ] ) continue;
 
+            $group = ( isset( $action['group'] ) ) ? $action['group'] : '';
             $name = $action[ 'name' ];
             $nicename = ( isset( $action[ 'nicename' ] ) ) ? $action[ 'nicename' ] : '';
             $image = ( isset( $action[ 'image' ] ) ) ? $action[ 'image' ] : '';
@@ -647,6 +648,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 
             $action_type_settings[ $name ] = array(
                 'id' => $name,
+                'group' => $group,
                 'section' => 'available',
                 'nicename' => $nicename,
                 'image' => $image,
