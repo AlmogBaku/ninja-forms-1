@@ -4,6 +4,7 @@ import { InspectorControls } from "@wordpress/block-editor";
 import useForms from "./useForms";
 import FormPreviewIFrame from "./FormPreviewIFrame";
 import { NinjaIcon } from "./icon";
+import PropTypes from "prop-types";
 
 const BlockPlaceholder = props => {
 	return (
@@ -24,6 +25,11 @@ const BlockPlaceholder = props => {
 		</Placeholder>
 	);
 };
+
+BlockPlaceholder.propTypes = {
+	children: PropTypes.element.isRequired
+};
+
 /**
  * Form chooser select control
  */
@@ -43,14 +49,21 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
 	);
 };
 
+ChooseForm.propTypes = {
+	formId: PropTypes.string.isRequired,
+	forms: PropTypes.array.isRequired,
+	onChange: PropTypes.func.isRequired,
+	labelText: PropTypes.string
+};
+
 /**
  * Ninja Forms block UI
  */
 export default function Edit({
 	formId,
 	forms,
-	setAttributes,
 	labelText,
+	setAttributes,
 	siteUrl,
 	previewToken
 }) {
@@ -95,3 +108,12 @@ export default function Edit({
 		</React.Fragment>
 	);
 }
+
+Edit.propTypes = {
+	formId: PropTypes.string.isRequired,
+	forms: PropTypes.array.isRequired,
+	labelText: PropTypes.string,
+	setAttributes: PropTypes.func.isRequired,
+	siteUrl: PropTypes.string.isRequired,
+	previewToken: PropTypes.string.isRequired
+};
