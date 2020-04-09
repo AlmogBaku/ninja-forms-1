@@ -50,8 +50,8 @@ export const ChooseForm = ({ formId, forms, onChange, labelText }) => {
 };
 
 ChooseForm.propTypes = {
-	formId: PropTypes.string.isRequired,
-	forms: PropTypes.array.isRequired,
+	formId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	forms: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
 	onChange: PropTypes.func.isRequired,
 	labelText: PropTypes.string
 };
@@ -110,8 +110,8 @@ export default function Edit({
 }
 
 Edit.propTypes = {
-	formId: PropTypes.string.isRequired,
-	forms: PropTypes.array.isRequired,
+	formId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	forms: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
 	labelText: PropTypes.string,
 	setAttributes: PropTypes.func.isRequired,
 	siteUrl: PropTypes.string.isRequired,
