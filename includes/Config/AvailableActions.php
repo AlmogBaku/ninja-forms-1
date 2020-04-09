@@ -27,7 +27,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/zapier.png"/>
                                 <p>In order to use this action, you need Zapier for Ninja Forms.</p>
-                                <p>Zapier is the perfect ‘middle-man’ solution for connecting WordPress to almost any service that does not yet have an official integration. Simply install and activate this extension, and your WordPress forms become the bridge between your website and Zapier. From there, they connect you to the service of your choice.</p>
+                                <p>Don\'t see an add-on integration for a service you love? Don\'t worry! Connect WordPress to more than 1,500 different services through Zapier, no code required!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/zapier/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Zapier" title="Zapier" class="primary nf-button">Learn More</a>
                                 </div>
