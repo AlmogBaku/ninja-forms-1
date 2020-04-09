@@ -11,7 +11,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/mail-chimp.png"/>
                                     <p>In order to use this action, you need MailChimp for Ninja Forms.</p>
-                                    <p>The MailChimp extension allows you to quickly create newsletter signup forms for your MailChimp account using the power and flexibility that Ninja Forms provides.</p>
+                                    <p>Bring new life to your lists with upgraded Mailchimp signup forms for WordPress! Easy to build and customize with no code required.</p>
                                     <div class="actions">
                                         <a target="_blank" href="https://ninjaforms.com/extensions/mail-chimp/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=MailChimp" title="MailChimp" class="primary nf-button">Learn More</a>
                                     </div>
@@ -27,7 +27,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/zapier.png"/>
                                 <p>In order to use this action, you need Zapier for Ninja Forms.</p>
-                                <p>Zapier is the perfect ‘middle-man’ solution for connecting WordPress to almost any service that does not yet have an official integration. Simply install and activate this extension, and your WordPress forms become the bridge between your website and Zapier. From there, they connect you to the service of your choice.</p>
+                                <p>Don\'t see an add-on integration for a service you love? Don\'t worry! Connect WordPress to more than 1,500 different services through Zapier, no code required!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/zapier/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Zapier" title="Zapier" class="primary nf-button">Learn More</a>
                                 </div>
@@ -75,7 +75,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/trello.png"/>
                                 <p>In order to use this action, you need Trello for Ninja Forms.</p>
-                                <p>This extension allows you to create Trello cards from you Ninja Forms submissions. You can control the card name and description from your form inputs, assign members to the card by default, set the card labels and its position. You can also set form inputs to be links attached to the cards.</p>
+                                <p>Create a new Trello card with data from any WordPress form submission. Map fields to card details, assign members and labels, upload images, embed links.</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/trello/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Trello" title="Trello" class="primary nf-button">Learn More</a>
                                 </div>
@@ -91,7 +91,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/slack.png"/>
                                     <p>In order to use this action, you need Slack for Ninja Forms.</p>
-                                    <p>Add users to Slack teams and send form submission data to a Slack channel using Ninja Forms.</p>
+                                    <p>Get realtime Slack notifications in the workspace and channel of your choice with any new WordPress form submission. @Mention any team member!</p>
                                     <div class="actions">
                                         <a target="_blank" href="https://ninjaforms.com/extensions/slack/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Slack" title="Slack" class="primary nf-button">Learn More</a>
                                     </div>
@@ -107,7 +107,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/webhooks.png"/>
                                 <p>In order to use this action, you need WebHooks for Ninja Forms.</p>
-                                <p>Do you need to integrate your form with several different web services? Maybe you’d like to subscribe a user to a Feedblitz email list, or populate a remote CRM with your user’s submitted data. The Webhooks extension allows you to send form data to a remote URL using either a GET or POST request.</p>
+                                <p>Can\'t find a WordPress integration for the service you love? Send WordPress forms data to any external URL using a simple GET or POST request!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/webhooks/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=WebHooks" title="WebHooks" class="primary nf-button">Learn More</a>
                                 </div>
@@ -203,9 +203,25 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/twilio-sms.png"/>
                                 <p>In order to use this action, you need Twilio SMS for Ninja Forms.</p>
-                                <p>Send an SMS when someone submits your form via Twilio. SMS is a powerful way to send notifications to yourself or to your customers. Unlike other types of notifications,  90% of SMS are read within the first three minutes of delivery and have an open rate approaching 100%. </p>
+                                <p>Get instant SMS notifications with every new WordPress form submission. Respond to leads faster and make more personal connections!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/twilio-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Twilio+SMS" title="Twilio SMS" class="primary nf-button">Learn More</a>
+                                </div>
+                            </div>',
+    ),
+
+    'clicksend_sms'            => array(
+        'group'             => 'notifications',
+        'name'              => 'clicksend_sms',
+        'nicename'          => 'ClickSend SMS',
+        'link'              => 'https://ninjaforms.com/extensions/clicksend-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=ClickSend+SMS',
+        'plugin_path'       => 'ninja-forms-clicksend/ninja-forms-clicksend.php',
+        'modal_content'     => '<div class="available-action-modal">
+                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/clicksend-sms.png"/>
+                                <p>In order to use this action, you need ClickSend SMS for Ninja Forms.</p>
+                                <p>Get instant SMS notifications with every new WordPress form submission. Respond to leads faster and make more personal connections!</p>
+                                <div class="actions">
+                                    <a target="_blank" href="https://ninjaforms.com/extensions/clicksend-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=ClickSend+SMS" title="ClickSend SMS" class="primary nf-button">Learn More</a>
                                 </div>
                             </div>',
     ),
@@ -235,7 +251,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/stripe.png"/>
                                 <p>In order to use this action, you need Stripe for Ninja Forms.</p>
-                                <p>The Stripe extension allows you to <strong>accept credit card payments</strong> directly from your WordPress website using the secure Stripe Checkout process. Customers never leave your site, instead completing their payments from the customizable Stripe Checkout modal window.</p>
+                                <p>Did you know you can accept credit card payments or donations from any form? Single payments, subscriptions, and more!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/stripe/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Stripe" title="Stripe" class="primary nf-button">Learn More</a>
                                 </div>
@@ -243,6 +259,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'paypal'                => array(
+        'group'             => 'payments',
         'name'              => 'paypal',
         'nicename'          => 'PayPal Express',
         'link'              => 'https://ninjaforms.com/extensions/paypal-express/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PayPal+Express',
@@ -250,7 +267,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/paypal-express.png"/>
                                 <p>In order to use this action, you need PayPal Express for Ninja Forms.</p>
-                                <p>The PayPal Express extension allows you to <strong>accept credit card payments</strong> using the secure PayPall Checkout process.</p>
+                                <p>Did you know you can accept PayPal payments or donations from any form? Connect any form completely and securely to your PayPal Express account!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/paypal-express/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PayPal+Express" title="PayPal Express" class="primary nf-button">Learn More</a>
                                 </div>
@@ -266,7 +283,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/elavon.png"/>
                                 <p>In order to use this action, you need Elavon for Ninja Forms.</p>
-                                <p>With the Ninja Forms Elavon extension, you can connect your WordPress website directly to your merchant bank account and process credit card payments directly from your site.</p>
+                                <p>Did you know you can accept credit card payments or donations from any form? Connect any form completely and securely to your Elavon account!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/elavon/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Elavon" title="Elavon" class="primary nf-button">Learn More</a>
                                 </div>
@@ -369,6 +386,22 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
+    'helpscout'       => array(
+        'group'             => 'management',
+        'name'              => 'helpscout',
+        'nicename'          => 'Help Scout',
+        'link'              => 'https://ninjaforms.com/extensions/help-scout/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Help+Scout',
+        'plugin_path'       => 'ninja-forms-helpscout/ninja-forms-helpscout.php',
+        'modal_content'     => '<div class="available-action-modal">
+                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/help-scout.png"/>
+                                <p>In order to use this action, you need Help Scout for Ninja Forms.</p>
+                                <p>Build the perfect support form for your users that funnels them directly into your Help Scout account. A great support experience begins with your support form! </p>
+                                <div class="actions">
+                                    <a target="_blank" href="https://ninjaforms.com/extensions/help-scout/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Help+Scout" title="Help Scout" class="primary nf-button">Learn More</a>
+                                </div>
+                            </div>',
+    ),
+
     'salesforce-crm'        => array(
         'group'             => 'marketing',
         'name'              => 'salesforce-crm',
@@ -410,7 +443,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/recurly.png"/>
                                 <p>In order to use this action, you need Recurly for Ninja Forms.</p>
-                                <p>Recurly delivers agile enterprise-class subscription management to thousands of businesses worldwide. Together with Ninja Forms, any form on any page of your site can now become an avenue to introduce your customers to the subscription management umbrella of Recurly.</p>
+                                <p>You can use any form to sign up new members to a recurring subscription plan. Connect any form directly and securely to your Recurly account. </p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/recurly/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Recurly" title="Recurly" class="primary nf-button">Learn More</a>
                                 </div>
