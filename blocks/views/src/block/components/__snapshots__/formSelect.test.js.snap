@@ -12,7 +12,7 @@ exports[`Editor component matches snapshot 1`] = `
         class="components-base-control__label"
         for="inspector-select-control-0"
       >
-        Select a form
+        Select Form
       </label>
       <select
         class="components-select-control__input"

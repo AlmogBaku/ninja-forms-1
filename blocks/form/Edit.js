@@ -11,8 +11,16 @@ const BlockPlaceholder = props => {
 			icon={<div style={{ marginRight: "10px" }}>{NinjaIcon}</div>}
 			label="Ninja Form"
 			instructions="Display a form"
+			style={{ alignItems: "center" }}
 		>
-			{props.children}
+			<div
+				style={{
+					margin: "auto",
+					width: "50%"
+				}}
+			>
+				{props.children}
+			</div>
 		</Placeholder>
 	);
 };

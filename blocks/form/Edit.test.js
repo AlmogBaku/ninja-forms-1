@@ -1,8 +1,8 @@
 import Edit, { ChooseForm } from "./Edit";
 import { render, fireEvent } from "@testing-library/react";
 import forms from "./forms.fixture.js";
-const siteUrl  = 'https://ninjaforms.com';
-const	previewToken = 'fff';
+const siteUrl = "https://ninjaforms.com";
+const previewToken = "fff";
 describe("Form block Edit callback", () => {
 	it("Renders placeholder", () => {
 		const setAttributes = jest.fn();
@@ -56,7 +56,7 @@ describe("Form block Edit callback", () => {
 			/>
 		);
 
-		fireEvent.change(getByLabelText("Choose Form"), {
+		fireEvent.change(getByLabelText("Select Form"), {
 			target: { value: "3" }
 		});
 		expect(setAttributes).toBeCalledTimes(1);
