@@ -339,6 +339,11 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'register-user'       => array(
+<<<<<<< HEAD
+        'group'             => 'management',
+        'name'              => 'register-user',
+        'nicename'          => 'Register User',
+=======
         'group'             => 'management',
         'name'              => 'register-user',
         'nicename'          => 'Register User',
@@ -358,6 +363,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'group'             => 'management',
         'name'              => 'login-user',
         'nicename'          => 'Login User',
+>>>>>>> cf8e39e9a8264a16ea1fec7d253b8588545b8fd3
         'link'              => 'https://ninjaforms.com/extensions/user-management/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=User+Management',
         'plugin_path'       => 'ninja-forms-user-management/ninja-forms-user-management.php',
         'modal_content'     => '<div class="available-action-modal">
@@ -370,6 +376,25 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
+<<<<<<< HEAD
+    'login-user'       => array(
+        'group'             => 'management',
+        'name'              => 'login-user',
+        'nicename'          => 'Login User',
+        'link'              => 'https://ninjaforms.com/extensions/user-management/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=User+Management',
+        'plugin_path'       => 'ninja-forms-user-management/ninja-forms-user-management.php',
+        'modal_content'     => '<div class="available-action-modal">
+                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/user-management.png"/>
+                                <p>In order to use this action, you need User Management for Ninja Forms.</p>
+                                <p>With User Management for Ninja Forms, you can:<ul><li>Register new users</li><li>Login registered users</li><li>Allow users to update their existing profiles</li></p>
+                                <div class="actions">
+                                    <a target="_blank" href="https://ninjaforms.com/extensions/user-management/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=User+Management" title="User Management" class="primary nf-button">Learn More</a>
+                                </div>
+                            </div>',
+    ),
+
+=======
+>>>>>>> cf8e39e9a8264a16ea1fec7d253b8588545b8fd3
     'update-profile'       => array(
         'group'             => 'management',
         'name'              => 'update-profile',
