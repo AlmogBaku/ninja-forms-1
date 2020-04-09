@@ -4,7 +4,7 @@
  * @package Ninja Forms
  * @subpackage Dashboard
  * @copyright (c) 2017 WP Ninjas
- * @since 3.2
+ * @since 3.4.25
  */
 define( [
     'models/formTemplateCollection',
