@@ -699,6 +699,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             $form_settings_types[ $id ]['settingDefaults'] = $this->_setting_defaults($unique_settings);
         }
 
+        if( function_exists( 'NF_File_Uploads' ) ) {
+            unset( $form_settings_types[ 'uploads_modal' ] );
+        }
+
         ?>
         <script>
         var formSettingTypeData = <?php echo wp_json_encode( array_values( $form_settings_types ) )?>;

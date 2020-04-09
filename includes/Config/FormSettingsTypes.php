@@ -17,8 +17,8 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
     	'nicename' 		=> esc_html__( 'Calculations', 'ninja-forms')
     ),
 
-    'uploads' 		=> array(
-    	'id' 			=> 'uploads',
+    'uploads_modal' 		=> array(
+    	'id' 			=> 'uploads_modal',
         'nicename' 		=> esc_html__( 'File Uploads', 'ninja-forms'),
         'modal-content'                 => '<div class="available-settings-modal">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/file-uploads.png"/>
