@@ -259,6 +259,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'paypal'                => array(
+        'group'             => 'payments',
         'name'              => 'paypal',
         'nicename'          => 'PayPal Express',
         'link'              => 'https://ninjaforms.com/extensions/paypal-express/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PayPal+Express',
@@ -266,7 +267,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/paypal-express.png"/>
                                 <p>In order to use this action, you need PayPal Express for Ninja Forms.</p>
-                                <p>The PayPal Express extension allows you to <strong>accept credit card payments</strong> using the secure PayPall Checkout process.</p>
+                                <p>Did you know you can accept PayPal payments or donations from any form? Connect any form completely and securely to your PayPal Express account!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/paypal-express/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PayPal+Express" title="PayPal Express" class="primary nf-button">Learn More</a>
                                 </div>

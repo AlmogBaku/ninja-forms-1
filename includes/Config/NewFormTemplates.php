@@ -131,7 +131,7 @@ $ads = array(
         'modal-content'                 => '<div class="modal-template">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/paypal-express.png"/>
                                                 <p>In order to use this template, you need PayPal Express for Ninja Forms.</p>
-                                                <p>PayPal Express allows you to accept payments using Ninja Forms. It leverages the powerful processing engine that runs each Ninja Form to get a total, perform a checkout, and send your users to PayPal to complete their transaction.</p>
+                                                <p>Did you know you can accept PayPal payments or donations from any form? Connect any form completely and securely to your PayPal Express account!</p>
                                                 <div class="actions">
                                                     <a target="_blank" href="https://ninjaforms.com/extensions/paypal-express/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Paypal+Payment
                                                     " title="PayPal Express" class="primary nf-button">Learn More</a>
