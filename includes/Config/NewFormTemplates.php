@@ -83,7 +83,7 @@ $ads = array(
         'modal-content'                 => '<div class="modal-template">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/mail-chimp.png"/>
                                                 <p>In order to use this template, you need MailChimp for Ninja Forms.</p>
-                                                <p>The MailChimp extension allows you to quickly create newsletter signup forms for your MailChimp account using the power and flexibility that Ninja Forms provides.</p>
+                                                <p>Bring new life to your lists with upgraded Mailchimp signup forms for WordPress! Easy to build and customize with no code required.</p>
                                                 <div class="actions">
                                                     <a target="_blank" href="https://ninjaforms.com/extensions/mail-chimp/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Mailchimp+Signup" title="MailChimp" class="primary nf-button">Learn More</a>
                                                 </div>
