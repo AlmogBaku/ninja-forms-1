@@ -442,7 +442,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/recurly.png"/>
                                 <p>In order to use this action, you need Recurly for Ninja Forms.</p>
-                                <p>Recurly delivers agile enterprise-class subscription management to thousands of businesses worldwide. Together with Ninja Forms, any form on any page of your site can now become an avenue to introduce your customers to the subscription management umbrella of Recurly.</p>
+                                <p>You can use any form to sign up new members to a recurring subscription plan. Connect any form directly and securely to your Recurly account. </p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/recurly/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Recurly" title="Recurly" class="primary nf-button">Learn More</a>
                                 </div>
