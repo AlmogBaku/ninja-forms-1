@@ -8,7 +8,7 @@
  */
 define( ['models/actions/typeModel'], function( actionTypeModel ) {
 	var collection = Backbone.Collection.extend( {
-		model: actionTypeModel
+		model: actionTypeModel,
 	} );
 	return collection;
 } );
