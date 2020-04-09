@@ -22,9 +22,13 @@ return [
         'uid' => 'firstSubmissionsReview',
         'metric' => 'submissionCount',
         'threshold' => 1,
-        'title' => 'Congratulations on your first form submission!',
+        'title' => 'How\' it going?',
         'message' => 'Loving Ninja Forms? If you have an extra 60 seconds, showing your support with a 5 star review helps us grow!',  
-        'links' => '<li><a href="#">Yes, Ninja Forms is pretty awesome!</a></li>',
+        'links' => '
+            <li><a href="#">Checkout our documentation</a></li>
+            <li><a href="#">Get help</a></li>
+            <li><a href="#">Dismiss</a></li>
+        ',
     ],
 
     // [
