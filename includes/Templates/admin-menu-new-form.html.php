@@ -219,6 +219,14 @@
         <tbody>
         </tbody>
     </table>
+
+    <div class="nf-action-table-callout">      
+            <h3 class="nf-action-table-callout--header">You can do much more with your forms!</h3>
+            <p class="nf-action-table-callout--content">
+                Add more form actions to customize your form.
+            </p>
+    </div>
+
 </script>
 
 <script id="tmpl-nf-action-item" type="text/template">

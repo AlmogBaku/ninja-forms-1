@@ -113,3 +113,21 @@
         top: 12px;
     }
 }
+
+.nf-action-table-callout {
+    display: block;
+    margin-top: 40px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 8px;
+    color: #23282d;
+    background-color: #ebedee;
+    position: relative;
+
+    .nf-action-table-callout--header {
+        font-size:24px;
+    }
+    .nf-action-table-callout--content {
+        font-size:18px;
+    }
+}
