@@ -91,7 +91,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/slack.png"/>
                                     <p>In order to use this action, you need Slack for Ninja Forms.</p>
-                                    <p>Add users to Slack teams and send form submission data to a Slack channel using Ninja Forms.</p>
+                                    <p>Get realtime Slack notifications in the workspace and channel of your choice with any new WordPress form submission. @Mention any team member!</p>
                                     <div class="actions">
                                         <a target="_blank" href="https://ninjaforms.com/extensions/slack/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Slack" title="Slack" class="primary nf-button">Learn More</a>
                                     </div>
