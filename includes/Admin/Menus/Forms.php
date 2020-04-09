@@ -657,6 +657,14 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             );
         }
 
+        /**
+         * Remove some action types if Builder Dev Mode is not enabled.
+         */
+        if( 1 != Ninja_Forms()->get_setting('builder_dev_mode') ) {
+            /** Remove the WP Hook (custom) action. */
+            unset( $action_type_settings[ 'custom' ] );
+        }
+
         $action_type_settings = apply_filters( 'ninja_forms_action_type_settings', $action_type_settings );
 
         ?>
