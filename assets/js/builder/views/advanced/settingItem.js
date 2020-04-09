@@ -16,7 +16,20 @@ define( [], function() {
 		},
 
 		clickEdit: function( e ) {
-			nfRadio.channel( 'settings' ).trigger( 'click:edit', e, this.model );
+			
+			if ( ! this.model.get( 'modal-content' ) ) {
+				nfRadio.channel( 'settings' ).trigger( 'click:edit', e, this.model );
+			} else {
+				new jBox( 'Modal', {
+				  content: this.model.get( 'modal-content' ),
+				  zIndex:99999999,
+				  closeButton: 'box',
+				  overlay: true,
+				  width: 600,
+				  repositionOnOpen: true,
+				  reposition: true
+				}).open();
+			}
 		},
 
 		templateHelpers: function() {
