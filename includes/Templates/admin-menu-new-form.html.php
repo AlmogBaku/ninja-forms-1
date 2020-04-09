@@ -269,7 +269,15 @@
 
 <script id="tmpl-nf-drawer-content-add-action" type="text/template">
     <span id="nf-drawer-primary"></span>
-    <span id="nf-drawer-secondary"></span>
+    <!-- <span id="nf-drawer-secondary"></span> -->
+    <span id="nf-drawer-secondary-payments"></span>
+    <span id="nf-drawer-secondary-marketing"></span>
+    <span id="nf-drawer-secondary-management"></span>
+    <span id="nf-drawer-secondary-workflow"></span>
+    <span id="nf-drawer-secondary-notifications"></span>
+    <span id="nf-drawer-secondary-misc"></span>
+
+
 </script>
 
 <script id="tmpl-nf-drawer-content-view-changes-item" type="text/template">

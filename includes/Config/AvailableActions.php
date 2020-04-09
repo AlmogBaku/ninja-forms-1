@@ -3,6 +3,7 @@
 return apply_filters( 'ninja_forms_available_actions', array(
 
     'mailchimp'             => array(
+        'group'             => 'marketing',
         'name'              => 'mailchimp',
         'nicename'          => 'MailChimp',
         'link'              => 'https://ninjaforms.com/extensions/mail-chimp/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=MailChimp',
@@ -18,6 +19,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'zapier'                => array(
+        'group'             => 'misc',
         'name'              => 'zapier',
         'nicename'          => 'Zapier',
         'link'              => 'https://ninjaforms.com/extensions/zapier/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Zapier',
@@ -33,6 +35,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'file_uploads'          => array(
+        'group'             => 'popular',
         'name'              => 'file_uploads',
         'nicename'          => 'File Uploads',
         'link'              => 'https://ninjaforms.com/extensions/file-uploads/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=File+Uploads',
@@ -48,6 +51,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'createposts'           => array(
+        'group'             => 'management',
         'name'              => 'createposts',
         'nicename'         => 'Front-End Posting',
         'link'              => 'https://ninjaforms.com/extensions/front-end-posting/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Front-End+Posting',
@@ -63,6 +67,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'trello'                => array(
+        'group'             => 'workflow',
         'name'              => 'trello',
         'nicename'          => 'Trello',
         'link'              => 'https://ninjaforms.com/extensions/trello/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Trello',
@@ -78,6 +83,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'slack'                 => array(
+        'group'             => 'notifications',
         'name'              => 'slack',
         'nicename'          => 'Slack',
         'link'              => 'https://ninjaforms.com/extensions/slack/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Slack',
@@ -93,6 +99,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'webhooks'              => array(
+        'group'             => 'misc',
         'name'              => 'webhooks',
         'nicename'          => 'WebHooks',
         'link'              => 'https://ninjaforms.com/extensions/webhooks/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=WebHooks',
@@ -108,6 +115,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'campaignmonitor'       => array(
+        'group'             => 'marketing',
         'name'              => 'campaignmonitor',
         'nicename'          => 'Campaign Monitor',
         'link'              => 'https://ninjaforms.com/extensions/campaign-monitor/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Campaign+Monitor',
@@ -123,6 +131,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'constantcontact'       => array(
+        'group'             => 'marketing',
         'name'              => 'constantcontact',
         'nicename'          => 'Constant Contact',
         'link'              => 'https://ninjaforms.com/extensions/constant-contact/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Constant+Contact',
@@ -138,6 +147,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'aweber'                => array(
+        'group'             => 'marketing',
         'name'              => 'aweber',
         'nicename'          => 'AWeber',
         'link'              => 'https://ninjaforms.com/extensions/aweber/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=AWeber',
@@ -153,6 +163,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'emma'                  => array(
+        'group'             => 'marketing',
         'name'              => 'emma',
         'nicename'         => 'Emma',
         'link'              => 'https://ninjaforms.com/extensions/emma/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Emma',
@@ -168,6 +179,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'webmerge'              => array(
+        'group'             => 'workflow',
         'name'              => 'webmerge',
         'nicename'          => 'WebMerge',
         'link'              => 'https://ninjaforms.com/extensions/webmerge/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=WebMerge',
@@ -183,6 +195,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'twilio_sms'            => array(
+        'group'             => 'notifications',
         'name'              => 'twilio_sms',
         'nicename'          => 'Twilio SMS',
         'link'              => 'https://ninjaforms.com/extensions/twilio-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Twilio+SMS',
@@ -198,6 +211,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'email_octopus'         => array(
+        'group'             => 'marketing',
         'name'              => 'email_octopus',
         'nicename'          => 'EmailOctopus',
         'link'              => 'https://ninjaforms.com/extensions/emailoctopus/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=EmailOctopus',
@@ -213,6 +227,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'stripe'                => array(
+        'group'             => 'payments',
         'name'              => 'stripe',
         'nicename'          => 'Stripe',
         'link'              => 'https://ninjaforms.com/extensions/stripe/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Stripe',
@@ -228,6 +243,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'elavon'                => array(
+        'group'             => 'payments',
         'name'              => 'elavon',
         'nicename'          => 'Elavon',
         'link'              => 'https://ninjaforms.com/extensions/elavon/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Elavon',
@@ -243,6 +259,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'pipelinedeals-crm'      => array(
+        'group'             => 'marketing',
         'name'              => 'pipelinedeals-crm',
         'nicename'          => 'PipelineDeals CRM',
         'link'              => 'https://ninjaforms.com/extensions/pipelinedeals-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PipelineDeals+CRM',
@@ -258,6 +275,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'active-campaign'       => array(
+        'group'             => 'marketing',
         'name'              => 'active-campaign',
         'nicename'          => 'Active Campaign',
         'link'              => 'https://ninjaforms.com/extensions/active-campaign/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Active+Campaign',
@@ -273,6 +291,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'insightly-crm'         => array(
+        'group'             => 'marketing',
         'name'              => 'insightly-crm',
         'nicename'          => 'Insightly CRM',
         'link'              => 'https://ninjaforms.com/extensions/insightly-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Insightly+CRM',
@@ -288,6 +307,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'user-management'       => array(
+        'group'             => 'management',
         'name'              => 'user-management',
         'nicename'          => 'User Management',
         'link'              => 'https://ninjaforms.com/extensions/user-management/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=User+Management',
@@ -303,6 +323,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'salesforce-crm'        => array(
+        'group'             => 'marketing',
         'name'              => 'salesforce-crm',
         'nicename'          => 'Salesforce CRM',
         'link'              => 'https://ninjaforms.com/extensions/salesforce-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Salesforce+CRM',
@@ -318,6 +339,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'capsule-crm'           => array(
+        'group'             => 'marketing',
         'name'              => 'capsule-crm',
         'nicename'          => 'Capsule CRM',
         'link'              => 'https://ninjaforms.com/extensions/capsule-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Capsule+CRM',
@@ -333,6 +355,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'recurly'               => array(
+        'group'             => 'payments',
         'name'              => 'recurly',
         'nicename'          => 'Recurly',
         'link'              => 'https://ninjaforms.com/extensions/recurly/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Recurly',
@@ -348,6 +371,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'highrise-crm'          => array(
+        'group'             => 'marketing',
         'name'              => 'highrise-crm',
         'nicename'          => 'Highrise CRM',
         'link'              => 'https://ninjaforms.com/extensions/highrise-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Highrise+CRM',
@@ -363,6 +387,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     ),
 
     'onepage-crm'           => array(
+        'group'             => 'marketing',
         'name'              => 'onepage-crm',
         'nicename'          => 'OnePage CRM',
         'link'              => 'https://ninjaforms.com/extensions/onepage-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=OnePage+CRM',
