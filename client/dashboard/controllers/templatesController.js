@@ -40,8 +40,8 @@ define([ 'models/formTemplateModel', 'models/formTemplateCollection' ], function
         sortTemplates: function( collection ) {
             var that = this;
             collection.each(function(model){
-                if ( 'undefined' == typeof( model.get('type') ) ) {
-
+                if ( 'undefined' == typeof model.get('type') ) {
+                    return;
                 } else if ( 'ad' == model.get('type') ) {
                     that.available.add( new Backbone.Model( model.toJSON() ) );
                 } else {

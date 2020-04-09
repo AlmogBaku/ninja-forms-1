@@ -37,9 +37,7 @@ define( [
 
         onRender: function() {
             var collection = nfRadio.channel( 'dashboard' ).request( 'get:formTemplates' );
-            if( 'undefined' == typeof collection ) {
-                // this.showChildView('body', new TableLoadingView());
-            } else {
+            if( 'undefined' != typeof collection ) {
                 this.showChildView( 'installed', new SectionView( { collection: nfRadio.channel('dashboard').request('get:installedFormTemplates') } ) );
                 this.showChildView( 'available', new SectionView( { collection: nfRadio.channel('dashboard').request('get:availableFormTemplates') } ) );
             }

@@ -235,13 +235,13 @@
 
 <!-- Widget: Forms - New Forms Template grid -->
 <script id="tmpl-nf-widget-templates-grid" type="text/template">
-<span class="section-head">
+<header class="section-head screen-reader-text">
 <?php esc_html_e( 'Available Templates', 'ninja-forms' ); ?>
-</span>
+</header>
 <div class="installed"></div>
-<span class="section-head">
+<header class="section-head">
 <?php esc_html_e( 'Additional Templates', 'ninja-forms' ); ?>
-</span>
+</header>
 <div class="available"></div>
 </script>
 
