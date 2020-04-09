@@ -707,6 +707,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             unset( $form_settings_types[ 'pdf_modal' ] );
         }
 
+        if( function_exists( 'NF_Layouts' ) ) {
+            unset( $form_settings_types[ 'layouts_styles_modal' ] );
+        }
+
         ?>
         <script>
         var formSettingTypeData = <?php echo wp_json_encode( array_values( $form_settings_types ) )?>;

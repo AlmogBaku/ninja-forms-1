@@ -46,4 +46,17 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
                                             </div>',
     ),
 
+    'layouts_styles_modal' 		=> array(
+    	'id' 			=> 'layouts_styles_modal',
+        'nicename' 		=> esc_html__( 'Layouts & Styles', 'ninja-forms'),
+        'modal-content'                 => '<div class="available-settings-modal">
+                                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/layout-styles.png"/>
+                                                <p>In order to use this feature, you need Layouts & Styles for Ninja Forms.</p>
+                                                <p>Drag & drop rows and columns, custom backgrounds, borders, & more without writing a single line of code. You just need Layout & Styles!</p>
+                                                <div class="actions">
+                                                    <a target="_blank" href="https://ninjaforms.com/extensions/layout-styles/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Layout+Styles" title="Layout & Styles" class="primary nf-button">Learn More</a>
+                                                </div>
+                                            </div>',
+    ),
+
 ));
