@@ -282,7 +282,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/elavon.png"/>
                                 <p>In order to use this action, you need Elavon for Ninja Forms.</p>
-                                <p>With the Ninja Forms Elavon extension, you can connect your WordPress website directly to your merchant bank account and process credit card payments directly from your site.</p>
+                                <p>Did you know you can accept credit card payments or donations from any form? Connect any form completely and securely to your Elavon account!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/elavon/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Elavon" title="Elavon" class="primary nf-button">Learn More</a>
                                 </div>
