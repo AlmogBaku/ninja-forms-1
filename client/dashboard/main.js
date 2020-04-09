@@ -11,7 +11,7 @@ if( ! useServices ){
 }
 
 jQuery( document ).ready( function( $ ) {
-    require( [ 'controllers/formsController', 'controllers/oauthController', 'controllers/servicesController', 'views/dashboardView' ], function( FormsController, OAuthController, ServicesController, DashboardView ) {
+    require( [ 'controllers/formsController', 'controllers/oauthController', 'controllers/servicesController', 'controllers/templatesController', 'views/dashboardView' ], function( FormsController, OAuthController, ServicesController, TemplatesController, DashboardView ) {
 
         var NinjaFormsDashboard = Marionette.Application.extend( {
 
@@ -40,6 +40,7 @@ jQuery( document ).ready( function( $ ) {
                 this.showView( new DashboardView() );
 
                 this.controllers.forms = new FormsController();
+                this.controllers.templates = new TemplatesController();
                 if( useServices ) this.controllers.oauth = new OAuthController();
                 if( useServices ) this.controllers.services = new ServicesController();
 
