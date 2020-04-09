@@ -203,7 +203,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
         'modal_content'     => '<div class="available-action-modal">
                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/twilio-sms.png"/>
                                 <p>In order to use this action, you need Twilio SMS for Ninja Forms.</p>
-                                <p>Send an SMS when someone submits your form via Twilio. SMS is a powerful way to send notifications to yourself or to your customers. Unlike other types of notifications,  90% of SMS are read within the first three minutes of delivery and have an open rate approaching 100%. </p>
+                                <p>Get instant SMS notifications with every new WordPress form submission. Respond to leads faster and make more personal connections!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/twilio-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Twilio+SMS" title="Twilio SMS" class="primary nf-button">Learn More</a>
                                 </div>
