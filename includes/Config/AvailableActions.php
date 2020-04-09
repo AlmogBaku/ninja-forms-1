@@ -385,6 +385,22 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
+    'helpscout'       => array(
+        'group'             => 'management',
+        'name'              => 'helpscout',
+        'nicename'          => 'Help Scout',
+        'link'              => 'https://ninjaforms.com/extensions/help-scout/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Help+Scout',
+        'plugin_path'       => 'ninja-forms-helpscout/ninja-forms-helpscout.php',
+        'modal_content'     => '<div class="available-action-modal">
+                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/help-scout.png"/>
+                                <p>In order to use this action, you need Help Scout for Ninja Forms.</p>
+                                <p>Build the perfect support form for your users that funnels them directly into your Help Scout account. A great support experience begins with your support form! </p>
+                                <div class="actions">
+                                    <a target="_blank" href="https://ninjaforms.com/extensions/help-scout/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Help+Scout" title="Help Scout" class="primary nf-button">Learn More</a>
+                                </div>
+                            </div>',
+    ),
+
     'salesforce-crm'        => array(
         'group'             => 'marketing',
         'name'              => 'salesforce-crm',
