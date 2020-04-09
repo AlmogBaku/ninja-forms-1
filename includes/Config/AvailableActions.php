@@ -210,6 +210,22 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
+    'clicksend_sms'            => array(
+        'group'             => 'notifications',
+        'name'              => 'clicksend_sms',
+        'nicename'          => 'ClickSend SMS',
+        'link'              => 'https://ninjaforms.com/extensions/clicksend-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=ClickSend+SMS',
+        'plugin_path'       => 'ninja-forms-clicksend/ninja-forms-clicksend.php',
+        'modal_content'     => '<div class="available-action-modal">
+                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/clicksend-sms.png"/>
+                                <p>In order to use this action, you need ClickSend SMS for Ninja Forms.</p>
+                                <p>Get instant SMS notifications with every new WordPress form submission. Respond to leads faster and make more personal connections!</p>
+                                <div class="actions">
+                                    <a target="_blank" href="https://ninjaforms.com/extensions/clicksend-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=ClickSend+SMS" title="ClickSend SMS" class="primary nf-button">Learn More</a>
+                                </div>
+                            </div>',
+    ),
+
     'email_octopus'         => array(
         'group'             => 'marketing',
         'name'              => 'email_octopus',
