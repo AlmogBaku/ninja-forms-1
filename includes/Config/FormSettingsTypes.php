@@ -22,7 +22,7 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
         'nicename' 		=> esc_html__( 'File Uploads', 'ninja-forms'),
         'modal-content'                 => '<div class="available-settings-modal">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/file-uploads.png"/>
-                                                <p>In order to use this template, you need File Uploads for Ninja Forms.</p>
+                                                <p>In order to use this feature, you need File Uploads for Ninja Forms.</p>
                                                 <p>
                                                 Let users upload any file to your website with File Uploads! Restrict by file type and size. Upload to server, media library, or your favorite cloud service.</p>
                                                 <div class="actions">
@@ -37,11 +37,10 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
         'nicename' 		=> esc_html__( 'PDF Submissions', 'ninja-forms'),
         'modal-content'                 => '<div class="available-settings-modal">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/pdf-form-submission.png"/>
-                                                <p>In order to use this template, you need File Uploads for Ninja Forms.</p>
+                                                <p>In order to use this feature, you need PDF Form Submissions for Ninja Forms.</p>
                                                 <p>Deliver by email or export any form submission as a customizable, business professional PDF file. Add company info, logo, and more!</p>
                                                 <div class="actions">
-                                                    <a target="_blank" href="https://ninjaforms.com/extensions/stripe/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=File+Upload
-                                                    " title="File Uploads" class="primary nf-button">Learn More</a>
+                                                    <a target="_blank" href="https://ninjaforms.com/extensions/pdf-form-submissions/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=PDF+Form+Submissions" title="PDF Form Submissions" class="primary nf-button">Learn More</a>
                                                 </div>
                                             </div>',
     ),
