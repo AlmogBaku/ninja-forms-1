@@ -715,6 +715,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             unset( $form_settings_types[ 'multi_part_forms_modal' ] );
         }
 
+        if( class_exists( 'NF_ConditionalLogic', false ) ) {
+            unset( $form_settings_types[ 'conditional_logic_modal' ] );
+        }
+
         ?>
         <script>
         var formSettingTypeData = <?php echo wp_json_encode( array_values( $form_settings_types ) )?>;

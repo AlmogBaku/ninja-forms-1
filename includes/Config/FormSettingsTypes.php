@@ -71,4 +71,17 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
                                             </div>',
     ),
 
+    'conditional_logic_modal' 		=> array(
+    	'id' 			=> 'conditional_logic_modal',
+        'nicename' 		=> esc_html__( 'Conditional Logic', 'ninja-forms'),
+        'modal-content'                 => '<div class="available-settings-modal">
+                                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/conditional-logic.png"/>
+                                                <p>In order to use this feature, you need Conditional Logic for Ninja Forms.</p>
+                                                <p>Show & hide fields and form pages, selectively send email, & much more! Build professional quality forms easily with Conditional Logic.</p>
+                                                <div class="actions">
+                                                    <a target="_blank" href="https://ninjaforms.com/extensions/conditional-logic/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Conditional+Logic" title="Conditional Logic" class="primary nf-button">Learn More</a>
+                                                </div>
+                                            </div>',
+    ),
+
 ));
