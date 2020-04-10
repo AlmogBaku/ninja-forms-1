@@ -140,6 +140,15 @@ class NF_Admin_CPT_Submission
             unset( $actions[ 'inline hide-if-no-js' ] );
             $export_url = add_query_arg( array( 'action' => 'export', 'post[]' => $sub->ID ) );
             $actions[ 'export' ] = sprintf( '<a href="%s">%s</a>', $export_url, esc_html__( 'Export', 'ninja-forms' ) );
+
+            // If PDF Form Submissions is not active, show a placeholder element.
+            if( ! class_exists( 'NF_Pdf_Submissions', false ) ) {
+                // @TODO implement modal for Export to PDF action.
+                $actions[ 'export_to_pdf_modal' ] = sprintf( '<a href="%s" style="color: #DDD;" class="export">%s</a>',
+                    'https://ninjaforms.com/extensions/pdf-form-submission/?utm_source=Ninja+Forms+Plugin&utm_medium=Submissions&utm_campaign=Export+To+PDF+Action&utm_content=PDF+Form+Submissions',
+                    esc_html__( 'Export To PDF', 'ninja-forms' )
+                );
+            }
         }
 
         return $actions;
