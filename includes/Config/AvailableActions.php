@@ -53,7 +53,7 @@ return apply_filters( 'ninja_forms_available_actions', array(
     'createposts'           => array(
         'group'             => 'management',
         'name'              => 'createposts',
-        'nicename:'         => 'Create Post',
+        'nicename'         => 'Create Post',
         'link'              => 'https://ninjaforms.com/extensions/front-end-posting/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Front-End+Posting',
         'plugin_path'       => 'ninja-forms-post-creation/ninja-forms-post-creation.php',
         'modal_content'     => '<div class="available-action-modal">
