@@ -65,6 +65,54 @@ return apply_filters( 'ninja_forms_available_actions', array(
                                 </div>',
     ),
 
+    'crms'             => array(
+        'group'             => 'marketing',
+        'name'              => 'crms',
+        'nicename'          => 'CRMs',
+        'modal_content'     => '<div class="available-action-modal">
+                                    <p>In order to use this action, you need a CRM Add-on for Ninja Forms.</p>
+                                    <p>Getting leads from your WordPress to your CRM is a bare bone basic. You should expect so much more. Build dynamic, irresistible lead generation forms that call prospects to your CTAs. Rank leads as they come in, make sure the right team or team member is immediately notified, and so much more!</p>
+
+                                    <ul>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/zoho-crm?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=ZohoCRM">
+                                                ZohoCRM
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/salesforce?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Salesforce">
+                                                Salesforce
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/capsule?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Capsule">
+                                                Capsule
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/insightly?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Insightly">
+                                                Insightly
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/pipelinedeals?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=PipelineDeals">
+                                                PipelineDeals
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/onepage-crm?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=OnePageCRM">
+                                            OnePageCRM
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/Highrise?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Highrise">
+                                            Highrise
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>',
+    ),
+
     'zapier'                => array(
         'group'             => 'misc',
         'name'              => 'zapier',
@@ -240,38 +288,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
-    'pipelinedeals-crm'      => array(
-        'group'             => 'marketing',
-        'name'              => 'pipelinedeals-crm',
-        'nicename'          => 'PipelineDeals CRM',
-        'link'              => 'https://ninjaforms.com/extensions/pipelinedeals-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PipelineDeals+CRM',
-        'plugin_path'       => 'ninja-forms-pipeline-deals-crm/ninja-forms-pipeline-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/pipelinedeals-crm.png"/>
-                                <p>In order to use this action, you need PipelineDeals CRM for Ninja Forms.</p>
-                                <p>Sick of transferring customer data manually between your website and PipelineDeals? Tired of maintaining an unstable custom integration? You can now connect your website directly to PipelineDeals through Ninja Forms with this fully automated solution!</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/pipelinedeals-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PipelineDeals+CRM" title="PipelineDeals CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'insightly-crm'         => array(
-        'group'             => 'marketing',
-        'name'              => 'insightly-crm',
-        'nicename'          => 'Insightly CRM',
-        'link'              => 'https://ninjaforms.com/extensions/insightly-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Insightly+CRM',
-        'plugin_path'       => 'ninja-forms-insightly-crm/ninja-forms-insightly-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/insightly-crm.png"/>
-                                <p>In order to use this action, you need Insightly CRM for Ninja Forms.</p>
-                                <p>The Insightly CRM extension for Ninja Forms enables you to send your form submission data directly into your Insightly CRM account, managing your sales leads effectively.</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/insightly-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Insightly+CRM" title="Insightly CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
     'register-user'       => array(
         'group'             => 'management',
         'name'              => 'register-user',
@@ -320,38 +336,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
-    'salesforce-crm'        => array(
-        'group'             => 'marketing',
-        'name'              => 'salesforce-crm',
-        'nicename'          => 'Salesforce CRM',
-        'link'              => 'https://ninjaforms.com/extensions/salesforce-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Salesforce+CRM',
-        'plugin_path'       => 'ninja-forms-salesforce-crm/ninja-forms-salesforce-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/salesforce-crm.png"/>
-                                <p>In order to use this action, you need Salesforce CRM for Ninja Forms.</p>
-                                <p>When the world’s most used CMS and the industry leading CRM come together, great things are bound to happen for your organization. WordPress and Salesforce is an integration that you need working for you!</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/salesforce-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Salesforce+CRM" title="Salesforce CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'capsule-crm'           => array(
-        'group'             => 'marketing',
-        'name'              => 'capsule-crm',
-        'nicename'          => 'Capsule CRM',
-        'link'              => 'https://ninjaforms.com/extensions/capsule-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Capsule+CRM',
-        'plugin_path'       => 'ninja-forms-capsule-crm/ninja-forms-capsule-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/capsule-crm.png"/>
-                                <p>In order to use this action, you need Capsule CRM for Ninja Forms.</p>
-                                <p>Connecting your WordPress website to your CRM account shouldn’t be a time sink for your team, but it too often can be. Take that pain away with effortless integration between WordPress and your CRM with Ninja Forms’ official Capsule CRM addon!</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/capsule-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Capsule+CRM" title="Capsule CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
     'recurly'               => array(
         'group'             => 'payments',
         'name'              => 'recurly',
@@ -364,38 +348,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                                 <p>Recurly delivers agile enterprise-class subscription management to thousands of businesses worldwide. Together with Ninja Forms, any form on any page of your site can now become an avenue to introduce your customers to the subscription management umbrella of Recurly.</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/recurly/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Recurly" title="Recurly" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'highrise-crm'          => array(
-        'group'             => 'marketing',
-        'name'              => 'highrise-crm',
-        'nicename'          => 'Highrise CRM',
-        'link'              => 'https://ninjaforms.com/extensions/highrise-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Highrise+CRM',
-        'plugin_path'       => 'ninja-forms-highrise-crm/ninja-forms-highrise-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/highrise-crm.png"/>
-                                <p>In order to use this action, you need Highrise CRM for Ninja Forms.</p>
-                                <p></p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/highrise-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Highrise+CRM" title="Highrise CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'onepage-crm'           => array(
-        'group'             => 'marketing',
-        'name'              => 'onepage-crm',
-        'nicename'          => 'OnePage CRM',
-        'link'              => 'https://ninjaforms.com/extensions/onepage-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=OnePage+CRM',
-        'plugin_path'       => 'ninja-forms-onepagecrm/ninja-forms-onepage-crm.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/onepage-crm.png"/>
-                                <p>In order to use this action, you need OnePage CRM for Ninja Forms.</p>
-                                <p>OnePage CRM is designed to keep your sales team focused on sales instead of navigating complex software. Ninja Forms’ official integration has been built with that ideal in mind and delivers in kind!</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/onepage-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=OnePage+CRM" title="OnePage CRM" class="primary nf-button">Learn More</a>
                                 </div>
                             </div>',
     ),
