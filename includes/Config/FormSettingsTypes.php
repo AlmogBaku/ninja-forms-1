@@ -58,4 +58,17 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
                                             </div>',
     ),
 
+    'multi_part_forms_modal' 		=> array(
+    	'id' 			=> 'multi_part_forms_modal',
+        'nicename' 		=> esc_html__( 'Multi-Part Forms', 'ninja-forms'),
+        'modal-content'                 => '<div class="available-settings-modal">
+                                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/multi-part-forms.png"/>
+                                                <p>In order to use this feature, you need Multi-Part Forms for Ninja Forms.</p>
+                                                <p>Create multiple page forms effortlessly with a drag-and-drop interface. You don\'t need to code to build complex forms, just Multi-Part Forms!</p>
+                                                <div class="actions">
+                                                    <a target="_blank" href="https://ninjaforms.com/extensions/multi-part-forms/?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Multi+Part+Forms" title="Multi-Part Forms" class="primary nf-button">Learn More</a>
+                                                </div>
+                                            </div>',
+    ),
+
 ));

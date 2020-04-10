@@ -703,12 +703,16 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             unset( $form_settings_types[ 'uploads_modal' ] );
         }
 
-        if( class_exists( 'NF_Pdf_Submissions' ) ) {
+        if( class_exists( 'NF_Pdf_Submissions', false ) ) {
             unset( $form_settings_types[ 'pdf_modal' ] );
         }
 
         if( function_exists( 'NF_Layouts' ) ) {
             unset( $form_settings_types[ 'layouts_styles_modal' ] );
+        }
+
+        if( class_exists( 'NF_MultiPart', false ) ) {
+            unset( $form_settings_types[ 'multi_part_forms_modal' ] );
         }
 
         ?>
