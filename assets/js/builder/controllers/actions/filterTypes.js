@@ -51,7 +51,7 @@ define( ['models/actions/typeCollection'], function( typeCollection ) {
 
         		var newAvailable = new typeCollection( filteredAvailable );
         		newAvailable.slug = 'available';
-        		newAvailable.nicename = 'Available';
+				newAvailable.nicename = 'Available';
 
         		// Request that our action types filter be applied, passing the collection we created above.
         		nfRadio.channel( 'drawer' ).trigger( 'filter:actionTypes', newInstalled, newAvailable );

@@ -742,7 +742,9 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             /*
              * Form Action Registration
              */
-            self::$instance->actions = apply_filters( 'ninja_forms_register_actions', self::load_classes( 'Actions' ) );
+            $actions = self::load_classes( 'Actions' ) ;
+            uksort( $actions, [ $this, 'sort_actions' ] );
+            self::$instance->actions = apply_filters( 'ninja_forms_register_actions', $actions );
 
             /*
              * Merge Tag Registration
@@ -938,6 +940,17 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         /*
          * PRIVATE METHODS
          */
+
+        private function sort_actions( $a, $b )
+        {
+            // Create a numeric lookup by flipping the non-associative array.
+            $custom_order = array_flip( $this->config( 'ActionTypeOrder' ) );
+
+            $a_order = ( isset( $custom_order[ $a ] ) ) ? $custom_order[ $a ] : 9001;
+            $b_order = ( isset( $custom_order[ $b ] ) ) ? $custom_order[ $b ] : 9001;
+
+            return $a_order >= $b_order;
+        }
 
         /**
          * Load Classes from Directory
