@@ -2,19 +2,66 @@
 
 return apply_filters( 'ninja_forms_available_actions', array(
 
-    'mailchimp'             => array(
+    'email_marketing'             => array(
         'group'             => 'marketing',
-        'name'              => 'mailchimp',
-        'nicename'          => 'MailChimp',
-        'link'              => 'https://ninjaforms.com/extensions/mail-chimp/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=MailChimp',
-        'plugin_path'       => 'ninja-forms-mail-chimp/ninja-forms-mail-chimp.php',
+        'name'              => 'email_marketing',
+        'nicename'          => 'Email Marketing',
         'modal_content'     => '<div class="available-action-modal">
-                                    <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/mail-chimp.png"/>
-                                    <p>In order to use this action, you need MailChimp for Ninja Forms.</p>
-                                    <p>The MailChimp extension allows you to quickly create newsletter signup forms for your MailChimp account using the power and flexibility that Ninja Forms provides.</p>
-                                    <div class="actions">
-                                        <a target="_blank" href="https://ninjaforms.com/extensions/mail-chimp/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=MailChimp" title="MailChimp" class="primary nf-button">Learn More</a>
-                                    </div>
+                                    <p>In order to use this action, you need an Email Marketing Add-on for Ninja Forms.</p>
+                                    <p>Looking at beginning an email list, but aren\'t sure which email marketing service to choose? Do you already have signup forms, but wish you could do more with them to encourage signups? Frustrated that simple things like offering a PDF in return for a subscription is so difficult? Make your life easier with a full featured integration with your favorite email marketing service.</p>
+
+                                    <ul>
+                                        <li>
+                                            <a href="https://ninjaforms.com/add-ons/mailchimp?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Mailchimp">
+                                                Mailchimp
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/campaign-monitor?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Campaign+Monitor">
+                                                Campaign Monitor
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/constant-contact?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Constant+Contact">
+                                                Constant Contact
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/mailpoet?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=MailPoet">
+                                                MailPoet
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/aweber?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=AWeber">
+                                                AWeber
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/cleverreach?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=CleverReach">
+                                                CleverReach
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/emma?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=Emma">
+                                                Emma
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/emailoctopus?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=EmailOctopus">
+                                                Email Octopus
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/convertkit?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=ConvertKit">
+                                                ConvertKit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://ninjaforms.com/extensions/active-campaign?utm_source=Ninja+Forms+Plugin&utm_medium=Add+New&utm_campaign=Dashboard+New+Form+Template&utm_content=ActiveCampaign">
+                                                ActiveCampaign
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>',
     ),
 
@@ -114,70 +161,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                             </div>',
     ),
 
-    'campaignmonitor'       => array(
-        'group'             => 'marketing',
-        'name'              => 'campaignmonitor',
-        'nicename'          => 'Campaign Monitor',
-        'link'              => 'https://ninjaforms.com/extensions/campaign-monitor/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Campaign+Monitor',
-        'plugin_path'       => 'ninja-forms-campaign-monitor/ninja-forms-campaign-monitor.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                    <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/campaign-monitor.png"/>
-                                    <p>In order to use this action, you need Campaign Monitor for Ninja Forms.</p>
-                                    <p>The Campaign Monitor extension allows you to quickly create newsletter signup forms for your Campaign Monitor account. Create an unlimited number of subscribe forms and begin growing your mailing lists.</p>
-                                    <div class="actions">
-                                        <a target="_blank" href="https://ninjaforms.com/extensions/campaign-monitor/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Campaign+Monitor" title="Campaign Monitor" class="primary nf-button">Learn More</a>
-                                    </div>
-                                </div>',
-    ),
-
-    'constantcontact'       => array(
-        'group'             => 'marketing',
-        'name'              => 'constantcontact',
-        'nicename'          => 'Constant Contact',
-        'link'              => 'https://ninjaforms.com/extensions/constant-contact/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Constant+Contact',
-        'plugin_path'       => 'ninja-forms-constant-contact/ninja-forms-constant-contact.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                    <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/constant-contact.png"/>
-                                    <p>In order to use this action, you need Constant Contact for Ninja Forms.</p>
-                                    <p>The Constant Contact extension allows you to quickly create newsletter signup forms for your Constant Contact account. Create an unlimited number of subscribe forms and grow your mailing lists.</p>
-                                    <div class="actions">
-                                        <a target="_blank" href="https://ninjaforms.com/extensions/constant-contact/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Constant+Contact" title="Constant Contact" class="primary nf-button">Learn More</a>
-                                    </div>
-                                </div>',
-    ),
-
-    'aweber'                => array(
-        'group'             => 'marketing',
-        'name'              => 'aweber',
-        'nicename'          => 'AWeber',
-        'link'              => 'https://ninjaforms.com/extensions/aweber/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=AWeber',
-        'plugin_path'       => 'ninja-forms-aweber/ninja-forms-aweber.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                    <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/aweber.png"/>
-                                    <p>In order to use this action, you need AWeber for Ninja Forms.</p>
-                                    <p>The AWeber extension allows you to quickly create newsletter signup forms for your AWeber account. Create an unlimited number of subscribe forms and grow your mailing lists.</p>
-                                    <div class="actions">
-                                        <a target="_blank" href="https://ninjaforms.com/extensions/aweber/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=AWeber" title="AWeber" class="primary nf-button">Learn More</a>
-                                    </div>
-                                </div>',
-    ),
-
-    'emma'                  => array(
-        'group'             => 'marketing',
-        'name'              => 'emma',
-        'nicename'         => 'Emma',
-        'link'              => 'https://ninjaforms.com/extensions/emma/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Emma',
-        'plugin_path'       => '',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/emma.png"/>
-                                <p>In order to use this action, you need Emma for Ninja Forms.</p>
-                                <p>The Emma extension allows you to quickly create newsletter signup forms for your Emma account. Create an unlimited number of subscribe forms and grow your mailing lists.</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/emma/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Emma" title="Emma" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
     'webmerge'              => array(
         'group'             => 'workflow',
         'name'              => 'webmerge',
@@ -206,22 +189,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                                 <p>Send an SMS when someone submits your form via Twilio. SMS is a powerful way to send notifications to yourself or to your customers. Unlike other types of notifications,  90% of SMS are read within the first three minutes of delivery and have an open rate approaching 100%. </p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/twilio-sms/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Twilio+SMS" title="Twilio SMS" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'email_octopus'         => array(
-        'group'             => 'marketing',
-        'name'              => 'email_octopus',
-        'nicename'          => 'EmailOctopus',
-        'link'              => 'https://ninjaforms.com/extensions/emailoctopus/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=EmailOctopus',
-        'plugin_path'       => 'ninja-forms-emailoctopus/ninja-forms-emailoctopus.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/emailoctopus.png"/>
-                                <p>In order to use this action, you need EmailOctopus for Ninja Forms.</p>
-                                <p>Automation, integration, analytics… EmailOctopus is the email management solution that fills every need, and it’s now available for WordPress! More than a simple email marketing tool, discover a new way to manage every aspect of your email strategy from marketing campaigns to automated employee onboarding. <strong>Save time, save money, be an email rockstar!</strong></p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/emailoctopus/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=EmailOctopus" title="EmailOctopus" class="primary nf-button">Learn More</a>
                                 </div>
                             </div>',
     ),
@@ -285,22 +252,6 @@ return apply_filters( 'ninja_forms_available_actions', array(
                                 <p>Sick of transferring customer data manually between your website and PipelineDeals? Tired of maintaining an unstable custom integration? You can now connect your website directly to PipelineDeals through Ninja Forms with this fully automated solution!</p>
                                 <div class="actions">
                                     <a target="_blank" href="https://ninjaforms.com/extensions/pipelinedeals-crm/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=PipelineDeals+CRM" title="PipelineDeals CRM" class="primary nf-button">Learn More</a>
-                                </div>
-                            </div>',
-    ),
-
-    'active-campaign'       => array(
-        'group'             => 'marketing',
-        'name'              => 'active-campaign',
-        'nicename'          => 'Active Campaign',
-        'link'              => 'https://ninjaforms.com/extensions/active-campaign/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Active+Campaign',
-        'plugin_path'       => 'ninja-forms-active-campaign/ninja-forms-active-campaign.php',
-        'modal_content'     => '<div class="available-action-modal">
-                                <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/active-campaign.png"/>
-                                <p>In order to use this action, you need Active Campaign for Ninja Forms.</p>
-                                <p>Active Campaign shines for sales teams that require insightful, intelligent customer relationship management. There’s no reason your integration should deliver any less. Integrate today and combine effortless, intelligent marketing automation with your WordPress website!</p>
-                                <div class="actions">
-                                    <a target="_blank" href="https://ninjaforms.com/extensions/active-campaign/?utm_source=Ninja+Forms+Plugin&utm_medium=Emails+and+Actions&utm_campaign=Builder+Actions+Drawer&utm_content=Active+Campaign" title="Active Campaign" class="primary nf-button">Learn More</a>
                                 </div>
                             </div>',
     ),
