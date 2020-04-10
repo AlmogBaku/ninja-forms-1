@@ -69,8 +69,23 @@ define( [], function() {
 		},
 
 		clickFieldType: function( e ) {
+
 			if ( ! this.dragging ) {
-				nfRadio.channel( 'drawer' ).trigger( 'click:fieldType', e );
+
+				var clickedFieldType = nfRadio.channel( 'fields' ).request( 'get:type', jQuery( e.target ).data( 'id' ) );
+				if( 'premium' === clickedFieldType.get( 'section' ) ){
+					new jBox( 'Modal', {
+					  content: clickedFieldType.get( 'modal_content' ),
+					  zIndex:99999999,
+					  closeButton: 'box',
+					  overlay: true,
+					  width: 600,
+					  repositionOnOpen: true,
+					  reposition: true
+					}).open();
+				} else {
+					nfRadio.channel( 'drawer' ).trigger( 'click:fieldType', e );
+				}
 			}
 		},
 

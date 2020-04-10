@@ -33,6 +33,7 @@ define( [
 			nfRadio.channel( 'fields' ).reply( 'get:typeCollection', this.getTypeCollection, this );
 			nfRadio.channel( 'fields' ).reply( 'get:typeSections', this.getTypeSections, this );
 			nfRadio.channel( 'fields' ).reply( 'get:savedFields', this.getSavedFields, this );
+			nfRadio.channel( 'fields' ).reply( 'get:premiumFields', this.getPremiumFields, this );
 
 			// Listen to clicks on field types
 			this.listenTo( nfRadio.channel( 'drawer' ), 'click:fieldType', this.addField );
@@ -124,6 +125,15 @@ define( [
          */
         getSavedFields: function() {
         	this.sections.get( 'saved' );
+		},
+		
+        /**
+         * Return our premium fields
+         *
+         * @return backbone.collection
+         */
+        getPremiumFields: function() {
+        	this.sections.get( 'premium' );
         }
 	});
 

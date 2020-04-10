@@ -587,6 +587,12 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             $field_type_settings[ $id ][ 'settingDefaults' ] = $defaults;
         }
 
+        foreach( Ninja_Forms()->config( 'PremiumFields' ) as $key => $premiumField ) {
+            $field_type_settings[ $key ] = $premiumField;
+            $field_type_settings[ $key ][ 'section' ] = 'premium';
+        }
+
+
         ?>
         <script>
             var fieldTypeData     = <?php echo wp_json_encode( array_values( $field_type_settings ) ); ?>;

@@ -5,8 +5,9 @@ define( ['views/fields/drawer/stagingCollection', 'models/fields/stagingCollecti
 
 		regions: {
 			staging: '#nf-drawer-staging .nf-reservoir',
-			primary: '#nf-drawer-primary',
-			secondary: '#nf-drawer-secondary'
+			saved: '#nf-drawer-saved',
+			premium: '#nf-drawer-premium',
+			fieldTypes: '#nf-drawer-fieldTypes',
 		},
 
 		initialize: function() {
@@ -14,19 +15,17 @@ define( ['views/fields/drawer/stagingCollection', 'models/fields/stagingCollecti
 			this.listenTo( nfRadio.channel( 'drawer' ), 'clear:filter', this.removeFieldTypeFilter );
 
 			this.savedCollection = nfRadio.channel( 'fields' ).request( 'get:savedFields' );
-			this.primaryCollection = this.savedCollection;
-
-			this.fieldTypeSectionCollection = nfRadio.channel( 'fields' ).request( 'get:typeSections' );
-			this.secondaryCollection = this.fieldTypeSectionCollection;
-
+			this.premiumCollection = nfRadio.channel( 'fields' ).request( 'get:premiumFields' );
+			this.fieldTypeCollection = nfRadio.channel( 'fields' ).request( 'get:typeSections' );
 		},
 
 		onShow: function() {
 			var stagingCollection = nfRadio.channel( 'fields' ).request( 'get:staging' );
 			this.staging.show( new drawerStagingView( { collection: stagingCollection } ) );
 
-			this.primary.show( new fieldTypeSectionCollectionView( { collection: this.primaryCollection } ) );
-			this.secondary.show( new fieldTypeSectionCollectionView( { collection: this.secondaryCollection } ) );
+			this.saved.show( new fieldTypeSectionCollectionView( { collection: this.savedCollection } ) );
+			this.premium.show( new fieldTypeSectionCollectionView( { collection: this.premiumCollection } ) );
+			this.fieldTypes.show( new fieldTypeSectionCollectionView( { collection: this.fieldTypeCollection } ) );
 		},
 
 		getEl: function() {
@@ -34,15 +33,17 @@ define( ['views/fields/drawer/stagingCollection', 'models/fields/stagingCollecti
 		},
 
 		filterFieldTypes: function( filteredSectionCollection ) {
-			this.primary.reset();
-			this.secondary.reset();
+			this.saved.reset();
+			this.premium.reset();
+			this.fieldTypes.reset();
 			this.filteredSectionCollection = filteredSectionCollection;
 			this.primary.show( new fieldTypeSectionCollectionView( { collection: this.filteredSectionCollection } ) );
 		},
 
 		removeFieldTypeFilter: function () {
-			this.primary.show( new fieldTypeSectionCollectionView( { collection: this.savedCollection } ) );
-			this.secondary.show( new fieldTypeSectionCollectionView( { collection: this.fieldTypeSectionCollection } ) );
+			this.saved.show( new fieldTypeSectionCollectionView( { collection: this.savedCollection } ) );
+			this.premium.show( new fieldTypeSectionCollectionView( { collection: this.premiumCollection } ) );
+			this.fieldTypes.show( new fieldTypeSectionCollectionView( { collection: this.fieldTypeCollection } ) );
 		}
 
 	} );

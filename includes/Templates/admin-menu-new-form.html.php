@@ -298,8 +298,9 @@
     <div id="nf-drawer-staging" class="nf-settings nf-stage">
         <div class="nf-reservoir nf-drawer-staged-fields nf-field-type-droppable"></div>
     </div>
-    <span id="nf-drawer-primary"></span>
-    <span id="nf-drawer-secondary"></span>
+    <span id="nf-drawer-saved"></span>
+    <span id="nf-drawer-premium"></span>
+    <span id="nf-drawer-fieldTypes"></span>
 </script>
 
 <script id="tmpl-nf-drawer-content-add-action" type="text/template">
