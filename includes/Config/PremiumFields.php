@@ -3,7 +3,7 @@
 return [
     'mailchimp_optin_modal' => [
         'id' => 'mailchimp_optin_modal',
-        'nicename' => 'Mailchimp Opt-In',
+        'nicename' => 'Mailchimp OptIn',
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/mail-chimp.png"/>
                                     <p>In order to use this action, you need MailChimp for Ninja Forms.</p>
