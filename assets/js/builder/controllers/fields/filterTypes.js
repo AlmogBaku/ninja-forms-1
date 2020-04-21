@@ -98,7 +98,7 @@ define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionColle
 				var found = false;
 				
 				// If we match either the ID or nicename, return true.
-				if ( model.get( 'type' ).toLowerCase().indexOf( search ) != -1 ) {
+				if ( 'undefined' !== typeof model.get('type') && model.get( 'type' ).toLowerCase().indexOf( search ) != -1 ) {
 					found = true;
 				} else if ( model.get( 'nicename' ).toLowerCase().indexOf( search ) != -1 ) {
 					found = true;

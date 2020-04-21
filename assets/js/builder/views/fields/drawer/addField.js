@@ -37,7 +37,7 @@ define( ['views/fields/drawer/stagingCollection', 'models/fields/stagingCollecti
 			this.premium.reset();
 			this.fieldTypes.reset();
 			this.filteredSectionCollection = filteredSectionCollection;
-			this.primary.show( new fieldTypeSectionCollectionView( { collection: this.filteredSectionCollection } ) );
+			this.fieldTypes.show( new fieldTypeSectionCollectionView( { collection: this.filteredSectionCollection } ) );
 		},
 
 		removeFieldTypeFilter: function () {
