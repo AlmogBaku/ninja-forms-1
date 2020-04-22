@@ -16,7 +16,7 @@ return [
 
     'file_uploads_modal' => [
         'id' => 'file_uploads_modal',
-        'nicename' => 'File Uploads',
+        'nicename' => 'File Upload',
         'modal_content'                 => '<div class="available-action-modal">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/file-uploads.png"/>
                                                 <p>In order to use this feature, you need File Uploads for Ninja Forms.</p>
