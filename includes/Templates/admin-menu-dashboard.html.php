@@ -240,10 +240,12 @@
 <?php esc_html_e( 'Available Templates', 'ninja-forms' ); ?>
 </header>
 <div class="installed"></div>
-<header class="section-head">
-<?php esc_html_e( 'Additional Templates', 'ninja-forms' ); ?>
-</header>
-<div class="available"></div>
+<?php if( ! apply_filters( 'ninja_forms_disable_marketing', false ) ) { ?>
+  <header class="section-head">
+  <?php esc_html_e( 'Additional Templates', 'ninja-forms' ); ?>
+  </header>
+  <div class="available"></div>
+<?php } ?>
 </script>
 
 <!-- Widget: Forms - New Forms Templates -->
