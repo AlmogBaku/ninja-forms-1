@@ -6,6 +6,10 @@ define( ['views/actions/drawer/typeButton'], function( actionTypeButtonView ) {
 		templateHelpers: function() {
 			var that = this;
 			return {
+				hasContents: function() {
+					return that.collection.length > 0;
+				},
+
 				renderNicename: function() {
 					return that.collection.nicename;
 				},
