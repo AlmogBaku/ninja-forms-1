@@ -41,6 +41,10 @@ define( ['models/fields/stagingCollection'], function( stagingCollection ) {
 			var silent = silent || false;
 			// Get our type model from the string.
 			var fieldType = nfRadio.channel( 'fields' ).request( 'get:type', type );
+			if ( 'premium' === fieldType.get('section') ) {
+				// Do not allow premium field modals to be staged for adding to the form.
+				return;
+			}
 			// Our tmp ID is a string with the time appended to make it unique.
 			var tmpID = 'nf-staged-field-' + jQuery.now();
 			// Object that will be added to our staging collection.
