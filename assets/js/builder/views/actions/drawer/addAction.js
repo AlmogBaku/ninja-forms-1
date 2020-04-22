@@ -65,8 +65,16 @@ define( ['views/actions/drawer/typeCollection', 'models/app/typeCollection'], fu
 		},
 
 		removeactionTypeFilter: function () {
-			this.primary.show( new actionTypeCollectionView( { collection: this.installedActions } ) );
-			this.secondary.show( new actionTypeCollectionView( { collection: this.availableActions } ) );
+			this.primary.show( new actionTypeCollectionView( { collection: this.primaryCollection } ) );
+
+			this.availableActions = nfRadio.channel( 'actions' ).request( 'get:availableActions' );
+			this.updateAvailableActionGroups();
+			this.payments.show( new actionTypeCollectionView( { collection: this.paymentsCollection } ) );
+			this.marketing.show( new actionTypeCollectionView( { collection: this.marketingCollection } ) );
+			this.management.show( new actionTypeCollectionView( { collection: this.managementCollection } ) );
+			this.workflow.show( new actionTypeCollectionView( { collection: this.workflowCollection } ) );
+			this.notifications.show( new actionTypeCollectionView( { collection: this.notificationsCollection } ) );
+			this.misc.show( new actionTypeCollectionView( { collection: this.miscCollection } ) );
 		},
 
 		updateAvailableActionGroups: function() {
