@@ -420,7 +420,11 @@
 
 <script id="tmpl-nf-drawer-action-type-section" type="text/template">
     <section class="nf-settings nf-action-items {{{ data.renderClasses() }}}">
-        <h3>{{{ data.renderNicename() }}}</h3>
+        <h3>
+        <# if( data.hasContents() ) { #>
+            {{{ data.renderNicename() }}}
+        <# } #>
+        </h3>
         <span class="action-types"></span>
     </section>
 </script>
