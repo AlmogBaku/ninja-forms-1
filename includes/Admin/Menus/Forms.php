@@ -588,6 +588,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
 
         foreach( Ninja_Forms()->config( 'PremiumFields' ) as $key => $premiumField ) {
+            // Ensure we do not register premium field modals for products that are already installed.
+            foreach( $field_type_settings as $field ) {
+                if ( $field[ 'type' ] === $premiumField[ 'promotes' ] ) continue 2;
+            }
             $field_type_settings[ $key ] = $premiumField;
             $field_type_settings[ $key ][ 'section' ] = 'premium';
         }

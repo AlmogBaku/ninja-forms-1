@@ -4,6 +4,7 @@ return [
     'mailchimp_optin_modal' => [
         'id' => 'mailchimp_optin_modal',
         'nicename' => 'Mailchimp OptIn',
+        'promotes' => 'mailchimp-optin',
         'modal_content'     => '<div class="available-action-modal">
                                     <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/mail-chimp.png"/>
                                     <p>In order to use this action, you need MailChimp for Ninja Forms.</p>
@@ -17,6 +18,7 @@ return [
     'file_uploads_modal' => [
         'id' => 'file_uploads_modal',
         'nicename' => 'File Upload',
+        'promotes' => 'file_upload',
         'modal_content'                 => '<div class="available-action-modal">
                                                 <img src="' . Ninja_Forms::$url . 'assets/img/add-ons/file-uploads.png"/>
                                                 <p>In order to use this feature, you need File Uploads for Ninja Forms.</p>
