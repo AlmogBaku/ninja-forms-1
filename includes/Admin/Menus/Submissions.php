@@ -28,7 +28,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
     /**
      * @var int
      */
-    public $priority = 3;
+    public $position = 3;
 
     /**
      * Constructor

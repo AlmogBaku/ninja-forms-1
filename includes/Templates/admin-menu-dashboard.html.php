@@ -234,6 +234,18 @@
     <td colspan="4"><?php esc_html_e( 'Loading Forms', 'ninja-forms' ); ?></td>
 </script>
 
+<!-- Widget: Forms - New Forms Template grid -->
+<script id="tmpl-nf-widget-templates-grid" type="text/template">
+<header class="section-head screen-reader-text">
+<?php esc_html_e( 'Available Templates', 'ninja-forms' ); ?>
+</header>
+<div class="installed"></div>
+<header class="section-head">
+<?php esc_html_e( 'Additional Templates', 'ninja-forms' ); ?>
+</header>
+<div class="available"></div>
+</script>
+
 <!-- Widget: Forms - New Forms Templates -->
 <script id="tmpl-nf-widget-forms-template" type="text/template">
     <div class="template {{{ data.type }}}">
