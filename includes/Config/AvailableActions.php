@@ -1,5 +1,7 @@
 <?php
 
+if ( apply_filters( 'ninja_forms_disable_marketing', false ) ) return array();
+
 return apply_filters( 'ninja_forms_available_actions', array(
 
     'mailchimp'             => array(

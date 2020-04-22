@@ -15,7 +15,7 @@
         $u_id = get_option( 'nf_aff', false );
         if ( !$u_id ) $u_id = apply_filters( 'ninja_forms_affiliate_id', false );
 
-        if( ! $disable_admin_notices ){
+        if( ! $disable_admin_notices && ! apply_filters( 'ninja_forms_disable_marketing', false ) ){
             if( ! function_exists( 'NF_Layouts' ) ) {
                 $link = 'https://ninjaforms.com/extensions/layout-styles/?utm_source=Ninja+Forms+Plugin&utm_medium=Form+Builder&utm_campaign=Builder+Layout+Styles+Comment+Bubble';
                 if ( $u_id ) {
@@ -420,7 +420,11 @@
 
 <script id="tmpl-nf-drawer-action-type-section" type="text/template">
     <section class="nf-settings nf-action-items {{{ data.renderClasses() }}}">
-        <h3>{{{ data.renderNicename() }}}</h3>
+        <h3>
+        <# if( data.hasContents() ) { #>
+            {{{ data.renderNicename() }}}
+        <# } #>
+        </h3>
         <span class="action-types"></span>
     </section>
 </script>
