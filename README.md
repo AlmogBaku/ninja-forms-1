@@ -49,7 +49,7 @@ You can run `yarn env stop` to stop your environment
 
 - To test your php code with phpunit
     - `yarn env test-php`
-- To test you javascript code with Jest
+- To test your javascript code with Jest
     - `yarn test:unit`
    
 Some tips:
