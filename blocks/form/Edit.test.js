@@ -14,6 +14,10 @@ describe("Form block Edit callback", () => {
 				forms={forms}
 				siteUrl={siteUrl}
 				previewToken={previewToken}
+				icon={<svg height="100" width="100">
+					<circle cx="50" cy="50" r="40" stroke="black"  fill="red" />
+					</svg>
+				}
 			/>
 		);
 		expect(container.querySelectorAll(".components-placeholder").length).toBe(
@@ -53,6 +57,10 @@ describe("Form block Edit callback", () => {
 				forms={forms}
 				siteUrl={siteUrl}
 				previewToken={previewToken}
+				icon={<svg height="100" width="100">
+					<circle cx="50" cy="50" r="40" stroke="black"  fill="red" />
+				</svg>
+				}
 			/>
 		);
 

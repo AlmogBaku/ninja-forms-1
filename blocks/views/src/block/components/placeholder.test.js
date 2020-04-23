@@ -8,12 +8,16 @@ import {
 
 describe("Editor component", () => {
 	afterEach(cleanup);
-
 	it("matches snapshot", () => {
 		const props = { inside: <div>Inside Content</div> };
 
 		const { container } = render(
-			<Placeholder>
+			<Placeholder
+				icon={<svg height="100" width="100">
+					<circle cx="50" cy="50" r="40" stroke="black"  fill="red" />
+				</svg>}
+			>
+
 				<div>Inside Content</div>
 			</Placeholder>
 		);
