@@ -79,14 +79,15 @@ export default function Edit({
 
 	if (!formId) {
 		return (
-			<BlockPlaceholder>
+			<BlockPlaceholder
+				icon={icon}
+			>
 				<ChooseForm
 					label={labelText ? labelText : "Select Form"}
 					formId={formId}
 					forms={forms}
 					onChange={updateChosenForm}
 					labelText={labelText}
-					icon={icon}
 				/>
 			</BlockPlaceholder>
 		);
