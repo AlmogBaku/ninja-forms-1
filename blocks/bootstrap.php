@@ -19,7 +19,7 @@ add_action('init', function () {
     );
 
     register_block_type('ninja-forms/form', array_merge($block, [
-        'title' => __('Ninja Form', 'ninja-form'),
+        'title' => esc_attr__('Ninja Form', 'ninja-forms'),
         'render_callback' => function ($atts) {
             $formId = isset($atts['formId']) ? $atts['formId'] : 1;
             ob_start();
