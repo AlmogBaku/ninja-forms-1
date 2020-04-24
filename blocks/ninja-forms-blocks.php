@@ -16,7 +16,7 @@ if(file_exists($autoloader = dirname(__DIR__) . '/vendor/autoload.php')) {
         } else {
             echo sprintf(
                 '<div class="notice notice-error"><p>%s</p></div>',
-                __( 'Ninja Forms Blocks was unable to load.' )
+                esc_html__( 'Ninja Forms Blocks was unable to load.', 'ninja-forms' )
             );
         }
     }
