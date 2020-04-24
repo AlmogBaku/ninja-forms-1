@@ -150,7 +150,7 @@ add_action('rest_api_init', function () {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'perPage' => [
-                'description' => __('Maximum number of items to be returned in result set.'),
+                'description' => esc_attr__('Maximum number of items to be returned in result set.', 'ninja-forms'),
                 'type' => 'integer',
                 'minimum' => 1,
                 'maximum' => 100,
