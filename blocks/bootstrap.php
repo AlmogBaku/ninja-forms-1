@@ -145,7 +145,7 @@ add_action('rest_api_init', function () {
         'args' => [
             'id' => [
                 'required' => true,
-                'description' => __('Unique identifier for the object.'),
+                'description' => esc_attr__('Unique identifier for the object.', 'ninja-forms'),
                 'type' => 'integer',
                 'validate_callback' => 'rest_validate_request_arg',
             ],
