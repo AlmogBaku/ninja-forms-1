@@ -158,7 +158,7 @@ add_action('rest_api_init', function () {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'page' => [
-                'description' => __('Current page of the collection.'),
+                'description' => esc_attr__('Current page of the collection.', 'ninja-forms'),
                 'type' => 'integer',
                 'default' => 1,
                 'sanitize_callback' => 'absint',
