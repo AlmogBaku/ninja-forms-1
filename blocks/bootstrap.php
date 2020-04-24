@@ -186,7 +186,7 @@ add_action( 'wp_head', function () {
     // check for preview and iframe get parameters
     if( isset( $_GET[ 'nf_preview_form' ] ) && isset( $_GET[ 'nf_iframe' ] ) ){
         if( ! wp_verify_nonce( $_GET['nf_iframe'], 'nf_iframe') ){
-            wp_die( __('Preview token failed validation', 'Ninja Forms'));
+            wp_die( esc_html__('Preview token failed validation', 'ninja-forms'));
             exit;
         }
 
