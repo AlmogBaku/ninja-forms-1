@@ -307,7 +307,7 @@ This section describes how to install the plugin and get it working.
 
 *Security:*
 
-* Patched an XSS vulnerability in the deprecated codebase upgrade process.
+* Fixed Cross-Site Request Forgery(CSRF) to stored Cross-Site Scripting(XSS) [reported responsibly](https://ninjaforms.com/security) by Ramuel Gall (Wordfence Threat Intelligence Team).
 
 == Changelog ==
 
@@ -315,7 +315,7 @@ This section describes how to install the plugin and get it working.
 
 *Security:*
 
-* Patched an XSS vulnerability in the deprecated codebase upgrade process.
+* Fixed Cross-Site Request Forgery(CSRF) to stored Cross-Site Scripting(XSS) [reported responsibly](https://ninjaforms.com/security) by Ramuel Gall (Wordfence Threat Intelligence Team).
 
 = 3.4.24.1 (5 March 2020) =
 
