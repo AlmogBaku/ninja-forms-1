@@ -38,7 +38,6 @@ add_action('init', function () {
 
     // automatically load dependencies and version
     $block_asset_file = include dirname(__DIR__, 1) . '/build/sub-table-block.asset.php';
-
     wp_register_script(
         'ninja-forms/submissions-table/block',
         plugins_url('../build/sub-table-block.js', __FILE__),

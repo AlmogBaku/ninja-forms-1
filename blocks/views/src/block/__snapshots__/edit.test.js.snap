@@ -17,7 +17,6 @@ exports[`Editor component matches snapshot 1`] = `
       style="display: flex; justify-content: space-between;"
     >
       <div />
-      <div />
     </div>
   </div>
 </div>
