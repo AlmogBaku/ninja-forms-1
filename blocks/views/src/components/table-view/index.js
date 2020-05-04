@@ -139,7 +139,6 @@ export function Pagination({
 		justifyContent: "space-between"
 	};
 
-	console.log(canNextPage,'pointatme');
 	let NextButton;
 	if (canNextPage) {
 		NextButton = <button onClick={() => nextPage()}>{">"}</button>;
