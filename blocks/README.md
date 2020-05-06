@@ -22,7 +22,7 @@ Both entry points share the `<FormsSubmissionsTable />` component, which is an i
 
 Block attributes are passed to the block's `render_callback` function, but are not otherwise directly available in a "front end" script. Additionally, attributes are per-block-instance.
 
-Because of this, block attributes are herein localized within the `render_callback` as a JSON encoded data-attribute, which are then parsed when rendered to the DOM.
+Because of this, each of the block attributes are localized within the `render_callback` as a JSON encoded array, which is then parsed when rendered to the DOM.
 
 #### Form Data Store with @wordpress/data
 
