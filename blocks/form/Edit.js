@@ -9,8 +9,7 @@ import PropTypes from "prop-types";
 const BlockPlaceholder = props => {
 	return (
 		<Placeholder
-			icon={<div style={{ marginRight: "10px" }}>{props.icon ? props.icon : NinjaIcon}</div>}
-			label="Ninja Form"
+			icon={<div>{props.icon ? props.icon : NinjaIcon}</div>}
 			instructions="Display a form"
 			style={{ alignItems: "center" }}
 		>
@@ -79,9 +78,7 @@ export default function Edit({
 
 	if (!formId) {
 		return (
-			<BlockPlaceholder
-				icon={icon}
-			>
+			<BlockPlaceholder icon={icon}>
 				<ChooseForm
 					label={labelText ? labelText : "Select Form"}
 					formId={formId}
