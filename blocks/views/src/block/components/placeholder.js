@@ -5,8 +5,7 @@ import { NinjaIcon } from "../icon";
 export default props => {
 	return (
 		<Placeholder
-			icon={<div style={{ marginRight: "10px" }}>{props.icon ? props.icon : NinjaIcon}</div>}
-			label="Submissions Table"
+			icon={<div>{props.icon ? props.icon : NinjaIcon}</div>}
 			instructions="Select a form to display the submissions."
 			style={{ alignItems: "center" }}
 		>
