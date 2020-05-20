@@ -147,7 +147,7 @@ abstract class NF_Abstracts_Field
         }
 
         if( isset( $field['required'] ) && 1 == intval($field['required']) && empty( trim( $field['value'] ) ) ){
-            $errors['slug'] = 'required_error';
+            $errors['slug'] = 'required-error';
             $errors['message'] = esc_html__('This field is required.', 'ninja-forms');
         }
         return $errors;
