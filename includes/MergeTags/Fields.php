@@ -308,7 +308,9 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
 
     public function maybe_sanitize( $field )
     {
-        if ( 'html' !== $field['type'] && $this->use_safe ) {
+        $safe = apply_filters( 'ninja_forms_get_html_safe_fields',
+            array( 'html' ) );
+        if ( ! in_array( $field['type'], $safe ) && $this->use_safe ) {
             $field['value'] = strip_tags($field['value']);
         }
         return $field;
