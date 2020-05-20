@@ -193,7 +193,10 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
 
 	    $value = apply_filters('ninja_forms_merge_tag_value_' . $field['type'], $field['value'], $field);
 
-	    $this->add( $callback, $field['id'], '{field:' . $field['id'] . '}', $value, false, ('html' !== $field['type']) );
+        $safe = apply_filters('ninja_forms_get_html_safe_fields',
+            array( 'html' ) );
+        $sanitize = (! in_array($field['type'], $safe));
+	    $this->add( $callback, $field['id'], '{field:' . $field['id'] . '}', $value, false, $sanitize );
 
         if( isset( $field[ 'key' ] ) ) {
             $field_key =  $field[ 'key' ];
@@ -201,17 +204,15 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
 
             // Add Field Key Callback
             $callback = 'field_' . $field_key;
-            $this->add( $callback, $field_key, '{field:' . $field_key . '}', $value, $calc_value );
+            $this->add( $callback, $field_key, '{field:' . $field_key . '}', $value, $calc_value, $sanitize );
 
             // Add Field by Key for All Fields
             $this->merge_tags[ 'all_fields_by_key' ][ 'fields' ][ $field_key ] = $field;
 
             // Add Field Calc Callabck
             if( '' == $calc_value ) $calc_value = '0';
-            //var_dump($calc_value);
-            //echo('myspace');
             $callback = 'field_' . $field_key . '_calc';
-            $this->add( $callback, $field_key, '{field:' . $field_key . ':calc}', $calc_value, $calc_value );
+            $this->add( $callback, $field_key, '{field:' . $field_key . ':calc}', $calc_value, $calc_value, $sanitize );
 
 
             /*
