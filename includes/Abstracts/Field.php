@@ -146,9 +146,12 @@ abstract class NF_Abstracts_Field
             $field[ 'value' ] = implode( '', $field[ 'value' ] );
         }
 
-        if( isset( $field['required'] ) && 1 == intval($field['required']) && empty( trim( $field['value'] ) ) ){
-            $errors['slug'] = 'required-error';
-            $errors['message'] = esc_html__('This field is required.', 'ninja-forms');
+        if( isset( $field['required'] ) && 1 == intval( $field['required'] ) ) {
+            $val = trim( $field['value'] );
+            if( empty( $val ) && '0' !== $val ){
+                $errors['slug'] = 'required-error';
+                $errors['message'] = esc_html__('This field is required.', 'ninja-forms');
+            }
         }
         return $errors;
     }
