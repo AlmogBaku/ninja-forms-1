@@ -287,6 +287,7 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
      * @param $tag
      * @param $value
      * @param bool $calc_value
+     * @param bool $sanitize
      */
 	public function add( $callback, $id, $tag, $value, $calc_value = false, $sanitize = true )
 	{
