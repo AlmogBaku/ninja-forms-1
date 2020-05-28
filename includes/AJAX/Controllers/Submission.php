@@ -191,6 +191,30 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             $form_fields = Ninja_Forms()->form($this->_form_id)->get_fields();
         }
 
+        $bad_words = $this->get_bad_words();
+        //Based on https://gist.github.com/them-es/7c8a120ac868f5c4fc474e53a1266c83
+        if( ! empty ( $bad_words ) ){
+            foreach (  $this->_form_data['fields'] as $field ) {
+                // Field settings, including the field key and value.
+                $field_value = wp_strip_all_tags( strtolower( $field['value'] ) );
+                $field_id    = esc_attr( $field['id'] );
+
+                foreach ( $bad_words as $bad_word ) {
+                    $bad_word = trim( $bad_word );
+
+                    // Skip empty lines.
+                    if ( empty( $bad_word ) ) {
+                        continue;
+                    }
+
+                    if ( false !== strpos( $field_value, $bad_word ) ) {
+                        $form_data['errors']['fields'][$field_id] = __( 'This field contains a word that has been blocked.', 'ninja-forms' );
+                    }
+                }
+            }
+
+        }
+
         /**
          * The Field Processing Loop.
          *
@@ -246,6 +270,28 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             /** Validate the Field */
             if( $validate_fields && ! isset( $this->_data[ 'resume' ] ) ){
                 $this->validate_field( $field );
+                if (! empty($bad_words)) {
+                    //Check if spammy/ abusive words are used in fields values
+                    foreach ($bad_words as $bad_word) {
+                        $bad_word = trim($bad_word);
+
+                        // Skip empty lines.
+                        if (empty($bad_word)) {
+                            continue;
+                        }
+
+                        if (false !== strpos($field['value'], $bad_word)) {
+                            $form_data['errors']['fields'][$field_id] = __('This field contains a word that has been blocked.',
+                                'ninja-forms');
+                        }
+                    }
+                }
+            }
+
+            // Check for field errors after validating.
+            if ( isset( $this->_form_data['errors']['fields'][ $field_id ] ) ) {
+                $this->_errors['fields'][ $field_id ] = $this->_form_data['errors']['fields'][ $field_id ];
+                $this->_respond();
             }
 
             /** Process the Field */
@@ -603,5 +649,28 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         header( 'Content-Type: application/json' );
         // Call the parent method.
         parent::_respond();
+    }
+
+    /**
+     * Get the array of spammy/ abusive words that are being blocked.
+     *
+     * @return array
+     */
+    protected  function get_bad_words(){
+
+        //The list of words used by wp_blacklist_check()
+        $bad_words = explode( "\n", strtolower( trim( get_option( 'blacklist_keys' ) ) ) );
+        /**
+         * Words that if used in a field, will cause the form submission to be blocked
+         *
+         * Default is same settings as wp_blacklist_check.
+         * You may return an empty value to disable this feature
+         *
+         * @see https://developer.wordpress.org/reference/functions/wp_blacklist_check/
+         *
+         * @param array $bad_words The bad words
+         */
+        $bad_words = apply_filters( 'ninja_forms_submit_data', $bad_words );
+        return $bad_words;
     }
 }
