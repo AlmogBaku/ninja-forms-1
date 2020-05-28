@@ -670,7 +670,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
          *
          * @param array $bad_words The bad words
          */
-        $bad_words = apply_filters( 'ninja_forms_submit_data', $bad_words );
+        $bad_words = apply_filters( 'ninja_forms_spam_words', $bad_words );
         return $bad_words;
     }
 }
