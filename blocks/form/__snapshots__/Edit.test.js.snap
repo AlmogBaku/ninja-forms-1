@@ -10,7 +10,6 @@ exports[`Form block Edit callback Renders placeholder 1`] = `
   >
     <iframe
       aria-hidden="true"
-      aria-label="resize-listener"
       frameborder="0"
       src="about:blank"
       style="display: block; opacity: 0; position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
@@ -21,7 +20,6 @@ exports[`Form block Edit callback Renders placeholder 1`] = `
     >
       <div
         size="24"
-        style="margin-right: 10px;"
       >
         <svg
           height="100"
@@ -36,7 +34,6 @@ exports[`Form block Edit callback Renders placeholder 1`] = `
           />
         </svg>
       </div>
-      Ninja Form
     </div>
     <div
       class="components-placeholder__instructions"
