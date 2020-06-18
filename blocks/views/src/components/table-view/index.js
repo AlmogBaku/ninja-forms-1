@@ -36,13 +36,7 @@ export default ({ formId, selectedFields, fields, submissions }) => {
 		submissions[submissions.length - 1] &&
 		submissions[submissions.length - 1].length;
 
-	const data = submissions.map(sub_item => {
-		return sub_item[0];
-	})
-	// Filter out undefined rows to avoid throwing an error when there are no submissions.
-	.filter(sub_item => {
-		return 'undefined' !== typeof sub_item;
-	});
+	const data = submissions.flat()
 
 	return (
 		<Table
