@@ -75,7 +75,7 @@
 .nf-item {
     background: #3B454D;
     border-radius: 4px;
-    color: #A2A5A8;
+    color: #EBEDEE;
     font-size: 14px;
     padding: 10px;
     position: relative;
@@ -118,8 +118,8 @@
 }
 .nf-action-items {
     .nf-item {
-        height: 100px;
-        line-height: 75px;
+        height: 50px;
+        line-height: 30px;
         cursor: pointer;
         &.nf-has-img {
             background-position: center center;
@@ -138,6 +138,12 @@
             }
         }
     }
+}
+
+.nf-actions-items-available .nf-item {
+    color: #3B454D;
+    background-color: #EBEDEE;
+    border: 1px solid #3B454D;
 }
 
 .nf-field-type-button {

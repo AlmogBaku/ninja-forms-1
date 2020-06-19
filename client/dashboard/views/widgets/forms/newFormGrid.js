@@ -4,27 +4,45 @@
  * @package Ninja Forms
  * @subpackage Dashboard
  * @copyright (c) 2017 WP Ninjas
- * @since 3.2
+ * @since 3.4.25
  */
 define( [
-    'models/formTemplateCollection',
-    'views/widgets/forms/newFormTemplate'
-], function( TemplateCollection, TemplateView ) {
-    var view = Marionette.CollectionView.extend( {
+    'views/widgets/forms/newFormSection'
+], function( SectionView ) {
+    var view = Marionette.View.extend( {
+        template: "#tmpl-nf-widget-templates-grid",
+        className: 'nf-template-grid',
         tagName: 'div',
-        className: 'template-list',
-        collection: new TemplateCollection(),
-        childView: TemplateView,
 
         initialize: function(){
-            this.listenTo( nfRadio.channel( 'widget-forms' ), 'update:filter', this.updateFilter );
+            var templateGrid = this;
+            this.listenTo( nfRadio.channel( 'dashboard' ), 'sort:installedFormTemplates', function( collection ){
+                templateGrid.showChildView( 'installed', new SectionView( { collection: collection } ) );
+            });
+            this.listenTo( nfRadio.channel( 'dashboard' ), 'sort:availableFormTemplates', function( collection ){
+                templateGrid.showChildView( 'available', new SectionView( { collection: collection } ) );
+            });
         },
 
-        updateFilter: function( term ){
-            this.setFilter(function (child, index, collection) {
-                return 0 <= child.get( 'title' ).toLowerCase().indexOf( term.toLowerCase() );
-            });
-        }
+        regions: {
+            installed: {
+                el: '.installed',
+                replaceElement: true
+            },
+            available: {
+                el: '.available',
+                replaceElement: true
+            }
+        },
+
+        onRender: function() {
+            var collection = nfRadio.channel( 'dashboard' ).request( 'get:formTemplates' );
+            if( 'undefined' != typeof collection ) {
+                this.showChildView( 'installed', new SectionView( { collection: nfRadio.channel('dashboard').request('get:installedFormTemplates') } ) );
+                this.showChildView( 'available', new SectionView( { collection: nfRadio.channel('dashboard').request('get:availableFormTemplates') } ) );
+            }
+        },
+        
     } );
     return view;
 } );

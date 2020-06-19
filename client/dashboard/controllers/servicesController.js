@@ -4,8 +4,8 @@ define([ 'models/serviceCollection' ], function( ServiceCollection ) {
 			this.services = new ServiceCollection();
 
 			nfRadio.channel( 'dashboard' ).reply( 'install:service', this.installService, this );
-      nfRadio.channel( 'dashboard' ).reply( 'get:services', this.getServices, this );
-      this.fetchServices();
+			nfRadio.channel( 'dashboard' ).reply( 'get:services', this.getServices, this );
+			this.fetchServices();
 		},
 
 		getServices: function() {
@@ -44,6 +44,9 @@ define([ 'models/serviceCollection' ], function( ServiceCollection ) {
 			// Request to Install the service plugin.
 			jQuery.post( ajaxurl, { action: 'nf_services_install', plugin: slug, install_path: installPath }, function( response ){
 				that.fetchServices(function(){
+					// Override default install behavior for SendWP and initiate registration flow.
+					if('sendwp' === slug) return ninja_forms_sendwp_remote_install();
+					
 					nfRadio.channel( 'dashboard' ).request( 'install:service:' + slug );
 				});
 			} );

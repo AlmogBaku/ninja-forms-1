@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms
 Plugin URI: http://ninjaforms.com/?utm_source=Ninja+Forms+Plugin&utm_medium=readme
 Description: Ninja Forms is a webform builder with unparalleled ease of use and features.
-Version: 3.4.24
+Version: 3.4.24.3
 Author: Saturday Drive
 Author URI: http://ninjaforms.com/?utm_source=Ninja+Forms+Plugin&utm_medium=Plugins+WP+Dashboard
 Text Domain: ninja-forms
@@ -59,7 +59,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
          * @since 3.0
          */
 
-        const VERSION = '3.4.24';
+        const VERSION = '3.4.24.3';
         
         /**
          * @since 3.4.0
@@ -694,7 +694,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 'ninja-forms-multi-part',
                 'ninja-forms-layout-styles', // Account for development environments.
                 'ninja-forms-style',
-                'ninja-shop',
                 'ninja-mail', // Account for Ninja Mail as legacy for SendWP.
                 'sendwp'
             );
@@ -744,7 +743,9 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
             /*
              * Form Action Registration
              */
-            self::$instance->actions = apply_filters( 'ninja_forms_register_actions', self::load_classes( 'Actions' ) );
+            $actions = self::load_classes( 'Actions' ) ;
+            uksort( $actions, [ $this, 'sort_actions' ] );
+            self::$instance->actions = apply_filters( 'ninja_forms_register_actions', $actions );
 
             /*
              * Merge Tag Registration
@@ -940,6 +941,17 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         /*
          * PRIVATE METHODS
          */
+
+        private function sort_actions( $a, $b )
+        {
+            // Create a numeric lookup by flipping the non-associative array.
+            $custom_order = array_flip( $this->config( 'ActionTypeOrder' ) );
+
+            $a_order = ( isset( $custom_order[ $a ] ) ) ? $custom_order[ $a ] : 9001;
+            $b_order = ( isset( $custom_order[ $b ] ) ) ? $custom_order[ $b ] : 9001;
+
+            return $a_order >= $b_order;
+        }
 
         /**
          * Load Classes from Directory
