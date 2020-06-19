@@ -24,6 +24,16 @@ export default ({ formId, selectedFields, fields, submissions }) => {
 		setLoadingPageIndex(false);
 	}
 
+	// Attempt to pre-fetch the next page.
+	// We need to check the next page's data to render the pagination.
+	// The Pagination component will also attempt to pre-fetching as a click event.
+	if( ! submissions[ pageIndex + 1 ] ) {
+		select("ninja-forms-views").getFormSubmissionsPage(
+			formId,
+			pageIndex + 2 // Convert the next index (base 0) to a page number (base 1), so we add 2.
+		);
+	}
+
 	const loadMore = nextPageIndex => {
 		setLoadingPageIndex(nextPageIndex);
 		select("ninja-forms-views").getFormSubmissionsPage(
@@ -138,13 +148,18 @@ export function Pagination({
 		justifyContent: "space-between"
 	};
 
+	const onClickNextButton = () => {
+		loadMore() // Pre-fetch the next page
+		nextPage()
+	}
+
 	let NextButton;
 	if (canNextPage) {
-		NextButton = <button onClick={() => nextPage()}>{">"}</button>;
+		NextButton = <button onClick={onClickNextButton}>{">"}</button>;
 	} else {
 		if (more) {
 			NextButton = (
-				<button onClick={() => loadMore()}>{loading ? "..." : ">"}</button>
+				<button onClick={onClickNextButton}>{loading ? "..." : ">"}</button>
 			);
 		}
 	}
