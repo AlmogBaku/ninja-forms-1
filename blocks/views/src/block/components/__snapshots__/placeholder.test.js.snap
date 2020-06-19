@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor component matches snapshot 1`] = `
+<div>
+  <div
+    class="components-placeholder is-small"
+    style="align-items: center;"
+  >
+    <iframe
+      aria-hidden="true"
+      frameborder="0"
+      src="about:blank"
+      style="display: block; opacity: 0; position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+      tabindex="-1"
+    />
+    <div
+      class="components-placeholder__label"
+    >
+      <div
+        size="24"
+      >
+        <svg
+          height="100"
+          width="100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="red"
+            r="40"
+            stroke="black"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="components-placeholder__instructions"
+    >
+      Select a form to display the submissions.
+    </div>
+    <div
+      class="components-placeholder__fieldset"
+    >
+      <div
+        style="margin: auto; width: 50%;"
+      >
+        <div>
+          Inside Content
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

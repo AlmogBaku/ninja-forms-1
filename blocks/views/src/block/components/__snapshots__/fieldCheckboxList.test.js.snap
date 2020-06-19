@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor component matches snapshot 1`] = `
+<div>
+  <ul>
+    <li>
+      <div
+        class="components-base-control"
+      >
+        <div
+          class="components-base-control__field"
+        >
+          <span
+            class="components-checkbox-control__input-container"
+          >
+            <input
+              class="components-checkbox-control__input"
+              id="inspector-checkbox-control-0"
+              type="checkbox"
+              value="1"
+            />
+          </span>
+          <label
+            class="components-checkbox-control__label"
+            for="inspector-checkbox-control-0"
+          >
+            First Name
+          </label>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div
+        class="components-base-control"
+      >
+        <div
+          class="components-base-control__field"
+        >
+          <span
+            class="components-checkbox-control__input-container"
+          >
+            <input
+              class="components-checkbox-control__input"
+              id="inspector-checkbox-control-1"
+              type="checkbox"
+              value="1"
+            />
+          </span>
+          <label
+            class="components-checkbox-control__label"
+            for="inspector-checkbox-control-1"
+          >
+            Last Name
+          </label>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

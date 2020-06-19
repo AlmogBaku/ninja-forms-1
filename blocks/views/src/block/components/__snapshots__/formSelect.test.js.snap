@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor component matches snapshot 1`] = `
+<div>
+  <div
+    class="components-base-control"
+  >
+    <div
+      class="components-base-control__field"
+    >
+      <label
+        class="components-base-control__label"
+        for="inspector-select-control-0"
+      >
+        Select Form
+      </label>
+      <select
+        class="components-select-control__input"
+        id="inspector-select-control-0"
+      >
+        <option
+          value="0"
+        >
+          -
+        </option>
+        <option
+          value="1"
+        >
+          Test Form
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+`;

@@ -18,8 +18,19 @@ deploy.sh
 deploy-old.sh
 vendor/
 composer.lock
+yarn.lock
 package-lock.json
 *composer.phar
+yarn.lock
+
+# WP Scripts Block Editor
+/build/
+
+# Local WordPress
+/wp-content/
+
+# ignore local environment wordpress
+wordpress/
 
 *.sass-cache
 *.scssc

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor component matches snapshot 1`] = `
+<div>
+  <div
+    class="sc-AxjAm cYunTa"
+  >
+    <table
+      role="table"
+    >
+      <thead />
+      <tbody
+        role="rowgroup"
+      />
+    </table>
+    <div
+      style="display: flex; justify-content: space-between;"
+    >
+      <div />
+    </div>
+  </div>
+</div>
+`;

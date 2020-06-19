@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination Shows button for next page when it should  1`] = `
+<div>
+  <div
+    style="display: flex; justify-content: space-between;"
+  >
+    <div />
+    <div>
+      <button>
+        &gt;
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Pagination Shows button for previous page when it should  1`] = `
+<div>
+  <div
+    style="display: flex; justify-content: space-between;"
+  >
+    <div>
+      <button>
+        &lt;
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Pagination Shows neither button when it should show neither button  1`] = `
+<div>
+  <div
+    style="display: flex; justify-content: space-between;"
+  >
+    <div />
+  </div>
+</div>
+`;

@@ -347,6 +347,12 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 new NF_Admin_CPT_DownloadAllSubmissions();
                 require_once Ninja_Forms::$dir . 'lib/StepProcessing/menu.php';
 
+                /**
+                 * Blocks
+                 */
+
+                require_once Ninja_Forms()::$dir . 'blocks/ninja-forms-blocks.php';
+                
                 /*
                  * Submission Metabox
                  */
@@ -398,11 +404,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 self::$instance->notices = new NF_Admin_Notices();
 
                 self::$instance->widgets[] = new NF_Widget();
-
-                /*
-                 * Gutenberg
-                 */
-                self::$instance->gutenblock = new NF_FormBlock();
 
                 /*
                  * Opt-In Tracking
