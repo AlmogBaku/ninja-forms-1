@@ -4,12 +4,13 @@ ini_set('error_reporting', E_ALL); // or error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 
-require_once 'vendor/autoload.php';
-require_once 'includes/Telemetry/Metric.php';
-require_once 'includes/Telemetry/CountMetric.php';
-require_once 'includes/Telemetry/MaxMetric.php';
-require_once 'includes/Telemetry/RepositoryInterface.php';
-require_once 'includes/Handlers/LocaleNumberFormatting.php';
+$root_dir = dirname(__FILE__,2) . '/';
+require_once $root_dir .'vendor/autoload.php';
+require_once $root_dir .'includes/Telemetry/Metric.php';
+require_once $root_dir .'includes/Telemetry/CountMetric.php';
+require_once $root_dir .'includes/Telemetry/MaxMetric.php';
+require_once $root_dir .'includes/Telemetry/RepositoryInterface.php';
+require_once $root_dir . 'includes/Handlers/LocaleNumberFormatting.php';
 
 class NF_Telemetry_MockRepository implements NF_Telemetry_RepositoryInterface
 {
