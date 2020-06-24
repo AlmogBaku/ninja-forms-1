@@ -50,5 +50,6 @@ Integration:
   before_script:
     - bash bin/install_gitlab_tests.sh wordpress_tests root mysql mysql latest
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - git clone -b 5.4 --single-branch git@github.com:WordPress/wordpress-develop.git
   script:
     - vendor/bin/phpunit tests/integration --bootstrap tests/bootstrap-integration.php
