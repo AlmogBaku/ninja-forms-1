@@ -1,6 +1,6 @@
 stages:
+  - Integration
   - unit
-  - acceptance
 
 # Cache libraries in between jobs
 cache:
@@ -43,7 +43,7 @@ JavaScript Tests:
 # WordPress Integration Tests
 ## Based on https://git.saturdaydrive.io/_/engineering-ops/sd-email-crm/email-crm/blob/master/.gitlab-ci.yml#L110
 Integration:
-  stage: unit
+  stage: Integration
   image: calevans/docker:php7.3
   services:
     - mysql:5.6
@@ -51,4 +51,4 @@ Integration:
     - bash bin/install_gitlab_tests.sh wordpress_tests root mysql mysql latest
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
   script:
-    - composer phpunit tests/integration --bootstrap tests/bootstrap-integration.php
+    - phpunit tests/integration --bootstrap tests/bootstrap-integration.php
