@@ -322,8 +322,10 @@ final class NF_Display_Render
                 $settings['old_classname'] = $field_class->get_old_classname();
                 $settings['wrap_template'] = $field_class->get_wrap_template();
 
-                // Sanitize all field settings before display.
-                array_walk( $settings, function(&$val){ $val = WPN_Helper::kses_post($val); } );
+                if( 'html' !== $field_type ) {
+                    // Sanitize all field settings before display.
+                    array_walk( $settings, function(&$val){ $val = WPN_Helper::kses_post($val); } );
+                }
 
                 $fields[] = apply_filters( 'ninja_forms_localize_field_settings_' . $field_type, $settings, $form );
 
