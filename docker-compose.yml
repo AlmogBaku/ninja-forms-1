@@ -1,0 +1,66 @@
+version: "3.7"
+
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8532:80
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_PASSWORD: example
+      ABSPATH: /usr/src/wordpress/
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'SCRIPT_DEBUG', true );
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - .:/var/www/html/wp-content/plugins/ninja-forms
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./vendor:/var/www/html/vendor
+  wptests:
+    build:
+      context: ./
+      dockerfile: WPTESTS
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_PASSWORD: example
+      ABSPATH: /usr/src/wordpress/
+      WP_TESTS_DIR: /var/www/html/wordpress-tests-lib
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'SCRIPT_DEBUG', true );
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - ./vendor:/var/www/html/vendor
+      - ./composer.json:/var/www/html/composer.json
+      - ./composer.lock:/var/www/html/composer.lock
+      - ./phpunit.xml:/var/www/html/phpunit.xml
+      - ./bin:/var/www/html/bin
+  cli:
+    image: wordpress:cli
+    restart: always
+    user: xfs
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+      - ./vendor:/var/www/html/vendor
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - .:/var/www/html/wp-content/plugins/ninja-forms
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+    depends_on:
+      - mysql
+      - wordpress
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: wordpress_test
+
+volumes:
+  wordpress_data:
+  testsuite:

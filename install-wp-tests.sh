@@ -1,0 +1,3 @@
+#docker-compose run --rm wptests svn co --quiet https://develop.svn.wordpress.org/trunk/tests/phpunit/includes/ /var/www/html/wordpress-tests-lib/includes/
+#docker-compose run --rm wptests svn co --quiet https://develop.svn.wordpress.org/trunk/tests/phpunit/data/ /var/www/html/wordpress-tests-lib/data
+docker-compose run --rm wptests bash var/html/www/bin/install_gitlab_tests.sh wordpress_tests root mysql mysql latest
