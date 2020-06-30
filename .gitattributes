@@ -5,3 +5,6 @@ README.md export-ignore
 gulpfile.js export-ignore
 package.json export-ignore
 node_modules export-ignore
+# Ensure shell script uses LF.
+WPTESTS  eol=lf
+*.sh     eol=lf
