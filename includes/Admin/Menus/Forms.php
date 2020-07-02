@@ -24,7 +24,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             add_action( 'current_screen', array( 'NF_Admin_AllFormsTable', 'process_bulk_action' ) );
         }
 
-        add_action( 'admin_body_class', array( $this, 'body_class' ) );
+        add_action( 'admin_body_class', array( $this, 'body_class' ), 999999999 );
         add_action( 'admin_init', array( $this, 'nf_upgrade_redirect' ) );
     }
 
