@@ -124,6 +124,10 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         if(! $this->is_preview()){
             $form_fields = Ninja_Forms()->form($this->_form_id)->get_fields();
             foreach ($form_fields as $id => $field) {
+                if( !isset($this->_form_data['fields'][$id]) && 'recaptcha' === $field->get_setting('type') ) {
+                    $this->_errors['fields'][$id] = esc_html__( 'Please complete the recaptcha.', 'ninja-forms' );
+                    $this->_respond();
+                }
                 $this->_form_data['fields'][$id]['key'] = $field->get_setting('key');
             }
         }
