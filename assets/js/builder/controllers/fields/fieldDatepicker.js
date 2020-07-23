@@ -15,7 +15,8 @@ define( [], function() {
 		},
 
 		addDatepicker: function( settingModel, dataModel, view ) {
-			var dateObject = pikadayResponsive( jQuery( view.el ).find( '.setting' )[0] );			
+			//Switch to flatpickr from pikaday 
+			var dateObject = flatpickr( jQuery( view.el ).find( '.setting' )[0] );			
 		}
 	});
 

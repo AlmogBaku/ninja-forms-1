@@ -15,23 +15,22 @@ define([], function() {
             }
 
             var el = jQuery( view.el ).find( '.nf-element' )[0];
-            var dateObject = pikadayResponsive( el, {
+            var dateObject = flatpickr( el, {
                 format: dateFormat,
                 outputFormat: dateFormat,
+                dateFormat: dateFormat,
                 classes: jQuery( el ).attr( "class" ),
                 placeholder: view.model.get( 'placeholder' ),
-                pikadayOptions: {
-                    yearRange:  this.getYearRange( view.model ),
-                    minDate: this.getMinDate( view.model ),
-                    maxDate: this.getMaxDate( view.model ),
-                    firstDay: parseInt( nfi18n.startOfWeek )
-                }
+                yearRange:  this.getYearRange( view.model ),
+                minDate: this.getMinDate( view.model ),
+                maxDate: this.getMaxDate( view.model ),
+                firstDay: parseInt( nfi18n.startOfWeek )
             } );
             if ( 1 == view.model.get( 'date_default' ) ) {
                dateObject.setDate( moment() );
             }
 
-            nfRadio.channel( 'pikaday' ).trigger( 'init', dateObject, view.model );
+            nfRadio.channel( 'flatpickr' ).trigger( 'init', dateObject, view.model );
         },
 
         getYearRange: function( fieldModel ) {
@@ -76,7 +75,7 @@ define([], function() {
         
         convertDateFormat: function( dateFormat ) {
             // http://php.net/manual/en/function.date.php
-            // https://github.com/dbushell/Pikaday/blob/master/README.md#formatting
+            // https://github.com/dbushell/Pikaday/blob/master/README.md#formatting  **** Switched to flatpickr ***
             // Note: Be careful not to add overriding replacements. Order is important here.
 
             /** Day */

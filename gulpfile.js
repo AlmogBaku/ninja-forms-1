@@ -72,8 +72,7 @@ gulp.task('js:frontend', function(){
 
     gulp.src([
         'assets/js/lib/moment-with-locales.min.js',
-        'assets/js/lib/pikaday.min.js',
-        'assets/js/lib/pikaday-responsive.min.js'
+        'assets/js/lib/flatpickr.min.js'
     ])
     .pipe(concat('front-end--datepicker.min.js'))
     .pipe(gulp.dest('assets/js/min/'));
