@@ -8,28 +8,36 @@ define([], function() {
         initDatepicker: function ( view ) {
 
             var dateFormat = view.model.get( 'date_format' );
-
+    
             // For "default" date format, convert PHP format to JS compatible format.
             if( '' == dateFormat || 'default' == dateFormat ){
                 dateFormat = this.convertDateFormat( nfi18n.dateFormat );
             }
 
             var el = jQuery( view.el ).find( '.nf-element' )[0];
-            var dateObject = flatpickr( el, {
-                format: dateFormat,
-                outputFormat: dateFormat,
-                dateFormat: dateFormat,
+            var dateSettings = {
                 classes: jQuery( el ).attr( "class" ),
                 placeholder: view.model.get( 'placeholder' ),
-                yearRange:  this.getYearRange( view.model ),
-                minDate: this.getMinDate( view.model ),
-                maxDate: this.getMaxDate( view.model ),
-                firstDay: parseInt( nfi18n.startOfWeek )
-            } );
+                parseDate: (datestr, format) => {
+                    return moment(datestr, format, true).toDate();
+                },
+                formatDate: (date, format, locale) => {
+                    return moment(date).format(format);
+                },
+                dateFormat: dateFormat,
+                altFormat: dateFormat,
+                altInput: true,
+                ariaDateFormat: dateFormat,
+                mode: "single"
+            };
+           
+            var dateObject = flatpickr( el, dateSettings );
+
             if ( 1 == view.model.get( 'date_default' ) ) {
-               dateObject.setDate( moment() );
+                dateObject.setDate( moment().format(dateFormat) );
             }
 
+            nfRadio.channel( 'pikaday' ).trigger( 'init', dateObject, view.model );
             nfRadio.channel( 'flatpickr' ).trigger( 'init', dateObject, view.model );
         },
 
