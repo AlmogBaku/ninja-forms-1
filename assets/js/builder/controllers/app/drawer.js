@@ -1,6 +1,6 @@
 /**
  * Handles opening and closing our drawer. This is where we display settings for fields, actions, and settings.
- * 
+ *
  * @package Ninja Forms builder
  * @subpackage Main App
  * @copyright (c) 2015 WP Ninjas
@@ -19,11 +19,11 @@ define( [], function() {
 			nfRadio.channel( 'app' ).reply( 'close:drawer', this.closeDrawer, this );
 
 			/*
-			 * When we close the drawer, we have to figure out what the right position should be.
+			 * When we close the drawer, we have to figure out what the right/left position should be.
 			 * This listens to requests from other parts of our app asking what the closed right position is.
 			 */
 			nfRadio.channel( 'drawer' ).reply( 'get:closedRightPos', this.getClosedDrawerPos, this );
-			
+
 			// Reply to requests to prevent our drawer from closing
 			nfRadio.channel( 'drawer' ).reply( 'prevent:close', this.preventClose, this );
 			// Reply to requests to enable drawer closing
@@ -36,6 +36,13 @@ define( [], function() {
 			 * We use an array so that registered requests can unregister and not affect each other.
 			 */
 			this.objPreventClose = {};
+
+            /*
+			 * Object that hold the side to align the drawer.
+			 * In LTR mode the drawer should be aligned to the right, and in RTL to the left.
+             * @type {string}
+             */
+            this.drawerSide = jQuery("body").hasClass("rtl") ? 'left' : 'right';
 
 			/*
 			 *  Listen to focus events on the filter and stop our interval when it happens.
@@ -72,14 +79,14 @@ define( [], function() {
 			jQuery( builderEl ).addClass( 'nf-drawer-closed' ).removeClass( 'nf-drawer-opened' );
 			jQuery( builderEl ).removeClass( 'disable-main' );
 
-			// Get the right position of our closed drawer. Should be container size in -px.
-			var rightClosed = this.getClosedDrawerPos();
+			// Get the right/left position of our closed drawer. Should be container size in -px.
+			var closedDrawerPos = this.getClosedDrawerPos();
 
-			// Get our drawer element and give change the 'right' property to our closed position.
+			// Get our drawer element and give change the 'right'/'left' property to our closed position.
 			var drawerEl = nfRadio.channel( 'app' ).request( 'get:drawerEl' );
-			jQuery( drawerEl ).css( { 'right': rightClosed } );
+			jQuery( drawerEl ).css( this.drawerSide, closedDrawerPos );
 
-			// In order to access properties in 'this' context in our interval below, we have to set it here.	
+			// In order to access properties in 'this' context in our interval below, we have to set it here.
 			var that = this;
 
 			/*
@@ -91,7 +98,7 @@ define( [], function() {
 			 * trigger a drawer closed message
 			 */
 			this.checkCloseDrawerPos = setInterval( function() {
-	        	if ( rightClosed == jQuery( drawerEl ).css( 'right' ) ) {
+	        	if ( closedDrawerPos == jQuery( drawerEl ).css( that.drawerSide ) ) {
 	        		clearInterval( that.checkCloseDrawerPos );
 		    		nfRadio.channel( 'app' ).request( 'update:currentDrawer', false );
 		    		nfRadio.channel( 'drawer' ).trigger( 'closed' );
@@ -117,7 +124,7 @@ define( [], function() {
 
 		/**
 		 * Open our drawer.
-		 * 
+		 *
 		 * @since  3.0
 		 * @param  string drawerID 	ID of the drawer we want to open.
 		 * @param  object data     	Optional data that we want to pass to the drawer.
@@ -147,16 +154,16 @@ define( [], function() {
 			// Send out a message requesting our drawer view to load the content for our drawer ID.
 			nfRadio.channel( 'drawer' ).request( 'load:drawerContent', drawerID, data );
 			nfRadio.channel( 'drawer' ).trigger( 'before:open' );
-			
+
 			// To open our drawer, we have to add our opened class to our builder element and remove the closed class.
 			var builderEl = nfRadio.channel( 'app' ).request( 'get:builderEl' );
 			jQuery( builderEl ).addClass( 'nf-drawer-opened' ).removeClass( 'nf-drawer-closed' );
-			
-			// To open our drawer, we have to set the right position of our drawer to 0px.
+
+			// To open our drawer, we have to set the 'right'/'left' position of our drawer to 0px.
 			var drawerEl = nfRadio.channel( 'app' ).request( 'get:drawerEl' );
-			jQuery( drawerEl ).css( { 'right': '0px' } );
-			
-			// In order to access properties in 'this' context in our interval below, we have to set it here.	
+			jQuery( drawerEl ).css( this.drawerSide, '0px' );
+
+			// In order to access properties in 'this' context in our interval below, we have to set it here.
 			var that = this;
 
 			/*
@@ -176,7 +183,7 @@ define( [], function() {
 			jQuery( '.nf-master-control' ).css( 'z-index', 0 );
 
 			this.checkOpenDrawerPos = setInterval( function() {
-	        	if ( '0px' == jQuery( drawerEl ).css( 'right' ) ) {
+	        	if ( '0px' == jQuery( drawerEl ).css( that.drawerSide ) ) {
 	        		clearInterval( that.checkOpenDrawerPos );
 					if ( ! that.hasFocus ) {
 		        		that.focusFilter();
@@ -184,7 +191,7 @@ define( [], function() {
 			    		nfRadio.channel( 'app' ).request( 'update:currentDrawer', drawerID );
 			    		jQuery( drawerEl ).scrollTop( 0 );
 			    		nfRadio.channel( 'drawer' ).trigger( 'opened' );
-					}   		
+					}
 	        	}
 			}, 150 );
 		},
@@ -214,12 +221,12 @@ define( [], function() {
         },
 
         /**
-         * Get the CSS right position (in px) of the closed drawer element.
+         * Get the CSS right/left position (in px) of the closed drawer element.
          * This is calculated by:
          * getting the width of the builder element
          * add 300 pixels
          * make it negative
-         * 
+         *
          * @since  3.0
          * @return void
          */
@@ -231,7 +238,7 @@ define( [], function() {
 
         /**
          * Check to see if anything has registered a prevent close key.
-         * 
+         *
          * @since  3.0
          * @return boolean
          */
@@ -245,7 +252,7 @@ define( [], function() {
 
         /**
          * Register a prevent close key.
-         * 
+         *
          * @since  3.0
          * @param  string 	key unique id for our 'prevent close' setting.
          * @return void
@@ -261,7 +268,7 @@ define( [], function() {
 
         /**
          * Remove a previously registered prevent close key.
-         * 
+         *
          * @since  3.0
          * @param  string 	key unique id for our 'prevent close' setting.
          * @return void
@@ -273,13 +280,13 @@ define( [], function() {
         	 */
         	if ( ! this.maybePreventClose() && 'undefined' != typeof this.dataModel ) {
 	        	// Get our current drawer.
-				this.dataModel.set( 'drawerDisabled', false );        		
+				this.dataModel.set( 'drawerDisabled', false );
         	}
         },
 
         /**
          * When we focus our filter, make sure that our open drawer interval is cleared.
-         * 
+         *
          * @since  3.0
          * @return void
          */
