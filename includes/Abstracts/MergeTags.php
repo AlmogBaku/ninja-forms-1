@@ -70,7 +70,7 @@ abstract class NF_Abstracts_MergeTags
 				$replace = '';
 			}
             
-            $subject = str_replace( $merge_tag[ 'tag' ], $replace, $subject );
+            $subject = $this->replace( str_replace( $merge_tag[ 'tag' ], $replace, $subject ) );
         }
 
         return $subject;
