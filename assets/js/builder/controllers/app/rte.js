@@ -251,17 +251,22 @@ define( [], function() {
 			// Sets up the media library frame
 			this.meta_image_frame = wp.media.frames.meta_image_frame = wp.media({
 				title: 'Select a file',
-				button: { text:  'insert' }
+				button: { text:  'insert' },
+				multiple: false,
+				frame:  'post',
+				state:  'insert'
 			});
 
 			var that = this;
 
 			// Runs when an image is selected.
-			this.meta_image_frame.on('select', function(){
+			this.meta_image_frame.on('insert', function(){
+				var state = that.meta_image_frame.state();
 
 				// Grabs the attachment selection and creates a JSON representation of the model.
-				var media_attachment = that.meta_image_frame.state().get('selection').first().toJSON();
-				that.insertMedia( media_attachment, context );
+				var media_attachment = state.get('selection').first();
+				var display = state.display(media_attachment).toJSON();
+				that.insertMedia( media_attachment.toJSON(), display );
 			});
 
 			// Opens the media library frame.
@@ -303,10 +308,10 @@ define( [], function() {
 			jQuery( e.target ).closest( 'div.note-btn-group.open' ).removeClass( 'open' );
 		},
 
-		insertMedia: function( media, context ) {
+		insertMedia: function( media, display ) {
 			this.currentContext.invoke( 'editor.restoreRange' );
 			if ( 'image' == media.type ) {
-				this.currentContext.invoke( 'editor.insertImage', media.url );
+				this.currentContext.invoke( 'editor.insertImage', media.sizes[display.size].url );
 			} else {
 				this.currentContext.invoke( 'editor.createLink', {
 					text: media.title || media.filename,
