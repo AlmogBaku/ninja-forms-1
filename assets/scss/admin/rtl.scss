@@ -18,6 +18,12 @@
 }
 
 .rtl {
+    .nf-full {
+        input[type=checkbox].nf-toggle+label {
+            right: auto;
+            left: 10px;
+        }
+    }
     #nf-app-admin-header {
         #nf-logo {
             float: right;

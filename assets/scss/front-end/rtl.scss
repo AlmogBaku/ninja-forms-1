@@ -1,0 +1,23 @@
+
+.rtl {
+  .nf-multi-cell .nf-cell {
+    float: right;
+  }
+  .nf-breadcrumbs li {
+    float: right;
+  }
+  .nf-breadcrumbs li a {
+    margin-right: auto;
+    margin-left: 16px;
+  }
+  .nf-next-previous li.nf-next-item {
+    float: left;
+  }
+  .nf-next-previous li.nf-previous-item {
+    float: right;
+  }
+  .nf-breadcrumbs li:last-child a {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}

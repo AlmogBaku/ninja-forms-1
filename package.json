@@ -70,6 +70,9 @@
 		"type": "git",
 		"url": "https://git.saturdaydrive.io/_/ninja-forms/ninja-forms"
 	},
+	"resolutions": {
+		"graceful-fs": "4.2.4"
+	},
 	"author": "Saturday Drive, LLC",
 	"license": "GPL-2.0-only"
 }
